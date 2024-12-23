@@ -6,3 +6,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 //Comentario
+
+
+//Este comentario está bien chido
