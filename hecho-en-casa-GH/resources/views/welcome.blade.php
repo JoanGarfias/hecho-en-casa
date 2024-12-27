@@ -170,6 +170,7 @@
                         Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
                         Jeycson estuvo aqui, funciona por favor xd
                         Jeovani estuvo aqui, prueba a nivel de back end
+                        Jeovani estuvo aqui, prueba a nivel de main
                     </footer>
                 </div>
             </div>
