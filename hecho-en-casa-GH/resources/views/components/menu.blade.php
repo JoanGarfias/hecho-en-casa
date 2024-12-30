@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/HechoEnCasaFront/hecho-en-casa/hecho-en-casa-GH/resources/css/estilos.css"> <!-- Ruta absoluta -->
+    <link rel="stylesheet" href="{{ asset('css/estilos.css') }}"> <!-- Ruta absoluta -->
     <title>Document</title>
 </head>
 <body>
