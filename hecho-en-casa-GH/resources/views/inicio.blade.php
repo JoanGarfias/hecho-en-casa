@@ -7,7 +7,7 @@
     <div class="contenedor">
         <div class="seccion temporada">
             <h3>TEMPORADA</h3>
-            <img src="/HechoEnCasaFront/hecho-en-casa/hecho-en-casa-GH/resources/img/temporada.png" alt="Pasteles de temporada">
+            <img src="{{ asset('resources/img/temporada.png') }}" alt="Pasteles de temporada">
         </div>
         <div class="seccion pasteles">
             <h3>PASTELES</h3>
@@ -20,4 +20,4 @@
             </div>
         </div>    
     </div>
-</main>
+</main>.
