@@ -3,6 +3,9 @@
 <link rel="stylesheet" href="{{ asset('css/cuerpo.css') }}"> <!-- Ruta absoluta -->
 <title>Inicio</title>
 <x-menu />
+
+<x-banner />
+
 <main>
     <h2>DESCUBRE</h2>
     <div class="contenedor">
