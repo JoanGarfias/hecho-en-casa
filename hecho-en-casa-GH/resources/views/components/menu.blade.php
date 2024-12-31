@@ -23,7 +23,7 @@
             <ul class="menu-derecho">
                 <li><a href="#">Conócenos</a></li>
                 <li><a href="#">Buscar pedido</a></li>
-                <li><a href="#"><img src="{{ asset('resources/img/usuario.png') }}" alt="Usuario"></a></li> <!-- Subimos un nivel para llegar a img -->
+                <li><a href="#"><img src="{{ asset('img/usuario.png') }}" alt="Usuario"></a></li> <!-- Subimos un nivel para llegar a img -->
             </ul>
         </nav>
     </div>
