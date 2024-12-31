@@ -1,8 +1,7 @@
-<x-menu>
-</x-menu>
+
 
 <link rel="stylesheet" href="/HechoEnCasaFront/hecho-en-casa/hecho-en-casa-GH/resources/css/cuerpo.css"> <!-- Ruta absoluta -->
-
+<title>Inicio</title>
 <main>
     <h2>DESCUBRE</h2>
     <div class="contenedor">
