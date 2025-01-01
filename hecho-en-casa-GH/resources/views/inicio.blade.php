@@ -24,4 +24,5 @@
             </div>
         </div>    
     </div>
-</main>.
+</main>
+<script src="{{ asset('js/icono.js') }}" defer></script>
