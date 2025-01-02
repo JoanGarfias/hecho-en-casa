@@ -31,7 +31,8 @@ class ControladorCatalogo extends Controller
                 abort(404, 'Catálogo no encontrado');
             }
             return view('catalogo', compact('categorias'))
-                ->with('catalogo', $catalogo);
+                ->with('catalogo', $catalogo)
+                ->with('categoriaSeleccionada', $categoria);
         }
         else {
             abort(500, 'Error interno del servidor');
