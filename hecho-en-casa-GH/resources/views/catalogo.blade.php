@@ -9,7 +9,7 @@
     <h1>Catálogo de Postres</h1>
 
     <!-- Dropdown para seleccionar categoría -->
-    <select id="categorias" onchange="mostrarCatalogo(this.value)">
+    <select id="categorias" onchange="mostrarProductos(this.value)">
         <option value="">Selecciona una categoría</option> 
         @foreach($categorias as $categoria)
             <option value="{{ $categoria->id_cat }}">{{ $categoria->nombre }}</option>
