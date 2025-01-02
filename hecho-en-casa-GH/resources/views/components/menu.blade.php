@@ -29,7 +29,7 @@
                             </a>
                              <div class="dropdown-menu" id="menu-usuario">
                                 <button>Iniciar sesión</button>
-                                <a href="{{ route('registrar') }}" class="btn">Registrarme</a>
+                                <a href="registrar/" class="btn">Registrarme</a>
 
                              </div>
                 </li> 
