@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio - Pastelería</title>
-    <link rel="stylesheet" href="{{ asset('resources/css/inicio/menu.css') }}">
+    <link rel="stylesheet" href="/css/inicio/menu.css">
     <link rel="stylesheet" href="{{ asset('resources/css/inicio/pie.css') }}">
     <link rel="stylesheet" href="{{ asset('resources/css/inicio/cuerpo.css') }}">
 </head>
@@ -21,7 +21,7 @@
                     <li><a href="#">Catálogo</a></li>
                 </ul>
                 <div class="logo">
-                    <img src="{{ asset('resources/img/inicio/logo.png') }}" alt="Logo">
+                    <img src="/img/inicio/logo.png" alt="Logo">
                 </div>
                 <ul class="menu-derecho">
                     <li><a href="#">Conócenos</a></li>
