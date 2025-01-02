@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Elemento;
-use Illuminate\Routing\RouteAction;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControladorInicio;
 use App\Http\Controllers\ControladorCalendario;
