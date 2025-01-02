@@ -13,7 +13,7 @@ class ControladorCatalogo extends Controller
     public function obtenerCategorias(){
         $categorias = Categoria::all();
         if($categorias->isNotEmpty()){
-            return response()->json($categorias);
+            return view('catalogo', compact('categorias'));
         }
         else{
             abort(500, 'Error interno del servidor');
