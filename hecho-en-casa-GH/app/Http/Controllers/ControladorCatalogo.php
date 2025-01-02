@@ -30,6 +30,16 @@ class ControladorCatalogo extends Controller
             if ($catalogo->isEmpty()) {
                 abort(404, 'Catálogo no encontrado');
             }
+
+            // Verificar si la solicitud es AJAX
+            if (request()->ajax()) {
+                return response()->json([
+                    'categorias' => $categorias,
+                    'catalogo' => $catalogo,
+                    'categoriaSeleccionada' => $categoria
+                ]);
+            }
+
             return view('catalogo', compact('categorias'))
                 ->with('catalogo', $catalogo)
                 ->with('categoriaSeleccionada', $categoria);
