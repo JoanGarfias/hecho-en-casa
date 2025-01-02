@@ -4,11 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio - Pastelería</title>
-    <!-- @vite(['/css/inicio/menu.css', '/css/inicio/pie.css', '/css/inicio/cuerpo.css']) -->
-    <link rel="stylesheet" href="{{ asset('css/inicio/menu.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/inicio/pie.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/inicio/cuerpo.css') }}">
-    
+    @vite(['/css/inicio/menu.css', '/css/inicio/pie.css', '/css/inicio/cuerpo.css'])
 </head>
 <body>
 
