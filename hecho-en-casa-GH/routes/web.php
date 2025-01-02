@@ -33,7 +33,7 @@ Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);
 /*
 
 /*RUTAS DE POSTRES FIJOS */
-/*
+
 Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrar']);
 Route::post('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrar']);
 
@@ -50,7 +50,7 @@ Route::get('fijo/detalles-entrega', [ControladorCatalogo::class, 'mostrar-detall
 Route::post('fijo/detalles-entrega', [ControladorCatalogo::class, 'seleccionar-detalles-entrega']);
 
 Route::get('fijo/ticket/{folio}', [ControladorCatalogo::class, 'mostrar-ticket']);
-*/
+
 
 /*RUTAS DE POSTRES PERSONALIZADOS */
 
