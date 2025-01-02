@@ -12,7 +12,10 @@
     <select id="categorias" onchange="cambiarCategoria(this.value)">
         <option value="">Selecciona una categoría</option> 
         @foreach($categorias as $categoria)
-            <option value="{{ $categoria->id_cat }}">{{ $categoria->nombre }}</option>
+            <option value="{{ $categoria->id_cat }}" 
+                @if($categoria->id_cat == $categoriaSeleccionada) selected @endif>
+                {{ $categoria->nombre }}
+            </option>
         @endforeach
     </select>
     <button class="buscarProducto">Escojer</button>
@@ -24,10 +27,13 @@
         // Pasar los productos y categorías a JavaScript
         let catalogo = @json($catalogo);
         let categorias = @json($categorias);
+        let categoriaSeleccionada = @json($categoriaSeleccionada); // Asegúrate de pasar esto desde el backend
+
         let buscarProductoBtn = document.querySelector(".buscarProducto");
         
         console.log("Catalogo", catalogo);
         console.log("Categorias", categorias);
+        console.log("Categoría seleccionada por defecto", categoriaSeleccionada);
 
         // Función para mostrar los productos en el contenedor
         function mostrarProductos(categoriaId) {
@@ -56,6 +62,11 @@
             window.history.pushState({}, "", `/fijo/catalogo/${categoriaId}`);
             // Mostrar los productos de la categoría seleccionada
             mostrarProductos(categoriaId);
+        }
+
+        // Llamar a mostrarProductos con la categoría seleccionada por defecto cuando se carga la página
+        if (categoriaSeleccionada) {
+            mostrarProductos(categoriaSeleccionada);
         }
     </script>
     
