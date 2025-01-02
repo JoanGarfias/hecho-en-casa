@@ -17,7 +17,7 @@ Route::get('/calendario', function(){
     return "Estás viendo el calendario";
 });
 
-Route::get('/catalogo/{categoria?}', function($categoria){
+Route::get('/catalogo/{categoria?}', function($categoria = null){
     //Aquí se va cargar el catalogo de la categoria (por defecto pay)
     if($categoria){
         return "La categoria por defecto es pay";
