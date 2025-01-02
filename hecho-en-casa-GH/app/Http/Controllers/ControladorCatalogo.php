@@ -14,4 +14,32 @@ class ControladorCatalogo extends Controller
             return "Seleccionaste la categoría {$categoria}";
         }
     }
+
+    public function mostrarFecha(){
+        
+    }
+
+    public function seleccionarFecha(){
+
+    }
+
+    public function mostrarDetalles(){
+
+    }
+
+    public function seleccionarDetalles(){
+
+    }
+
+    public function mostrarDetallesEntrega(){
+
+    }
+
+    public function seleccionarDetallesEntrega(){
+
+    }
+
+    public function mostrarTicket(){
+        
+    }
 }
