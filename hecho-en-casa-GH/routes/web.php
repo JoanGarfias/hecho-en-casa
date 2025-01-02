@@ -1,9 +1,18 @@
 <?php
 
+use App\Models\Elemento;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $elemento = new Elemento;
+    $elemento->nom_elemento = 'Ejemplo';
+    $elemento->precio_e = 0.0;
+    $elemento->save();
+    return $elemento;
+});
+
+Route::get('prueba', function(){
+    
 });
 //Comentario
 
