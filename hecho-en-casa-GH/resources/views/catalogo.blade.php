@@ -51,7 +51,6 @@
         function cambiarCategoria(categoriaId) {
             // Cambiar la URL sin recargar la página
             window.history.pushState({}, "", `/fijo/catalogo/${categoriaId}`);
-            
             // Mostrar los productos de la categoría seleccionada
             mostrarProductos(categoriaId);
         }
@@ -76,11 +75,6 @@
             console.log("Categoría seleccionada:", categoriaSeleccionada);
             cambiarCategoria(categoriaSeleccionada); // Aquí puedes poner la lógica para escoger la categoría de forma dinámica
         });
-        let select = document.getElementById('categorias');
-        let categoriaSeleccionada = select.value; // Obtén el valor seleccionado
-        // Cargar las categorías y productos al inicio
-        cargarCategorias();
-        mostrarProductos(categoriaSeleccionada); // Mostrar productos de la categoría 1 al inicio (por defecto)
     </script>
     
 </body>
