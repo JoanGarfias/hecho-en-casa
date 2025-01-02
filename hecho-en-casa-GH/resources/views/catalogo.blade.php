@@ -26,6 +26,9 @@
         let categorias = @json($categorias);
         let buscarProductoBtn = document.querySelector(".buscarProducto");
         
+        console.log("Catalogo", catalogo);
+        console.log("Categorias", categorias);
+
         // Función para mostrar los productos en el contenedor
         function mostrarProductos(categoriaId) {
             // Filtramos los productos según la categoría seleccionada
