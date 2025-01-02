@@ -73,9 +73,9 @@ Route::get('personalizado/ticket/{folio}', [ControladorCatalogo::class, 'mostrar
 */
 
 
-/*RUTAS DE POSTRES EMERGENTES */
+/* RUTAS DE POSTRES EMERGENTES  */
 
-/*
+
 Route::get('/emergentes', [ControladorCatalogo::class, 'mostrar']);
 
 Route::get('emergentes/seleccionar-fecha', [ControladorCatalogo::class, 'mostrar-calendario']);
@@ -92,4 +92,3 @@ Route::post('emergentes/detalles-entrega', [ControladorCatalogo::class, 'selecci
 
 Route::get('emergentes/ticket/{folio}', [ControladorCatalogo::class, 'mostrar-ticket']);
 
-*/
