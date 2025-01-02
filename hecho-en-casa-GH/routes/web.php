@@ -9,10 +9,21 @@ Route::get('/', function(){
     return "Bienvenido a la página de inicio";
 });
 
-Route::post('/prueba', function(){
-    return "Prueba";
+Route::get('/inicio', function(){
+    return "Bienvenido a la página de inicio";
 });
 
+Route::get('/calendario', function(){
+    return "Estás viendo el calendario";
+});
+
+Route::get('/catalogo/{categoria?}', function($categoria){
+    //Aquí se va cargar el catalogo de la categoria (por defecto pay)
+    if($categoria){
+        return "La categoria por defecto es pay";
+    }
+    return "Estás viendo el catalogo de {$categoria}";
+});
 
 
 //Esta fue la prueba de Jeycson:
