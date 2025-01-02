@@ -8,12 +8,8 @@ use App\Models\Catalogo;
 class ControladorCatalogo extends Controller
 {
     public function mostrar($categoria = null){
-        if($categoria === null){
-            
-        }
-        else{
-            return "Seleccionaste la categoría {$categoria}";
-        }
+        $catalogo = Catalogo::find();
+        return $catalogo;
     }
 
     public function mostrarFecha(){
