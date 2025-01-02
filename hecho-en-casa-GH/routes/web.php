@@ -38,19 +38,19 @@ Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);
 Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrar']);
 Route::post('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrar']);
 
-Route::get('fijo/seleccionar-fecha', [ControladorCatalogo::class, 'mostrar-calendario']);
-Route::post('fijo/seleccionar-fecha', [ControladorCatalogo::class, 'seleccionar-fecha']);
+Route::get('fijo/seleccionar-fecha', [ControladorCatalogo::class, 'mostrarCalendario']);
+Route::post('fijo/seleccionar-fecha', [ControladorCatalogo::class, 'seleccionarFecha']);
 
-Route::get('fijo/detalles-pedido', [ControladorCatalogo::class, 'mostrar-detalles']);
-Route::post('fijo/detalles-pedido', [ControladorCatalogo::class, 'seleccionar-detalles']);
+Route::get('fijo/detalles-pedido', [ControladorCatalogo::class, 'mostrarDetalles']);
+Route::post('fijo/detalles-pedido', [ControladorCatalogo::class, 'seleccionarDetalles']);
 
-Route::get('fijo/detalles-pedido', [ControladorCatalogo::class, 'mostrar-detalles']);
-Route::post('fijo/detalles-pedido', [ControladorCatalogo::class, 'seleccionar-detalles']);
+Route::get('fijo/detalles-pedido', [ControladorCatalogo::class, 'mostrarDetalles']);
+Route::post('fijo/detalles-pedido', [ControladorCatalogo::class, 'seleccionarDetalles']);
 
-Route::get('fijo/detalles-entrega', [ControladorCatalogo::class, 'mostrar-detalles-entrega']);
-Route::post('fijo/detalles-entrega', [ControladorCatalogo::class, 'seleccionar-detalles-entrega']);
+Route::get('fijo/detalles-entrega', [ControladorCatalogo::class, 'mostrarDetallesEntrega']);
+Route::post('fijo/detalles-entrega', [ControladorCatalogo::class, 'seleccionarDetallesEntrega']);
 
-Route::get('fijo/ticket/{folio}', [ControladorCatalogo::class, 'mostrar-ticket']);
+Route::get('fijo/ticket/{folio}', [ControladorCatalogo::class, 'mostrarTicket']);
 
 
 /*RUTAS DE POSTRES PERSONALIZADOS */
