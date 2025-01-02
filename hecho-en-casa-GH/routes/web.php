@@ -4,23 +4,13 @@ use App\Models\Elemento;
 use Illuminate\Routing\RouteAction;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControladorInicio;
+use App\Http\Controllers\ControladorCalendario;
+use App\Http\Controllers\ControladorCatalogo;
 
 Route::get('/', [ControladorInicio::class, 'index']);
 Route::get('/inicio', [ControladorInicio::class, 'index']);
-
-Route::get('/calendario', function(){
-    return "Estás viendo el calendario";
-});
-
-Route::get('/catalogo/{categoria?}', function($categoria = null){
-    //Aquí se va cargar el catalogo de la categoria (por defecto pay)
-    if($categoria === null){
-        return "La categoria por defecto es pay";
-    }
-    else{
-        return "Estás viendo el catalogo de {$categoria}";
-    }
-});
+Route::get('/calendario', [ControladorCalendario::class, 'index']);
+Route::get('/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrar']);
 
 
 //Esta fue la prueba de Jeycson:
