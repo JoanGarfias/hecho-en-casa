@@ -1,3 +1,8 @@
 use App\Http\Controllers\ControladorCatalogo;
+use Illuminate\Support\Facades\Route;
 
-Route::get('categorias/{categoria?}', [ControladorCatalogo::class, 'mostrar']);
+Route::get('test', function () {
+    return response()->json(['message' => 'API funcionando']);
+});
+
+Route::get('categorias', [ControladorCatalogo::class, 'obtenerCategorias']);
