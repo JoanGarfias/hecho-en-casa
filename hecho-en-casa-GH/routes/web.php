@@ -30,8 +30,10 @@ Route::delete('/cerrar-sesion', [ControladorCalendario::class, 'index']);
 
 Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);
 
-/*RUTAS DE POSTRES FIJOS */
+/*
 
+/*RUTAS DE POSTRES FIJOS */
+/*
 Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrar']);
 Route::post('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrar']);
 
@@ -48,10 +50,11 @@ Route::get('fijo/detalles-entrega', [ControladorCatalogo::class, 'mostrar-detall
 Route::post('fijo/detalles-entrega', [ControladorCatalogo::class, 'seleccionar-detalles-entrega']);
 
 Route::get('fijo/ticket/{folio}', [ControladorCatalogo::class, 'mostrar-ticket']);
-
+*/
 
 /*RUTAS DE POSTRES PERSONALIZADOS */
 
+/*
 Route::get('/personalizados', [ControladorCatalogo::class, 'mostrar']);
 
 Route::get('personalizado/seleccionar-fecha', [ControladorCatalogo::class, 'mostrar-calendario']);
@@ -67,10 +70,12 @@ Route::get('personalizado/detalles-entrega', [ControladorCatalogo::class, 'mostr
 Route::post('personalizado/detalles-entrega', [ControladorCatalogo::class, 'seleccionar-detalles-entrega']);
 
 Route::get('personalizado/ticket/{folio}', [ControladorCatalogo::class, 'mostrar-ticket']);
+*/
 
 
 /*RUTAS DE POSTRES EMERGENTES */
 
+/*
 Route::get('/emergentes', [ControladorCatalogo::class, 'mostrar']);
 
 Route::get('emergentes/seleccionar-fecha', [ControladorCatalogo::class, 'mostrar-calendario']);
@@ -86,23 +91,5 @@ Route::get('emergentes/detalles-entrega', [ControladorCatalogo::class, 'mostrar-
 Route::post('emergentes/detalles-entrega', [ControladorCatalogo::class, 'seleccionar-detalles-entrega']);
 
 Route::get('emergentes/ticket/{folio}', [ControladorCatalogo::class, 'mostrar-ticket']);
-
-
-
-
-//Esta fue la prueba de Jeycson:
-
-/*
-Route::get('/', function () {
-    $elemento = new Elemento;
-    $elemento->nom_elemento = 'Ejemplo';
-    $elemento->precio_e = 0.0;
-    $elemento->save();
-    return $elemento;
-});
-
-Route::get('prueba', function(){
-    
-});
 
 */

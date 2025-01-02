@@ -74,3 +74,50 @@ header {
     height: 40px; /* Tamaño del ícono */
     vertical-align: middle; /* Alinea imágenes verticalmente */
 }
+
+/* Dropdown (menú desplegable) */
+.dropdown {
+    position: relative; /* Para posicionar el menú relativo al ícono */
+}
+
+/* Menú desplegable (oculto por defecto) */
+.dropdown-menu {
+    display: none; /* Ocultar inicialmente */
+    position: absolute;
+    top: 50px; /* Ajusta según el tamaño del ícono */
+    right: 0; /* Alineado al lado derecho del contenedor */
+    background-color: #FCF5C7; /* Fondo blanco */
+    border-radius: 5px; /* Esquinas redondeadas */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+    padding: 10px;
+    z-index: 100; /* Asegura que esté sobre otros elementos */
+
+    left: 50%; /* Centra horizontalmente respecto al ícono */
+    transform: translateX(-50%); /* Ajuste para centrar perfectamente */
+
+    width: 230px; /* Cambia este valor para hacerlo más ancho */
+    height: 120px; /* Cambia este valor para hacerlo más largo */
+    overflow: auto; /* Permite desplazamiento si el contenido supera la altura */
+
+}
+
+/* Botones del menú desplegable */
+.dropdown-menu button {
+    display: block; /* Cada botón en una nueva línea */
+    width: 100%; /* Ocupa todo el ancho del menú */
+    background-color: #DDB97F; /* Mismo color que el header */
+    border: none;
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    margin: 5px 0; /* Espaciado entre botones */
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dropdown-menu button:hover {
+    background-color: #7E643B; /* Color más oscuro al pasar el mouse */
+}
+
