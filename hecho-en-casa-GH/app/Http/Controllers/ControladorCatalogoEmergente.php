@@ -20,6 +20,12 @@ class ControladorCatalogoEmergente extends Controller
                                 ->get();
 
         $json_popups = json_encode($popups, JSON_PRETTY_PRINT);
-        return $json_emergentes . "\n" . $json_popups;
+
+        $data1 = json_decode($json_emergentes, true);
+        $data2 = json_decode($json_popups, true);
+
+        $union = array_merge($data1, $data2);
+
+        return response()->json($union);
     }
 }
