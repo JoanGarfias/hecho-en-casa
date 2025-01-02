@@ -9,7 +9,7 @@
     <h1>Catálogo de Postres</h1>
 
     <!-- Dropdown para seleccionar categoría -->
-    <select id="categorias" onchange="mostrarProductos(this.value)">
+    <select id="categorias" onchange="cambiarCategoria(this.value)">
         <option value="">Selecciona una categoría</option> 
         @foreach($categorias as $categoria)
             <option value="{{ $categoria->id_cat }}">{{ $categoria->nombre }}</option>
@@ -28,6 +28,8 @@
         
         console.log("Catalogo", catalogo);
         console.log("Categorias", categorias);
+
+        let catSel = document.
 
         // Función para mostrar los productos en el contenedor
         function mostrarProductos(categoriaId) {
@@ -57,27 +59,6 @@
             // Mostrar los productos de la categoría seleccionada
             mostrarProductos(categoriaId);
         }
-    
-        // Función para cargar las categorías en el menú (opcional)
-        function cargarCategorias() {
-            let categoriasContainer = document.getElementById("categorias");
-            categorias.forEach(categoria => {
-                let categoriaBtn = document.createElement("button");
-                categoriaBtn.textContent = categoria.nombre;
-                categoriaBtn.addEventListener("click", () => cambiarCategoria(categoria.id));
-                categoriasContainer.appendChild(categoriaBtn);
-            });
-        }
-    
-        // Evento para el botón de búsqueda de productos
-        buscarProductoBtn.addEventListener("click", () => {
-            // Asumiendo que el botón "buscarProducto" selecciona una categoría, por ejemplo, la categoría 1
-            
-            let select = document.getElementById('categorias');
-            let categoriaSeleccionada = select.value; // Obtén el valor seleccionado
-            console.log("Categoría seleccionada:", categoriaSeleccionada);
-            cambiarCategoria(categoriaSeleccionada); // Aquí puedes poner la lógica para escoger la categoría de forma dinámica
-        });
     </script>
     
 </body>
