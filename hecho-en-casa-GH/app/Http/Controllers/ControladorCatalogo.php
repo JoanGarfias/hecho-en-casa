@@ -9,7 +9,11 @@ class ControladorCatalogo extends Controller
 {
     public function mostrar($categoria = null){
         if($categoria === null){
-            $catalogo = Catalogo::where('id_categoria', $categoria ?? 1)->get();
+            $catalogo = Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
+            ->where('id_tipo_postre', 'fijo')
+            ->where('id_categoria', 1)
+            ->get();
+
 
             // Verificar si el catálogo está vacío
             if ($catalogo->isEmpty()) {
@@ -20,7 +24,10 @@ class ControladorCatalogo extends Controller
             }
         }
         else{
-            $catalogo = Catalogo::where('id_categoria', $categoria)->get();
+            $catalogo = Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
+            ->where('id_tipo_postre', 'fijo')
+            ->where('id_categoria', $categoria)
+            ->get();
 
             // Verificar si el catálogo está vacío
             if ($catalogo->isEmpty()) {
