@@ -35,6 +35,8 @@ Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);
 
 /*RUTAS DE POSTRES FIJOS */
 
+Route::get('fijo/categorias', [ControladorCatalogo::class, 'obtenerCategorias']);
+
 Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrar']);
 Route::post('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrar']);
 

@@ -4,9 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Catalogo;
+use App\Models\Categoria;
 
 class ControladorCatalogo extends Controller
 {
+
+    public function obtenerCategorias(){
+        $categorias = Categoria::select('id_cat', 'nombre')->get();
+        // Verificar si hay categorías
+        if ($categorias->isEmpty()) {
+            abort(404, 'No hay categorías disponibles');
+        }
+
+        return response()->json($categorias);
+    }
+
     public function mostrar($categoria = null){
         if($categoria === null){
             $catalogo = Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
