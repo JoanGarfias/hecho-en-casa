@@ -39,10 +39,11 @@ class ControladorCatalogo extends Controller
                     'categoriaSeleccionada' => $categoria
                 ]);
             }
-
-            return view('catalogo', compact('categorias'))
-                ->with('catalogo', $catalogo)
+            else{
+                // Si no es una solicitud AJAX, renderizar la vista normalmente
+                return view('catalogo', compact('categorias', 'catalogo'))
                 ->with('categoriaSeleccionada', $categoria);
+            }
         }
         else {
             abort(500, 'Error interno del servidor');
