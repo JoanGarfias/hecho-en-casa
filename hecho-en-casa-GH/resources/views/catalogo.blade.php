@@ -3,33 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Postres</title>
+    <title>Catálogo</title>
 </head>
 <body>
     <h1>Catálogo de Postres</h1>
 
     <!-- Dropdown para seleccionar categoría -->
     <select id="categorias" onchange="cambiarCategoria(this.value)">
-        <option value="">Selecciona una categoría</option>
+        <option value="">Selecciona una categoría</option> 
         @foreach($categorias as $categoria)
-            <option value="{{ $categoria->id_cat }}">{{ $categoria->nombre }}</option>
+            <option value="{{ $categoria->id_cat }}" @if($categoria->id_cat == $categoriaSeleccionada) selected @endif>{{ $categoria->nombre }}</option>
         @endforeach
     </select>
-    <button class="buscarProducto">Escojer</button>
 
     <!-- Contenedor para mostrar los productos -->
-    <div id="productos"></div>
+    <div id="productos">
+
+    </div>
 
     <script>
-        // Pasar los productos y categorías a JavaScript
-        let catalogo = @json($catalogo);
-        let categorias = @json($categorias);
-        let buscarProductoBtn = document.querySelector(".buscarProducto");
-        
-        console.log("Catalogo", catalogo);
-        console.log("Categorias", categorias);
+        function obtenerImagenCompleta(shortLink) {
+            // Extraemos el ID del enlace corto
+            const imageId = shortLink.split('/').pop(); // Obtiene la última parte del enlace
 
-        // Función para mostrar los productos en el contenedor
+            // Tu API Key de ImgBB
+            const apiKey = '2c79d8a7e650f2eab106cb4cc7a2b0d4';
+
+            // Hacemos una solicitud a la API de ImgBB
+            fetch(`https://api.imgbb.com/1/links/${imageId}?key=${apiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.data && data.data.url) {
+                        console.log('URL Completa de la imagen:', data.data.url);
+                        // Aquí puedes hacer lo que necesites con la URL completa
+                        // Por ejemplo, asignarla a una imagen en el DOM:
+                        const imagenElement = document.querySelector('#imagenProducto');
+                        imagenElement.src = data.data.url;
+                    } else {
+                        console.error('Error al obtener la imagen');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error en la solicitud:', error);
+                });
+        }
+
+        // Llamar a la función con el enlace corto de ImgBB
+        const shortLink = 'https://ibb.co/abc123'; // Reemplaza con tu enlace corto
+        obtenerImagenCompleta(shortLink);
+
+
+
+        // Función para cambiar la URL y recargar la página
+        function cambiarCategoria(categoriaId) {
+            // Cambiar la URL y recargar la página
+            window.location.href = `/fijo/catalogo/${categoriaId}`;
+        }
+
         function mostrarProductos(categoriaId) {
             // Filtramos los productos según la categoría seleccionada
             let productosFiltrados = catalogo.filter(producto => producto.id_categoria == categoriaId);
@@ -58,41 +88,8 @@
                 productosContainer.appendChild(productoElement);
             });
         }
-    
-        // Función para cambiar la URL
-        function cambiarCategoria(categoriaId) {
-            // Cambiar la URL sin recargar la página
-            window.history.pushState({}, "", `/fijo/catalogo/${categoriaId}`);
-            // Mostrar los productos de la categoría seleccionada
-            mostrarProductos(categoriaId);
-        }
 
-        // Función para obtener la URL completa de la imagen desde ImgBB
-        function obtenerImagenCompleta(shortLink, imagenElement) {
-            // Extraemos el ID del enlace corto
-            const imageId = shortLink.split('/').pop(); // Obtiene la última parte del enlace
-
-            // Tu API Key de ImgBB
-            const apiKey = 'YOUR_IMGBB_API_KEY'; // Sustituye con tu clave API
-
-            // Hacemos una solicitud a la API de ImgBB
-            fetch(`https://api.imgbb.com/1/links/${imageId}?key=${apiKey}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.data && data.data.url) {
-                        console.log('URL Completa de la imagen:', data.data.url);
-                        // Asignamos la URL completa de la imagen al elemento img
-                        imagenElement.src = data.data.url;
-                    } else {
-                        console.error('Error al obtener la imagen');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error en la solicitud:', error);
-                });
-        }
 
     </script>
-    
 </body>
 </html>
