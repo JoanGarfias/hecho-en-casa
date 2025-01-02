@@ -9,7 +9,7 @@ class ControladorCatalogo extends Controller
 {
     public function mostrar($categoria = null){
         if($categoria === null){
-            $catalogo = Catalogo::where('id_categoria', 1)->all();
+            $catalogo = Catalogo::where('id_categoria', 1)->get();
             return $catalogo;
         }
         else{
