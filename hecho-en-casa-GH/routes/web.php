@@ -9,8 +9,8 @@ Route::get('/', function(){
     return "Bienvenido a la página de inicio";
 });
 
-Route::get('/inicio', function(){
-    return "Bienvenido a la página de inicio";
+Route::post('/prueba', function(){
+    return "Prueba";
 });
 
 
