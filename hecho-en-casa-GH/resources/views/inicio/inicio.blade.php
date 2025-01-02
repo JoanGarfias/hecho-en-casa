@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio - Pastelería</title>
-    <link rel="stylesheet" href="/css/inicio/menu.css">
-    <link rel="stylesheet" href="{{ asset('resources/css/inicio/pie.css') }}">
-    <link rel="stylesheet" href="{{ asset('resources/css/inicio/cuerpo.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/inicio/menu.css') }}">
+<link rel="stylesheet" href="{{ asset('css/inicio/pie.css') }}">
+<link rel="stylesheet" href="{{ asset('css/inicio/cuerpo.css') }}">
+
 </head>
 <body>
 
@@ -26,7 +27,7 @@
                 <ul class="menu-derecho">
                     <li><a href="#">Conócenos</a></li>
                     <li><a href="#">Buscar pedido</a></li>
-                    <li><a href="#"><img src="{{ asset('resources/img/inicio/usuario.png') }}" alt="Usuario"></a></li>
+                    <li><a href="#"><img src="{{ asset('/img/inicio/usuario.png') }}" alt="Usuario"></a></li>
                 </ul>
             </nav>
         </div>
@@ -35,7 +36,7 @@
     <!-- Banner -->
 
     <section class="banner">
-        <img src="{{ asset('resources/img/inicio/Banner.png') }}" alt="Banner de pasteles">
+        <img src="{{ asset('/img/inicio/Banner.png') }}" alt="Banner de pasteles">
     </section>
     <div class="registro-banner">
         ¿No tienes una cuenta? ¡Regístrate y gana increíbles premios!
@@ -48,14 +49,14 @@
         <div class="contenedor">
             <div class="seccion temporada">
                 <h3>TEMPORADA</h3>
-		<img src="{{ asset('resources/img/inicio/temporada.png') }}" alt="Pasteles de temporada">
+		<img src="{{ asset('/img/inicio/temporada.png') }}" alt="Pasteles de temporada">
             </div>
             <div class="seccion pasteles">
                 <h3>PASTELES</h3>
                 <div class="contenedor-flex">
-		    <img src="{{ asset('resources/img/inicio/pasteles.png') }}" alt="Pasteles personalizados">
+		    <img src="{{ asset('/img/inicio/pasteles.png') }}" alt="Pasteles personalizados">
                     <button class="personaliza">
-			<img src="{{ asset('resources/img/inicio/varita.png') }}" alt="Personaliza tu pastel">
+			<img src="{{ asset('/img/inicio/varita.png') }}" alt="Personaliza tu pastel">
                         Personaliza tu pastel
                     </button>
                 </div>
@@ -65,7 +66,7 @@
 
     <!-- Pie de página -->
     <div class="piePa">
-        <img src="{{ asset('resources/img/inicio/PiePag.png') }}" alt="Pie de página">
+        <img src="{{ asset('/img/inicio/PiePag.png') }}" alt="Pie de página">
     </div>
 </body>
 </html>
