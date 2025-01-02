@@ -22,7 +22,9 @@ Route::get('/catalogo/{categoria?}', function($categoria = null){
     if($categoria){
         return "La categoria por defecto es pay";
     }
-    return "Estás viendo el catalogo de {$categoria}";
+    else{
+        return "Estás viendo el catalogo de {$categoria}";
+    }
 });
 
 
