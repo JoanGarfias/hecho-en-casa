@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+
 use App\Models\Catalogo;
 use App\Models\Categoria;
 
@@ -10,13 +11,18 @@ class ControladorCatalogo extends Controller
 {
 
     public function obtenerCategorias(){
-        $categorias = Categoria::select('id_cat', 'nombre')->get();
-        // Verificar si hay categorías
-        if ($categorias->isEmpty()) {
-            abort(404, 'No hay categorías disponibles');
-        }
+        $response = Http::get('http://localhost:8080/api/categorias');
+            
+        // Verificando si la petición fue exitosa
+        if ($response->successful()) {
+            $categorias = $response->json(); // Obtener los datos en formato JSON
 
-        return response()->json($categorias);
+            // Hacer algo con las categorías, como retornarlas a la vista
+            return view('catalogo', ['categorias' => $categorias]);
+        } else {
+            // Si la API no responde correctamente, maneja el error
+            return response()->json(['error' => 'No se pudo obtener las categorías'], 500);
+        }
     }
 
     public function mostrar($categoria = null){
