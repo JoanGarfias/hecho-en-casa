@@ -11,8 +11,7 @@ export default defineConfig({
     server: {
         proxy: {
             // Redirige todas las solicitudes a "/api" a tu servidor XAMPP
-            '/': 'http://localhost/Laravel/hecho-en-casa/hecho-en-casa-GH/', // XAMPP normalmente corre en http://localhost o http://localhost:80
-            '/build': 'http://localhost/Laravel/hecho-en-casa/hecho-en-casa-GH/build', // Si los archivos están en el directorio build de XAMPP
+            '/build': 'http://localhost/Laravel/hecho-en-casa/hecho-en-casa-GH/public/build', // Si los archivos están en el directorio build de XAMPP
         },
     },
 });
