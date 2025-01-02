@@ -7,6 +7,6 @@ use Illuminate\Http\Request;
 class ControladorInicio extends Controller
 {
     public function index(){
-        return "Bienvenido a Hecho en Casa";
+        return view('inicio.inicio');
     }
 }
