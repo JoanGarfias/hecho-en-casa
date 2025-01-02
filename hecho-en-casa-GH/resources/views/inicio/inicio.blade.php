@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio - Pastelería</title>
-    @vite(['resources/css/inicio/menu.css', 'resources/css/inicio/pie.css', 'resources/css/inicio/cuerpo.css'])
+    <link rel="stylesheet" href="{{ mix('build/assets/menu-CX5Ov8oT.css') }}">
+<link rel="stylesheet" href="{{ mix('build/assets/cuerpo-BjCxLUjj.css') }}">
+<link rel="stylesheet" href="{{ mix('build/assets/pie-C4YBsxw8.css') }}">
 
 </head>
 <body>
