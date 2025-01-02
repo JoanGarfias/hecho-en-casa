@@ -10,7 +10,7 @@
 
     <!-- Dropdown para seleccionar categoría -->
     <select id="categoriaSelect" onchange="mostrarCatalogo(this.value)">
-        <option value="">Selecciona una categoría</option>
+        <option value="">Selecciona una categoría</option> 
         @foreach($categorias as $categoria)
             <option value="{{ $categoria->id_cat }}">{{ $categoria->nombre }}</option>
         @endforeach
@@ -21,7 +21,13 @@
 
     <script>
         // Pasar los productos a JavaScript
-        var catalogo = @json($catalogo);
+        let catalogo = @json($catalogo);
+        let categorias = @json($categorias);
+        console.log("Catalogo:");
+        console.log(catalogo);
+
+        console.log("Categorias:");
+        console.log(categorias);
 
         // Función para mostrar los productos según la categoría seleccionada
         function mostrarCatalogo(categoria) {
