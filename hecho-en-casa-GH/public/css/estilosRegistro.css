@@ -6,22 +6,27 @@
     font-weight: bold;
 }
 
-body {
+body {  
+    background: #f4f4f4; /* Fondo del sitio */
+}
+
+.flexi{
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh; /* Hace que el diseño esté centrado en pantalla */
-    background: #f4f4f4; /* Fondo del sitio */
+
 }
 
 .contenedor {
     position: relative;
     background: #C6B8A2;
     border-radius: 22px;
-    padding: 15px;
+    padding: 25px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1;
+    top: 35px;
     width: 100%;
     max-width: 400px; /* Ancho máximo */
     overflow: hidden;
@@ -30,7 +35,7 @@ body {
 .contenedor::before {
     content: '';
     position: absolute;
-    top: 4px;
+    top:  5px;
     left: 10px;
     width: 90%;
     height: 95%;
