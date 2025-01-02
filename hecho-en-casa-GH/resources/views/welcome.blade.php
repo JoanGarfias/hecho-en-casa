@@ -169,7 +169,8 @@
                     <footer class="py-16 text-center text-sm text-black dark:text-white/70">
                         Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
                         Jeycson estuvo aqui, funciona por favor xd
-                        Que show
+                        Jeovani estuvo aqui, prueba a nivel de back end
+                        Jeovani estuvo aqui, prueba a nivel de main
                     </footer>
                 </div>
             </div>
