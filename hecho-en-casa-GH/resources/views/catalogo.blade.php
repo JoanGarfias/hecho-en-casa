@@ -12,8 +12,8 @@
                 var select = document.getElementById('categoriaSelect');
                 categorias.forEach(function(categoria) {
                     var option = document.createElement('option');
-                    option.value = categoria.id_categoria;
-                    option.text = categoria.nombre_categoria;
+                    option.value = categoria.id_cat;
+                    option.text = categoria.nombre;
                     select.appendChild(option);
                 });
             };
