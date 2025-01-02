@@ -9,7 +9,7 @@
     <h1>Catálogo de Postres</h1>
 
     <!-- Dropdown para seleccionar categoría -->
-    <select id="categoriaSelect" onchange="mostrarCatalogo(this.value)">
+    <select id="categorias" onchange="mostrarCatalogo(this.value)">
         <option value="">Selecciona una categoría</option> 
         @foreach($categorias as $categoria)
             <option value="{{ $categoria->id_cat }}">{{ $categoria->nombre }}</option>
@@ -71,7 +71,7 @@
         buscarProductoBtn.addEventListener("click", () => {
             // Asumiendo que el botón "buscarProducto" selecciona una categoría, por ejemplo, la categoría 1
             
-            let select = document.getElementById('categoriaSelect');
+            let select = document.getElementById('categorias');
             let categoriaSeleccionada = select.value; // Obtén el valor seleccionado
             console.log("Categoría seleccionada:", categoriaSeleccionada);
             cambiarCategoria(categoriaSeleccionada); // Aquí puedes poner la lógica para escoger la categoría de forma dinámica
