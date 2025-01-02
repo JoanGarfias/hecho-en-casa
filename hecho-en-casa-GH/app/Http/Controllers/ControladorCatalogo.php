@@ -8,7 +8,7 @@ use App\Models\Catalogo;
 class ControladorCatalogo extends Controller
 {
     public function mostrar($categoria = null){
-        $catalogo = Catalogo::where('categoria', $categoria);
+        $catalogo = Catalogo::where('categoria', $categoria)->first;
         return $catalogo;
     }
 
