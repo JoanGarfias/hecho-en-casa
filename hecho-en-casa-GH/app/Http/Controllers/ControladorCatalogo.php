@@ -11,17 +11,12 @@ class ControladorCatalogo extends Controller
 {
 
     public function obtenerCategorias(){
-        $response = Http::get('http://hechocasa.com/api/categorias');
-            
-        // Verificando si la petición fue exitosa
-        if ($response->successful()) {
-            $categorias = $response->json(); // Obtener los datos en formato JSON
-
-            // Hacer algo con las categorías, como retornarlas a la vista
-            return view('catalogo', ['categorias' => $categorias]);
-        } else {
-            // Si la API no responde correctamente, maneja el error
-            return response()->json(['error' => 'No se pudo obtener las categorías'], 500);
+        $categorias = Categoria::all();
+        if($categorias->isNotEmpty()){
+            return response()->json($categorias);
+        }
+        else{
+            abort(500, 'Error interno del servidor');
         }
     }
 
