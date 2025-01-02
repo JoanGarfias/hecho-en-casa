@@ -13,7 +13,7 @@ class ControladorCatalogo extends Controller
             return $catalogo;
         }
         else{
-            $catalogo = Catalogo::where('id_categoria', $categoria)->all();
+            $catalogo = Catalogo::where('id_categoria', $categoria)->get();
             return $catalogo;
         }
     }
