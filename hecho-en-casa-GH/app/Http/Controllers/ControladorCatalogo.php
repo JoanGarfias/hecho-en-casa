@@ -18,7 +18,7 @@ class ControladorCatalogo extends Controller
             if ($categoria === null) {
                 $catalogo = Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
                     ->where('id_tipo_postre', 'fijo')
-                    ->where('id_categoria', 1)
+                    ->where('id_categoria', $categorias[0]->id_cat)
                     ->get();
             }
             else {
@@ -31,19 +31,9 @@ class ControladorCatalogo extends Controller
                 abort(404, 'Catálogo no encontrado');
             }
 
-            // Verificar si la solicitud es AJAX
-            if (request()->ajax()) {
-                return response()->json([
-                    'categorias' => $categorias,
-                    'catalogo' => $catalogo,
-                    'categoriaSeleccionada' => $categoria
-                ]);
-            }
-            else{
-                // Si no es una solicitud AJAX, renderizar la vista normalmente
-                return view('catalogo', compact('categorias', 'catalogo'))
-                ->with('categoriaSeleccionada', $categoria);
-            }
+            // Si no es una solicitud AJAX, renderizar la vista normalmente
+            return view('catalogo', compact('categorias', 'catalogo'))
+            ->with('categoriaSeleccionada', $categoria);
         }
         else {
             abort(500, 'Error interno del servidor');
