@@ -5,4 +5,4 @@ Route::get('test', function () {
     return response()->json(['message' => 'API funcionando']);
 });
 
-Route::get('categorias', [ControladorCatalogo::class, 'obtenerCategorias']);
+Route::get('fijo/categorias', [ControladorCatalogo::class, 'obtenerCategorias']);
