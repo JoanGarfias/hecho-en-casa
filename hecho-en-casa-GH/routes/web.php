@@ -3,15 +3,10 @@
 use App\Models\Elemento;
 use Illuminate\Routing\RouteAction;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ControladorInicio;
 
-
-Route::get('/', function(){
-    return "Bienvenido a la página de inicio";
-});
-
-Route::get('/inicio', function(){
-    return "Bienvenido a la página de inicio";
-});
+Route::get('/', [ControladorInicio::class, 'index']);
+Route::get('/inicio', [ControladorInicio::class, 'index']);
 
 Route::get('/calendario', function(){
     return "Estás viendo el calendario";
@@ -19,7 +14,7 @@ Route::get('/calendario', function(){
 
 Route::get('/catalogo/{categoria?}', function($categoria = null){
     //Aquí se va cargar el catalogo de la categoria (por defecto pay)
-    if($categoria){
+    if($categoria === null){
         return "La categoria por defecto es pay";
     }
     else{
