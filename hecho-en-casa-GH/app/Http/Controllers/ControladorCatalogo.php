@@ -8,8 +8,14 @@ use App\Models\Catalogo;
 class ControladorCatalogo extends Controller
 {
     public function mostrar($categoria = null){
-        $catalogo = Catalogo::where('id_categoria', $categoria)->first();
-        return $catalogo;
+        if($categoria === null){
+            $catalogo = Catalogo::where('id_categoria', 1)->all();
+            return $catalogo;
+        }
+        else{
+            $catalogo = Catalogo::where('id_categoria', $categoria)->all();
+            return $catalogo;
+        }
     }
 
     public function mostrarFecha(){
