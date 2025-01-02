@@ -6,5 +6,7 @@ use Illuminate\Http\Request;
 
 class ControladorCatalogoEmergente extends Controller
 {
-    //
+    public function mostrar(){
+        
+    }
 }
