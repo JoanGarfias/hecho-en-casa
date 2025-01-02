@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio - Pastelería</title>
-    @vite(['resources/css/inicio/menu.css', 'resources/css/inicio/pie.css', 'resources/css/inicio/cuerpo.css'])
+    @vite(['/css/inicio/menu.css', '/css/inicio/pie.css', '/css/inicio/cuerpo.css'])
 </head>
 <body>
 
