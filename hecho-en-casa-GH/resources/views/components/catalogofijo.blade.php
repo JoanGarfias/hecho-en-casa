@@ -24,9 +24,7 @@
                         ";
                     }
                 ?>
-                <button type='submit'>Test</button>
                 </form>
             </div>
         </body>
-        <script src="script.js"></script>
 </html>
