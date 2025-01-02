@@ -6,6 +6,10 @@ Route::get('/', function () {
     return view('inicio');
 });
 //Comentario
+Route::get('/registrar', function () {
+    return view('registrar');
+})->name('registrar');
+
 
 
 //Este comentario está bien chido
