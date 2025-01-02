@@ -11,7 +11,7 @@ class ControladorCatalogo extends Controller
 {
 
     public function obtenerCategorias(){
-        $response = Http::get('http://localhost:8080/api/categorias');
+        $response = Http::get('http://hechocasa.com/api/categorias');
             
         // Verificando si la petición fue exitosa
         if ($response->successful()) {
