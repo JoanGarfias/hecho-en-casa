@@ -9,11 +9,10 @@ use App\Models\Categoria;
 
 class ControladorCatalogo extends Controller
 {
-
     public function mostrar($categoria = null)
     {
         $categorias = Categoria::all();
-    
+
         if ($categorias->isNotEmpty()) {
             if ($categoria === null) {
                 $catalogo = Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
