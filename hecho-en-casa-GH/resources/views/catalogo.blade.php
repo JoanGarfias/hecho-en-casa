@@ -76,7 +76,8 @@
             console.log("Categoría seleccionada:", categoriaSeleccionada);
             cambiarCategoria(categoriaSeleccionada); // Aquí puedes poner la lógica para escoger la categoría de forma dinámica
         });
-    
+        let select = document.getElementById('categorias');
+        let categoriaSeleccionada = select.value; // Obtén el valor seleccionado
         // Cargar las categorías y productos al inicio
         cargarCategorias();
         mostrarProductos(categoriaSeleccionada); // Mostrar productos de la categoría 1 al inicio (por defecto)
