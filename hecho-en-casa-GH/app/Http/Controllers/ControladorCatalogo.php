@@ -10,47 +10,34 @@ use App\Models\Categoria;
 class ControladorCatalogo extends Controller
 {
 
-    public function obtenerCategorias(){
+    public function mostrar($categoria = null)
+    {
         $categorias = Categoria::all();
-        if($categorias->isNotEmpty()){
-            return view('catalogo', compact('categorias'));
+    
+        if ($categorias->isNotEmpty()) {
+            if ($categoria === null) {
+                $catalogo = Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
+                    ->where('id_tipo_postre', 'fijo')
+                    ->where('id_categoria', 1)
+                    ->get();
+            }
+            else {
+                $catalogo = Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
+                    ->where('id_tipo_postre', 'fijo')
+                    ->where('id_categoria', $categoria)
+                    ->get();
+            }
+            if ($catalogo->isEmpty()) {
+                abort(404, 'Catálogo no encontrado');
+            }
+            return view('catalogo', compact('categorias'))
+                ->with('catalogo', $catalogo);
         }
-        else{
+        else {
             abort(500, 'Error interno del servidor');
         }
     }
-
-    public function mostrar($categoria = null){
-        if($categoria === null){
-            $catalogo = Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
-            ->where('id_tipo_postre', 'fijo')
-            ->where('id_categoria', 1)
-            ->get();
-
-
-            // Verificar si el catálogo está vacío
-            if ($catalogo->isEmpty()) {
-                abort(404, 'Catálogo no encontrado'); // Lanzar error 404
-            }
-            else{
-                return response()->json($catalogo);
-            }
-        }
-        else{
-            $catalogo = Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
-            ->where('id_tipo_postre', 'fijo')
-            ->where('id_categoria', $categoria)
-            ->get();
-
-            // Verificar si el catálogo está vacío
-            if ($catalogo->isEmpty()) {
-                abort(404, 'Catálogo no encontrado'); // Lanzar error 404
-            }
-            else{
-                return response()->json($catalogo);
-            }
-        }
-    }
+    
 
     public function mostrarFecha(){
         

@@ -1,31 +1,55 @@
-<html>
-    <head>
-        <script>
-            // Aquí pasamos los datos desde PHP a JavaScript
-            var categorias = @json($categorias);
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo</title>
+</head>
+<body>
+    <h1>Catálogo de Postres</h1>
 
-            // Usar los datos dentro de JavaScript
-            console.log(categorias); // Solo para verificar
+    <!-- Dropdown para seleccionar categoría -->
+    <select id="categoriaSelect" onchange="mostrarCatalogo(this.value)">
+        <option value="">Selecciona una categoría</option>
+        @foreach($categorias as $categoria)
+            <option value="{{ $categoria->id_cat }}">{{ $categoria->nombre }}</option>
+        @endforeach
+    </select>
 
-            // Aquí puedes usar los datos en el frontend, por ejemplo, para llenar un dropdown
-            window.onload = function() {
-                var select = document.getElementById('categoriaSelect');
-                categorias.forEach(function(categoria) {
-                    var option = document.createElement('option');
-                    option.value = categoria.id_cat;
-                    option.text = categoria.nombre;
-                    select.appendChild(option);
+    <!-- Contenedor para mostrar los productos -->
+    <div id="productos"></div>
+
+    <script>
+        // Pasar los productos a JavaScript
+        var catalogo = @json($catalogo);
+
+        // Función para mostrar los productos según la categoría seleccionada
+        function mostrarCatalogo(categoria) {
+            var productosFiltrados = catalogo.filter(function(producto) {
+                return producto.id_categoria == categoria || categoria === "";
+            });
+
+            var productosContainer = document.getElementById('productos');
+            productosContainer.innerHTML = ''; // Limpiar el contenedor antes de agregar los productos
+
+            if (productosFiltrados.length > 0) {
+                productosFiltrados.forEach(function(producto) {
+                    var productoDiv = document.createElement('div');
+                    productoDiv.value = producto.id_postre;
+                    productoDiv.innerHTML = `
+                        <h3>${producto.nombre}</h3>
+                        <img src="${producto.imagen}" alt="${producto.nombre}" />
+                        <p>${producto.descripcion}</p>
+                    `;
+                    productosContainer.appendChild(productoDiv);
                 });
-            };
-        </script>
-    </head>
-    <body>
-        <h3>Selecciona tu categoría</h3>
+            } else {
+                productosContainer.innerHTML = '<p>No se encontraron productos para esta categoría.</p>';
+            }
+        }
 
-        <select id="categoriaSelect">
-            <option value="">--Selecciona una categoría--</option>
-        </select>
-
-        <!-- Aquí puedes usar AJAX para obtener los datos del catálogo según la categoría seleccionada -->
-    </body>
+        // Mostrar los productos de la categoría por defecto al cargar la página
+        mostrarCatalogo('');
+    </script>
+</body>
 </html>
