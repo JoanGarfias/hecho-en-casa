@@ -90,19 +90,3 @@ Route::get('emergentes/ticket/{folio}', [ControladorCatalogo::class, 'mostrar-ti
 
 
 
-//Esta fue la prueba de Jeycson:
-
-/*
-Route::get('/', function () {
-    $elemento = new Elemento;
-    $elemento->nom_elemento = 'Ejemplo';
-    $elemento->precio_e = 0.0;
-    $elemento->save();
-    return $elemento;
-});
-
-Route::get('prueba', function(){
-    
-});
-
-*/
