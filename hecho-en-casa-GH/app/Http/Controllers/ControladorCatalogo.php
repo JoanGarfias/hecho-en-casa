@@ -9,8 +9,14 @@ class ControladorCatalogo extends Controller
 {
     public function mostrar($categoria = null){
         if($categoria === null){
-            $catalogo = Catalogo::where('id_categoria', 1)->get();
-            return $catalogo;
+            $catalogo = Catalogo::where('id_categoria', $categoria ?? 1)->get();
+
+            // Verificar si el catálogo está vacío
+        if ($catalogo->isEmpty()) {
+            abort(404, 'Catálogo no encontrado'); // Lanzar error 404
+        }
+
+        return response()->json($catalogo);
         }
         else{
             $catalogo = Catalogo::where('id_categoria', $categoria)->get();
