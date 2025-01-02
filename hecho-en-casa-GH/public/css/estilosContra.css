@@ -1,0 +1,25 @@
+
+.contenedor {
+    position: relative;
+    background: #C6B8A2;
+    border-radius: 22px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    width: 100%;
+    max-width: 400px; /* Ancho máximo */
+    overflow: hidden;
+}
+
+.contenedor::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 10px;
+    width: 90%;
+    height: 91%;
+    background: white; /* Color secundario */
+    border-radius: 22px;
+    z-index: -1; /* Coloca este fondo detrás del contenido */
+    transform: translate(10px, 10px); /* Desplazamiento para crear el efecto */
+}

@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+/* Reset básico */
+* {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos del Header */
+header {
+    background-color: #DDB97F; /* Color dorado/marrón */
+    padding: 10px 0;
+}
+
+/* Contenedor principal del menú */
+.menu nav {
+    display: flex;
+    justify-content: space-between; /* Espacio entre listas */
+    align-items: center; /* Centra verticalmente el contenido */
+    position: relative; /* Necesario para posicionar el logo */
+    width: 100%;
+    max-width: 1370px; /* Ancho máximo del menú */
+    margin: auto; /* Centrar horizontalmente */
+    padding: 10px 0; /* Espacio superior e inferior para bajar las letras */
+}
+
+/* Listas del menú */
+.menu nav ul {
+    list-style: none;
+    display: flex;
+    gap: 100px; /* Aumenta el espacio entre los elementos del menú */
+    align-items: center; /* Centra verticalmente los ítems */
+}
+
+/* Enlaces en las listas */
+.menu nav ul li a {
+    text-decoration: none;
+    color: #7E643B;
+    font-weight: 700; /* Negrita */
+    font-size: 18px; /* Tamaño de la fuente */
+    line-height: 1.5; /* Espaciado entre líneas */
+    transition: color 0.3s;
+}
+
+.menu nav ul li a:hover {
+    color: #fff; /* Efecto hover */
+}
+
+/* Logo */
+.logo {
+    height: 120px; /* Tamaño deseado del logo */
+    width: auto; /* Mantén las proporciones */
+    position: absolute; /* Posiciona el logo dentro del menú */
+    left: 50%; /* Centra horizontalmente */
+    top: 70%; /* Baja el logo */
+    transform: translate(-50%, -50%); /* Centrado perfecto */
+    z-index: 1; /* Asegura que esté por encima */
+}
+
+/* Ajuste para las listas izquierda y derecha */
+.menu-izquierdo,
+.menu-derecho {
+    flex: 1; /* Ocupan el espacio disponible */
+    display: flex;
+    justify-content: space-evenly; /* Distribuye mejor los elementos */
+    align-items: center;
+    padding: 0 100px; /* Espacio horizontal para evitar colisión con el logo */
+}
+
+/* Iconos e imágenes dentro del menú */
+.menu nav ul li img {
+    height: 40px; /* Tamaño del ícono */
+    vertical-align: middle; /* Alinea imágenes verticalmente */
+}
+
+/* Dropdown (menú desplegable) */
+.dropdown {
+    position: relative; /* Para posicionar el menú relativo al ícono */
+}
+
+/* Menú desplegable (oculto por defecto) */
+.dropdown-menu {
+    display: none; /* Ocultar inicialmente */
+    position: absolute;
+    top: 50px; /* Ajusta según el tamaño del ícono */
+    right: 0; /* Alineado al lado derecho del contenedor */
+    background-color: #FCF5C7; /* Fondo blanco */
+    border-radius: 5px; /* Esquinas redondeadas */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+    padding: 10px;
+    z-index: 100; /* Asegura que esté sobre otros elementos */
+
+    left: 50%; /* Centra horizontalmente respecto al ícono */
+    transform: translateX(-50%); /* Ajuste para centrar perfectamente */
+
+    width: 230px; /* Cambia este valor para hacerlo más ancho */
+    height: 120px; /* Cambia este valor para hacerlo más largo */
+    overflow: auto; /* Permite desplazamiento si el contenido supera la altura */
+
+}
+
+/* Botones del menú desplegable */
+.dropdown-menu button {
+    display: block; /* Cada botón en una nueva línea */
+    width: 100%; /* Ocupa todo el ancho del menú */
+    background-color: #DDB97F; /* Mismo color que el header */
+    border: none;
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    margin: 5px 0; /* Espaciado entre botones */
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dropdown-menu button:hover {
+    background-color: #7E643B; /* Color más oscuro al pasar el mouse */
+}
+
