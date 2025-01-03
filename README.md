@@ -1,6 +1,6 @@
 # DxiCode
 
-![Logotipo de DxiCode](https://i.ibb.co/3kMfNhm/Logo-dxicode.png "DxiCode")
+![Logotipo de DxiCode](https://i.ibb.co/FhcdjyJ/Logo-dxicode-transformed.png "DxiCode")
 
 ### **Misión**  
 Nuestra misión es crear soluciones de software de alta calidad que superen las expectativas de nuestros clientes, impulsando su crecimiento y éxito. Nos enfocamos en la innovación y en el uso de tecnologías de vanguardia para ofrecer un servicio excepcional, asegurando una mejora continua y el máximo valor en cada proyecto.
