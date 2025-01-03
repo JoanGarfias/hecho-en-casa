@@ -50,7 +50,5 @@
         </form>  
     </div>
 </div>
-   <!-- <div class = "abajo">
-            <p></p>
-    </div>-->
+   
     <script src="{{ asset('js/registrando.js') }}"></script>

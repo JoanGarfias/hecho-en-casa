@@ -32,6 +32,12 @@ Route::get('/direccion', function(){
 
 Route::post('/direccion', [ControladorCalendario::class, 'index']);
 
+Route::get('/contrasena', function(){
+    return view('contrasena');
+});
+
+Route::post('/contrasena', [ControladorCalendario::class, 'index']);
+
 Route::get('/registrar', [ControladorCalendario::class, 'index']);
 Route::post('/registrar', [ControladorCalendario::class, 'index']);
 
