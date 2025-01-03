@@ -9,28 +9,49 @@
 }
 
 /* Estilos del Header */
-header {
-    background-color: #DDB97F; /* Color dorado/marrón */
-    padding: 10px 0;
+header {   
+    background: white;
+    padding: 35px 0;
 }
+
 
 /* Contenedor principal del menú */
 .menu nav {
-    display: flex;
-    justify-content: space-between; /* Espacio entre listas */
-    align-items: center; /* Centra verticalmente el contenido */
-    position: relative; /* Necesario para posicionar el logo */
-    width: 100%;
-    max-width: 1370px; /* Ancho máximo del menú */
-    margin: auto; /* Centrar horizontalmente */
-    padding: 10px 0; /* Espacio superior e inferior para bajar las letras */
+    position: fixed; /* Fija el contenedor en el viewport */
+    background: white; /* Color primario */
+    border-radius: 0px;
+    padding: 40px;
+    z-index: 1000; /* Asegura que esté sobre otros elementos */
+    top: 0px; /* Ajusta la posición vertical */
+    left: 50%; /* Centra horizontalmente */
+    transform: translateX(-50%); /* Centrado perfecto */
+    width: 100%; /* Ancho relativo al viewport */
+    max-width: 1370px;/* Ancho máximo */
+    overflow: visible;
+    display: flex; /* Usamos flexbox */
+    justify-content: center; /* Centra horizontalmente el contenido */
+    align-items: center; /
 }
+
+.menu nav::before {
+    content: '';
+    position: absolute;
+    top: 26px;
+    left: 10px;
+    width: 98%; /* Ajusta según el diseño */
+    height: 60%; /* Ajusta según el diseño */
+    background: #DDB97F; /* Color secundario */
+    border-radius: 22px;
+    z-index: -1; /* Coloca este fondo detrás del contenido */
+    transform: translate(0px, 0px); /* Efecto de sombra */
+}
+
 
 /* Listas del menú */
 .menu nav ul {
     list-style: none;
     display: flex;
-    gap: 100px; /* Aumenta el espacio entre los elementos del menú */
+    gap: 65px; /* Aumenta el espacio entre los elementos del menú */
     align-items: center; /* Centra verticalmente los ítems */
 }
 
@@ -42,6 +63,7 @@ header {
     font-size: 18px; /* Tamaño de la fuente */
     line-height: 1.5; /* Espaciado entre líneas */
     transition: color 0.3s;
+    padding: 10px 0;
 }
 
 .menu nav ul li a:hover {
@@ -54,7 +76,7 @@ header {
     width: auto; /* Mantén las proporciones */
     position: absolute; /* Posiciona el logo dentro del menú */
     left: 50%; /* Centra horizontalmente */
-    top: 70%; /* Baja el logo */
+    top: 50%; /* Centra verticalmente */
     transform: translate(-50%, -50%); /* Centrado perfecto */
     z-index: 1; /* Asegura que esté por encima */
 }
@@ -66,8 +88,16 @@ header {
     display: flex;
     justify-content: space-evenly; /* Distribuye mejor los elementos */
     align-items: center;
-    padding: 0 100px; /* Espacio horizontal para evitar colisión con el logo */
+    padding: 0 90px; /* Espacio horizontal para evitar colisión con el logo */
 }
+.menu-izquierdo{
+    padding-left: 2%;
+}
+
+.menu-derecho{
+    padding-right: 2%;
+}
+
 
 /* Iconos e imágenes dentro del menú */
 .menu nav ul li img {
@@ -76,25 +106,25 @@ header {
 }
 
 /* Dropdown (menú desplegable) */
+/* Dropdown (menú desplegable) */
 .dropdown {
+    
     position: relative; /* Para posicionar el menú relativo al ícono */
 }
 
 /* Menú desplegable (oculto por defecto) */
 .dropdown-menu {
     display: none; /* Ocultar inicialmente */
-    position: absolute;
-    top: 50px; /* Ajusta según el tamaño del ícono */
+    position: fixed;
+    top: 80px; /* Ajusta según el tamaño del ícono */
     right: 0; /* Alineado al lado derecho del contenedor */
     background-color: #FCF5C7; /* Fondo blanco */
     border-radius: 5px; /* Esquinas redondeadas */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
     padding: 10px;
-    z-index: 100; /* Asegura que esté sobre otros elementos */
-
-    left: 50%; /* Centra horizontalmente respecto al ícono */
+    z-index: 1001; /* Asegura que esté sobre otros elementos */
+    left:90%; /* Centra horizontalmente respecto al ícono */
     transform: translateX(-50%); /* Ajuste para centrar perfectamente */
-
     width: 230px; /* Cambia este valor para hacerlo más ancho */
     height: 120px; /* Cambia este valor para hacerlo más largo */
     overflow: auto; /* Permite desplazamiento si el contenido supera la altura */
@@ -120,4 +150,3 @@ header {
 .dropdown-menu button:hover {
     background-color: #7E643B; /* Color más oscuro al pasar el mouse */
 }
-
