@@ -48,4 +48,4 @@ Para más información sobre nuestros proyectos o colaboraciones, no dudes en po
 
 ---
 
-> _“Innovamos para transformar”_  
+> _“Soluciones al día”_  
