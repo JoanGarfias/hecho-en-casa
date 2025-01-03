@@ -51,7 +51,6 @@ class ControladorCatalogo extends Controller
         $ultimoDiaDelMes = $fecha->copy()->endOfMonth();
         
         $pedidos = Pedido:: select('id_ped', 'fecha_hora_entrega', 'porcionespedidas')
-                            ->where('id_tipopostre', 'personalizado')
                             ->whereBetween('fecha_hora_entrega', [$primerDiaDelMes, $ultimoDiaDelMes])
                             ->get();
         $diasDelMes = [];
