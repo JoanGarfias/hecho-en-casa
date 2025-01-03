@@ -34,25 +34,25 @@
 
     <script>
         // Función para cargar el calendario de acuerdo a mes y año
-        document.getElementById('calendario-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            let mes = document.getElementById('mes').value;
-            let anio = document.getElementById('anio').value;
-
-            axios.get(`/fijo/seleccionar-fecha?mes=${mes}&anio=${anio}`)
-                .then(function(response) {
-                    const diasDelMes = response.data;
-                    let calendarioHTML = '<table border="1"><tr><th>Fecha</th><th>Porciones</th></tr>';
-                    diasDelMes.forEach(function(dia) {
-                        calendarioHTML += `<tr><td>${dia.fecha}</td><td>${dia.porciones}</td></tr>`;
+            document.getElementById('calendario-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                let mes = document.getElementById('mes').value;
+                let anio = document.getElementById('anio').value;
+                
+                axios.get(`/fijo/seleccionar-fecha?mes=${mes}&anio=${anio}`)
+                    .then(function(response) {                        
+                        const diasDelMes = response.data;
+                        let calendarioHTML = '<table border="1"><tr><th>Fecha</th><th>Porciones</th></tr>';
+                        diasDelMes.forEach(function(dia) {
+                            calendarioHTML += `<tr><td>${dia.fecha}</td><td>${dia.porciones}</td></tr>`;
+                        });
+                        calendarioHTML += '</table>';
+                        document.getElementById('calendario').innerHTML = calendarioHTML;
+                    })
+                    .catch(function(error) {
+                        console.error(error);
                     });
-                    calendarioHTML += '</table>';
-                    document.getElementById('calendario').innerHTML = calendarioHTML;
-                })
-                .catch(function(error) {
-                    console.error(error);
-                });
-        });
+            });
 
         // Función para seleccionar la fecha y hacer validaciones
         document.getElementById('seleccionar-fecha-form').addEventListener('submit', function(event) {
@@ -66,6 +66,7 @@
             })
             .then(function(response) {
                 alert('Fecha seleccionada correctamente.');
+                
             })
             .catch(function(error) {
                 if (error.response && error.response.data) {
