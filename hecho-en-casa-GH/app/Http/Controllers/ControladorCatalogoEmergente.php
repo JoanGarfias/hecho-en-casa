@@ -11,7 +11,7 @@ class ControladorCatalogoEmergente extends Controller
 {
     public function mostrar(){
 
-            $emergentes = Cache::remember('catalogoemergentes', 3600, function () {
+            $emergentes = Cache::remember('catalogoemergentes', 600, function () {
                 return [
                     'temporada' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre')
                                         ->where('id_tipo_postre', 'temporada')
