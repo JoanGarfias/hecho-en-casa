@@ -19,7 +19,7 @@
     <div id="productos">
         @foreach($catalogo as $producto)
             <div class="producto">
-                <h3>{{ $producto->nombre }}</h3>
+                <h3>{{ $producto->nombre }}</h3>  <!--Cambiarlos a Href-->
                 <img src="{{ $producto->imagen }}" alt="{{ $producto->nombre }}">
                 <p>{{ $producto->descripcion }}</p>
             </div>
@@ -31,7 +31,8 @@
         // Función para cambiar la URL y recargar la página
         function cambiarCategoria(categoriaId) {
             // Cambiar la URL y recargar la página
-            window.location.href = `/fijo/catalogo/${categoriaId}`;
+            window.location.href = `http://localhost/ProyectoLaravel/hecho-en-casa/hecho-en-casa-GH/public/fijo/catalogo/${categoriaId}`;
+            //Para mi comodidad lo cambie xd:window.location.href = `/fijo/catalogo/${categoriaId}`;
         }
     </script>
 </body>
