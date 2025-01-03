@@ -45,6 +45,7 @@ DxiCode es una empresa desarrollada como parte de un proyecto de la materia **In
 
 ### **Contacto**  
 Para más información sobre nuestros proyectos o colaboraciones, no dudes en ponerte en contacto con nosotros a través de nuestro repositorio o los canales designados de comunicación.
+Correo: dxicode@gmail.com
 
 ---
 
