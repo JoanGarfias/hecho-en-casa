@@ -1,7 +1,7 @@
 
 <x-menu />
 
-    <title>Registro</title>
+    <title>Iniciar sesión</title>
     <link rel="stylesheet" href="{{ asset('css/iniciando.css') }}">
 
 <div class = "contenedor">         

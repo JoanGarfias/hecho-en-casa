@@ -26,6 +26,12 @@ Route::get('/iniciar-sesion', function(){
 
 Route::post('/iniciar-sesion', [ControladorCalendario::class, 'index']);
 
+Route::get('/direccion', function(){
+    return view('direccion');
+});
+
+Route::post('/direccion', [ControladorCalendario::class, 'index']);
+
 Route::get('/registrar', [ControladorCalendario::class, 'index']);
 Route::post('/registrar', [ControladorCalendario::class, 'index']);
 

@@ -16,6 +16,10 @@
     text-align: center; /* Alinear el texto en el centro */
 }
 
+.flexi{
+    margin-top: -40px;
+}
+
 .contenedor {
     position: relative;
     background: #C6B8A2;
@@ -31,8 +35,7 @@
 .contenedor::before {
     content: '';
     position: absolute;
-    top: 8px;
-   
+    top: 8px;  
     width: 90%;
     height: 90%;
     background: white; /* Color secundario */
