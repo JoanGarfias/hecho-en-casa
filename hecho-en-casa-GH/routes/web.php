@@ -8,7 +8,7 @@ use App\Http\Controllers\ControladorCatalogo;
 use App\Http\Controllers\ControladorCatalogoEmergente;
 
 Route::get('/', [ControladorInicio::class, 'index']);
-Route::get('/inicio', [ControladorInicio::class, 'index']);
+Route::get('/inicio', [ControladorInicio::class, 'index']); 
 Route::get('/calendario', [ControladorCalendario::class, 'index']);
 Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 
@@ -40,11 +40,11 @@ Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);
 Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrar']);
 Route::post('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrar']);
 
-Route::get('fijo/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario']);
+Route::get('fijo/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])->name('seleccionarFecha');
 Route::post('fijo/seleccionar-fecha', [ControladorCatalogo::class, 'seleccionarFecha']);
 
 Route::get('fijo/detalles-pedido', [ControladorCatalogo::class, 'mostrarDetalles']);
-Route::post('fijo/detalles-pedido', [ControladorCatalogo::class, 'seleccionarDetalles']);
+Route::post('fijo/detalles-pedido', [ControladorCatalogo::class, 'seleccionarDetalles'])->name('pedido.guardarfijo');
 
 Route::get('fijo/detalles-direccion', [ControladorCatalogo::class, 'mostrarDetalles']);
 Route::post('fijo/detalles-direccion', [ControladorCatalogo::class, 'seleccionarDetalles']);
