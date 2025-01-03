@@ -27,6 +27,8 @@
     <form id="seleccionar-fecha-form">
         <label for="fecha">Fecha: </label>
         <input type="date" id="fecha" name="fecha" required>
+        <label for="hora">Hora de entrega: </label>
+        <input type="time" id="hora" name="hora" required>
         <label for="id_postre">ID Postre: </label>
         <input type="number" id="id_postre" name="id_postre" required>
         <button type="submit">Seleccionar Fecha</button>

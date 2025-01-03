@@ -9,7 +9,7 @@ use App\Http\Controllers\ControladorCatalogoEmergente;
 use App\Http\Controllers\ControladorCatalogoPersonalizado;
 
 Route::get('/', [ControladorInicio::class, 'index']);
-Route::get('/inicio', [ControladorInicio::class, 'index']);
+Route::get('/inicio', [ControladorInicio::class, 'index']); 
 Route::get('/calendario', [ControladorCalendario::class, 'index']);
 Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 
