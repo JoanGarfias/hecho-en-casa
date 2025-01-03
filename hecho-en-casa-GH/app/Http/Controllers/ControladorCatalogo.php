@@ -128,11 +128,33 @@ class ControladorCatalogo extends Controller
 
     }
 
-    public function seleccionarDetallesEntrega(){
+    public function seleccionarDetallesEntrega(Request $request){
+        $pedido = new Pedido;
 
+        $pedido->id_ped = $request->id_ped;
+        $pedido->id_usuario = $request->id_usuario;
+        $pedido->id_tipopostre = $request->id_tipopostre;
+        $pedido->id_categoria_postre = $request->id_categoria_postre;
+        $pedido->estado_e = $request->estado_e;
+        $pedido->Codigo_postal_e = $request->Codigo_postal_e;
+        $pedido->ciudad_e = $request->ciudad_e;
+        $pedido->colonia_e = $request->colonia_e;
+        $pedido->calle_e = $request->calle_e;
+        $pedido->num_exterior_e = $request->num_exterior_e;
+        $pedido->num_interior_e = $request->num_interior_e;
+        $pedido->referencia_e = $request->referencia_e;
+        $pedido->porcionespedidas = $request->porcionespedidas;
+        $pedido->fecha_hora_registro = $request->fecha_hora_registro;
+        $pedido->fecha_hora_entrega = $request->fecha_hora_entrega;
+        $pedido->status = $request->status;
+        $pedido->precio_final = $request->precio_final;
+
+        $pedido->save();
+
+        return $pedido;
     }
-
+    
     public function mostrarTicket(){
-
+        
     }
 }
