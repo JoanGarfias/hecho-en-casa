@@ -81,17 +81,17 @@ Route::get('personalizado/ticket/{folio}', [ControladorCatalogo::class, 'mostrar
 
 Route::get('/emergentes', [ControladorCatalogoEmergente::class, 'mostrar']);
 
-Route::get('emergentes/seleccionar-fecha', [ControladorCatalogo::class, 'mostrar-calendario']);
-Route::post('emergentes/seleccionar-fecha', [ControladorCatalogo::class, 'seleccionar-fecha']);
+Route::get('emergentes/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario']);
+Route::post('emergentes/seleccionar-fecha', [ControladorCatalogo::class, 'seleccionarFecha']);
 
-Route::get('emergentes/detalles-pedido', [ControladorCatalogo::class, 'mostrar-detalles']);
-Route::post('emergentes/detalles-pedido', [ControladorCatalogo::class, 'seleccionar-detalles']);
+Route::get('emergentes/detalles-pedido', [ControladorCatalogo::class, 'mostrarDetalles']);
+Route::post('emergentes/detalles-pedido', [ControladorCatalogo::class, 'seleccionarDetalles']);
 
-Route::get('emergentes/detalles-pedido', [ControladorCatalogo::class, 'mostrar-detalles']);
-Route::post('emergentes/detalles-pedido', [ControladorCatalogo::class, 'seleccionar-detalles']);
+Route::get('emergentes/detalles-pedido', [ControladorCatalogo::class, 'mostrarDetalles']);
+Route::post('emergentes/detalles-pedido', [ControladorCatalogo::class, 'seleccionarDetalles']);
 
-Route::get('emergentes/detalles-entrega', [ControladorCatalogo::class, 'mostrar-detalles-entrega']);
-Route::post('emergentes/detalles-entrega', [ControladorCatalogo::class, 'seleccionar-detalles-entrega']);
+Route::get('emergentes/detalles-entrega', [ControladorCatalogo::class, 'mostrarDetalles-entrega']);
+Route::post('emergentes/detalles-entrega', [ControladorCatalogo::class, 'seleccionarDetallesEntrega']);
 
-Route::get('emergentes/ticket/{folio}', [ControladorCatalogo::class, 'mostrar-ticket']);
+Route::get('emergentes/ticket/{folio}', [ControladorCatalogo::class, 'mostrarTicket']);
 

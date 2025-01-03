@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Http;
 
 use App\Models\Catalogo;
 use App\Models\Categoria;
+use App\Models\Pedido;
+use Carbon\Carbon;
 
 class ControladorCatalogo extends Controller
 {
@@ -39,6 +41,40 @@ class ControladorCatalogo extends Controller
         }
     }
     
+    public function mostrarCalendario($mes = null, $anio = null){
+        $fecha = Carbon::now();
+        if($mes && $anio){
+            $fecha = Carbon::createFromDate($anio, $mes, 1);
+        }
+        
+        $primerDiaDelMes = $fecha->copy()->startOfMonth();
+        $ultimoDiaDelMes = $fecha->copy()->endOfMonth();
+        
+        $pedidos = Pedido:: select('id_ped', 'fecha_hora_entrega', 'porcionespedidas')
+                            ->where('id_tipopostre', 'personalizado')
+                            ->whereBetween('fecha_hora_entrega', [$primerDiaDelMes, $ultimoDiaDelMes])
+                            ->get();
+        $diasDelMes = [];
+        $diaActual = $primerDiaDelMes->copy();
+                    
+        while ($diaActual->lte($ultimoDiaDelMes)) {
+            $diasDelMes[] = [
+                'fecha' => $diaActual->toDateString(), // Solo la fecha
+                'porciones' => 0,
+            ];
+            $diaActual->addDay();
+        }
+
+        foreach ($pedidos as $pedido) {
+            $fechaPedido = Carbon::parse($pedido->fecha_hora_entrega)->toDateString();
+            $indice = array_search($fechaPedido, array_column($diasDelMes, 'fecha'));
+            if ($indice !== false) {
+                $diasDelMes[$indice]['porciones'] += $pedido->porcionespedidas;
+            }
+        }
+
+        return response()->json($diasDelMes);
+    }
 
     public function mostrarFecha(){
         
