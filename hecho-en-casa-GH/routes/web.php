@@ -40,7 +40,7 @@ Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);
 Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrar']);
 Route::post('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrar']);
 
-Route::get('fijo/seleccionar-fecha', [ControladorCatalogo::class, 'mostrarCalendario']);
+Route::get('fijo/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario']);
 Route::post('fijo/seleccionar-fecha', [ControladorCatalogo::class, 'seleccionarFecha']);
 
 Route::get('fijo/detalles-pedido', [ControladorCatalogo::class, 'mostrarDetalles']);
