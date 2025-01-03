@@ -5,7 +5,7 @@
 
 <div class="flexi">
     <div class = "contenedor"><!-- café-->
-        <form id="formularioRegistro" action="" method="">
+        <form id="validandoContra" action="" method="">
             <h2 class="titule">Regístrate</h2>
             
             <label for="password" id = "campos">Contraseña:</label>

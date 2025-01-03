@@ -1,5 +1,5 @@
 // Capturar el formulario
-let formulario = document.querySelector('#inicioSesion');
+let formulario = document.querySelector('#validandoContra');
 
 formulario.addEventListener("submit", (e) => {
     e.preventDefault(); // Detenemos el envío del formulario
@@ -21,7 +21,7 @@ function validateContra() {
     document.getElementById("bienPass").textContent = "";
     document.getElementById("bienConfirmacion").textContent = "";
 
-    let isValid = 0;
+    let isValid = true;
 
     // Validar contraseña
     if (passwordReg.test(password)) {
