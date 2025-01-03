@@ -1,10 +1,9 @@
 
+<link rel="stylesheet" href="{{ asset('css/estilosRegistro.css') }}">
+<title>Registro</title>  
 <x-menu />
 
-    <title>Registro</title>
-    <link rel="stylesheet" href="{{ asset('css/estilosRegistro.css') }}">
-    
-    <div class="flexi">
+<div class="flexi">
     <div class = "contenedor"><!-- café-->
         <form id="formularioRegistro" action="" method="">
             <h2 class="titule">Regístrate</h2>
@@ -50,5 +49,9 @@
         </form>  
     </div>
 </div>
-   
+
+<x-pie/>
+
     <script src="{{ asset('js/registrando.js') }}"></script>
+    <!--Para la animación del logo de usuario-->
+<script src="{{ asset('js/icono.js') }}" defer></script>

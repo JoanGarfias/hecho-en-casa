@@ -23,18 +23,18 @@
                         <li><a href="#">Buscar pedido</a></li>
                         <li class="dropdown">
                             <a href="#" id="usuario-icon">
-                                 <img src="img/usuario.png" alt="Usuario">
+                                 <img src="{{ asset('img/usuario.png') }}" alt="Usuario">
                             </a>
                              <div class="dropdown-menu" id="menu-usuario">
                                 <button>Iniciar sesión</button>
                                 <a href="registrar/" class="btn">Registrarme</a>
 
                              </div>
-                </li> 
+                        </li> 
             </ul>
         </nav>
     </div>
 </header>
 <body>
 </body>
-</html>
+
