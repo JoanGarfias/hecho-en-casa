@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Catalogo;
+use App\Models\usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -81,7 +82,7 @@ class ControladorCatalogoEmergente extends Controller
         if($tipo_entrega == 'domicilio'){
             return redirect()->route('pedido.direccion');
         }
-        
+    
         return redirect()->route('pedido.resumen');   
     }
 }

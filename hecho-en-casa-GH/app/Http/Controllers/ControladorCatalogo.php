@@ -244,33 +244,38 @@ class ControladorCatalogo extends Controller
         $id_postre = session('postre');
         $postre = Catalogo::where('id_postre', $id_postre)
                             ->first();
-
+        $tipo = $postre->id_tipo_postre;
         $categoria_postre = null;
         $total = null;
         //AQUI LES TOCA PONER SU LOGICA PARA LOS FIJOS
 
-        if($postre->id_tipo_postre == 'fijo'){
+        if($tipo == 'fijo'){
             $fijo = new Postrefijo;
             
         }
 
         //AQUI VA LA LOGICA PARA LOS PERSONALIZADOS
-        elseif ($postre->id_tipo_postre == 'personalizado'){
+        elseif ($tipo == 'personalizado'){
             $personalizado = new Pastelpersonalizado;
         }
         
         //AQUI VA LA LOGICA PARA LOS DE TEMPORADA Y EMERGENTES
-        elseif($postre->id_tipo_postre == 'pop-up' || $postre->id_tipo_postre == 'temporada'){
+        elseif($tipo == 'pop-up' || $tipo == 'temporada'){
             $emergente = new Postreemergente;
             $emergente->id_postre_elegido = $postre->id_postre;
-            $emergente->save();
+            try{
+                $emergente->save();
+            }catch(\Exception $e){
+                dd("Error al guardar el postre emergente: ".$e->getMessage());
+            }
+            
             $categoria_postre = $emergente->id_pt;//este es el id de la tabla postre emergente que se guardara en pedido
             $total = $postre->precio_emergentes;
         }
-
+        
         $pedido = new Pedido;
         $pedido->id_usuario = session('id_u');
-        $pedido->id_tipopostre = $postre->id_tipo_postre;
+        $pedido->id_tipopostre = "temporada";
         $pedido->id_categoria_postre = $categoria_postre;
         $pedido->estado_e = session('estado');
         $pedido->Codigo_postal_e = session('codigo_postal');
@@ -278,9 +283,19 @@ class ControladorCatalogo extends Controller
         $pedido->colonia_e = session('colonia');   
         $pedido->calle_e = session('calle');
         $pedido->num_exterior_e = session('numero');
-        $pedido->fecha_hora_entrega = "2025-12-31 23:59:59";
+        //$pedido->referencia_e = session('referencia'); ESTO EN UN FUTURO ESTARA DESCOMENTADO
+        $pedido->porcionespedidas = "100";
+        $pedido->fecha_hora_entrega = "2025-12-31 23:59:59"; 
+        $pedido->fecha_hora_registro = now();
         $pedido->status = "pendiente";
         $pedido->precio_final = $total;
-        $pedido->save();
+        
+        try {
+            $pedido->save();
+        } catch (\Exception $e) {
+            dd("Error al guardar el pedido: " . $e->getMessage());
+        }
+
+        return $pedido->id_ped;
     }
 }
