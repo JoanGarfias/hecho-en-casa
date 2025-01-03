@@ -33,6 +33,25 @@
             <p style="color: red; font-size: 12px;">{{ $message }}</p>
         @enderror
 
+        <label for="unidad_m">
+            {{ session('tipo_medida') == 'porciones' ? 'Porciones:' : 
+               (session('tipo_medida') == 'piezas' ? 'Piezas:' : 
+               (session('tipo_medida') == 'piezas_mini' ? 'Piezas Mini:' : 'Cantidad:')) }}
+        </label>        
+         <!--Ahi va la variable nombre_unidad-->
+        <select id="unidadm" name="unidadm">
+            @if (session('medidas_disponibles'))
+                @foreach (session('medidas_disponibles') as $medida)
+                    <option value="{{ $medida }}">{{ $medida }} {{ session('tipo_medida') }}</option>
+                @endforeach
+            @else
+                <option>No hay opciones disponibles</option>
+            @endif
+        </select>
+        @error('cantidad')
+            <p style="color: red; font-size: 12px;">{{ $message }}</p>
+        @enderror
+
         <label for="cantidad">Cantidad:</label>
         <input type="number" id="cantidad" name="cantidad" min="{{session('cantidad_minima')}}" value="{{session('cantidad_minima')}}">
         {{-- <p>Quedan XX porciones disponibles.</p> --}}
