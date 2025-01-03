@@ -1,8 +1,6 @@
-
-<x-menu />
-
-    <title>Iniciar sesión</title>
-    <link rel="stylesheet" href="{{ asset('css/iniciando.css') }}">
+<link rel="stylesheet" href="{{ asset('css/iniciando.css') }}">
+<title>Iniciar sesión</title>
+<x-menu />    
 
 <div class = "contenedor">         
     <form action="procesar.php" method="POST" id = "inicioSesion">
@@ -32,3 +30,5 @@
 </div>
 
 <script src="{{ asset('js/iniciando.js') }}"></script>
+<!--Para la animación del logo de usuario-->
+<script src="{{ asset('js/icono.js') }}" defer></script>
