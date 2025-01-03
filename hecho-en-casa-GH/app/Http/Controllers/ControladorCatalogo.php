@@ -83,7 +83,7 @@ class ControladorCatalogo extends Controller
                 $diasDelMes[$indice]['porciones'] += $pedido->porcionespedidas;
             }
         }
-        return view('calendario', compact('diasDelMes'));
+        return view('calendarioFecha', compact('diasDelMes'));
     }
 
     public function seleccionarFecha(Request $request){
