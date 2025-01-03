@@ -8,7 +8,12 @@ use App\Http\Controllers\ControladorCatalogo;
 
 Route::get('/', [ControladorInicio::class, 'index']);
 Route::get('/inicio', [ControladorInicio::class, 'index']);
-Route::get('/calendario', [ControladorCalendario::class, 'index']);
+Route::get('/calFijo', function(){
+    return view('calFijo');
+});
+
+Route::post('/calFijo', [ControladorCalendario::class, 'index']);
+
 Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 
 Route::get('/buscarpedido', [ControladorCalendario::class, 'index']);

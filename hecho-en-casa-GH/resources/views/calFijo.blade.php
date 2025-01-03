@@ -1,9 +1,8 @@
+
+<link rel="stylesheet" href="{{ asset('css/calendario.css') }}">
 <title>Calendario - Ver fechas</title>
-
+<x-menu />
            
-           <link rel="stylesheet" href="{{ asset('css/calendario.css') }}">
-
-            <?php require('./Plantillas/menu.php'); ?>
 
         </head>
             <body>
@@ -15,21 +14,21 @@
 
                         <!-- Nombres de los días -->
                         <ol class="ol">
-                            <li class='nom-dia'>Lun</li>
-                            <li class='nom-dia'>Mar</li>
-                            <li class='nom-dia'>Mie</li>
-                            <li class='nom-dia'>Jue</li>
-                            <li class='nom-dia'>Vie</li>
-                            <li class='nom-dia'>Sab</li>
-                            <li class='nom-dia'>Dom</li>
+                            <li class='nom-dia'>L</li>
+                            <li class='nom-dia'>M</li>
+                            <li class='nom-dia'>M</li>
+                            <li class='nom-dia'>J</li>
+                            <li class='nom-dia'>V</li>
+                            <li class='nom-dia'>S</li>
+                            <li class='nom-dia'>D</li>
                         </ol>
 
                         <!-- Números de los días -->
                         <ol class="numbers" id="numbers">
                             <!-- Los días se generarán dinámicamente -->
                         </ol>
-                </div>
-
+                </div >
+                <div class="ambos">
                     <div class="legend">
                         <p><span class="closed"></span> Fechas cerradas</p>
                         <p><span class="current"></span> Fecha actual</p>
@@ -41,7 +40,10 @@
                         <button id="next-month" class="arrow">➡</button>
                     </div>
                 </div>
+            </div>
 
-                <script src="Cjs/meses.js"></script>
-
+                
+                
+            <br>
             </body>
+            <script src="{{ asset('js/meses.js') }}"></script>

@@ -1,7 +1,7 @@
 
 <link rel="stylesheet" href="{{ asset('css/estilosRegistro.css') }}">
-    <title>Registro</title>  
-    <x-menu />
+<title>Registro</title>  
+<x-menu />
 
 <div class="flexi">
     <div class = "contenedor"><!-- café-->
