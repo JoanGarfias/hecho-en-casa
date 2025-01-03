@@ -71,8 +71,6 @@ class ControladorCatalogo extends Controller
                 $diasDelMes[$indice]['porciones'] += $pedido->porcionespedidas;
             }
         }
-
-        return response()->json($diasDelMes);
         return view('calendario', compact('diasDelMes'));
     }
 
