@@ -6,8 +6,6 @@
     <link rel="stylesheet" href="{{ asset('css/estilos.css') }}"> <!-- Ruta absoluta -->
     <title>Document</title>
 </head>
-<body>
-</body>
 <header>
     <div class="menu">
         <nav>
@@ -37,4 +35,6 @@
         </nav>
     </div>
 </header>
+<body>
+</body>
 </html>

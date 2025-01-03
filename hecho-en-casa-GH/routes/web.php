@@ -19,8 +19,24 @@ Route::post('/buscarpedido', [ControladorCalendario::class, 'index']);
 Route::get('/perfil', [ControladorCalendario::class, 'index']);
 Route::put('/perfil', [ControladorCalendario::class, 'index']);
 
-Route::get('/iniciar-sesion', [ControladorCalendario::class, 'index']);
+/*Route::get('/iniciar-sesion', [ControladorCalendario::class, 'index']);*/
+Route::get('/iniciar-sesion', function(){
+    return view('iniciar-sesion');
+});
+
 Route::post('/iniciar-sesion', [ControladorCalendario::class, 'index']);
+
+Route::get('/direccion', function(){
+    return view('direccion');
+});
+
+Route::post('/direccion', [ControladorCalendario::class, 'index']);
+
+Route::get('/contrasena', function(){
+    return view('contrasena');
+});
+
+Route::post('/contrasena', [ControladorCalendario::class, 'index']);
 
 Route::get('/registrar', [ControladorCalendario::class, 'index']);
 Route::post('/registrar', [ControladorCalendario::class, 'index']);
@@ -73,9 +89,9 @@ Route::get('personalizado/ticket/{folio}', [ControladorCatalogo::class, 'mostrar
 */
 
 
-/*RUTAS DE POSTRES EMERGENTES */
+/* RUTAS DE POSTRES EMERGENTES  */
 
-/*
+
 Route::get('/emergentes', [ControladorCatalogo::class, 'mostrar']);
 
 Route::get('emergentes/seleccionar-fecha', [ControladorCatalogo::class, 'mostrar-calendario']);
@@ -92,4 +108,3 @@ Route::post('emergentes/detalles-entrega', [ControladorCatalogo::class, 'selecci
 
 Route::get('emergentes/ticket/{folio}', [ControladorCatalogo::class, 'mostrar-ticket']);
 
-*/
