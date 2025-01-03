@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Catalogo;
+use App\Models\Pedido;
+use App\Models\Postreemergente;
+use App\Models\usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -81,7 +84,44 @@ class ControladorCatalogoEmergente extends Controller
         if($tipo_entrega == 'domicilio'){
             return redirect()->route('pedido.direccion');
         }
+
+        $id_postre = session('postre');
+        $postre = Catalogo::where('id_postre', $id_postre)
+                            ->first();
+        $emergente = new Postreemergente;
+        $emergente->id_postre_elegido = $postre->id_postre;
+        try{
+            $emergente->save();
+        }catch(\Exception $e){
+            dd("Error al guardar el postre emergente: ".$e->getMessage());
+        }
         
+        $total = $postre->precio_emergentes;
+        
+        $pedido = new Pedido;
+        $pedido->id_usuario = session('id_u');
+        $pedido->id_tipopostre = $postre->id_tipo_postre;
+        $pedido->id_categoria_postre = $emergente->id_pt;//este es el id de la tabla postre emergente que se guardara en pedido
+        $pedido->porcionespedidas = "100";
+        $pedido->fecha_hora_entrega = "2025-12-31 23:59:59"; 
+        $pedido->fecha_hora_registro = now();
+        $pedido->status = "pendiente";
+        $pedido->precio_final = $total;
+        
+        try {
+            $pedido->save();
+        } catch (\Exception $e) {
+            dd("Error al guardar el pedido: " . $e->getMessage());
+        }
+
+        $fechaHoraEntrega = $pedido->fecha_hora_entrega;
+
+        list($fecha, $hora) = explode(' ', $fechaHoraEntrega);
+
+        $usuario = Usuario::find($pedido->id_usuario); 
+
+        return view('pedido', compact('pedido', 'usuario', 'fecha', 'hora'));
+
         return redirect()->route('pedido.resumen');   
     }
 }
