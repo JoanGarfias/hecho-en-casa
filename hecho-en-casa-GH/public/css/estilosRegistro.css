@@ -7,11 +7,12 @@
 }
 
 body {  
-    background: #f4f4f4; /* Fondo del sitio */
+    background: white; /* Fondo del sitio */
+    
 }
 
 .flexi{
-    margin: 0;
+    margin-top: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
