@@ -73,6 +73,7 @@ class ControladorCatalogo extends Controller
         }
 
         return response()->json($diasDelMes);
+        return view('calendario', compact('diasDelMes'));
     }
 
     public function seleccionarFecha(Request $request){
@@ -107,6 +108,13 @@ class ControladorCatalogo extends Controller
                     }
                 },
             ],
+        ]);
+
+        return view('fechaSeleccionada', [
+            'fecha' => $fechaEscogida,
+            'postre' => $postre,
+            'porciones_dia' => $porciones_dia,
+            'cantidad_minima' => $cantidad_minima,
         ]);
     }
 
