@@ -19,7 +19,7 @@
     <div id="productos">
         @foreach($catalogo as $producto)
             <div class="producto">
-                <h3>{{ $producto->nombre }}</h3>  <!--Cambiarlos a Href-->
+                <a href="fijo/seleccionar-fecha">{{ $producto->nombre }}</a><br>  <!--Cambiarlos a Href-->
                 <img src="{{ $producto->imagen }}" alt="{{ $producto->nombre }}">
                 <p>{{ $producto->descripcion }}</p>
             </div>
