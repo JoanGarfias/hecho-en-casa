@@ -13,44 +13,42 @@ use Illuminate\Support\Facades\Cache;
 
 class ControladorCatalogo extends Controller
 {
-    public function mostrar($categoria = null)
-    {
+
+    public function mostrar($categoria = null){
         $categorias = Cache::remember('categorias', 30, function () {
             return Categoria::all();
         });
 
         if ($categorias->isNotEmpty()) {
             if ($categoria === null) {
-                $catalogo = Cache::remember('catalogofijoCatNula', 30, function () {
-                    return  Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
-                    ->where('id_tipo_postre', 'fijo')
-                    ->where('id_categoria', $categorias[0]->id_cat)
-                    ->get();
-                    
-                }
-            );
-        }else{
-            $cad = "catalogofijoCat'{$categoria}'";
-                $catalogo = Cache::remember($cad, 30, function () {
+                $categoriaPorDefecto = $categorias->first()->id_cat;
+                $catalogo = Cache::remember('catalogofijoCatNula', 30, function () use ($categoriaPorDefecto) {
                     return Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
-                    ->where('id_tipo_postre', 'fijo')
-                    ->where('id_categoria', $categoria)
-                    ->get();
-                }
-            );
-        }
+                        ->where('id_tipo_postre', 'fijo')
+                        ->where('id_categoria', $categoriaPorDefecto)
+                        ->get();
+                });
+            } else {
+                $cacheKey = "catalogofijoCat{$categoria}";
+                $catalogo = Cache::remember($cacheKey, 30, function () use ($categoria) {
+                    return Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
+                        ->where('id_tipo_postre', 'fijo')
+                        ->where('id_categoria', $categoria)
+                        ->get();
+                });
+            }
 
             if ($catalogo->isEmpty()) {
                 abort(404, 'Catálogo no encontrado');
             }
 
             return view('catalogo', compact('categorias', 'catalogo'))
-            ->with('categoriaSeleccionada', $categoria);
-        }
-        else {
-            abort(500, 'Error interno del servidor');
+                ->with('categoriaSeleccionada', $categoria);
+        } else {
+            abort(500, 'No hay categorías disponibles');
         }
     }
+
     
     public function mostrarCalendario($mes = null, $anio = null){
         $fecha = Carbon::now();
