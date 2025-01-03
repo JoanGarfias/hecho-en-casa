@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Cache;
 class ControladorCatalogo extends Controller
 {
 
-    public function mostrar($categoria = null){
+    public function mostrarCatalogo($categoria = null){ //GET: Muestra los productos
         $categorias = Cache::remember('categorias', 30, function () {
             return Categoria::all();
         });
@@ -53,8 +53,27 @@ class ControladorCatalogo extends Controller
         }
     }
 
+    public function guardarSeleccionCatalogo(Request $request){ //POST: guarda la selección en session 
+        $id_postre = $request->input('id_postre');
+        $nombre_postre = $request->input('nombre_postre');
+
+        $datos = $request->validate([
+            'id_postre' => 'required|integer',
+            'id_tipopostre' => 'required|integer',
+            'nombre_postre' => 'required|string|min:3|max:255',
+        ]);
+
+        session([
+            'id_postre' => $datos['id_postre'],
+            'id_tipopostre' => 'required|integer',
+            'nombre_postre' => $datos['nombre_postre'],
+        ]);
+
+        return redirect()->route('calendario.get');
+    }
+
     
-    public function mostrarCalendario($mes = null, $anio = null){
+    public function mostrarCalendario($mes = null, $anio = null){ //GET: Mostrar calendario
         $fecha = Carbon::now();
         if($mes && $anio){
             $fecha = Carbon::createFromDate($anio, $mes, 1);
@@ -92,6 +111,7 @@ class ControladorCatalogo extends Controller
 
     public function seleccionarFecha(Request $request)
     {
+
         $fechaEscogida = $request->input('fecha');
         $postre = $request->input('id_postre');
     
@@ -128,22 +148,41 @@ class ControladorCatalogo extends Controller
 
         session([
             'fecha' => $fechaEscogida,
-            'postre' => $postre,
             'porciones_dia' => $porciones_dia,
             'cantidad_minima' => $cantidad_minima,
         ]);
 
-        
+        $tipopostre = session('id_tipopostre');
+        switch($tipopostre){
+            case "fijo":
+                return redirect()->route('fijo.detallesPedido.get');
+                break;
+            case "personalizado":
+                return redirect()->route('personalizado.detallesPedido.get');
+                break;
+            case "emergente":
+                return redirect()->route('emergente.pedido.get');
+                break;
+        }
         /* return view('fechaSeleccionada', [
             'fecha' => $fechaEscogida,
             'postre' => $postre,
             'porciones_dia' => $porciones_dia,
             'cantidad_minima' => $cantidad_minima,
         ]); */
-        return redirect()->route('fechaSelecionada');
+        return redirect()->route('');
     }
 
-    public function mostrarDireccion(){
+    public function mostrarDetalles(){ //GET: Selección de atributos
+
+    }
+
+    public function seleccionarDetalles(){ //POST: Guardar atributos
+
+    }
+
+
+    public function mostrarDireccion(){ //GET: Mostramos la dirección del usuario
         //AQUI DEBERIA JALAR EL ID DEL USUARIO DE ALGUN ALMACEN LOCAL PERO ESTO ES UNA PRUEBA
 
         $id_usuario = session('id_u');
@@ -153,7 +192,7 @@ class ControladorCatalogo extends Controller
         return view('direccion', compact('usuario'));
     }
 
-    public function seleccionarDireccion(Request $request){
+    public function seleccionarDireccion(Request $request){ //POST: Mandamos a la ruta del ticket
 
         $ubicacion = $request->input('ubicacion');
         $id_usuario = $request->input('id_usuario');
@@ -202,14 +241,8 @@ class ControladorCatalogo extends Controller
 
     }
 
-    public function mostrarDetalles(){
 
-    }
-
-    public function seleccionarDetalles(){
-
-    }
-
+    /*
     public function mostrarDetallesEntrega(){
 
     }
@@ -238,9 +271,9 @@ class ControladorCatalogo extends Controller
         $pedido->save();
 
         return $pedido;
-    }
+    }*/
     
-    public function mostrarTicket(){
+    public function mostrarTicket(){ //PASO Final, mostrar los datos
         $id_postre = session('postre');
         $postre = Catalogo::where('id_postre', $id_postre)
                             ->first();
