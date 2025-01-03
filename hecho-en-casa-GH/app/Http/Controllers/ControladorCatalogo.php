@@ -296,6 +296,12 @@ class ControladorCatalogo extends Controller
             dd("Error al guardar el pedido: " . $e->getMessage());
         }
 
-        return $pedido->id_ped;
+        $fechaHoraEntrega = $pedido->fecha_hora_entrega;
+
+        list($fecha, $hora) = explode(' ', $fechaHoraEntrega);
+
+        $usuario = Usuario::find($pedido->id_usuario); 
+
+        return view('pedido', compact('pedido', 'usuario', 'fecha', 'hora'));
     }
 }

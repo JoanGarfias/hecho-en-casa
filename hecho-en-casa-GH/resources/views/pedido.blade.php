@@ -9,20 +9,18 @@
     <h2>Pedido con folio: <span style="color: red;">{{$pedido->id_ped }}</span></h2>
 
     <div>
-        <p><strong>Tipo de postre:</strong> {{ $pedido['tipo_postre'] ?? 'Selección' }}</p>
-        <p><strong>Sabor:</strong> {{ $pedido['sabor'] ?? 'Selección' }}</p>
-        <p><strong>Porciones:</strong> {{ $pedido['porciones'] ?? 'xx' }}</p>
-        <p><strong>Cantidad:</strong> {{ $pedido['cantidad'] ?? '01' }}</p>
-        <p><strong>Estatus:</strong> <span style="background-color: yellow; padding: 0.2em;">{{ $pedido['estatus'] ?? 'Pendiente' }}</span></p>
+        <p><strong>Tipo de postre:</strong> {{ $pedido->id_tipopostre}}</p>
+        <p><strong>Porciones:</strong> {{ $pedido->porcionespedidas }}</p>
+        <p><strong>Estatus:</strong> <span style="background-color: yellow; padding: 0.2em;">{{ $pedido->status}}</span></p>
     </div>
 
     <div>
-        <p><strong>Nombre:</strong> {{ $pedido['nombre'] ?? 'xxxxx' }}</p>
-        <p><strong>Teléfono:</strong> {{ $pedido['telefono'] ?? 'xxxxx' }}</p>
-        <p><strong>Fecha de entrega:</strong> {{ $pedido['fecha_entrega'] ?? 'xx/xx/xxxx' }}</p>
-        <p><strong>Hora de entrega:</strong> {{ $pedido['hora_entrega'] ?? '00:00' }}</p>
-        <p><strong>Tipo de entrega:</strong> {{ $pedido['tipo_entrega'] ?? 'Selección' }}</p>
-        <p><strong>Costo aprox:</strong> {{ $pedido['costo_aprox'] ?? '$550.00' }}</p>
+        <p><strong>Nombre:</strong> {{ $usuario->nombre." ". $usuario->apellido_paterno." ".$usuario->apellido_materno}}</p>
+        <p><strong>Teléfono:</strong> {{ $usuario->telefono}}</p>
+        <p><strong>Fecha de entrega:</strong> {{ $fecha}}</p>
+        <p><strong>Hora de entrega:</strong> {{ $hora }}</p>
+        <p><strong>Tipo de entrega:</strong> {{session('tipo_entrega')}}</p>
+        <p><strong>Costo aprox:</strong> {{ $pedido->precio_final}}</p>
     </div>
 </body>
 </html>
