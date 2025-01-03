@@ -82,7 +82,7 @@ class ControladorCatalogoEmergente extends Controller
         ]);
 
         if($tipo_entrega == 'domicilio'){
-            return redirect()->route('pedido.direccion');
+            return redirect()->route('pedido.direccion');  //SI SELECCIONO ENTREGA A DOMICILIO ENTONCES NOS VAMOS A DETALLES DIRECCION
         }
 
         $id_postre = session('postre');
@@ -102,7 +102,7 @@ class ControladorCatalogoEmergente extends Controller
         $pedido->id_usuario = session('id_u');
         $pedido->id_tipopostre = $postre->id_tipo_postre;
         $pedido->id_categoria_postre = $emergente->id_pt;//este es el id de la tabla postre emergente que se guardara en pedido
-        $pedido->porcionespedidas = "100";
+        $pedido->porcionespedidas = session('cantidad_pedida');
         $pedido->fecha_hora_entrega = "2025-12-31 23:59:59"; 
         $pedido->fecha_hora_registro = now();
         $pedido->status = "pendiente";
@@ -113,14 +113,10 @@ class ControladorCatalogoEmergente extends Controller
         } catch (\Exception $e) {
             dd("Error al guardar el pedido: " . $e->getMessage());
         }
-
-        $fechaHoraEntrega = $pedido->fecha_hora_entrega;
-
-        list($fecha, $hora) = explode(' ', $fechaHoraEntrega);
-
-        $usuario = Usuario::find($pedido->id_usuario); 
-
-        return view('pedido', compact('pedido', 'usuario', 'fecha', 'hora'));
+        
+        session([
+            'folio' => $pedido->id_ped,
+        ]);
 
         return redirect()->route('pedido.resumen');   
     }
