@@ -40,10 +40,12 @@
                         <button id="next-month" class="arrow">➡</button>
                     </div>
                 </div>
-            </div>
-
-                
+            </div>           
                 
             <br>
+            
             </body>
+            <x-pie/>
             <script src="{{ asset('js/meses.js') }}"></script>
+            <!--Para la animación del logo de usuario-->
+<script src="{{ asset('js/icono.js') }}" defer></script>

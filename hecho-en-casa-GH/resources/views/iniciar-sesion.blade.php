@@ -28,6 +28,7 @@
     </div>
 </form>
 </div>
+<x-pie/>
 
 <script src="{{ asset('js/iniciando.js') }}"></script>
 <!--Para la animación del logo de usuario-->

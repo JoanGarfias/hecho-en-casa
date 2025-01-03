@@ -27,7 +27,7 @@ h1{
 
 .container{
     border: 1px solid #0000;
-    width: 805px;
+    width: 800px;
     margin: 5px auto;
     background-size: 120%; /* Aumenta el tamaño al 120% del contenedor */
     background-repeat: no-repeat;
@@ -66,21 +66,12 @@ ol{
     height: 30px;
 }
 
-/*.nom-dia img {
-    width: 80%;  Ajusta el porcentaje según el tamaño deseado 
-    height: auto;
-    display: block;
-    margin: 0 auto; 
-}
-*/
-
-
-/*.numbers{
+.numbers{
     font-size: 1rem;
     text-align: center;
     padding: 5px 10px;
-}
-*/
+}/*checar*/
+
 #numbers {
     display: grid;
     grid-template-columns: repeat(7, 1fr); /* Dividir en 7 columnas (una por cada día de la semana) */
@@ -164,13 +155,26 @@ ol{
 .arrows {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
-    gap: 10px; /* Espacio entre las flechas */
+    margin-top: 36px;
+    gap: 10px; /*espacio entre flechas*/
+    height: 60px;
+}
+
+.hour{
+    text-align: center;
+    margin-top: 36px;
+}
+
+input[type="time"] {
+    padding: 5px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 .arrow {
     padding: 10px 20px;
-    font-size: /*16px*/1.5rem;
+    font-size: 16px;
     background-color: #c0a061; /* Color de fondo */
     color:white; /* Color de texto */
     border: none;
@@ -182,14 +186,14 @@ ol{
 }
 
 .arrow:hover {
-    background-color: #a7854e; /* Color al pasar el cursor */
+    background-color: #7E643B; /* Color al pasar el cursor */
 }
 
 .empty-day {
     visibility: hidden;
 }
 
-.ambos{
+.tre{
     display: flex;
     gap: 200px;
 }
