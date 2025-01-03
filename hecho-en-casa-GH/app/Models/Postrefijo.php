@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Postrefijo extends Model
 {
     use HasFactory;
-    protected $table = 'pedido';
+    protected $table = 'postrefijo';
     public $timestamps = false;
 }
