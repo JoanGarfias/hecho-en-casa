@@ -92,7 +92,7 @@ class ControladorCatalogo extends Controller
         $fechaEscogida = $request->input('fecha');
         $postre = $request->input('id_postre');
 
-        $pedidos_dia = Cache::remember('pedidosdia', 600, function () {
+        $pedidos_dia = Cache::remember('pedidosdia', 30, function () {
             return Pedido::select('id_postre', 'fecha_hora_entrega', 'porcionespedidas')
             ->whereIn('id_tipopostre', ['fijo', 'personalizado'])
             ->whereDate('fecha_hora_entrega', $fechaEscogida)
@@ -103,7 +103,7 @@ class ControladorCatalogo extends Controller
         $porciones_dia = $pedidos_dia->sum('porcionespedidas');
 
         //Obtengo las porciones de la presentación minima
-        $porciones_unidad_minima = Cache::remember('porcionesunidadminima', 600, function () {
+        $porciones_unidad_minima = Cache::remember('porcionesunidadminima', 30, function () {
             return PostreFijoUnidad::select('cantidad')
             ->where('id_pf', $postre)
             ->orderBy('cantidad', 'desc')
