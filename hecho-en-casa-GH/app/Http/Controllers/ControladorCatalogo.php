@@ -9,26 +9,37 @@ use App\Models\Categoria;
 use App\Models\Pedido;
 use App\Models\PostreFijoUnidad;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 class ControladorCatalogo extends Controller
 {
     public function mostrar($categoria = null)
     {
-        $categorias = Categoria::all();
+        $categorias = Cache::remember('categorias', 30, function () {
+            return Categoria::all();
+        });
 
         if ($categorias->isNotEmpty()) {
             if ($categoria === null) {
-                $catalogo = Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
+                $catalogo = Cache::remember('catalogofijoCatNula', 30, function () {
+                    return  Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
                     ->where('id_tipo_postre', 'fijo')
                     ->where('id_categoria', $categorias[0]->id_cat)
                     ->get();
-            }
-            else {
-                $catalogo = Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
+                    
+                }
+            );
+        }else{
+            $cad = "catalogofijoCat'{$categoria}'";
+                $catalogo = Cache::remember($cad, 30, function () {
+                    return Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
                     ->where('id_tipo_postre', 'fijo')
                     ->where('id_categoria', $categoria)
                     ->get();
-            }
+                }
+            );
+        }
+
             if ($catalogo->isEmpty()) {
                 abort(404, 'Catálogo no encontrado');
             }
@@ -50,9 +61,12 @@ class ControladorCatalogo extends Controller
         $primerDiaDelMes = $fecha->copy()->startOfMonth();
         $ultimoDiaDelMes = $fecha->copy()->endOfMonth();
         
-        $pedidos = Pedido:: select('id_ped', 'fecha_hora_entrega', 'porcionespedidas')
+        $pedidos = Cache::remember('pedidos', 30, function () use ($primerDiaDelMes, $ultimoDiaDelMes){
+            return Pedido:: select('id_ped', 'fecha_hora_entrega', 'porcionespedidas')
                             ->whereBetween('fecha_hora_entrega', [$primerDiaDelMes, $ultimoDiaDelMes])
                             ->get();
+            });
+
         $diasDelMes = [];
         $diaActual = $primerDiaDelMes->copy();
                     
@@ -78,19 +92,23 @@ class ControladorCatalogo extends Controller
         $fechaEscogida = $request->input('fecha');
         $postre = $request->input('id_postre');
 
-        $pedidos_dia = Pedido::select('id_postre', 'fecha_hora_entrega', 'porcionespedidas')
+        $pedidos_dia = Cache::remember('pedidosdia', 600, function () {
+            return Pedido::select('id_postre', 'fecha_hora_entrega', 'porcionespedidas')
             ->whereIn('id_tipopostre', ['fijo', 'personalizado'])
             ->whereDate('fecha_hora_entrega', $fechaEscogida)
             ->get();
+        });
 
         //Consigo la suma de las porciones pedidas
         $porciones_dia = $pedidos_dia->sum('porcionespedidas');
 
         //Obtengo las porciones de la presentación minima
-        $porciones_unidad_minima = PostreFijoUnidad::select('cantidad')
+        $porciones_unidad_minima = Cache::remember('porcionesunidadminima', 600, function () {
+            return PostreFijoUnidad::select('cantidad')
             ->where('id_pf', $postre)
             ->orderBy('cantidad', 'desc')
             ->first();
+        });
 
         $cantidad_minima = $porciones_unidad_minima ? $porciones_unidad_minima->cantidad : 0;
 
