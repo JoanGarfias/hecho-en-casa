@@ -17,6 +17,6 @@
         <p><strong>¡No se puede seleccionar esta fecha debido al límite de porciones!</strong></p>
     @endif
 
-    <a href="/fijo/seleccionar-fecha">Volver a seleccionar otra fecha</a>
+    <a href="/fijo/seleccionar-fecha">Volver a seleccionar otra fechaa</a>
 </body>
 </html>
