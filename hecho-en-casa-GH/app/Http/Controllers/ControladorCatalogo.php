@@ -83,54 +83,52 @@ class ControladorCatalogo extends Controller
                 $diasDelMes[$indice]['porciones'] += $pedido->porcionespedidas;
             }
         }
-        return view('calendarioFecha', compact('diasDelMes'));
+        return view('calendario', compact('diasDelMes'));
     }
 
-    public function seleccionarFecha(Request $request){
+    public function seleccionarFecha(Request $request)
+    {
         $fechaEscogida = $request->input('fecha');
         $postre = $request->input('id_postre');
-
-        $pedidos_dia = Cache::remember('pedidosdia', 30, function () {
+    
+        $pedidos_dia = Cache::remember('pedidosdia', 30, function () use ($fechaEscogida) {
             return Pedido::select('id_postre', 'fecha_hora_entrega', 'porcionespedidas')
-            ->whereIn('id_tipopostre', ['fijo', 'personalizado'])
-            ->whereDate('fecha_hora_entrega', $fechaEscogida)
-            ->get();
+                ->whereIn('id_tipopostre', ['fijo', 'personalizado'])
+                ->whereDate('fecha_hora_entrega', $fechaEscogida)
+                ->get();
         });
+    
 
-        //Consigo la suma de las porciones pedidas
         $porciones_dia = $pedidos_dia->sum('porcionespedidas');
-
-        //Obtengo las porciones de la presentación minima
-        $porciones_unidad_minima = Cache::remember('porcionesunidadminima', 30, function () {
+        $porciones_unidad_minima = Cache::remember('porcionesunidadminima', 30, function () use ($postre) {
             return PostreFijoUnidad::select('cantidad')
-            ->where('id_pf', $postre)
-            ->orderBy('cantidad', 'desc')
-            ->first();
+                ->where('id_pf', $postre)
+                ->orderBy('cantidad', 'desc')
+                ->first();
         });
-
+    
         $cantidad_minima = $porciones_unidad_minima ? $porciones_unidad_minima->cantidad : 0;
-
-
+    
         $request->validate([
             'fecha' => [
                 'required',
                 'date',
                 'after_or_equal:today',
                 function ($attribute, $value, $fail) use ($porciones_dia, $cantidad_minima) {
-                    if (($porciones_dia+$cantidad_minima) >= 100) {
+                    if (($porciones_dia + $cantidad_minima) >= 100) {
                         $fail('No se puede seleccionar esta fecha, el límite de porciones diarias es de 100.');
                     }
                 },
             ],
         ]);
-
-        return view('fechaSeleccionada', [
+    
+        return view('detallesFijo', [
             'fecha' => $fechaEscogida,
             'postre' => $postre,
             'porciones_dia' => $porciones_dia,
             'cantidad_minima' => $cantidad_minima,
         ]);
-    }
+    }    
 
     public function mostrarDetalles(){
 
