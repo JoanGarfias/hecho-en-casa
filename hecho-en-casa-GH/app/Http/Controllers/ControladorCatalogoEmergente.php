@@ -13,45 +13,35 @@ use Illuminate\Support\Facades\Log;
 class ControladorCatalogoEmergente extends Controller
 {
     public function mostrar(){
-        $emergentes = [
-            //consulta para obtener todos los postres de temporada disponibles en el catalogo
-            'temporada' => Catalogo::select('id_postre', 'imagen','id_tipo_postre')
+        $emergentes = Cache::remember('catalogoemergentes', 600, function () {
+            return [
+                'temporada' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre')
                                     ->where('id_tipo_postre', 'temporada')
                                     ->where('disponible', '1')
                                     ->get(),
-            //consulta para obtener todos los postres pop-up disponibles en el catalogo
-            'pop-up' =>    Catalogo::select('id_postre', 'imagen', 'id_tipo_postre', 'nombre', 'descripcion', 'stock')
+
+                'pop-up' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre', 'nombre', 'descripcion', 'stock')
                                     ->where('id_tipo_postre', 'pop-up')
                                     ->where('stock', '>', 0)
                                     ->get(),
-        ];
+            ];
+        });
 
-            $emergentes = Cache::remember('catalogoemergentes', 600, function () {
-                return [
-                    'temporada' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre')
-                                        ->where('id_tipo_postre', 'temporada')
-                                        ->where('disponible', '1')
-                                        ->get(),
-    
-                    'pop-up' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre', 'nombre', 'descripcion', 'stock')
-                                        ->where('id_tipo_postre', 'pop-up')
-                                        ->where('stock', '>', 0)
-                                        ->get(),
-                ];
-            });
-    
-                if (!$emergentes) {
-                    Log::info('Cache is empty or expired.');
-                    return response()->json([]);
-                }
+        if (!$emergentes) {
+            Log::info('Cache is empty or expired.');
+            return response()->json([]);
+        }
         
-      
+        return response()->json($emergentes);
     }
 
     public function mostrarDetalles(){
         //ESTO DEBERIA JALARSE DE LA VISTA ANTERIOR AQUI SOLO VA UN EJEMP
         session([
-            'id_u' => "1",
+            'id_u' => "1", //<----OJITO AQUI DEBERIA DE JALARSE EL ID DE LA SESION
+            //RECORDARIO DE ACTUALIZAR ESTO CUANDO SE MANEJE LA SESION
+            //TALVEZ AQUI GUARDEMOS EL ID DEL USUARIO O ANTES PERO HAY QUE RECUPERARLO CUANDO INICIE SESION
+            //O DE LA CACHE CREO PERO CON RECORDATORIO ->>>>>>>>>>>>
             'fecha' => "2025-01-03",
             'hora_entrega' => "12:00",
             'postre' => "30",
@@ -96,7 +86,7 @@ class ControladorCatalogoEmergente extends Controller
         }catch(\Exception $e){
             dd("Error al guardar el postre emergente: ".$e->getMessage());
         }
-        
+
         $pedido = new Pedido;
         $pedido->id_usuario = session('id_u');
         $pedido->id_tipopostre = $postre->id_tipo_postre;
@@ -113,6 +103,12 @@ class ControladorCatalogoEmergente extends Controller
             dd("Error al guardar el pedido: " . $e->getMessage());
         }
         
+        //para reducir su stock en caso de que tenga si es null entonces no maneja stock
+        if($postre->stock != null){
+            $postre->stock = $postre->stock - session('cantidad_pedida');
+            $postre->save();
+        }
+
         session([
             'folio' => $pedido->id_ped,
         ]);

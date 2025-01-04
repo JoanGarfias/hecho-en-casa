@@ -193,7 +193,7 @@ class ControladorCatalogo extends Controller
             'id_u' => "1",
             'fecha' => "2025-01-07",
             'hora_entrega' => "01:03:33",
-            'postre' => "2",
+            'postre' => "38",
             'cantidad_minima' => "15",
         ]);
 
