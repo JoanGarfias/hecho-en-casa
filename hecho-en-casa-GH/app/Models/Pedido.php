@@ -33,4 +33,10 @@ class Pedido extends Model
         'fecha_hora_registro',
         'fecha_hora_entrega',
     ];
+
+
+    public function pastelPersonalizado() {
+        return $this->belongsTo(Pastelpersonalizado::class, 'id_seleccion_usuario');
+    }
+    
 }

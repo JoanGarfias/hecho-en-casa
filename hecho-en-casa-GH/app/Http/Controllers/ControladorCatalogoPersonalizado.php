@@ -60,32 +60,14 @@ class ControladorCatalogoPersonalizado extends Controller
         $elementos = array_map('intval', $request->input('elementos', []));
         
         $porciones = intval($request->input('porciones'));
-
-        $datos = [
-            'tematica' => $tematica,
-            'imagen' => $imagen,
-            'descripcion' => $descripcion,
-            'costo' => $costo,
-            'tipo_entrega' => $tipo_entrega,
-            'id_usuario' => $id_usuario,
-            'fecha_hora_entrega' => $fecha_hora_entrega,
-            'fecha_hora_registro' => $fecha_hora_registro,
-            'id_tipopostre' => $id_tipopostre,
-            'sabor_pan' => $sabor_pan,
-            'relleno' => $relleno,
-            'cobertura' => $cobertura,
-            'elementos' => $elementos,
-            'porciones' => $porciones,
-        ];
         
-        //return view('direccion', compact('datos'));
 
-        if ($tipo_entrega === "Domicilio") {
-            session([
-                'sabor_pan' => $sabor_pan,
+        if ($tipo_entrega == "Domicilio") {
+            $datos = [
+                'id_saborpan' => $sabor_pan,
                 'id_tipopostre' => $id_tipopostre,
-                'relleno' => $relleno,
-                'cobertura' => $cobertura,
+                'id_saborrelleno' => $relleno,
+                'id_cobertura' => $cobertura,
                 'elementos' => $elementos,
                 'porciones' => $porciones,
                 'tematica' => $tematica,
@@ -93,45 +75,149 @@ class ControladorCatalogoPersonalizado extends Controller
                 'descripcion' => $descripcion,
                 'costo' => $costo,
                 'tipo_entrega' => $tipo_entrega,
-            ]);
-            //return redirect()->route('personalizado.direccion.get'); 
-            return view('direccion', compact('datos'));
+                'fecha_hora_registro' => $fecha_hora_registro,
+                'fecha_hora_entrega' => $fecha_hora_entrega
+            ];
+            session()->put('datos_pedido', $datos);
+
+
+            return redirect()->route('personalizado.direccion.get');            ;
         }
         else{
+            // Instanciación de Pastelpersonalizado
+            $pastel = new Pastelpersonalizado;
+            $pastel->id_saborpan = $sabor_pan;
+            $pastel->id_saborrelleno = $relleno;
+            $pastel->id_cobertura = $cobertura;
+            $pastel->tipo_evento = $tematica;
+            $pastel->descripciondetallada = $descripcion;
+            $pastel->id_postre_elegido = 37;
+            $pastel->save();  // Guardamos el pastel en la base de datos
 
-            $pastel = Pastelpersonalizado::create([
-                'id_saborpan' => $sabor_pan,
-                'id_saborrelleno' => $relleno,
-                'id_cobertura' => $cobertura,
-                'tipo_evento' => $tematica,
-                'imagendescriptiva' => $imagen,
-                'descripciondetallada' => $descripcion,
-                'id_postre_elegido' => 37,
-            ]);
-            
+            // Obtenemos el ID del pastel recién creado
             $id_detalles_pastel = $pastel->id_pp;
 
-            $pedido = Pedido::create([
-                'id_usuario' => $id_usuario,
-                'id_seleccion_usuario' => $id_detalles_pastel,
-                'id_tipopostre' => $id_tipopostre,
-                'porcionespedidas' => $porciones,
-                'status' => "pendiente",
-                'precio_final' => $costo,
-                'fecha_hora_registro' => $fecha_hora_registro,
-                'fecha_hora_entrega' => $fecha_hora_entrega,
-            ]);
+            // Instanciación de Pedido
+            $pedido = new Pedido;
+            $pedido->id_usuario = $id_usuario;
+            $pedido->id_tipopostre = $id_tipopostre;
+            $pedido->id_seleccion_usuario = $id_detalles_pastel;
+            $pedido->porcionespedidas = $porciones;
+            $pedido->status = 'pendiente';
+            $pedido->precio_final = $costo;
+            $pedido->fecha_hora_registro = $fecha_hora_registro;
+            $pedido->fecha_hora_entrega = $fecha_hora_entrega;
+            $pedido->save();  // Guardamos el pedido en la base de datos
 
-            //return redirect()->route('personalizado.direccion.get'); 
-            return view('direccion', compact('datos'));
+            $id_pedido = $pedido->id_ped;
+
+            foreach($elementos as $elem){
+                $listarElemento = new ListaElementos;
+                $listarElemento->id_pp = $id_detalles_pastel;
+                $listarElemento->id_elemento = $elem;
+                $listarElemento->save();
+            }
+
+            $datos = [
+                'tematica' => $tematica,
+                'imagen' => $imagen,
+                'descripcion' => $descripcion,
+                'costo' => $costo,
+                'tipo_entrega' => $tipo_entrega,
+                'id_usuario' => $id_usuario,
+                'fecha_hora_entrega' => $fecha_hora_entrega,
+                'fecha_hora_registro' => $fecha_hora_registro,
+                'id_tipopostre' => $id_tipopostre,
+                'sabor_pan' => $sabor_pan,
+                'relleno' => $relleno,
+                'cobertura' => $cobertura,
+                'elementos' => $elementos,
+                'porciones' => $porciones,
+                'id_pp' => $id_detalles_pastel,
+                'pedido' => [
+                    'id_pedido' => $pedido->id_ped,
+                    'porcionespedidas' => $pedido->porcionespedidas,
+                    'status' => $pedido->status,
+                    'precio_final' => $pedido->precio_final,
+                    'fecha_hora_registro' => $pedido->fecha_hora_registro,
+                    'fecha_hora_entrega' => $pedido->fecha_hora_entrega,
+                ],
+            ];
+            return redirect()->route('personalizado.ticket.get', ['folio' => $id_pedido]);            
         }
     }
 
     public function mostrarDireccion(){
-        return view('direccion');
+        $datos = session('datos_pedido');
+        return view('direccionPersonalizado', compact('datos'));
     }
 
-    public function guardarDireccion(){
+    public function guardarDireccion(Request $request){
+        $tipo_domicilio = $request->input('tipo_domicilio');
+        $datos = session('datos_pedido');       
 
+        // Instanciación de Pastelpersonalizado
+        $pastel = new Pastelpersonalizado;
+        $pastel->id_saborpan = $datos['id_saborpan'];  // Accede usando el índice de array
+        $pastel->id_saborrelleno = $datos['id_saborrelleno'];
+        $pastel->id_cobertura = $datos['id_cobertura'];
+        $pastel->tipo_evento = $datos['tematica'];
+        $pastel->descripciondetallada = $datos['descripcion'];
+        $pastel->id_postre_elegido = 37;
+        $pastel->save();  // Guardamos el pastel en la base de datos
+        
+        // Obtenemos el ID del pastel recién creado
+        $id_detalles_pastel = $pastel->id_pp;
+
+        $id_usuario = 1;
+            // Instanciación de Pedido
+        $pedido = new Pedido;
+        $pedido->id_usuario = $id_usuario;
+        $pedido->id_tipopostre = $datos['id_tipopostre'];
+        $pedido->id_seleccion_usuario = $id_detalles_pastel;
+        $pedido->porcionespedidas = $datos['porciones'];
+        $pedido->status = 'pendiente';
+        $pedido->precio_final = $datos['costo'];
+        $pedido->fecha_hora_registro = $datos['fecha_hora_registro'];
+        $pedido->fecha_hora_entrega = $datos['fecha_hora_entrega'];
+        $pedido->save();  // Guardamos el pedido en la base de datos
+
+            $id_pedido = $pedido->id_ped;
+
+        foreach($datos['elementos'] as $elem){
+                $listarElemento = new ListaElementos;
+                $listarElemento->id_pp = $id_detalles_pastel;
+                $listarElemento->id_elemento = $elem;
+                $listarElemento->save();
+            }
+            return redirect()->route('personalizado.ticket.get', ['folio' => $id_pedido]);  
+    }
+
+    public function mostrarTicket($folio = null){
+        if ($folio !== null) {
+            // Consulta el pedido con el folio
+            $ticket_pedido = Pedido::select('id_ped','id_seleccion_usuario','id_tipopostre', 'porcionespedidas', 'status', 'precio_final')
+            ->where('id_ped', $folio)
+            ->first();
+    
+            if (!$ticket_pedido) {
+                return redirect()->back()->with('error', 'El pedido con el folio especificado no existe.');
+            }
+    
+            // Si hay una relación con Pastelpersonalizado
+            $id_pastel = $ticket_pedido->id_seleccion_usuario;
+            $datos = ["id_pastel" => $id_pastel];
+
+            $ticket_pastel = Pastelpersonalizado::select('id_saborpan', 'id_saborrelleno', 'id_cobertura', 'tipo_evento', 'descripciondetallada', 'imagendescriptiva')
+            ->where('id_pp', $id_pastel)
+            ->first();
+    
+        }
+        else {
+            return redirect()->back()->with('error', 'El folio no fue especificado.');
+        }
+    
+        // Envía la información a la vista
+        return view('pedidoPersonalizado', compact('ticket_pedido', 'ticket_pastel', 'datos'));
     }
 }
