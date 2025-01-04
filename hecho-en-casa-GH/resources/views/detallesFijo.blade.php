@@ -6,7 +6,7 @@
     <title>Formulario de Pedidos fijos</title>
 </head>
 <body>
-    <form action="{{ route('pedido.guardarfijo') }}" method="POST">
+    <form action="{{ route('fijo.detallesPedido.get') }}" method="POST">
         @csrf
 
         <label for="fecha-entrega">Fecha de entrega:</label>
@@ -33,24 +33,26 @@
             <p style="color: red; font-size: 12px;">{{ $message }}</p>
         @enderror
 
-        <label for="unidad_m">
-            {{ session('tipo_medida') == 'porciones' ? 'Porciones:' : 
-               (session('tipo_medida') == 'piezas' ? 'Piezas:' : 
-               (session('tipo_medida') == 'piezas_mini' ? 'Piezas Mini:' : 'Cantidad:')) }}
+        <label for="unidad_m"> 
+            {{ session('lista_unidad')[0]['nombreunidad'] == 'Porciones' ? 'porciones:' : 
+               (session('lista_unidad')[0]['nombreunidad'] == 'Piezas' ? 'piezas:' : 
+               (session('lista_unidad')[0]['nombreunidad'] == 'Piezas Mini' ? 'piezas mini:' : 'Cantidad:')) }}
         </label>        
-         <!--Ahi va la variable nombre_unidad-->
+        <!--Ahi va la variable nombre_unidad-->
         <select id="unidadm" name="unidadm">
-            @if (session('medidas_disponibles'))
-                @foreach (session('medidas_disponibles') as $medida)
-                    <option value="{{ $medida }}">{{ $medida }} {{ session('tipo_medida') }}</option>
+            @if (session('lista_unidad') && count(session('lista_unidad')) > 0)
+                @foreach (session('lista_unidad') as $unidad)
+                    <option value="{{ $unidad['cantidadporciones'] }}">{{ $unidad['cantidadporciones'] }} {{ $unidad['nombreunidad'] }}</option>
                 @endforeach
             @else
                 <option>No hay opciones disponibles</option>
             @endif
         </select>
-        @error('cantidad')
+        
+        @error('unidadm')
             <p style="color: red; font-size: 12px;">{{ $message }}</p>
         @enderror
+        
 
         <label for="cantidad">Cantidad:</label>
         <input type="number" id="cantidad" name="cantidad" min="{{session('cantidad_minima')}}" value="{{session('cantidad_minima')}}">
