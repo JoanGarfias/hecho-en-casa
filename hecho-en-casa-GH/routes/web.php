@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControladorInicio;
 use App\Http\Controllers\ControladorCalendario;
 use App\Http\Controllers\ControladorCatalogo;
+use App\Http\Controllers\ControladorIniciarSesion;
 use App\Http\Controllers\ControladorRegistrar;
 
 Route::get('/', [ControladorInicio::class, 'index']);
@@ -33,12 +34,15 @@ Route::post('/buscarpedido', [ControladorCalendario::class, 'index']);
 Route::get('/perfil', [ControladorCalendario::class, 'index']);
 Route::put('/perfil', [ControladorCalendario::class, 'index']);
 
-/*Route::get('/iniciar-sesion', [ControladorCalendario::class, 'index']);*/
+//Route::get('/iniciar-sesion', [ControladorCalendario::class, 'index']);
 Route::get('/iniciar-sesion', function(){
     return view('iniciar-sesion');
 });
 
-Route::post('/iniciar-sesion', [ControladorCalendario::class, 'index']);
+Route::post('/iniciar-sesion', [ControladorIniciarSesion::class, 'index']);
+
+
+//Route::post('/iniciar-sesion', [ControladorCalendario::class, 'index']);
 
 Route::get('/direccion', function(){
     return view('direccion');
@@ -63,6 +67,7 @@ Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);
 
 Route::get('/registrar', [ControladorRegistrar::class, 'index']);
 Route::post('/registrar', [ControladorRegistrar::class, 'index']);
+
 
 
 /*
