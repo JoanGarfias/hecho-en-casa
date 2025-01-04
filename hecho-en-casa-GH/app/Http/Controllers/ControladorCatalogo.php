@@ -166,6 +166,8 @@ class ControladorCatalogo extends Controller
             case "emergente":
                 return redirect()->route('emergente.pedido.get');
                 break;
+            default:
+                return redirect()->route('inicio');
         }
         /* return view('fechaSeleccionada', [
             'fecha' => $fechaEscogida,

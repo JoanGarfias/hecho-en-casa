@@ -8,8 +8,8 @@ use App\Http\Controllers\ControladorCatalogo;
 use App\Http\Controllers\ControladorCatalogoEmergente;
 use App\Http\Controllers\ControladorCatalogoPersonalizado;
 
-Route::get('/', [ControladorInicio::class, 'index']);
-Route::get('/inicio', [ControladorInicio::class, 'index']); 
+Route::get('/', [ControladorInicio::class, 'index'])->name('inicio');
+Route::get('/inicio', [ControladorInicio::class, 'index'])->name('inicio'); 
 Route::get('/calendario', [ControladorCalendario::class, 'index']);
 Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 
