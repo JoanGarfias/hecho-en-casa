@@ -19,7 +19,7 @@
     <div id="productos">
         @foreach($catalogo as $producto)
             <div class="producto">
-                <h3>{{ $producto->nombre }}</h3>
+                <a href="fijo/seleccionar-fecha">{{ $producto->nombre }}</a><br>  <!--Cambiarlos a Href-->
                 <img src="{{ $producto->imagen }}" alt="{{ $producto->nombre }}">
                 <p>{{ $producto->descripcion }}</p>
             </div>
@@ -32,6 +32,7 @@
         function cambiarCategoria(categoriaId) {
             // Cambiar la URL y recargar la página
             window.location.href = `/fijo/catalogo/${categoriaId}`;
+            //Para mi comodidad lo cambie xd:window.location.href = `/fijo/catalogo/${categoriaId}`;
         }
     </script>
 </body>
