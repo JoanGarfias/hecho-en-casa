@@ -21,6 +21,10 @@ class ControladorCatalogoPersonalizado extends Controller
         return view("personalizados");
     }
 
+    public function seleccionarCatalogo(){
+        return redirect()->route('personalizado.calendario.get');
+    }
+
     public function mostrarDetalles(){ //GET: Vista de detalles para personalizado
         $sabores = SaborPan::select('id_sp', 'nom_pan', 'precio_p')
         ->get();
@@ -35,11 +39,8 @@ class ControladorCatalogoPersonalizado extends Controller
     }
 
     public function seleccionarDetalles(Request $request){ //POST: Guardar las opciones de personalización
-        $sabor_pan = $request->input('sabor_pan');
-        $relleno = $request->input('sabor_relleno');
-        $cobertura = $request->input('cobertura');
-        $elementos = $request->input('elementos');
-        $porciones = $request->input('porciones');
+
+        $pedido = new Pedido;
         $tematica = $request->input('tematica');
         $imagen = $request->input('imagen');
         $descripcion = $request->input('descripcion');
@@ -49,6 +50,14 @@ class ControladorCatalogoPersonalizado extends Controller
         $id_usuario = session('id_u');
         $fecha_hora_entrega = $request->input('fecha_hora_entrega'); 
         $fecha_hora_registro = now();
+
+
+        $sabor_pan = $request->input('sabor_pan');
+        $relleno = $request->input('sabor_relleno');
+        $cobertura = $request->input('cobertura');
+        $elementos = $request->input('elementos');
+        $porciones = $request->input('porciones');
+
 
         if($ubicacion === 'otra'){
             session([
