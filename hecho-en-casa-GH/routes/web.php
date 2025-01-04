@@ -83,8 +83,8 @@ Route::post('personalizado/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalo
 Route::get('personalizado/detalles-pedido', [ControladorCatalogoPersonalizado::class, 'mostrarDetalles'])->name('personalizado.detallesPedido.get');
 Route::post('personalizado/detalles-pedido', [ControladorCatalogoPersonalizado::class, 'seleccionarDetalles'])->name('personalizado.detallesPedido.post');
 
-Route::get('personalizado/detalles-direccion', [ControladorCatalogo::class, 'mostrarDireccion'])->name('personalizado.direccion.get');
-Route::post('personalizado/detalles-direccion', [ControladorCatalogo::class, 'guardarDireccion'])->name('personalizado.direccion.post');
+Route::get('personalizado/detalles-direccion', [ControladorCatalogoPersonalizado::class, 'mostrarDireccion'])->name('personalizado.direccion.get');
+Route::post('personalizado/detalles-direccion', [ControladorCatalogoPersonalizado::class, 'guardarDireccion'])->name('personalizado.direccion.post');
 
 Route::get('personalizado/ticket/{folio}', [ControladorCatalogo::class, 'mostrar-ticket'])->name('personalizado.ticket.get');
 
