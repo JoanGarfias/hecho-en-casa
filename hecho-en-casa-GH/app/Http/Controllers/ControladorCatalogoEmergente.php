@@ -90,7 +90,7 @@ class ControladorCatalogoEmergente extends Controller
         $pedido = new Pedido;
         $pedido->id_usuario = session('id_u');
         $pedido->id_tipopostre = $postre->id_tipo_postre;
-        $pedido->id_categoria_postre = $emergente->id_pt;//este es el id de la tabla postre emergente que se guardara en pedido
+        $pedido->id_seleccion_usuario = $emergente->id_pt;//este es el id de la tabla postre emergente que se guardara en pedido
         $pedido->porcionespedidas = session('cantidad_pedida');
         $pedido->fecha_hora_entrega = session('fecha') . " " . session('hora_entrega'); 
         $pedido->fecha_hora_registro = now();
@@ -165,7 +165,7 @@ class ControladorCatalogoEmergente extends Controller
         $pedido = new Pedido;
         $pedido->id_usuario = session('id_u');
         $pedido->id_tipopostre = $postre->id_tipo_postre;
-        $pedido->id_categoria_postre = $emergente->id_pt;//este es el id de la tabla postre emergente que se guardara en pedido
+        $pedido->id_seleccion_usuario = $emergente->id_pt;//este es el id de la tabla postre emergente que se guardara en pedido
         $pedido->estado_e = $estado;
         $pedido->Codigo_postal_e = $codigo_postal;
         $pedido->ciudad_e = $ciudad;
