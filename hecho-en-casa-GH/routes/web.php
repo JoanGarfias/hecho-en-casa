@@ -84,7 +84,7 @@ Route::post('personalizado/detalles-pedido', [ControladorCatalogoPersonalizado::
 Route::get('personalizado/detalles-direccion', [ControladorCatalogoPersonalizado::class, 'mostrarDireccion'])->name('personalizado.direccion.get');
 Route::post('personalizado/detalles-direccion', [ControladorCatalogoPersonalizado::class, 'guardarDireccion'])->name('personalizado.direccion.post');
 
-Route::get('personalizado/ticket/{folio}', [ControladorCatalogo::class, 'mostrar-ticket'])->name('personalizado.ticket.get');
+Route::get('personalizado/ticket/{folio}', [ControladorCatalogoPersonalizado::class, 'mostrarTicket'])->name('personalizado.ticket.get');
 
 
 

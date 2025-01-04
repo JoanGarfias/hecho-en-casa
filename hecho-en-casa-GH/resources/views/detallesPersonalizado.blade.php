@@ -8,6 +8,18 @@
 <body>
     <h1>Detalles del Pastel Personalizado</h1>
     
+    <script>
+        let pan = @json($sabores);
+        let relleno = @json($rellenos);
+        let elementos = @json($elementos);
+        let cobertura = @json($coberturas);
+
+        console.log("Panes: ", pan);
+        console.log("Rellenos: ", relleno);
+        console.log("Elementos: ", elementos);
+        console.log("Coberturas: ", cobertura);
+    </script>
+
     <!-- Formulario para enviar los datos -->
     <form method="POST" action="{{ route('personalizado.detallesPedido.post') }}">
         @csrf <!-- Token de seguridad para formularios en Laravel -->
@@ -47,19 +59,20 @@
 
         <!-- Elementos -->
         <label for="elementos">Selecciona elementos adicionales:</label>
-        <select name="elementos[]" id="elementos" multiple>
+        <select name="elementos[]" id="elementos" multiple size="5">
             @foreach($elementos as $elemento)
                 <option value="{{ $elemento->id_e }}">
                     {{ $elemento->nom_elemento }} ({{ $elemento->precio_e }} MXN)
                 </option>
             @endforeach
         </select>
+        
 
         <br><br>
         <label>Tipo de entrega:</label>
         <select name="tipo_entrega" id="entrega">
-            <option value="domicilio">Envío a domiclio</option>
-            <option value="sucursal">Recoge en sucursal</option>
+            <option value="Domicilio">Envío a domiclio</option>
+            <option value="Sucursal">Recoge en sucursal</option>
         </select>
 
         <br><br>

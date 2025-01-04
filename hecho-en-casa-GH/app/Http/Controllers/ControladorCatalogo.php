@@ -165,6 +165,7 @@ class ControladorCatalogo extends Controller
                 ]);
 
                 return redirect()->route('fijo.detallesPedido.get');
+                
             case "personalizado":
                 session([
                     'fecha' => $fechaEscogida,
@@ -173,6 +174,7 @@ class ControladorCatalogo extends Controller
                 ]);
 
                 return redirect()->route('personalizado.detallesPedido.get');
+                
             case "temporada": case "pop-up":
                 session([
                     'fecha' => $fechaEscogida,
@@ -181,6 +183,7 @@ class ControladorCatalogo extends Controller
                 ]);
 
                 return redirect()->route('emergente.pedido');
+                
         }
         /* return view('fechaSeleccionada', [
             'fecha' => $fechaEscogida,
@@ -195,8 +198,8 @@ class ControladorCatalogo extends Controller
             'id_u' => "1",
             'fecha' => "2025-01-07",
             'hora_entrega' => "01:03:33",
-            'postre' => "28",
-            'cantidad_minima' => "15",
+            'postre' => "27",
+            'cantidad_minima' => "6",
         ]);
 
         //COMO SON DATOS DIRECTOS NO ES NECESARIO ESTO
@@ -237,13 +240,20 @@ class ControladorCatalogo extends Controller
             } else {
                 session(['lista_unidad' => 'No encontrado']); 
             }
-            // Opciones de personalización
+            
+            $tiposAtributo = TipoAtributo::all();
             $personalizaciones = AtributosExtra::where('id_tipo_postre', $categoria->id_cat)->get();
-            $saborfrost = $personalizaciones->where('id_tipo_atributo', '2')->pluck('nom_atributo')->toArray();
-            $toppings = $personalizaciones->where('id_tipo_atributo', '1')->pluck('nom_atributo')->toArray();
-            $saborcubierta = $personalizaciones->where('id_tipo_atributo', '3')->pluck('nom_atributo')->toArray();
-            $forma = $personalizaciones->where('id_tipo_atributo', '4')->pluck('nom_atributo')->toArray();
-            session(['saborfrost' => $saborfrost, 'toppings' => $toppings, 'saborcubierta' => $saborcubierta, 'forma' => $forma]);
+            $atributosSesion = [];
+
+            foreach ($tiposAtributo as $tipo) {
+                $atributos = $personalizaciones->where('id_tipo_atributo', $tipo->idtipo_atributo)->pluck('nom_atributo')->toArray();
+                if (!empty($atributos)) {
+                    $atributosSesion[$tipo->nombre_atributo] = $atributos;
+                }
+            }
+
+            session(['atributosSesion' => $atributosSesion]);
+            
         } else {
             return redirect()->route('seleccionarFecha')->with('error', 'Postre no encontrado.');
         }
@@ -252,18 +262,72 @@ class ControladorCatalogo extends Controller
         $sabor_postre = session('sabor_postre');
         $hora_entrega = session('hora_entrega');
         $nombre_categoria = session('nombre_categoria');
-        $lista_unidad = session('lista_unidad');
-        $saborfrost = session('saborfrost');
-        $toppings = session('toppings');
-        $saborcubierta = session('saborcubierta');
-        $forma = session('forma');
+        $lista_unidad = session('lista_unidad'); 
+        $atributosSesion = session('atributosSesion');
 
-        return view('detallesFijo', compact('fecha', 'sabor_postre', 'hora_entrega', 'nombre_categoria', 'lista_unidad', 'saborfrost', 'toppings', 'saborcubierta', 'forma'));
+        return view('detallesFijo', compact('fecha', 'sabor_postre', 'hora_entrega', 'nombre_categoria', 'lista_unidad', 'atributosSesion'));
     }
 
 
-    public function seleccionarDetalles(){
-        
+    public function seleccionarDetalles(Request $request){
+        $id_postre = session('postre');
+        $postre = Catalogo::where('id_postre', $id_postre)
+                            ->first();
+
+        $costo = intval($request->input('costo'));
+        $tipo_entrega = $request->input('tipo_entrega');
+        $id_usuario = session('id_u');
+
+        $fechaEscogida = session('fecha');
+        $horaEntrega = session('hora_entrega');
+        $fecha_hora_entrega = Carbon::parse($fechaEscogida . ' ' . $horaEntrega); 
+        $fecha_hora_registro = now();
+        $id_tipopostre = $postre->id_tipo_postre;
+
+        $porciones = 50; //prueba
+
+        $datos = [
+            'costo' => $costo,
+            'tipo_entrega' => $tipo_entrega,
+            'id_usuario' => $id_usuario,
+            'fecha_hora_entrega' => $fecha_hora_entrega,
+            'fecha_hora_registro' => $fecha_hora_registro,
+            'id_tipopostre' => $id_tipopostre,
+            'porciones' => $porciones,
+        ];
+
+        if ($tipo_entrega === "Domicilio") {
+            session([
+                'id_tipopostre' => $id_tipopostre,
+                'porciones' => $porciones,
+                'costo' => $costo,
+                'tipo_entrega' => $tipo_entrega,
+            ]);
+            return redirect()->route('fijo.direccion.get'); 
+        }
+        else{
+
+            /*$pastel = Postrefijo::create([
+                'id_pf' => session('id_cat'),
+                //'id_atributo' => 2,
+                'id_um' => 1,
+                'id_postre_elegido' => 37,
+            ]);*/
+            
+
+            $pedido = Pedido::create([
+                'id_usuario' => $id_usuario,
+                'id_seleccion_usuario' => session('id_cat'),
+                'id_tipopostre' => $id_tipopostre,
+                'porcionespedidas' => $porciones,
+                'status' => 'pendiente',
+                'precio_final' => $costo,
+                'fecha_hora_registro' => $fecha_hora_registro,
+                'fecha_hora_entrega' => $fecha_hora_entrega,
+            ]);
+
+            return redirect()->route('fijo.direccion.get'); 
+        }
     }
     
     public function mostrarDireccion(){
@@ -323,14 +387,6 @@ class ControladorCatalogo extends Controller
         
         return redirect()->route('pedido.resumen');
 
-    }
-
-    public function mostrarDetallesEntrega(){
-
-    }
-
-    public function seleccionarDetallesEntrega(Request $request){
-        
     }
     
     public function mostrarTicket(){

@@ -18,6 +18,7 @@ class Pedido extends Model
     protected $fillable = [
         'id_usuario',
         'id_tipopostre',
+        'id_seleccion_usuario',
         'porcionespedidas',
         'estado_e',
         'Codigo_postal_e',
@@ -32,4 +33,10 @@ class Pedido extends Model
         'fecha_hora_registro',
         'fecha_hora_entrega',
     ];
+
+
+    public function pastelPersonalizado() {
+        return $this->belongsTo(Pastelpersonalizado::class, 'id_seleccion_usuario');
+    }
+    
 }
