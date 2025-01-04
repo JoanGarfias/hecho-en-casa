@@ -23,7 +23,7 @@ class ControladorCatalogoPersonalizado extends Controller
     }
 
     public function seleccionarCatalogo(){
-        return redirect()->route('personalizado.calendario.get');
+        return redirect()->route('calendario.get');
     }
 
     public function mostrarDetalles(){ //GET: Vista de detalles para personalizado
