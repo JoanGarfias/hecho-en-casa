@@ -13,6 +13,8 @@ use App\Models\Postrefijo;
 use App\Models\PostreFijoUnidad;
 use App\Models\UnidadMedida;
 use App\Models\usuario;
+use App\Models\AtributosExtra;
+use App\Models\TipoAtributo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
