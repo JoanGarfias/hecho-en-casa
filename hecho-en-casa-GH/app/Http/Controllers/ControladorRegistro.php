@@ -36,4 +36,9 @@ class ControladorRegistro extends Controller
     public function contrasena(){
         return view('contrasena');
     }
+
+    public function guardarContrasena(Request $request){
+        dd($request->all());
+        $constrasena = $request->input('password');
+    }
 }

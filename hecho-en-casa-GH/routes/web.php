@@ -35,14 +35,12 @@ Route::get('/direccion', function(){
 
 Route::post('/direccion', [ControladorCalendario::class, 'index']);
 
-
-
-Route::post('/contrasena', [ControladorCalendario::class, 'index']);
-
+//REGISTRO DE USUARIO NUEVO
 Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar.index');
 Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.registro');
 
 Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena');
+Route::post('/contrasena', [ControladorRegistro::class, 'guardarContrasena'])->name('registrar.guardarContrasena');
 
 Route::get('/cerrar-sesion', [ControladorCalendario::class, 'index']);
 Route::delete('/cerrar-sesion', [ControladorCalendario::class, 'index']);
