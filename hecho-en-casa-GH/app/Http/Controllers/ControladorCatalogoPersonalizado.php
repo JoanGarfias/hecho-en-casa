@@ -53,7 +53,7 @@ class ControladorCatalogoPersonalizado extends Controller
         $horaEntrega = session('hora_entrega');
         $fecha_hora_entrega = Carbon::parse($fechaEscogida . ' ' . $horaEntrega); 
         $fecha_hora_registro = now();
-
+        $id_tipopostre = "personalizado";
 
         $sabor_pan = $request->input('sabor_pan');
         $relleno = $request->input('sabor_relleno');
@@ -65,7 +65,7 @@ class ControladorCatalogoPersonalizado extends Controller
         if (strpos($tipo_entrega, 'domicilio') === true) {
             session([
                 'sabor_pan' => $sabor_pan,
-                'id_tipopostre' => "personalizado",
+                'id_tipopostre' => $id_tipopostre,
                 'relleno' => $relleno,
                 'cobertura' => $cobertura,
                 'elementos' => $elementos,
@@ -81,7 +81,7 @@ class ControladorCatalogoPersonalizado extends Controller
         else{
             $pedido = Pedido::create([
                 'id_usuario' => $id_usuario,
-                'id_tipopostre' => "personalizado",
+                'id_tipopostre' => $id_tipopostre,
                 'porcionespedidas' => $porciones,
                 'status' => "pendiente",
                 'precio_final' => $costo,
