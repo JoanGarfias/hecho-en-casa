@@ -53,6 +53,7 @@ class ControladorCatalogoEmergente extends Controller
         session([
             'id_u' => "1",
             'fecha' => "2025-01-03",
+            'hora_entrega' => "12:00",
             'postre' => "30",
             'cantidad_minima' => "4",
         ]);
@@ -96,17 +97,15 @@ class ControladorCatalogoEmergente extends Controller
             dd("Error al guardar el postre emergente: ".$e->getMessage());
         }
         
-        $total = $postre->precio_emergentes;
-        
         $pedido = new Pedido;
         $pedido->id_usuario = session('id_u');
         $pedido->id_tipopostre = $postre->id_tipo_postre;
         $pedido->id_categoria_postre = $emergente->id_pt;//este es el id de la tabla postre emergente que se guardara en pedido
         $pedido->porcionespedidas = session('cantidad_pedida');
-        $pedido->fecha_hora_entrega = "2025-12-31 23:59:59"; 
+        $pedido->fecha_hora_entrega = session('fecha') . " " . session('hora_entrega'); 
         $pedido->fecha_hora_registro = now();
         $pedido->status = "pendiente";
-        $pedido->precio_final = $total;
+        $pedido->precio_final = $postre->precio_emergentes;
         
         try {
             $pedido->save();
@@ -119,5 +118,81 @@ class ControladorCatalogoEmergente extends Controller
         ]);
 
         return redirect()->route('pedido.resumen');   
+    }
+
+    public function seleccionarDireccion(Request $request){ 
+
+        $ubicacion = $request->input('ubicacion');
+        $id_usuario = $request->input('id_usuario');
+        //por defecto cargamos la ubicacion del usuario predeterminado
+        $user = usuario::where('id_u', $id_usuario)->first();
+        $codigo_postal = $user->Codigo_postal_u;
+        $estado = $user->estado_u;
+        $ciudad = $user->ciudad_u;
+        $colonia = $user->colonia_u;
+        $calle = $user->calle_u;
+        $numero = $user->num_exterior_u;
+
+        //si elige otra entocnes sobreescribimos los valores
+        if($ubicacion=='otra'){
+            $codigo_postal = $request->input('codigo_postal');
+            $estado = $request->input('estado');
+            $ciudad = $request->input('ciudad');
+            $colonia = $request->input('colonia');
+            $calle = $request->input('calle');
+            $numero = $request->input('numero');
+
+            //si elige volverla su ubicacion predeterminada entonces lo actualizamos en el perfil del usuario
+            if($request->has('predeterminado')){
+                $user->Codigo_postal_u = $codigo_postal;
+                $user->estado_u = $estado;
+                $user->ciudad_u = $ciudad;
+                $user->colonia_u = $colonia;
+                $user->calle_u = $calle;
+                $user->num_exterior_u = $numero;
+                $user->save();
+            }
+
+        }
+
+        $postre = Catalogo::where('id_postre', session('postre'))
+                            ->first();
+        
+        $emergente = new Postreemergente;
+        $emergente->id_postre_elegido = $postre->id_postre;
+        try{
+            $emergente->save();
+        }catch(\Exception $e){
+            dd("Error al guardar el postre emergente: ".$e->getMessage());
+        }
+
+        $pedido = new Pedido;
+        $pedido->id_usuario = session('id_u');
+        $pedido->id_tipopostre = $postre->id_tipo_postre;
+        $pedido->id_categoria_postre = $emergente->id_pt;//este es el id de la tabla postre emergente que se guardara en pedido
+        $pedido->estado_e = $estado;
+        $pedido->Codigo_postal_e = $codigo_postal;
+        $pedido->ciudad_e = $ciudad;
+        $pedido->colonia_e = $colonia;
+        $pedido->calle_e = $calle;
+        $pedido->num_exterior_e = $numero;
+        $pedido->porcionespedidas = session('cantidad_pedida');
+        $pedido->fecha_hora_entrega =  session('fecha') . " " . session('hora_entrega'); 
+        $pedido->fecha_hora_registro = now();
+        $pedido->status = "pendiente";
+        $pedido->precio_final = $postre->precio_emergentes;;
+        
+        try {
+            $pedido->save();
+        } catch (\Exception $e) {
+            dd("Error al guardar el pedido: " . $e->getMessage());
+        }
+        
+        session([
+            'folio' => $pedido->id_ped,
+        ]);
+
+        return redirect()->route('pedido.resumen');   
+
     }
 }
