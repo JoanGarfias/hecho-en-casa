@@ -209,17 +209,16 @@ class ControladorCatalogo extends Controller
                     $nombreunidad = UnidadMedida::where('id_um', $id_um)->first();  // Consulta 'UnidadMedida' usando 'id_um'
                     
                     if ($nombreunidad) {
-                        // Si existe un resultado en 'UnidadMedida', lo agregas al arreglo $unidades
                         $unidades[] = [
                             'nombreunidad' => $nombreunidad->nombre_unidad,  // 'nombre_unidad' de la tabla 'UnidadMedida'
-                            'cantidadporciones' => $nombreunidad->cantidad,  // Suponiendo que 'cantidad' está en 'UnidadMedida'
+                            'cantidadporciones' => $nombreunidad->cantidad,  // 'cantidad' está en 'UnidadMedida'
                         ];
                     }
                 }
 
-                session(['lista_unidad' => $unidades]);  // Guardas el arreglo en sesión
+                session(['lista_unidad' => $unidades]);  
             } else {
-                session(['lista_unidad' => 'No encontrado']);  // Si no hay resultados, guardas el mensaje
+                session(['lista_unidad' => 'No encontrado']); 
             }
         } else {
             return redirect()->route('seleccionarFecha')->with('error', 'Postre no encontrado.');
