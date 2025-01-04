@@ -8,8 +8,8 @@ use App\Http\Controllers\ControladorCatalogo;
 use App\Http\Controllers\ControladorCatalogoEmergente;
 use App\Http\Controllers\ControladorCatalogoPersonalizado;
 
-Route::get('/', [ControladorInicio::class, 'index']);
-Route::get('/inicio', [ControladorInicio::class, 'index']); 
+Route::get('/', [ControladorInicio::class, 'index'])->name('inicio');
+Route::get('/inicio', [ControladorInicio::class, 'index'])->name('inicio'); 
 Route::get('/calendario', [ControladorCalendario::class, 'index']);
 Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 
@@ -79,11 +79,11 @@ Route::get('/emergentes', [ControladorCatalogoEmergente::class, 'mostrar']);
 Route::get('emergentes/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario']);
 Route::post('emergentes/seleccionar-fecha', [ControladorCatalogo::class, 'seleccionarFecha']);
 
-Route::get('emergentes/detalles-pedido', [ControladorCatalogo::class, 'mostrarDetalles'])->name('emergente.pedido.get');
-Route::post('emergentes/detalles-pedido', [ControladorCatalogo::class, 'seleccionarDetalles'])->name('emergente.pedido.guardar');
+Route::get('emergentes/detalles-pedido', [ControladorCatalogoEmergente::class, 'mostrarDetalles'])->name('emergente.pedido');
+Route::post('emergentes/detalles-pedido', [ControladorCatalogoEmergente::class, 'seleccionarDetalles'])->name('pedido.guardar');
 
 Route::get('emergentes/detalles-direccion', [ControladorCatalogo::class, 'mostrarDireccion'])->name('pedido.direccion');
-Route::post('emergentes/detalles-direccion', [ControladorCatalogo::class, 'seleccionarDireccion'])->name('pedido.guardarDireccion');
+Route::post('emergentes/detalles-direccion', [ControladorCatalogoEmergente::class, 'seleccionarDireccion'])->name('pedido.guardarDireccion');
 
 Route::get('emergentes/ticket/', [ControladorCatalogo::class, 'mostrarTicket'])->name('pedido.resumen');
 
