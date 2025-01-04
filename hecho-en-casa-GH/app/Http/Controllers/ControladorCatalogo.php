@@ -269,8 +269,65 @@ class ControladorCatalogo extends Controller
     }
 
 
-    public function seleccionarDetalles(){
-        
+    public function seleccionarDetalles(Request $request){
+        $id_postre = session('postre');
+        $postre = Catalogo::where('id_postre', $id_postre)
+                            ->first();
+
+        $costo = intval($request->input('costo'));
+        $tipo_entrega = $request->input('tipo_entrega');
+        $id_usuario = session('id_u');
+
+        $fechaEscogida = session('fecha');
+        $horaEntrega = session('hora_entrega');
+        $fecha_hora_entrega = Carbon::parse($fechaEscogida . ' ' . $horaEntrega); 
+        $fecha_hora_registro = now();
+        $id_tipopostre = $postre->id_tipo_postre;
+
+        $porciones = 50; //prueba
+
+        $datos = [
+            'costo' => $costo,
+            'tipo_entrega' => $tipo_entrega,
+            'id_usuario' => $id_usuario,
+            'fecha_hora_entrega' => $fecha_hora_entrega,
+            'fecha_hora_registro' => $fecha_hora_registro,
+            'id_tipopostre' => $id_tipopostre,
+            'porciones' => $porciones,
+        ];
+
+        if ($tipo_entrega === "Domicilio") {
+            session([
+                'id_tipopostre' => $id_tipopostre,
+                'porciones' => $porciones,
+                'costo' => $costo,
+                'tipo_entrega' => $tipo_entrega,
+            ]);
+            return redirect()->route('fijo.direccion.get'); 
+        }
+        else{
+
+            /*$pastel = Postrefijo::create([
+                'id_pf' => session('id_cat'),
+                //'id_atributo' => 2,
+                'id_um' => 1,
+                'id_postre_elegido' => 37,
+            ]);*/
+            
+
+            $pedido = Pedido::create([
+                'id_usuario' => $id_usuario,
+                'id_seleccion_usuario' => session('id_cat'),
+                'id_tipopostre' => $id_tipopostre,
+                'porcionespedidas' => $porciones,
+                'status' => 'pendiente',
+                'precio_final' => $costo,
+                'fecha_hora_registro' => $fecha_hora_registro,
+                'fecha_hora_entrega' => $fecha_hora_entrega,
+            ]);
+
+            return redirect()->route('fijo.direccion.get'); 
+        }
     }
     
     public function mostrarDireccion(){
@@ -330,14 +387,6 @@ class ControladorCatalogo extends Controller
         
         return redirect()->route('pedido.resumen');
 
-    }
-
-    public function mostrarDetallesEntrega(){
-
-    }
-
-    public function seleccionarDetallesEntrega(Request $request){
-        
     }
     
     public function mostrarTicket(){
