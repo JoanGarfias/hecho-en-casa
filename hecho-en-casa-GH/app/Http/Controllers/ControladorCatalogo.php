@@ -262,7 +262,7 @@ class ControladorCatalogo extends Controller
         $sabor_postre = session('sabor_postre');
         $hora_entrega = session('hora_entrega');
         $nombre_categoria = session('nombre_categoria');
-        $lista_unidad = session('lista_unidad');
+        $lista_unidad = session('lista_unidad'); 
         $atributosSesion = session('atributosSesion');
 
         return view('detallesFijo', compact('fecha', 'sabor_postre', 'hora_entrega', 'nombre_categoria', 'lista_unidad', 'atributosSesion'));
