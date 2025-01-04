@@ -11,4 +11,16 @@ class usuario extends Model
     protected $table = 'usuario';
     protected $primaryKey = 'id_u';
     public $timestamps = false;
+    protected $hidden = [
+        'contraseña',
+        'token_sesion',
+        'token_recuperacion',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'password' => 'hashed',
+        ];
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\usuario;
 use Illuminate\Http\Request;
 
 class ControladorRegistro extends Controller
@@ -38,12 +39,31 @@ class ControladorRegistro extends Controller
     }
 
     public function guardarContrasena(Request $request){
-        $constrasena = $request->input('confirmacion');
-        session(['contrasena' => $constrasena]);
+        $contrasena = $request->input('confirmacion');
+        session(['contrasena' => $contrasena]);
         return redirect()->route('registrar.direccion'); 
     }
 
     public function mostrarDireccion(){
         return view('direccion');
+    }
+
+    public function guardarDireccion(Request $request){
+        $usuario = new usuario;
+        $usuario->correo_electronico = session('correo');
+        $usuario->nombre = session('nombre');
+        $usuario->apellido_paterno = session('apellido_paterno');
+        $usuario->apellido_materno = session('apellido_materno');
+        $usuario->telefono = session('telefono');
+        $usuario->Codigo_postal_u = $request->input('codigoPostal'); 
+        $usuario->estado_u = $request->input('estado');
+        $usuario->ciudad_u = $request->input('ciudad');
+        $usuario->colonia_u = $request->input('colonia');
+        $usuario->calle_u = $request->input('calle');
+        $usuario->num_exterior_u = $request->input('num'); ///<-----------AQUI SE TIENE QUE SEPARAR EN DOS CAMPOS
+        //$usuario->referencia_u = $request->input('referencia');
+        $usuario->contraseña = session('contrasena');
+        
+
     }
 }

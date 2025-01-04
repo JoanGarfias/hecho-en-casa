@@ -127,7 +127,8 @@ class ControladorCatalogoEmergente extends Controller
         $ciudad = $user->ciudad_u;
         $colonia = $user->colonia_u;
         $calle = $user->calle_u;
-        $numero = $user->num_exterior_u;
+        $numero = $user->num_exterior_u; ///<-----------AQUI SE TIENE QUE SEPARAR EN DOS CAMPOS
+        //$referencia = $user->referencia_u;
 
         //si elige otra entocnes sobreescribimos los valores
         if($ubicacion=='otra'){
@@ -136,7 +137,8 @@ class ControladorCatalogoEmergente extends Controller
             $ciudad = $request->input('ciudad');
             $colonia = $request->input('colonia');
             $calle = $request->input('calle');
-            $numero = $request->input('numero');
+            $numero = $request->input('numero'); ///<-----------AQUI SE TIENE QUE SEPARAR EN DOS CAMPOS
+            //$referencia = $request->input('referencia');
 
             //si elige volverla su ubicacion predeterminada entonces lo actualizamos en el perfil del usuario
             if($request->has('predeterminado')){
@@ -145,7 +147,8 @@ class ControladorCatalogoEmergente extends Controller
                 $user->ciudad_u = $ciudad;
                 $user->colonia_u = $colonia;
                 $user->calle_u = $calle;
-                $user->num_exterior_u = $numero;
+                $user->num_exterior_u = $numero; ///<-----------AQUI SE TIENE QUE SEPARAR EN DOS CAMPOS
+                //$user->referencia_u = $referencia;
                 $user->save();
             }
 
@@ -171,7 +174,8 @@ class ControladorCatalogoEmergente extends Controller
         $pedido->ciudad_e = $ciudad;
         $pedido->colonia_e = $colonia;
         $pedido->calle_e = $calle;
-        $pedido->num_exterior_e = $numero;
+        $pedido->num_exterior_e = $numero; ///<-------------------AQUI SE TIENE QUEE SEPARAR EN DOS CAMPOS
+        //$pedido->referencia_e = $referencia;
         $pedido->porcionespedidas = session('cantidad_pedida');
         $pedido->fecha_hora_entrega =  session('fecha') . " " . session('hora_entrega'); 
         $pedido->fecha_hora_registro = now();
