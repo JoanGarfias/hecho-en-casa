@@ -199,7 +199,7 @@ class ControladorCatalogo extends Controller
             'fecha' => "2025-01-07",
             'hora_entrega' => "01:03:33",
             'postre' => "27",
-            'cantidad_minima' => "15",
+            'cantidad_minima' => "6",
         ]);
 
         //COMO SON DATOS DIRECTOS NO ES NECESARIO ESTO
