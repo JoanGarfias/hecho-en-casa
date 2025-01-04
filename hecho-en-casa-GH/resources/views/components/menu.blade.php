@@ -28,7 +28,6 @@
                              <div class="dropdown-menu" id="menu-usuario">
                                 <button>Iniciar sesión</button>
                                 <button onclick="window.location.href='registrar/'">Registrarme</button>
-                                <a href="registrar/" class="btn">Registrarme</a>
 
                              </div>
                         </li> 
