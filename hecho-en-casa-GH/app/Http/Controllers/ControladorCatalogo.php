@@ -159,15 +159,10 @@ class ControladorCatalogo extends Controller
         switch($tipopostre){
             case "fijo":
                 return redirect()->route('fijo.detallesPedido.get');
-                break;
             case "personalizado":
                 return redirect()->route('personalizado.detallesPedido.get');
-                break;
-            case "emergente":
-                return redirect()->route('emergente.pedido.get');
-                break;
-            default:
-                return redirect()->route('inicio');
+            case "temporada": case "pop-up":
+                return redirect()->route('emergente.pedido');
         }
         /* return view('fechaSeleccionada', [
             'fecha' => $fechaEscogida,
@@ -175,7 +170,6 @@ class ControladorCatalogo extends Controller
             'porciones_dia' => $porciones_dia,
             'cantidad_minima' => $cantidad_minima,
         ]); */
-        return redirect()->route('');
     }
 
     public function mostrarDetalles(){
@@ -222,6 +216,7 @@ class ControladorCatalogo extends Controller
     public function seleccionarDetalles(){
         
     }
+    
     public function mostrarDireccion(){
         //AQUI DEBERIA JALAR EL ID DEL USUARIO DE ALGUN ALMACEN LOCAL PERO ESTO ES UNA PRUEBA
 
