@@ -17,6 +17,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh; /* Hace que el diseño esté centrado en pantalla */
+    margin-bottom: 10%;
 
 }
 
