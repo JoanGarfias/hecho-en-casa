@@ -7,6 +7,8 @@ use App\Http\Controllers\ControladorCalendario;
 use App\Http\Controllers\ControladorCatalogo;
 use App\Http\Controllers\ControladorCatalogoEmergente;
 use App\Http\Controllers\ControladorCatalogoPersonalizado;
+use App\Http\Controllers\ControladorLogIn;
+use App\Http\Controllers\ControladorRegistro;
 
 Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 
@@ -23,7 +25,7 @@ Route::get('/iniciar-sesion', function(){
     return view('iniciar-sesion');
 });
 
-Route::post('/iniciar-sesion', [ControladorCalendario::class, 'index']);
+Route::post('/iniciar-sesion', [ControladorLogIn::class, 'index'])->name('login.index');
 
 Route::get('/direccion', function(){
     return view('direccion');
@@ -31,14 +33,14 @@ Route::get('/direccion', function(){
 
 Route::post('/direccion', [ControladorCalendario::class, 'index']);
 
-Route::get('/contrasena', function(){
-    return view('contrasena');
-});
+
 
 Route::post('/contrasena', [ControladorCalendario::class, 'index']);
 
-Route::get('/registrar', [ControladorCalendario::class, 'index']);
-Route::post('/registrar', [ControladorCalendario::class, 'index']);
+Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar.index');
+Route::post('/registrar', [ControladorCalendario::class, 'registrar'])->name('registrar.registro');
+
+Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena');
 
 Route::get('/cerrar-sesion', [ControladorCalendario::class, 'index']);
 Route::delete('/cerrar-sesion', [ControladorCalendario::class, 'index']);
