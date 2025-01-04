@@ -2,6 +2,7 @@
 <title>Iniciar sesión</title>
 <x-menu />    
 
+<div class="flexi">
 <div class = "contenedor">         
     <form action="procesar.php" method="POST" id = "inicioSesion">
         <h2>Iniciar sesión</h2>
@@ -27,6 +28,7 @@
         <button class="botoncito" type="submit" name="action" value="login" onclick="validateForm()">Continuar</button>
     </div>
 </form>
+</div>
 </div>
 <x-pie/>
 
