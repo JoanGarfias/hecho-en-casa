@@ -57,6 +57,8 @@ Route::get('fijo/ticket/{folio}', [ControladorCatalogo::class, 'mostrarTicket'])
 
 
 Route::get('/personalizados', [ControladorCatalogoPersonalizado::class, 'mostrarCatalogo'])->name('personalizado.catalogo.get');
+Route::post('/personalizados', [ControladorCatalogoPersonalizado::class, 'seleccionarCatalogo'])->name('personalizado.catalogo.get');
+
 
 Route::get('personalizado/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])->name('personalizado.calendario.get');
 Route::post('personalizado/seleccionar-fecha', [ControladorCatalogo::class, 'seleccionarFecha'])->name('personalizado.calendario.post');
