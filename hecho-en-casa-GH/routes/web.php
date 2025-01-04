@@ -5,12 +5,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControladorInicio;
 use App\Http\Controllers\ControladorCalendario;
 use App\Http\Controllers\ControladorCatalogo;
+use App\Http\Controllers\ControladorIniciarSesion;
+use App\Http\Controllers\ControladorRegistrar;
 
 Route::get('/', [ControladorInicio::class, 'index']);
 Route::get('/inicio', [ControladorInicio::class, 'index']);
+
 Route::get('/calFijo', function(){
     return view('calFijo');
 });
+
+
 Route::post('/calFijo', [ControladorCalendario::class, 'index']);
 
 Route::get('/calEdit', function(){
@@ -33,12 +38,15 @@ Route::post('/calEdit', [ControladorCalendario::class, 'index']);
 Route::get('/perfil', [ControladorCalendario::class, 'index']);
 Route::put('/perfil', [ControladorCalendario::class, 'index']);
 
-/*Route::get('/iniciar-sesion', [ControladorCalendario::class, 'index']);*/
+//Route::get('/iniciar-sesion', [ControladorCalendario::class, 'index']);
 Route::get('/iniciar-sesion', function(){
     return view('iniciar-sesion');
 });
 
-Route::post('/iniciar-sesion', [ControladorCalendario::class, 'index']);
+Route::post('/iniciar-sesion', [ControladorIniciarSesion::class, 'index']);
+
+
+//Route::post('/iniciar-sesion', [ControladorCalendario::class, 'index']);
 
 Route::get('/direccion', function(){
     return view('direccion');
@@ -52,15 +60,13 @@ Route::get('/contrasena', function(){
 
 Route::post('/contrasena', [ControladorCalendario::class, 'index']);
 
-Route::get('/registrar', [ControladorCalendario::class, 'index']);
-Route::post('/registrar', [ControladorCalendario::class, 'index']);
+Route::get('/calendario', [ControladorCalendario::class, 'index']);
+Route::post('/calendario', [ControladorCalendario::class, 'index']);
 
 Route::get('/cerrar-sesion', [ControladorCalendario::class, 'index']);
 Route::delete('/cerrar-sesion', [ControladorCalendario::class, 'index']);
 
 Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);
-
-
 
 /*
 
