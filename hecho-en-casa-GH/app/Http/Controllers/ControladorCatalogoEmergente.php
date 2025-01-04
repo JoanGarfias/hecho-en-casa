@@ -86,7 +86,7 @@ class ControladorCatalogoEmergente extends Controller
         }catch(\Exception $e){
             dd("Error al guardar el postre emergente: ".$e->getMessage());
         }
-        
+
         $pedido = new Pedido;
         $pedido->id_usuario = session('id_u');
         $pedido->id_tipopostre = $postre->id_tipo_postre;
@@ -103,6 +103,12 @@ class ControladorCatalogoEmergente extends Controller
             dd("Error al guardar el pedido: " . $e->getMessage());
         }
         
+        //para reducir su stock en caso de que tenga si es null entonces no maneja stock
+        if($postre->stock != null){
+            $postre->stock = $postre->stock - session('cantidad_pedida');
+            $postre->save();
+        }
+
         session([
             'folio' => $pedido->id_ped,
         ]);
