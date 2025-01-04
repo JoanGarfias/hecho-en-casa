@@ -16,13 +16,17 @@ Route::post('/calFijo', [ControladorCalendario::class, 'index']);
 Route::get('/calEdit', function(){
     return view('calEdit');
 });
-
 Route::post('/calEdit', [ControladorCalendario::class, 'index']);
 
 Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 
 Route::get('/buscarpedido', [ControladorCalendario::class, 'index']);
 Route::post('/buscarpedido', [ControladorCalendario::class, 'index']);
+
+Route::get('/pedidos', function(){
+    return view('pedidos');
+});
+Route::post('/pedidos', [ControladorCalendario::class, 'index']);
 
 /*INICIO DE SESIÓN */
 
@@ -55,6 +59,8 @@ Route::get('/cerrar-sesion', [ControladorCalendario::class, 'index']);
 Route::delete('/cerrar-sesion', [ControladorCalendario::class, 'index']);
 
 Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);
+
+
 
 /*
 
