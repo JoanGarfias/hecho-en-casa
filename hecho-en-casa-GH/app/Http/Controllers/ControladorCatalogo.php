@@ -113,11 +113,15 @@ class ControladorCatalogo extends Controller
     public function seleccionarFecha(Request $request)
     {
 
-        $fechaEscogida = $request->input('fecha');
-        $horaEscogida = $request->input('hora');
+        $fechaEscogida = "2025-01-08";
+        $horaEntrega = "12:00";
         $postre = session('id_postre');
         $tipopostre = session('id_tipopostre');
     
+        session(['fecha_entrega' => $fechaEscogida]);
+        session(['hora_entrega' => $horaEntrega]);
+
+
         $pedidos_dia = Cache::remember('pedidosdia', 30, function () use ($fechaEscogida) {
             return Pedido::select('fecha_hora_entrega', 'porcionespedidas')
                 ->whereIn('id_tipopostre', ['fijo', 'personalizado'])
@@ -153,9 +157,7 @@ class ControladorCatalogo extends Controller
                 ]);
 
                 session([
-                    'fecha' => $fechaEscogida,
                     'postre' => $postre,
-                    'hora_entrega'=> $horaEscogida,
                     'porciones_dia' => $porciones_dia,
                     'cantidad_minima' => $cantidad_minima,
                 ]);
@@ -165,7 +167,6 @@ class ControladorCatalogo extends Controller
                 session([
                     'fecha' => $fechaEscogida,
                     'postre' => $postre,
-                    'hora_entrega'=> $horaEscogida,
                     'porciones_dia' => $porciones_dia,
                 ]);
 
@@ -174,7 +175,6 @@ class ControladorCatalogo extends Controller
                 session([
                     'fecha' => $fechaEscogida,
                     'postre' => $postre,
-                    'hora_entrega'=> $horaEscogida,
                     'porciones_dia' => $porciones_dia,
                 ]);
 

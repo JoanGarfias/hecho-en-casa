@@ -3,83 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personalizar</title>
+    <title>Detalles del Pastel Personalizado</title>
 </head>
 <body>
-    <h1>Personalizar tu pastel</h1>
+    <h1>Detalles del Pastel Personalizado</h1>
+    
+    <!-- Formulario para enviar los datos -->
+    <form method="POST" action="{{ route('personalizado.detallesPedido.post') }}">
+        @csrf <!-- Token de seguridad para formularios en Laravel -->
 
-    <form action="{{ route('fijo.detallesPedido.get') }}" method="POST">
-        @csrf
+        <!-- Sabores -->
+        <label for="sabor">Selecciona el sabor del pan:</label>
+        <select name="sabor_pan" id="sabor">
+            @foreach($sabores as $sabor)
+                <option value="{{ $sabor->id_sp }}">
+                    {{ $sabor->nom_pan }} ({{ $sabor->precio_p }} MXN)
+                </option>
+            @endforeach
+        </select>
+        <br><br>
 
-        <label for="fecha-entrega">Fecha de entrega:</label>
-        <input type="date" id="fecha-entrega" name="fecha_entrega" value="{{ session('fecha') }}">
-        @error('fecha_entrega')
-            <p style="color: red; font-size: 12px;">{{ $message }}</p>
-        @enderror
+        <!-- Rellenos -->
+        <label for="relleno">Selecciona el relleno:</label>
+        <select name="sabor_relleno" id="relleno">
+            @foreach($rellenos as $relleno)
+                <option value="{{ $relleno->id_sr }}">
+                    {{ $relleno->nom_relleno }} ({{ $relleno->precio_sr }} MXN)
+                </option>
+            @endforeach
+        </select>
+        <br><br>
 
-        <label for="hora_entrega">Hora de entrega:</label>
-        <input type="time" id="hora_entrega" name="hora_entrega" value="{{ session('hora_entrega') }}">
-        @error('hora_entrega')
-            <p style="color: red; font-size: 12px;">{{ $message }}</p>
-        @enderror
+        <!-- Coberturas -->
+        <label for="cobertura">Selecciona la cobertura:</label>
+        <select name="cobertura" id="cobertura">
+            @foreach($coberturas as $cobertura)
+                <option value="{{ $cobertura->id_c }}">
+                    {{ $cobertura->nom_cobertura }} ({{ $cobertura->precio_c }} MXN)
+                </option>
+            @endforeach
+        </select>
+        <br><br>
 
-        <label for="nombre_categoria">Tipo de postre:</label>
-        <input type="text" id="nombre_categoria" name="nombre_categoria" value="{{ session('nombre_categoria') }}">
-        @error('nombre_categoria')
-            <p style="color: red; font-size: 12px;">{{ $message }}</p>
-        @enderror
+        <!-- Elementos -->
+        <label for="elementos">Selecciona elementos adicionales:</label>
+        <select name="elementos[]" id="elementos" multiple>
+            @foreach($elementos as $elemento)
+                <option value="{{ $elemento->id_e }}">
+                    {{ $elemento->nom_elemento }} ({{ $elemento->precio_e }} MXN)
+                </option>
+            @endforeach
+        </select>
 
-        <label for="sabor_postre">sabor:</label>
-        <input type="text" id="sabor_postre" name="sabor_postre" value="{{ session('sabor_postre') }}">
-        @error('sabor_postre')
-            <p style="color: red; font-size: 12px;">{{ $message }}</p>
-        @enderror
+        <br><br>
+        <label>Tipo de entrega:</label>
+        <select name="tipo_entrega" id="entrega">
+            <option value="domicilio">Envío a domiclio</option>
+            <option value="sucursal">Recoge en sucursal</option>
+        </select>
 
-        <label for="unidad_m"> 
-            {{ session('lista_unidad')[0]['nombreunidad'] == 'Porciones' ? 'porciones:' : 
-               (session('lista_unidad')[0]['nombreunidad'] == 'Piezas' ? 'piezas:' : 
-               (session('lista_unidad')[0]['nombreunidad'] == 'Piezas Mini' ? 'piezas mini:' : 'Cantidad:')) }}
-        </label>        
-        <!--Ahi va la variable nombre_unidad-->
-        <select id="unidadm" name="unidadm">
-            @if (session('lista_unidad') && count(session('lista_unidad')) > 0)
-                @foreach (session('lista_unidad') as $unidad)
-                    <option value="{{ $unidad['cantidadporciones'] }}">{{ $unidad['cantidadporciones'] }} {{ $unidad['nombreunidad'] }}</option>
-                @endforeach
-            @else
-                <option>No hay opciones disponibles</option>
-            @endif
+        <br><br>
+
+        <label>Tematica:</label>
+        <select name="tematica" id="tematica">
+            <option>XV Años</option>
+            <option>Cumpleaños</option>
+            <option>Boda</option>
+            <option>Bautizo</option>
         </select>
         
-        @error('unidadm')
-            <p style="color: red; font-size: 12px;">{{ $message }}</p>
-        @enderror
-        
+        <br><br>
+        <label>Imagen:</label><br>
+        <textarea name="imagen" id="imagen" rows="4" cols="50"></textarea>
 
-        <label for="cantidad">Cantidad:</label>
-        <input type="number" id="cantidad" name="cantidad" min="{{session('cantidad_minima')}}" value="{{session('cantidad_minima')}}">
-        {{-- <p>Quedan XX porciones disponibles.</p> --}}
-        @error('cantidad')
-            <p style="color: red; font-size: 12px;">{{ $message }}</p>
-        @enderror
+        <br><br>
+        <label>Descripción:</label><br>
+        <textarea name="descripcion" id="descripcion" rows="4" cols="50"></textarea>
 
         <br>
+        <label>Costo:</label><br>
+        <input type="number" name="costo" value="800" min="100" max="800"></input>
         <br>
-        <label>Tipo de entrega:</label>
-        <br>
-        <br>
-        <div>
-            <label><input type="radio" name="tipo_entrega" value="sucursal" {{ old('tipo_entrega') == 'sucursal' ? 'checked' : '' }}> Recoger en sucursal</label>
-            <label><input type="radio" name="tipo_entrega" value="domicilio" {{ old('tipo_entrega') == 'domicilio' ? 'checked' : '' }}> Envío a domicilio</label>
-        </div>
-        @error('tipo_entrega')
-            <p style="color: red; font-size: 12px;">{{ $message }}</p>
-        @enderror
+        <label>Porciones:</label><br>
+        <input type="number" name="porciones"></input>
 
-        <p class="costo">Costo: $200</p>
-        <p class="nota">NOTA: El costo es aproximado.</p>
-
-        <button type="submit">Continuar</button>
+        <br><br>
+        <!-- Botón de envío -->
+        <button type="submit">Guardar selección</button>
     </form>
 </body>
 </html>
