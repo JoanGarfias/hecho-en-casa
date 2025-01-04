@@ -180,7 +180,7 @@ class ControladorCatalogo extends Controller
             'id_u' => "1",
             'fecha' => "2025-01-07",
             'hora_entrega' => "01:03:33",
-            'postre' => "38",
+            'postre' => "4",
             'cantidad_minima' => "15",
         ]);
 
@@ -207,8 +207,8 @@ class ControladorCatalogo extends Controller
             $listaunidad = PostreFijoUnidad::where('id_pf', $postre->id_postre)->pluck('id_um'); // Obtener solo la columna 'id_um'
             if ($listaunidad->isNotEmpty()) {
                 $unidades = []; 
-                foreach ($listaunidad as $id_um) {  // Ahora recorres la lista de 'id_um'
-                    $nombreunidad = UnidadMedida::where('id_um', $id_um)->first();  // Consulta 'UnidadMedida' usando 'id_um'
+                foreach ($listaunidad as $id_um) {  // Ahora recorro la lista de 'id_um'
+                    $nombreunidad = UnidadMedida::where('id_um', $id_um)->first();  //'UnidadMedida' usando 'id_um'
                     
                     if ($nombreunidad) {
                         $unidades[] = [
@@ -222,6 +222,13 @@ class ControladorCatalogo extends Controller
             } else {
                 session(['lista_unidad' => 'No encontrado']); 
             }
+            // Opciones de personalización
+            $personalizaciones = AtributosExtra::where('id_tipo_postre', $categoria->id_cat)->get();
+            $saborfrost = $personalizaciones->where('id_tipo_atributo', '2')->pluck('nom_atributo')->toArray();
+            $toppings = $personalizaciones->where('id_tipo_atributo', '1')->pluck('nom_atributo')->toArray();
+            $saborcubierta = $personalizaciones->where('id_tipo_atributo', '3')->pluck('nom_atributo')->toArray();
+            $forma = $personalizaciones->where('id_tipo_atributo', '4')->pluck('nom_atributo')->toArray();
+            session(['saborfrost' => $saborfrost, 'toppings' => $toppings, 'saborcubierta' => $saborcubierta, 'forma' => $forma]);
         } else {
             return redirect()->route('seleccionarFecha')->with('error', 'Postre no encontrado.');
         }
@@ -231,8 +238,12 @@ class ControladorCatalogo extends Controller
         $hora_entrega = session('hora_entrega');
         $nombre_categoria = session('nombre_categoria');
         $lista_unidad = session('lista_unidad');
+        $saborfrost = session('saborfrost');
+        $toppings = session('toppings');
+        $saborcubierta = session('saborcubierta');
+        $forma = session('forma');
 
-        return view('detallesFijo', compact('fecha', 'sabor_postre', 'hora_entrega', 'nombre_categoria', 'lista_unidad'));
+        return view('detallesFijo', compact('fecha', 'sabor_postre', 'hora_entrega', 'nombre_categoria', 'lista_unidad', 'saborfrost', 'toppings', 'saborcubierta', 'forma'));
     }
 
 
