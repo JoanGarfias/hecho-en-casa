@@ -5,7 +5,8 @@
 
 <div class="flexi">
     <div class = "contenedor"><!-- café-->
-        <form id="formularioRegistro" action="" method="">
+        <form id="formularioRegistro" action="POST" method="{{route('registrar.registro')}}">
+            @csrf
             <h2 class="titule">Regístrate</h2>
             
             <label for="name" id = "campos">Nombre:</label>
@@ -50,7 +51,6 @@
     </div>
 </div>
 
-<x-pie/>
 
     <script src="{{ asset('js/registrando.js') }}"></script>
     <!--Para la animación del logo de usuario-->
