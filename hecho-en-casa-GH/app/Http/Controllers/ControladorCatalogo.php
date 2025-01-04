@@ -11,6 +11,7 @@ use App\Models\Pedido;
 use App\Models\Postreemergente;
 use App\Models\Postrefijo;
 use App\Models\PostreFijoUnidad;
+use App\Models\UnidadMedida;
 use App\Models\usuario;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -178,7 +179,7 @@ class ControladorCatalogo extends Controller
             'id_u' => "1",
             'fecha' => "2025-01-07",
             'hora_entrega' => "01:03:33",
-            'postre' => "4",
+            'postre' => "2",
             'cantidad_minima' => "15",
         ]);
 
@@ -188,7 +189,6 @@ class ControladorCatalogo extends Controller
         //}
 
         $postre = Catalogo::where('id_postre', session('postre'))->first();
-
         if ($postre) {
             session([
                 'sabor_postre' => $postre->nombre,
@@ -201,6 +201,27 @@ class ControladorCatalogo extends Controller
             } else {
                 session(['nombre_categoria' => 'Categoría no encontrada']);
             }
+
+            //$listaunidad = PostreFijoUnidad::where('id_pf', $postre->id_postre)->get();
+            $listaunidad = PostreFijoUnidad::where('id_pf', $postre->id_postre)->pluck('id_um'); // Obtener solo la columna 'id_um'
+            if ($listaunidad->isNotEmpty()) {
+                $unidades = []; 
+                foreach ($listaunidad as $id_um) {  // Ahora recorres la lista de 'id_um'
+                    $nombreunidad = UnidadMedida::where('id_um', $id_um)->first();  // Consulta 'UnidadMedida' usando 'id_um'
+                    
+                    if ($nombreunidad) {
+                        // Si existe un resultado en 'UnidadMedida', lo agregas al arreglo $unidades
+                        $unidades[] = [
+                            'nombreunidad' => $nombreunidad->nombre_unidad,  // 'nombre_unidad' de la tabla 'UnidadMedida'
+                            'cantidadporciones' => $nombreunidad->cantidad,  // Suponiendo que 'cantidad' está en 'UnidadMedida'
+                        ];
+                    }
+                }
+
+                session(['lista_unidad' => $unidades]);  // Guardas el arreglo en sesión
+            } else {
+                session(['lista_unidad' => 'No encontrado']);  // Si no hay resultados, guardas el mensaje
+            }
         } else {
             return redirect()->route('seleccionarFecha')->with('error', 'Postre no encontrado.');
         }
@@ -209,8 +230,9 @@ class ControladorCatalogo extends Controller
         $sabor_postre = session('sabor_postre');
         $hora_entrega = session('hora_entrega');
         $nombre_categoria = session('nombre_categoria');
+        $lista_unidad = session('lista_unidad');
 
-        return view('detallesFijo', compact('fecha', 'sabor_postre', 'hora_entrega', 'nombre_categoria'));
+        return view('detallesFijo', compact('fecha', 'sabor_postre', 'hora_entrega', 'nombre_categoria', 'lista_unidad'));
     }
 
 
