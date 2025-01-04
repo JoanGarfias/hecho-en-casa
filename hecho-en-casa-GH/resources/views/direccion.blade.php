@@ -8,5 +8,11 @@
 </head>
 <body>
     <h1>Detalles de domicilio</h1>
+
+    <script>
+        let datos = @json($datos);
+        console.log(datos);
+    </script>
+
 </body>
 </html>

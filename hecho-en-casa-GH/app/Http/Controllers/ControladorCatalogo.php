@@ -165,6 +165,7 @@ class ControladorCatalogo extends Controller
                 ]);
 
                 return redirect()->route('fijo.detallesPedido.get');
+                break;
             case "personalizado":
                 session([
                     'fecha' => $fechaEscogida,
@@ -173,6 +174,7 @@ class ControladorCatalogo extends Controller
                 ]);
 
                 return redirect()->route('personalizado.detallesPedido.get');
+                break;
             case "temporada": case "pop-up":
                 session([
                     'fecha' => $fechaEscogida,
@@ -181,6 +183,7 @@ class ControladorCatalogo extends Controller
                 ]);
 
                 return redirect()->route('emergente.pedido');
+                break;
         }
         /* return view('fechaSeleccionada', [
             'fecha' => $fechaEscogida,
