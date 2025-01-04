@@ -23,6 +23,6 @@
         </div>    
     </div>
 </main>
-
+<x-pie/>
 <!--Para la animación del logo de usuario-->
 <script src="{{ asset('js/icono.js') }}" defer></script>
