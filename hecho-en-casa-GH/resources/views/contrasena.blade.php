@@ -1,7 +1,7 @@
-<x-menu />
-    <title>Registro</title>
-    <link rel="stylesheet" href="{{ asset('css/estilosRegistro.css') }}">
+<link rel="stylesheet" href="{{ asset('css/estilosRegistro.css') }}">
     <link rel="stylesheet" href="{{ asset('css/estilosContra.css') }}">
+    <title>Registro</title>
+    <x-menu />
 
 <div class="flexi">
     <div class = "contenedor"><!-- café-->
@@ -28,4 +28,8 @@
     </div>
 </div>
 
+<x-pie/>
+
 <script src="{{ asset('js/validarContrasena.js') }}"></script>
+<!--Para la animación del logo de usuario-->
+<script src="{{ asset('js/icono.js') }}" defer></script>

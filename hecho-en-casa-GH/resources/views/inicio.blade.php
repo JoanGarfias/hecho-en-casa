@@ -1,5 +1,3 @@
-
-
 <link rel="stylesheet" href="{{ asset('css/cuerpo.css') }}"> <!-- Ruta absoluta -->
 <title>Inicio</title>
 <x-menu />
@@ -25,4 +23,6 @@
         </div>    
     </div>
 </main>
+
+<!--Para la animación del logo de usuario-->
 <script src="{{ asset('js/icono.js') }}" defer></script>
