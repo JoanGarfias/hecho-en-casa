@@ -10,6 +10,8 @@ use App\Http\Controllers\ControladorCatalogoPersonalizado;
 use App\Http\Controllers\ControladorLogIn;
 use App\Http\Controllers\ControladorRegistro;
 
+Route::get('/', [ControladorInicio::class, 'index']);
+
 Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 
 Route::get('/buscarpedido', [ControladorCalendario::class, 'index']);
@@ -38,7 +40,7 @@ Route::post('/direccion', [ControladorCalendario::class, 'index']);
 Route::post('/contrasena', [ControladorCalendario::class, 'index']);
 
 Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar.index');
-Route::post('/registrar', [ControladorCalendario::class, 'registrar'])->name('registrar.registro');
+Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.registro');
 
 Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena');
 
