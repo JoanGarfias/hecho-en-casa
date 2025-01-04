@@ -1,4 +1,6 @@
+
 .piePa img{
-    width: 2216px; /*Ancho*/
-    height: 237px; /* Alto*/
+    width: 100%; /*Ancho*/
+    max-width: 2216px; 
+    height: 15%; /* Alto*/
 }

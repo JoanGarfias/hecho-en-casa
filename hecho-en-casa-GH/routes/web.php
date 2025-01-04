@@ -9,7 +9,17 @@ use App\Http\Controllers\ControladorCatalogoEmergente;
 
 Route::get('/', [ControladorInicio::class, 'index']);
 Route::get('/inicio', [ControladorInicio::class, 'index']);
-Route::get('/calendario', [ControladorCalendario::class, 'index']);
+Route::get('/calFijo', function(){
+    return view('calFijo');
+});
+Route::post('/calFijo', [ControladorCalendario::class, 'index']);
+
+Route::get('/calEdit', function(){
+    return view('calEdit');
+});
+
+Route::post('/calEdit', [ControladorCalendario::class, 'index']);
+
 Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 
 Route::get('/buscarpedido', [ControladorCalendario::class, 'index']);
@@ -20,8 +30,24 @@ Route::post('/buscarpedido', [ControladorCalendario::class, 'index']);
 Route::get('/perfil', [ControladorCalendario::class, 'index']);
 Route::put('/perfil', [ControladorCalendario::class, 'index']);
 
-Route::get('/iniciar-sesion', [ControladorCalendario::class, 'index']);
+/*Route::get('/iniciar-sesion', [ControladorCalendario::class, 'index']);*/
+Route::get('/iniciar-sesion', function(){
+    return view('iniciar-sesion');
+});
+
 Route::post('/iniciar-sesion', [ControladorCalendario::class, 'index']);
+
+Route::get('/direccion', function(){
+    return view('direccion');
+});
+
+Route::post('/direccion', [ControladorCalendario::class, 'index']);
+
+Route::get('/contrasena', function(){
+    return view('contrasena');
+});
+
+Route::post('/contrasena', [ControladorCalendario::class, 'index']);
 
 Route::get('/registrar', [ControladorCalendario::class, 'index']);
 Route::post('/registrar', [ControladorCalendario::class, 'index']);
