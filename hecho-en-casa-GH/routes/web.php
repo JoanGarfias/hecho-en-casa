@@ -7,6 +7,10 @@ use App\Http\Controllers\ControladorCalendario;
 use App\Http\Controllers\ControladorCatalogo;
 use App\Http\Controllers\ControladorCatalogoEmergente;
 use App\Http\Controllers\ControladorCatalogoPersonalizado;
+use App\Http\Controllers\ControladorLogIn;
+use App\Http\Controllers\ControladorRegistro;
+
+Route::get('/', [ControladorInicio::class, 'index']);
 
 Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 
@@ -23,7 +27,7 @@ Route::get('/iniciar-sesion', function(){
     return view('iniciar-sesion');
 });
 
-Route::post('/iniciar-sesion', [ControladorCalendario::class, 'index']);
+Route::post('/iniciar-sesion', [ControladorLogIn::class, 'index'])->name('login.index');
 
 Route::get('/direccion', function(){
     return view('direccion');
@@ -31,14 +35,12 @@ Route::get('/direccion', function(){
 
 Route::post('/direccion', [ControladorCalendario::class, 'index']);
 
-Route::get('/contrasena', function(){
-    return view('contrasena');
-});
+//REGISTRO DE USUARIO NUEVO
+Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar.index');
+Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.registro');
 
-Route::post('/contrasena', [ControladorCalendario::class, 'index']);
-
-Route::get('/registrar', [ControladorCalendario::class, 'index']);
-Route::post('/registrar', [ControladorCalendario::class, 'index']);
+Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena');
+Route::post('/contrasena', [ControladorRegistro::class, 'guardarContrasena'])->name('registrar.guardarContrasena');
 
 Route::get('/cerrar-sesion', [ControladorCalendario::class, 'index']);
 Route::delete('/cerrar-sesion', [ControladorCalendario::class, 'index']);
@@ -79,10 +81,10 @@ Route::post('personalizado/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalo
 Route::get('personalizado/detalles-pedido', [ControladorCatalogoPersonalizado::class, 'mostrarDetalles'])->name('personalizado.detallesPedido.get');
 Route::post('personalizado/detalles-pedido', [ControladorCatalogoPersonalizado::class, 'seleccionarDetalles'])->name('personalizado.detallesPedido.post');
 
-Route::get('personalizado/detalles-direccion', [ControladorCatalogo::class, 'mostrarDireccion'])->name('personalizado.direccion.get');
-Route::post('personalizado/detalles-direccion', [ControladorCatalogo::class, 'guardarDireccion'])->name('personalizado.direccion.post');
+Route::get('personalizado/detalles-direccion', [ControladorCatalogoPersonalizado::class, 'mostrarDireccion'])->name('personalizado.direccion.get');
+Route::post('personalizado/detalles-direccion', [ControladorCatalogoPersonalizado::class, 'guardarDireccion'])->name('personalizado.direccion.post');
 
-Route::get('personalizado/ticket/{folio}', [ControladorCatalogo::class, 'mostrar-ticket'])->name('personalizado.ticket.get');
+Route::get('personalizado/ticket/{folio}', [ControladorCatalogoPersonalizado::class, 'mostrarTicket'])->name('personalizado.ticket.get');
 
 
 

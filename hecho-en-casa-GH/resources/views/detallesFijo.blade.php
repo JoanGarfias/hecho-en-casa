@@ -61,6 +61,17 @@
             <p style="color: red; font-size: 12px;">{{ $message }}</p>
         @enderror
 
+        @if (!empty($atributosSesion))
+            @foreach ($atributosSesion as $nombreTipo => $atributos)
+                <label for="{{ strtolower($nombreTipo) }}">{{ ucfirst($nombreTipo) }}:</label>
+                <select id="{{ strtolower($nombreTipo) }}" name="{{ strtolower($nombreTipo) }}">
+                    @foreach ($atributos as $atributo)
+                        <option value="{{ $atributo }}">{{ ucfirst($atributo) }}</option>
+                    @endforeach
+                </select>
+            @endforeach
+        @endif
+
         <br>
         <br>
         <label>Tipo de entrega:</label>
@@ -74,9 +85,10 @@
             <p style="color: red; font-size: 12px;">{{ $message }}</p>
         @enderror
 
-        <p class="costo">Costo: $200</p>
-        <p class="nota">NOTA: El costo es aproximado.</p>
-
+        <br>
+        <label>Costo:</label><br>
+        <input type="number" name="costo" value="0" min="100" max="1000"></input>
+        <br><br>
         <button type="submit">Continuar</button>
     </form>
 </body>

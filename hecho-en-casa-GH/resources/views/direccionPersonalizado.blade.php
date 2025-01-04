@@ -9,6 +9,17 @@
 <body>
     <h1>Detalles de domicilio</h1>
 
+    <form method="POST" action="{{ route('personalizado.direccion.post') }}">
+        @csrf
+        <select name="tipo_domicilio" id="domicilio">
+            <option value="Default">Domicilio por defecto</option>
+            <option value="Nueva">Nueva ubicación</option>
+        </select>
+
+        <button type="submit">Siguiente</button>
+
+    </form>
+
     <script>
         let datos = @json($datos);
         console.log(datos);
