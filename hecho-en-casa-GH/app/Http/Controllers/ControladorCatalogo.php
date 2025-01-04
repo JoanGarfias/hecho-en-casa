@@ -159,13 +159,10 @@ class ControladorCatalogo extends Controller
         switch($tipopostre){
             case "fijo":
                 return redirect()->route('fijo.detallesPedido.get');
-                break;
             case "personalizado":
                 return redirect()->route('personalizado.detallesPedido.get');
-                break;
             case "emergente":
                 return redirect()->route('emergente.pedido.get');
-                break;
         }
         /* return view('fechaSeleccionada', [
             'fecha' => $fechaEscogida,
