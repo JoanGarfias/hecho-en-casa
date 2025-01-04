@@ -7,22 +7,28 @@
     <div class = "contenedor"><!-- café-->
         <form id="validandoContra" action="" method="">
             <h2 class="titule">Regístrate</h2>
-            
-            <label for="password" id = "campos">Contraseña:</label>
-            <input type="password" id="password" name="password" required>
+            <br>
+            <label for="password" class = "campos">Contraseña:</label>
+            <div class="campo-contrasena">
+                <input type="password" id="password" name="password" required>
+                <i class="fi fi-rs-crossed-eye visibility" onclick="visibility('password', this)"></i>
+            </div>
             <div class="mensaje">
-            <p id="errorPass" class="error"></p>
-            <p id="bienPass" class="bien"></p>
+                <p id="errorPass" class="error"></p>
+                <p id="bienPass" class="bien"></p>
             </div>
             <br>
 
-            <label for="confirmacion" id = "campos">Confirmar contraseña:</label>
-            <input type="password" id="confirmacion" name="confirmacion" required>
-            <div class="mensaje">
-            <p id="errorConfirmacion" class="error"></p>
-            <p id="bienConfirmacion" class="bien"></p>
+            <label for="confirmacion" class = "campos">Confirmar contraseña:</label>
+            <div class="campo-contrasena">
+                <input type="password" id="confirmacion" name="confirmacion" required>
+                <i class="fi fi-rs-crossed-eye visibility" onclick="visibility('confirmacion', this)"></i>
             </div>
-
+            <div class="mensaje">
+                <p id="errorConfirmacion" class="error"></p>
+                <p id="bienConfirmacion" class="bien"></p>
+            </div>
+            <br>
             <button class="botoncito" type="submit" name="action" value="contrasena" onclick="validateContra()">Continuar</button>
         </form>  
     </div>
