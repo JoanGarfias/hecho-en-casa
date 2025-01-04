@@ -85,9 +85,10 @@
             <p style="color: red; font-size: 12px;">{{ $message }}</p>
         @enderror
 
-        <p class="costo">Costo: $200</p>
-        <p class="nota">NOTA: El costo es aproximado.</p>
-
+        <br>
+        <label>Costo:</label><br>
+        <input type="number" name="costo" value="0" min="100" max="1000"></input>
+        <br><br>
         <button type="submit">Continuar</button>
     </form>
 </body>
