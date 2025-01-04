@@ -26,7 +26,7 @@ Route::post('/buscarpedido', [ControladorCalendario::class, 'index']);
 Route::get('/pedidos', function(){
     return view('pedidos');
 });
-Route::post('/pedidos', [ControladorCalendario::class, 'index']);
+Route::post('/calEdit', [ControladorCalendario::class, 'index']);
 
 /*INICIO DE SESIÓN */
 
