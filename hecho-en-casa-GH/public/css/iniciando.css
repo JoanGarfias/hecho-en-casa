@@ -6,28 +6,23 @@
     font-weight: bold;
 }
 
-body {  
-    background: white; /* Fondo del sitio */
-    
-}
-
-.flexi{
-    margin-top: 40px;
+body {
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh; /* Hace que el diseño esté centrado en pantalla */
-
+    background: #f4f4f4; /* Fondo del sitio */
 }
 
 .contenedor {
+    margin-top: 80px;
     position: relative;
     background: #C6B8A2;
     border-radius: 22px;
-    padding: 25px;
+    padding: 35px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1;
-    top: 35px;
     width: 100%;
     max-width: 400px; /* Ancho máximo */
     overflow: hidden;
@@ -36,17 +31,17 @@ body {
 .contenedor::before {
     content: '';
     position: absolute;
-    top:  5px;
+    top: 4px;
     left: 10px;
     width: 90%;
-    height: 95%;
+    height: 92%;
     background: white; /* Color secundario */
     border-radius: 22px;
     z-index: -1; /* Coloca este fondo detrás del contenido */
     transform: translate(10px, 10px); /* Desplazamiento para crear el efecto */
 }
 
-h2 {
+h2{
     color: #FBAF35;
     text-align: center;
 }
@@ -56,15 +51,14 @@ a{
     color: #955128;
 }
 
-
-label {
+label{
     color: #A09179;
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
 }
 
-input {
+input{
     background: #E8D9C2;
     border: 1px solid #E8D9C2;
     border-radius: 4px;
@@ -74,31 +68,31 @@ input {
 }
 
 .mensaje{
-    margin-top: 6px;
+    margin-top: 15px;
 }
 
 .error {
     color: rgb(200, 32, 32);
     font-weight: bold;
-    font-size: 10px;
-    margin: -5px 0 10px 10px;
+    font-size: 12px;
+    margin: -10px 0 10px 10px;
 }
 
 .bien {
     color: rgb(73, 255, 89);
     font-weight: bold;
-    font-size: 10px;
+    font-size: 12px;
     margin: -10px 0 10px 10px;
 }
 
-.botoncito {
+.botoncito{
     background: #FBAF35;
     color: white;
     border: none;
     border-radius: 8px;
     padding: 10px 15px;
     cursor: pointer;
-   
+    
     margin: 10px;
 }
 

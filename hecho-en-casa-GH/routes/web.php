@@ -8,9 +8,6 @@ use App\Http\Controllers\ControladorCatalogo;
 use App\Http\Controllers\ControladorCatalogoEmergente;
 use App\Http\Controllers\ControladorCatalogoPersonalizado;
 
-Route::get('/', [ControladorInicio::class, 'index'])->name('inicio');
-Route::get('/inicio', [ControladorInicio::class, 'index'])->name('inicio'); 
-Route::get('/calendario', [ControladorCalendario::class, 'index']);
 Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 
 Route::get('/buscarpedido', [ControladorCalendario::class, 'index']);
@@ -21,8 +18,24 @@ Route::post('/buscarpedido', [ControladorCalendario::class, 'index']);
 Route::get('/perfil', [ControladorCalendario::class, 'index']);
 Route::put('/perfil', [ControladorCalendario::class, 'index']);
 
-Route::get('/iniciar-sesion', [ControladorCalendario::class, 'index']);
+/*Route::get('/iniciar-sesion', [ControladorCalendario::class, 'index']);*/
+Route::get('/iniciar-sesion', function(){
+    return view('iniciar-sesion');
+});
+
 Route::post('/iniciar-sesion', [ControladorCalendario::class, 'index']);
+
+Route::get('/direccion', function(){
+    return view('direccion');
+});
+
+Route::post('/direccion', [ControladorCalendario::class, 'index']);
+
+Route::get('/contrasena', function(){
+    return view('contrasena');
+});
+
+Route::post('/contrasena', [ControladorCalendario::class, 'index']);
 
 Route::get('/registrar', [ControladorCalendario::class, 'index']);
 Route::post('/registrar', [ControladorCalendario::class, 'index']);
@@ -42,7 +55,7 @@ Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrarCa
 Route::post('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'guardarSeleccionCatalogo'])->name('catalogo.post');
 
 Route::get('fijo/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])->name('calendario.get');
-Route::post('fijo/seleccionar-fecha', [ControladorCatalogo::class, 'seleccionarFecha'])->name('calendario.post');
+Route::post('fijo/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'seleccionarFecha'])->name('calendario.post');
 
 Route::get('fijo/detalles-pedido', [ControladorCatalogo::class, 'mostrarDetalles'])->name('fijo.detallesPedido.get');
 Route::post('fijo/detalles-pedido', [ControladorCatalogo::class, 'seleccionarDetalles'])->name('fijo.detallesPedido.post');
@@ -57,11 +70,11 @@ Route::get('fijo/ticket/{folio}', [ControladorCatalogo::class, 'mostrarTicket'])
 
 
 Route::get('/personalizado', [ControladorCatalogoPersonalizado::class, 'mostrarCatalogo'])->name('personalizado.catalogo.get');
-Route::post('/personalizado', [ControladorCatalogoPersonalizado::class, 'seleccionarCatalogo'])->name('personalizado.catalogo.get');
+Route::post('/personalizado', [ControladorCatalogoPersonalizado::class, 'seleccionarCatalogo'])->name('personalizado.catalogo.post');
 
 
 Route::get('personalizado/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])->name('personalizado.calendario.get');
-Route::post('personalizado/seleccionar-fecha', [ControladorCatalogo::class, 'seleccionarFecha'])->name('personalizado.calendario.post');
+Route::post('personalizado/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'seleccionarFecha'])->name('personalizado.calendario.post');
 
 Route::get('personalizado/detalles-pedido', [ControladorCatalogoPersonalizado::class, 'mostrarDetalles'])->name('personalizado.detallesPedido.get');
 Route::post('personalizado/detalles-pedido', [ControladorCatalogoPersonalizado::class, 'seleccionarDetalles'])->name('personalizado.detallesPedido.post');

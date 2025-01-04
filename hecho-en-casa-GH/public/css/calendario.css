@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+* {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /**/background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+body{
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+h1{
+    width: 100%;
+    font-size: 2rem;
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    padding: 10px;
+    color: #7E643B;
+    margin-top: 50px;
+}
+
+.container{
+    border: 1px solid #0000;
+    width: 805px;
+    margin: 5px auto;
+    background-size: 120%; /* Aumenta el tamaño al 120% del contenedor */
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.calendar {
+    background: transparent;
+    margin-top: 20px;
+    position: relative;
+}
+
+#calendar {
+    width: 103%;
+    height: 460px; /* Ajusta el tamaño según lo que necesites */
+    background-size: cover; /* Asegura que la imagen cubra todo el contenedor */
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/*Estilos del arreglo de números*/
+ol{
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding-top: 110px;
+    text-align: center;
+    width: 42rem;
+}
+
+.nom-dia {
+    font-size: 1rem;
+    font-weight: bold;  /*Le da aspectos en negrita*/
+    text-align: center;
+    position: relative;
+    height: 30px;
+}
+
+/*.nom-dia img {
+    width: 80%;  Ajusta el porcentaje según el tamaño deseado 
+    height: auto;
+    display: block;
+    margin: 0 auto; 
+}
+*/
+
+
+/*.numbers{
+    font-size: 1rem;
+    text-align: center;
+    padding: 5px 10px;
+}
+*/
+#numbers {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* Dividir en 7 columnas (una por cada día de la semana) */
+    gap: 18px; /* Separación entre días */
+    list-style-type: none;
+    padding: 0;
+    margin: 26px;
+}
+
+#numbers li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px; /* Tamaño del círculo */
+    height: 30px; /* Tamaño del círculo */
+    border-radius: 50%; /* Hacerlo circular */
+    text-align: center;
+    font-size: 14px;
+}
+
+#numbers li.current {
+    background-color: blue;
+    color: white;
+}
+
+#numbers li.closed {
+    background-color: gray;
+    color: white;
+}
+
+#numbers li.available {
+    background-color: lightgreen;
+    color: black;
+}
+
+#numbers li.empty-day {
+    background-color: transparent;
+    border: none;
+}
+
+.numbers:hover{
+   /*background-color: #92f385; */
+   /* transform: scale(1.20); */
+    /*box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); */
+    cursor: pointer;
+    /*border-radius: 100%;*/
+   /* transition: transform 0.3s ease, box-shadow 0.3s ease;*/
+}
+
+.legend {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.legend p {
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.legend span {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+
+.legend .closed {
+    background: #7a7979;
+}
+
+.legend .current {
+    background: #4f5bfc;
+}
+
+.legend .available {
+    background: #92f385;
+}
+
+.arrows {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 10px; /* Espacio entre las flechas */
+}
+
+.arrow {
+    padding: 10px 20px;
+    font-size: /*16px*/1.5rem;
+    background-color: #c0a061; /* Color de fondo */
+    color:white; /* Color de texto */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    margin: 10px;
+    font-weight: bold;  
+}
+
+.arrow:hover {
+    background-color: #a7854e; /* Color al pasar el cursor */
+}
+
+.empty-day {
+    visibility: hidden;
+}
+
+.ambos{
+    display: flex;
+    gap: 200px;
+}

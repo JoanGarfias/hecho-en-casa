@@ -117,10 +117,11 @@ class ControladorCatalogo extends Controller
 
         $fechaEscogida = $request->input('fecha');
         $horaEscogida = $request->input('hora');
-        $postre = $request->input('id_postre');
+        $postre = session('id_postre');
+        $tipopostre = session('id_tipopostre');
     
         $pedidos_dia = Cache::remember('pedidosdia', 30, function () use ($fechaEscogida) {
-            return Pedido::select('id_postre', 'fecha_hora_entrega', 'porcionespedidas')
+            return Pedido::select('fecha_hora_entrega', 'porcionespedidas')
                 ->whereIn('id_tipopostre', ['fijo', 'personalizado'])
                 ->whereDate('fecha_hora_entrega', $fechaEscogida)
                 ->get();
@@ -128,43 +129,57 @@ class ControladorCatalogo extends Controller
     
 
         $porciones_dia = $pedidos_dia->sum('porcionespedidas');
-        $porciones_unidad_minima = Cache::remember('porcionesunidadminima', 30, function () use ($postre) {
-            return PostreFijoUnidad::select('cantidad')
-                ->where('id_pf', $postre)
-                ->orderBy('cantidad', 'desc')
-                ->first();
-        });
-    
-        $cantidad_minima = $porciones_unidad_minima ? $porciones_unidad_minima->cantidad : 0;
-    
-        $request->validate([
-            'fecha' => [
-                'required',
-                'date',
-                'after_or_equal:today',
-                function ($attribute, $value, $fail) use ($porciones_dia, $cantidad_minima) {
-                    if (($porciones_dia + $cantidad_minima) >= 100) {
-                        $fail('No se puede seleccionar esta fecha, el límite de porciones diarias es de 100.');
-                    }
-                },
-            ],
-        ]);
 
-        session([
-            'fecha' => $fechaEscogida,
-            'postre' => $postre,
-            'hora_entrega'=> $horaEscogida,
-            'porciones_dia' => $porciones_dia,
-            'cantidad_minima' => $cantidad_minima,
-        ]);
-
-        $tipopostre = session('id_tipopostre');
         switch($tipopostre){
             case "fijo":
+                $porciones_unidad_minima = Cache::remember('porcionesunidadminima', 30, function () use ($postre) {
+                    return PostreFijoUnidad::with('unidadMedida')
+                    ->where('id_pf', $postre)
+                    ->orderBy('unidadMedida.cantidad', 'asc')
+                    ->first();
+                });
+            
+                $cantidad_minima = $porciones_unidad_minima ? $porciones_unidad_minima->cantidad : 0;
+            
+                $request->validate([
+                    'fecha' => [
+                        'required',
+                        'date',
+                        'after_or_equal:today',
+                        function ($attribute, $value, $fail) use ($porciones_dia, $cantidad_minima) {
+                            if (($porciones_dia + $cantidad_minima) >= 100) {
+                                $fail('No se puede seleccionar esta fecha, el límite de porciones diarias es de 100.');
+                            }
+                        },
+                    ],
+                ]);
+
+                session([
+                    'fecha' => $fechaEscogida,
+                    'postre' => $postre,
+                    'hora_entrega'=> $horaEscogida,
+                    'porciones_dia' => $porciones_dia,
+                    'cantidad_minima' => $cantidad_minima,
+                ]);
+
                 return redirect()->route('fijo.detallesPedido.get');
             case "personalizado":
+                session([
+                    'fecha' => $fechaEscogida,
+                    'postre' => $postre,
+                    'hora_entrega'=> $horaEscogida,
+                    'porciones_dia' => $porciones_dia,
+                ]);
+
                 return redirect()->route('personalizado.detallesPedido.get');
             case "temporada": case "pop-up":
+                session([
+                    'fecha' => $fechaEscogida,
+                    'postre' => $postre,
+                    'hora_entrega'=> $horaEscogida,
+                    'porciones_dia' => $porciones_dia,
+                ]);
+
                 return redirect()->route('emergente.pedido');
         }
         /* return view('fechaSeleccionada', [

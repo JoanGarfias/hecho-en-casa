@@ -32,7 +32,7 @@ class ControladorCatalogoPersonalizado extends Controller
         ->get();
         $coberturas = Cobertura::select('id_c', 'nom_cobertura', 'precio_c')
         ->get();
-        $elementos = Elemento::select('id_e', 'nom_elemento', 'precio')
+        $elementos = Elemento::select('id_e', 'nom_elemento', 'precio_e')
         ->get();
         
         return view('detallesPersonalizado', compact('sabores', 'rellenos', 'coberturas', 'elementos'));
