@@ -57,11 +57,14 @@
                 <div class="columna">
                     <div class="fila">
                         <label for="tipoEntrega">Tipo de entrega:</label>
-                        <select id="tipoEntrega" name="tipoEntrega" required>
-                            <option value="" disabled selected>Selecciona una opción</option>
-                            <option value="opcion1">Opción 1</option>
-                            <option value="opcion2">Opción 2</option>
-                        </select>
+                        <div class="custom-select">
+                            <button id="toggleSelect" class="custom-select-button">🔻</button>
+                            <div id="selectOptions" class="custom-select-options" style="display: none;">
+                                <div class="option" data-value="opcion1">Opción 1</div>
+                                <div class="option" data-value="opcion2">Opción 2</div>
+                            </div>
+                            <input type="hidden" id="tipoEntrega" name="tipoEntrega">
+                        </div>
                     </div>
                     <div class="fila">
                         <label for="costo">Costo:</label>
