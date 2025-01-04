@@ -8,6 +8,7 @@ use App\Models\SaborRelleno;
 use App\Models\Cobertura;
 use App\Models\Elemento;
 use App\Models\ListaElementos;
+use App\Models\Pedido;
 use App\Models\Pastelpersonalizado;
 
 class ControladorCatalogoPersonalizado extends Controller
@@ -45,20 +46,11 @@ class ControladorCatalogoPersonalizado extends Controller
         $costo = $request->input('costo');
         $tipo_entrega = $request->input('tipo_entrega');
         $ubicacion = $request->input('ubicacion');
+        $id_usuario = session('id_u');
+        $fecha_hora_entrega = $request->input('fecha_hora_entrega'); 
+        $fecha_hora_registro = now();
 
         if($ubicacion === 'otra'){
-            Pastelpersonalizado::create([
-                'id_sabor_pan' => $sabor_pan,
-                'id_saborrelleno' => $relleno,
-                'id_cobertura' => $cobertura,
-                'tipoevento' => $tematica,
-                'imagendescriptiva' => $imagen,
-                'descripciondetallada' => $descripcion,
-            ]);
-            
-            return redirect()->route('resumen.pedido.get');
-        }
-        else{
             session([
                 'sabor_pan' => $sabor_pan,
                 'relleno' => $relleno,
@@ -71,7 +63,27 @@ class ControladorCatalogoPersonalizado extends Controller
                 'costo' => $costo,
                 'tipo_entrega' => $tipo_entrega,
             ]);
-            return redirect()->route('personalizado.direccion.get');   
+            return redirect()->route('personalizado.direccion.get'); 
+        }
+        else{
+            Pedido::create([
+                'id_usuario' => $id_usuario,
+                'porcionespedidas' => $porciones,
+                'status' => "pendiente",
+                'precio_final' => $costo,
+                'fecha_hora_registro' => $fecha_hora_registro,
+                'fecha_hora_entrega' => $fecha_hora_entrega,
+            ]);
+
+            Pastelpersonalizado::create([
+                'id_sabor_pan' => $sabor_pan,
+                'id_saborrelleno' => $relleno,
+                'id_cobertura' => $cobertura,
+                'tipoevento' => $tematica,
+                'imagendescriptiva' => $imagen,
+                'descripciondetallada' => $descripcion,
+            ]);
+            
         }
 
     }
