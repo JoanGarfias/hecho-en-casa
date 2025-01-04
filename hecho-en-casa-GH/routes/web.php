@@ -42,6 +42,8 @@ Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('regi
 Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena');
 Route::post('/contrasena', [ControladorRegistro::class, 'guardarContrasena'])->name('registrar.guardarContrasena');
 
+Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name('registrar.direccion');
+
 Route::get('/cerrar-sesion', [ControladorCalendario::class, 'index']);
 Route::delete('/cerrar-sesion', [ControladorCalendario::class, 'index']);
 

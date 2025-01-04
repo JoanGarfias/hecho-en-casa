@@ -38,7 +38,12 @@ class ControladorRegistro extends Controller
     }
 
     public function guardarContrasena(Request $request){
-        dd($request->all());
-        $constrasena = $request->input('password');
+        $constrasena = $request->input('confirmacion');
+        session(['contrasena' => $constrasena]);
+        return redirect()->route('registrar.direccion'); 
+    }
+
+    public function mostrarDireccion(){
+        return view('direccion');
     }
 }
