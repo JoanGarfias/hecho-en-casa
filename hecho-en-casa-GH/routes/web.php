@@ -10,6 +10,8 @@ use App\Http\Controllers\ControladorCatalogoPersonalizado;
 use App\Http\Controllers\ControladorLogIn;
 use App\Http\Controllers\ControladorRegistro;
 
+Route::get('/', [ControladorInicio::class, 'index']);
+
 Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 
 Route::get('/buscarpedido', [ControladorCalendario::class, 'index']);
@@ -33,14 +35,12 @@ Route::get('/direccion', function(){
 
 Route::post('/direccion', [ControladorCalendario::class, 'index']);
 
-
-
-Route::post('/contrasena', [ControladorCalendario::class, 'index']);
-
+//REGISTRO DE USUARIO NUEVO
 Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar.index');
-Route::post('/registrar', [ControladorCalendario::class, 'registrar'])->name('registrar.registro');
+Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.registro');
 
 Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena');
+Route::post('/contrasena', [ControladorRegistro::class, 'guardarContrasena'])->name('registrar.guardarContrasena');
 
 Route::get('/cerrar-sesion', [ControladorCalendario::class, 'index']);
 Route::delete('/cerrar-sesion', [ControladorCalendario::class, 'index']);
@@ -81,8 +81,8 @@ Route::post('personalizado/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalo
 Route::get('personalizado/detalles-pedido', [ControladorCatalogoPersonalizado::class, 'mostrarDetalles'])->name('personalizado.detallesPedido.get');
 Route::post('personalizado/detalles-pedido', [ControladorCatalogoPersonalizado::class, 'seleccionarDetalles'])->name('personalizado.detallesPedido.post');
 
-Route::get('personalizado/detalles-direccion', [ControladorCatalogo::class, 'mostrarDireccion'])->name('personalizado.direccion.get');
-Route::post('personalizado/detalles-direccion', [ControladorCatalogo::class, 'guardarDireccion'])->name('personalizado.direccion.post');
+Route::get('personalizado/detalles-direccion', [ControladorCatalogoPersonalizado::class, 'mostrarDireccion'])->name('personalizado.direccion.get');
+Route::post('personalizado/detalles-direccion', [ControladorCatalogoPersonalizado::class, 'guardarDireccion'])->name('personalizado.direccion.post');
 
 Route::get('personalizado/ticket/{folio}', [ControladorCatalogo::class, 'mostrar-ticket'])->name('personalizado.ticket.get');
 

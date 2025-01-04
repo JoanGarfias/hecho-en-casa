@@ -10,6 +10,7 @@ use App\Models\Elemento;
 use App\Models\ListaElementos;
 use App\Models\Pedido;
 use App\Models\Pastelpersonalizado;
+Use Carbon\Carbon;
 
 class ControladorCatalogoPersonalizado extends Controller
 {
@@ -46,22 +47,25 @@ class ControladorCatalogoPersonalizado extends Controller
         $descripcion = $request->input('descripcion');
         $costo = $request->input('costo');
         $tipo_entrega = $request->input('tipo_entrega');
-        $ubicacion = $request->input('ubicacion');
-        $id_usuario = session('id_u');
-        $fecha_hora_entrega = $request->input('fecha_hora_entrega'); 
-        $fecha_hora_registro = now();
+        $id_usuario = 1;
 
+        $fechaEscogida = session('fecha_entrega');
+        $horaEntrega = session('hora_entrega');
+        $fecha_hora_entrega = Carbon::parse($fechaEscogida . ' ' . $horaEntrega); 
+        $fecha_hora_registro = now();
+        $id_tipopostre = "personalizado";
 
         $sabor_pan = $request->input('sabor_pan');
         $relleno = $request->input('sabor_relleno');
         $cobertura = $request->input('cobertura');
-        $elementos = $request->input('elementos');
+        $elementos = $request->input('elementos[]');
         $porciones = $request->input('porciones');
 
 
-        if($ubicacion === 'otra'){
+        if (strpos($tipo_entrega, 'domicilio') === true) {
             session([
                 'sabor_pan' => $sabor_pan,
+                'id_tipopostre' => $id_tipopostre,
                 'relleno' => $relleno,
                 'cobertura' => $cobertura,
                 'elementos' => $elementos,
@@ -75,8 +79,9 @@ class ControladorCatalogoPersonalizado extends Controller
             return redirect()->route('personalizado.direccion.get'); 
         }
         else{
-            Pedido::create([
+            $pedido = Pedido::create([
                 'id_usuario' => $id_usuario,
+                'id_tipopostre' => $id_tipopostre,
                 'porcionespedidas' => $porciones,
                 'status' => "pendiente",
                 'precio_final' => $costo,
@@ -84,16 +89,27 @@ class ControladorCatalogoPersonalizado extends Controller
                 'fecha_hora_entrega' => $fecha_hora_entrega,
             ]);
 
+            $id_pedido = $pedido->id_ped;
+
             Pastelpersonalizado::create([
+                'id_pp' => $id_pedido,
                 'id_sabor_pan' => $sabor_pan,
                 'id_saborrelleno' => $relleno,
                 'id_cobertura' => $cobertura,
                 'tipoevento' => $tematica,
                 'imagendescriptiva' => $imagen,
                 'descripciondetallada' => $descripcion,
+                'id_postre_elegido' => 37,
             ]);
-            
+            return redirect()->route('personalizado.direccion.get'); 
         }
+    }
+
+    public function mostrarDireccion(){
+        return view('direccion');
+    }
+
+    public function guardarDireccion(){
 
     }
 }
