@@ -42,7 +42,7 @@ function validateContra() {
 
     // Si todo es válido, mostrar un mensaje
     if (isValid) {
-        alert("Formulario enviado exitosamente. ¡Gracias!");
+        //alert("Formulario enviado exitosamente. ¡Gracias!");
         formulario.submit(); // Enviamos el formulario si todo es correcto
     }
 }

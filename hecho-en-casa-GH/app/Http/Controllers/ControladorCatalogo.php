@@ -198,7 +198,7 @@ class ControladorCatalogo extends Controller
             'id_u' => "1",
             'fecha' => "2025-01-07",
             'hora_entrega' => "01:03:33",
-            'postre' => "28",
+            'postre' => "27",
             'cantidad_minima' => "15",
         ]);
 
@@ -240,13 +240,20 @@ class ControladorCatalogo extends Controller
             } else {
                 session(['lista_unidad' => 'No encontrado']); 
             }
-            // Opciones de personalización
+            
+            $tiposAtributo = TipoAtributo::all();
             $personalizaciones = AtributosExtra::where('id_tipo_postre', $categoria->id_cat)->get();
-            $saborfrost = $personalizaciones->where('id_tipo_atributo', '2')->pluck('nom_atributo')->toArray();
-            $toppings = $personalizaciones->where('id_tipo_atributo', '1')->pluck('nom_atributo')->toArray();
-            $saborcubierta = $personalizaciones->where('id_tipo_atributo', '3')->pluck('nom_atributo')->toArray();
-            $forma = $personalizaciones->where('id_tipo_atributo', '4')->pluck('nom_atributo')->toArray();
-            session(['saborfrost' => $saborfrost, 'toppings' => $toppings, 'saborcubierta' => $saborcubierta, 'forma' => $forma]);
+            $atributosSesion = [];
+
+            foreach ($tiposAtributo as $tipo) {
+                $atributos = $personalizaciones->where('id_tipo_atributo', $tipo->idtipo_atributo)->pluck('nom_atributo')->toArray();
+                if (!empty($atributos)) {
+                    $atributosSesion[$tipo->nombre_atributo] = $atributos;
+                }
+            }
+
+            session(['atributosSesion' => $atributosSesion]);
+            
         } else {
             return redirect()->route('seleccionarFecha')->with('error', 'Postre no encontrado.');
         }
@@ -256,12 +263,9 @@ class ControladorCatalogo extends Controller
         $hora_entrega = session('hora_entrega');
         $nombre_categoria = session('nombre_categoria');
         $lista_unidad = session('lista_unidad');
-        $saborfrost = session('saborfrost');
-        $toppings = session('toppings');
-        $saborcubierta = session('saborcubierta');
-        $forma = session('forma');
+        $atributosSesion = session('atributosSesion');
 
-        return view('detallesFijo', compact('fecha', 'sabor_postre', 'hora_entrega', 'nombre_categoria', 'lista_unidad', 'saborfrost', 'toppings', 'saborcubierta', 'forma'));
+        return view('detallesFijo', compact('fecha', 'sabor_postre', 'hora_entrega', 'nombre_categoria', 'lista_unidad', 'atributosSesion'));
     }
 
 

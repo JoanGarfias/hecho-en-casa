@@ -61,40 +61,15 @@
             <p style="color: red; font-size: 12px;">{{ $message }}</p>
         @enderror
 
-        @if (!empty(session('saborfrost')))
-            <label for="saborfrost">Sabor Frost:</label>
-            <select id="saborfrost" name="saborfrost">
-                @foreach (session('saborfrost') as $saborfrost)
-                    <option value="{{ $saborfrost }}">{{ ucfirst($saborfrost) }}</option>
-                @endforeach
-            </select>
-        @endif
-
-        @if (!empty(session('toppings')))
-            <label for="toppings">Toppings:</label>
-            <select id="toppings" name="toppings">
-                @foreach (session('toppings') as $toppings)
-                    <option value="{{ $toppings }}">{{ ucfirst($toppings) }}</option>
-                @endforeach
-            </select>
-        @endif
-
-        @if (!empty(session('saborcubierta')))
-            <label for="saborcubierta">Cubierta:</label>
-            <select id="saborcubierta" name="saborcubierta">
-                @foreach (session('saborcubierta') as $saborcubierta)
-                    <option value="{{ $saborcubierta }}">{{ ucfirst($saborcubierta) }}</option>
-                @endforeach
-            </select>
-        @endif
-
-        @if (!empty(session('forma')))
-            <label for="forma">Forma:</label>
-            <select id="forma" name="forma">
-                @foreach (session('forma') as $forma)
-                    <option value="{{ $forma }}">{{ ucfirst($forma) }}</option>
-                @endforeach
-            </select>
+        @if (!empty($atributosSesion))
+            @foreach ($atributosSesion as $nombreTipo => $atributos)
+                <label for="{{ strtolower($nombreTipo) }}">{{ ucfirst($nombreTipo) }}:</label>
+                <select id="{{ strtolower($nombreTipo) }}" name="{{ strtolower($nombreTipo) }}">
+                    @foreach ($atributos as $atributo)
+                        <option value="{{ $atributo }}">{{ ucfirst($atributo) }}</option>
+                    @endforeach
+                </select>
+            @endforeach
         @endif
 
         <br>
