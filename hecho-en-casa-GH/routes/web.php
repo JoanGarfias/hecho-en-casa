@@ -28,12 +28,6 @@ Route::put('/perfil', [ControladorCalendario::class, 'index']);
 Route::get('/login', [AuthController::class, 'mostrarLogin'])->name('login.get');
 Route::post('/login', [AuthController::class, 'Logear'])->name('login.post');
 
-Route::get('/direccion', function(){
-    return view('direccion');
-});
-
-Route::post('/direccion', [ControladorCalendario::class, 'index']);
-
 //REGISTRO DE USUARIO NUEVO
 Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar.index');
 Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.registro');
