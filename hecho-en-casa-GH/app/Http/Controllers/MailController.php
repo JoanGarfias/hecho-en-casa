@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Mail;
 
 class MailController extends Controller
 {
-    public function enviarCorreo()
+    public function enviarCorreo(Request $request)
     {
         // Detalles del correo
         $detalles = [
@@ -24,4 +24,9 @@ class MailController extends Controller
             'message' => 'Correo enviado correctamente.',
         ]);
     }
+
+    public function mostrar()
+    {
+        return view('prueba-recuperacion');
+    }   
 }

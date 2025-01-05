@@ -22,7 +22,7 @@
         <p id="bienPass" class="bien"></p>
         </div>
 
-        <a href="" id="olvidadizo">Olvidé mi contraseña</a><br><br>
+        <a href="{{route('recuperar-clave.get')}}" id="olvidadizo">Olvidé mi contraseña</a><br><br>
 
     <div>
         <button class="botoncito" type="submit" name="action" value="register">Registrarme</button>

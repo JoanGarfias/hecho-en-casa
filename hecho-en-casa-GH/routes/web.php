@@ -43,8 +43,8 @@ Route::get('/cerrar-sesion', [AuthController::class, 'logout'])
 ->middleware(CheckSession::class);
 
 //Route::delete('/cerrar-sesion', [ControladorCalendario::class, 'logout.post']);
-
-Route::get('/enviar-correo', [MailController::class, 'enviarCorreo']);
+Route::get('/recuperar-clave', [MailController::class, 'mostrar'])->name('recuperar-clave.get');
+Route::post('/recuperar-clave', [MailController::class, 'enviarCorreo'])->name('enviar-correo.post');
 Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);
 
 /*
