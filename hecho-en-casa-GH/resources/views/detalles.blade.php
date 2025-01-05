@@ -6,7 +6,7 @@
     <title>Formulario de Pedido</title>
 </head>
 <body>
-    <form action="{{ route('pedido.guardar') }}" method="POST">
+    <form action="{{ route('emergente.detallesPedido.post') }}" method="POST">
         @csrf
 
         <label for="fecha-entrega">Fecha de entrega:</label>

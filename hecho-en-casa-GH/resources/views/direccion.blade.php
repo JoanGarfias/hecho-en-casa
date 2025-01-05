@@ -6,7 +6,7 @@
 
 <div class="flexi">
     <div class = "contenedor"><!-- café-->
-        <form id="formularioRegistro" action="{{route('registrar.guardarDireccion')}}" method="POST">
+        <form id="formularioRegistro" action="{{route('emergente.direccion.post')}}" method="POST">
             @csrf
             <h2 class="titule">Regístrate</h2>
                     

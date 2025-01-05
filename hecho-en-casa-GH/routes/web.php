@@ -125,6 +125,8 @@ Route::get('personalizado/ticket/{folio}', [ControladorCatalogoPersonalizado::cl
 
 Route::get('/emergentes', [ControladorCatalogoEmergente::class, 'mostrar'])
 ->name('emergentes.get');
+Route::post('/emergentes', [ControladorCatalogoEmergente::class, 'seleccionar'])
+->name('emergentes.post');
 
 Route::get('emergentes/detalles-pedido', [ControladorCatalogoEmergente::class, 'mostrarDetalles'])
 ->name('emergente.detallesPedido.get')
