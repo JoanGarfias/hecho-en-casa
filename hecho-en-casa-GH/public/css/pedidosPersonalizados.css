@@ -1,0 +1,79 @@
+.opciones{
+    display: flex;
+    flex-direction: column;
+}
+
+.fila {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se ajusten automáticamente */
+    align-items: center; /* Alinea verticalmente el label y el input */
+    gap: 10px; /* Espaciado entre los elementos */
+}
+
+.fila .nota {
+    margin-top: 10px; /* Espaciado entre la nota y los elementos de la fila */
+    flex-basis: 100%; /* Asegura que el párrafo ocupe toda la fila */
+
+}
+
+.fila label {
+    display: flex;
+    align-items: center;
+    gap: 11px; /* Espacio entre el botón y el texto */
+    margin: 1%;
+}
+.blanca{
+    font-size:small;
+    background: none;
+}
+
+.fila input[type="radio"] {
+    accent-color: #FBAF35; /* Cambia el color del botón radio */
+    width: 20px;
+    height: 20px;
+    border-radius: 0; /* Esto elimina la forma circular */
+    border: 2px solid #FBAF35; /* Añade un borde para darle forma de cuadrado */
+}
+
+
+.escribiendo {
+    background: #E8D9C2;
+    border: 1px solid #E8D9C2;
+    border-radius: 4px;
+    width: 100%; /* Ajusta el ancho al contenedor */
+    max-width: 220px;
+    min-height: 90px; /* Altura mínima */
+    max-height: 300px; /* Altura máxima, si deseas limitarla */
+    resize: both; /* Permite ajustar tanto ancho como alto */
+}
+
+.porciones-wrapper {
+    display: flex;
+    align-items: center; /* Centra el contenido verticalmente */
+}
+
+.boton-wrapper {
+    display: flex;
+    flex-direction: column; /* Coloca los botones uno encima del otro */
+    margin-right: 10px; /* Espacio entre los botones y el input */
+    margin-left: 10px;
+}
+
+.boton-wrapper button {
+    background-color: #F8CFA0;
+    border: none;
+    color: white;
+    font-size: 18px;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.boton-wrapper button:hover {
+    background-color: #ffb25a;
+}
+
+.porciones-wrapper input {
+    width: 50px;
+    text-align: center;
+    margin: 16px;
+}
