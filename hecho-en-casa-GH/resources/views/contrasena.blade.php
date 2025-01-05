@@ -26,6 +26,7 @@
             </div>
             <div class="mensaje">
                 <p id="errorConfirmacion" class="error"></p>
+                <p id="asegurarConfirmacion" class="error"></p>
                 <p id="bienConfirmacion" class="bien"></p>
             </div>
             <br>
