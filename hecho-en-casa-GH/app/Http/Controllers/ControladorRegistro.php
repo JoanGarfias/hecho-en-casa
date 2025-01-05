@@ -13,11 +13,21 @@ class ControladorRegistro extends Controller
     }
 
     public function registrar(Request $request){
+
         $nombre = $request->input('name');
         $apellido_paterno = $request->input('apellidoP');
         $apellido_materno = $request->input('apellidoM');
         $telefono = $request->input('phone');
         $correo = $request->input('email');
+        $correo_existe = usuario::where('correo_electronico', $correo)->first();
+
+        if ($correo_existe) {
+            // Redirigir de vuelta con un mensaje de error
+            return redirect()->back()
+            ->withErrors(['email' => 'El correo ya está registrado. Por favor, ingresa otro.'])
+            ->withInput();
+        }
+
         $action = $request->input('action');
         
         session([
@@ -72,6 +82,6 @@ class ControladorRegistro extends Controller
             dd("Error al guardar el pedido: " . $e->getMessage());
         }
         
-        return redirect()->route('login.index');
+        return redirect()->route('login.get');
     }
 }
