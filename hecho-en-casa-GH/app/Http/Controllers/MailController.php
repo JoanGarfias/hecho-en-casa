@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Mail\Correo;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+
+class MailController extends Controller
+{
+    public function enviarCorreo()
+    {
+        // Detalles del correo
+        $detalles = [
+            'nombre' => 'Juan Pérez',
+            'mensaje' => 'Este es un correo de prueba desde Laravel.',
+        ];
+
+        // Enviar el correo
+        Mail::to('jeycsonlopez@gmail.com')->send(new Correo($detalles));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Correo enviado correctamente.',
+        ]);
+    }
+}

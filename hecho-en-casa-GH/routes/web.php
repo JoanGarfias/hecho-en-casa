@@ -10,6 +10,7 @@ use App\Http\Controllers\ControladorCatalogoPersonalizado;
 use App\Http\Controllers\ControladorLogIn;
 use App\Http\Controllers\ControladorRegistro;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MailController;
 use App\Http\Middleware\CheckSession;
 
 Route::get('/', [ControladorInicio::class, 'index'])->name('inicio.get');
@@ -43,6 +44,7 @@ Route::get('/cerrar-sesion', [AuthController::class, 'logout'])
 
 //Route::delete('/cerrar-sesion', [ControladorCalendario::class, 'logout.post']);
 
+Route::get('/enviar-correo', [MailController::class, 'enviarCorreo']);
 Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);
 
 /*
