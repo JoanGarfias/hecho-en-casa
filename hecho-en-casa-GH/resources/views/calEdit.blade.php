@@ -64,8 +64,14 @@
                         </div>
 
                     <div class="hour">
-                        <label for="time">Seleccionar hora:</label>
-                        <input type="time" id="time" name="time">
+                        <label for="time" class="seleccionarHora">Seleccionar hora:</label>
+                        <div class="hora-selector">
+                            <input type="time" id="horaEntrega" name="horaEntrega" min="11:00" max="19:00" required>
+                            <div class="boton-wrapper">
+                                <button type="button" id="incrementarHora" class="hora-boton">🔺</button>
+                                <button type="button" id="decrementarHora" class="hora-boton">🔻</button>                                        
+                            </div>
+                        </div>
                     </div>
 
                     <div class="arrows">
