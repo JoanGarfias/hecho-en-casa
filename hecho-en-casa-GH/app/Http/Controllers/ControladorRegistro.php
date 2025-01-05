@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\usuario;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class ControladorRegistro extends Controller
@@ -49,6 +50,7 @@ class ControladorRegistro extends Controller
     }
 
     public function guardarDireccion(Request $request){
+        
         $usuario = new usuario;
         $usuario->correo_electronico = session('correo');
         $usuario->nombre = session('nombre');
@@ -62,8 +64,14 @@ class ControladorRegistro extends Controller
         $usuario->calle_u = $request->input('calle');
         $usuario->num_exterior_u = $request->input('num'); ///<-----------AQUI SE TIENE QUE SEPARAR EN DOS CAMPOS
         //$usuario->referencia_u = $request->input('referencia');
-        $usuario->contraseña = session('contrasena');
+        $usuario->contraseña = bcrypt(session('contrasena'));
+        $usuario->token_recuperacion = Str::random(64);
+        try{
+            $usuario->save();
+        }catch(\Exception $e){
+            dd("Error al guardar el pedido: " . $e->getMessage());
+        }
         
-
+        return redirect()->route('login.index');
     }
 }

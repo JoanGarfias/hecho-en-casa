@@ -16,11 +16,4 @@ class usuario extends Model
         'token_sesion',
         'token_recuperacion',
     ];
-
-    protected function casts(): array
-    {
-        return [
-            'password' => 'hashed',
-        ];
-    }
 }

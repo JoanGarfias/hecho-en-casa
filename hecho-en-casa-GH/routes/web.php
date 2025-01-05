@@ -22,12 +22,7 @@ Route::post('/buscarpedido', [ControladorCalendario::class, 'index']);
 Route::get('/perfil', [ControladorCalendario::class, 'index']);
 Route::put('/perfil', [ControladorCalendario::class, 'index']);
 
-/*Route::get('/iniciar-sesion', [ControladorCalendario::class, 'index']);*/
-Route::get('/iniciar-sesion', function(){
-    return view('iniciar-sesion');
-});
-
-Route::post('/iniciar-sesion', [ControladorLogIn::class, 'index'])->name('login.index');
+Route::get('/iniciar-sesion', [ControladorLogIn::class, 'index'])->name('login.index');
 
 Route::get('/direccion', function(){
     return view('direccion');
