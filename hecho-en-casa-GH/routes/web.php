@@ -14,8 +14,6 @@ Route::get('/inicio', [ControladorInicio::class, 'index']);
 Route::get('/calFijo', function(){
     return view('calFijo');
 });
-
-
 Route::post('/calFijo', [ControladorCalendario::class, 'index']);
 
 Route::get('/calEdit', function(){
@@ -28,8 +26,8 @@ Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 Route::get('/buscarpedido', [ControladorCalendario::class, 'index']);
 Route::post('/buscarpedido', [ControladorCalendario::class, 'index']);
 
-Route::get('/pedidos', function(){
-    return view('pedidos');
+Route::get('/pedidosPersonalizados', function(){
+    return view('pedidosPersonalizados');
 });
 Route::post('/calEdit', [ControladorCalendario::class, 'index']);
 
