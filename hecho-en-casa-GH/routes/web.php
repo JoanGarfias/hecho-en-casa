@@ -53,8 +53,10 @@ Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);
 /*PETICIÓN DE PRUEBA MEDIANTE API.PHP */
 //Route::get('fijo/categorias', [ControladorCatalogo::class, 'obtenerCategorias']);
 
-Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrarCatalogo'])->name('catalogo.get');
-Route::post('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'guardarSeleccionCatalogo'])->name('catalogo.post');
+Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrarCatalogo'])
+->name('fijo.catalogo.get');
+Route::post('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'guardarSeleccionCatalogo'])
+->name('fijo.catalogo.post');
 
 //esta ruta usa el mismo metodo para los tres tipos de postre entonces todo se manejara desde aqui
 
@@ -89,8 +91,10 @@ Route::get('fijo/ticket/{folio}', [ControladorCatalogo::class, 'mostrarTicket'])
 /*RUTAS DE POSTRES PERSONALIZADOS */
 
 
-Route::get('/personalizado', [ControladorCatalogoPersonalizado::class, 'mostrarCatalogo'])->name('personalizado.catalogo.get');
-Route::post('/personalizado', [ControladorCatalogoPersonalizado::class, 'seleccionarCatalogo'])->name('personalizado.catalogo.post');
+Route::get('/personalizado', [ControladorCatalogoPersonalizado::class, 'mostrarCatalogo'])
+->name('personalizado.catalogo.get');
+Route::post('/personalizado', [ControladorCatalogoPersonalizado::class, 'seleccionarCatalogo'])
+->name('personalizado.catalogo.post');
 
 /* Route::get('personalizado/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])->name('personalizado.calendario.get');
 Route::post('personalizado/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'seleccionarFecha'])->name('personalizado.calendario.post');
@@ -119,24 +123,25 @@ Route::get('personalizado/ticket/{folio}', [ControladorCatalogoPersonalizado::cl
 /* RUTAS DE POSTRES EMERGENTES  */
 
 
-Route::get('/emergentes', [ControladorCatalogoEmergente::class, 'mostrar']);
+Route::get('/emergentes', [ControladorCatalogoEmergente::class, 'mostrar'])
+->name('emergentes.get');
 
 Route::get('emergentes/detalles-pedido', [ControladorCatalogoEmergente::class, 'mostrarDetalles'])
-->name('emergente.pedido')
+->name('emergente.detallesPedido.get')
 ->middleware(CheckSession::class);
 
 Route::post('emergentes/detalles-pedido', [ControladorCatalogoEmergente::class, 'seleccionarDetalles'])
-->name('pedido.guardar')
+->name('emergente.detallesPedido.post')
 ->middleware(CheckSession::class);
 
 Route::get('emergentes/detalles-direccion', [ControladorCatalogo::class, 'mostrarDireccion'])
-->name('pedido.direccion')
+->name('emergente.direccion.get')
 ->middleware(CheckSession::class);
 
 Route::post('emergentes/detalles-direccion', [ControladorCatalogoEmergente::class, 'seleccionarDireccion'])
-->name('pedido.guardarDireccion')
+->name('emergente.direccion.post')
 ->middleware(CheckSession::class);
 
 Route::get('emergentes/ticket/', [ControladorCatalogo::class, 'mostrarTicket'])
-->name('pedido.resumen')
+->name('emergente.ticket.get')
 ->middleware(CheckSession::class);
