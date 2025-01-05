@@ -14,6 +14,7 @@ function validateContra() {
     document.getElementById("errorConfirmacion").textContent = "";
     document.getElementById("bienPass").textContent = "";
     document.getElementById("bienConfirmacion").textContent = "";
+    document.getElementById("asegurarConfirmacion").textContent=""
 
     let isValid = true;
 
@@ -41,22 +42,19 @@ function validateContra() {
         isValid = false;
     }
 
-    // Validar que la contraseña contenga al menos un carácter especial
-    const specialChars = /[@$!%*?&._\[\]\(\)\{\}:]/;
-    if (!specialChars.test(password)) {
-        document.getElementById("errorPass").textContent = "La contraseña debe contener al menos un carácter especial.";
-        isValid = false;
-    } 
-
     if (isValid){
         document.getElementById("bienPass").textContent = "Contraseña válida.";
     }
 
     // Validar que las contraseñas coincidan
+
     if (password !== confirmacion) {
         document.getElementById("errorConfirmacion").textContent = "Las contraseñas no coinciden.";
         isValid = false;
-    } else {
+    } else if (!isValid){ 
+        document.getElementById("asegurarConfirmacion").textContent = "La contraseña debe ser válida.";
+        isValid = false;
+    } else {  
         document.getElementById("bienConfirmacion").textContent = "Las contraseñas coinciden.";
     }
 
