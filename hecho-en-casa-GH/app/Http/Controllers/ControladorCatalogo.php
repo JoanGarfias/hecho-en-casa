@@ -183,7 +183,8 @@ class ControladorCatalogo extends Controller
                 ]);
 
                 return redirect()->route('emergente.pedido');
-                
+            
+            return "Error";
         }
         /* return view('fechaSeleccionada', [
             'fecha' => $fechaEscogida,
