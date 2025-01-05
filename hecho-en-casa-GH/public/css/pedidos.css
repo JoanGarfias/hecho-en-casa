@@ -5,13 +5,18 @@
     font-weight: bold;
 }
 
+#fechaEntrega{
+    background: none;
+    border: none;
+    font-weight: bold;
+}
+
 .titule{
     margin-top: 70px;
     color: #7E643B;
     text-align: center;
     font-size: large;
 }
-
 
 body {  
     background: white; /* Fondo del sitio */  
@@ -23,6 +28,7 @@ body {
     align-items: center;
     min-height: 100vh; /* Hace que el diseño esté centrado en pantalla */
     margin-top: 0px;
+    margin-bottom: 5%;
 }
 
 .contenedor {
@@ -61,7 +67,17 @@ body {
     text-align: center; /* Alinear el texto en el centro */
     padding: 12px;
     border-radius: 10px;
+    flex-wrap: wrap; /* Permite que los elementos se ajusten automáticamente */
+    align-items: center; /* Alinea verticalmente el label y el input */
+    gap: 10px; /* Espaciado entre los elementos */
 }
+
+.fila .nota {
+    margin-top: 10px; /* Espaciado entre la nota y los elementos de la fila */
+    flex-basis: 100%; /* Asegura que el párrafo ocupe toda la fila */
+
+}
+
 a{
     font-size: small;
     color: #955128;
@@ -130,10 +146,37 @@ form {
     color: #C7C0B5;
 }
 
+
 .opciones{
     display: flex;
     flex-direction: row;
 }
+
+/*Para la hora*/
+.hora-selector{
+    display: flex;
+    flex-direction: row;
+    width: 5%;
+    height: auto;
+}
+
+input[type="time"] {
+    background-color: #ffffff;
+    border: 1px solid #E8D9C2;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 16px;
+    width: 120px;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    background-color: #FBAF35;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+}
+
+/*Acá termina la hora*/
 
 .fila label {
     display: flex;
@@ -145,7 +188,6 @@ form {
     accent-color: #FBAF35; /* Cambia el color del botón radio */
     width: 20px;
     height: 20px;
-    border-radius: 0; /* Esto elimina la forma circular */
     border: 2px solid #FBAF35; /* Añade un borde para darle forma de cuadrado */
 }
 

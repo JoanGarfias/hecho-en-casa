@@ -60,7 +60,7 @@ input {
 }
 
 #referencias {
-    background: #E8D9C2;
+    background: white;
     border: 1px solid #E8D9C2;
     border-radius: 4px;
     width: 100%; /* Ajusta el ancho al contenedor */
