@@ -14,14 +14,19 @@
         </div>
 
         <br>
-        <label for="password">Contraseña: </label>
-        <input type="password" id = "pass" name = "pass" required> 
+        <div class="alineando">
+            <label for="password">Contraseña: </label>
+            <div class="campo-contrasena">
+                <input type="password" id="password" name="password" required>
+                <i class="fi fi-rs-crossed-eye visibility" onclick="visibility('password', this)"></i>
+            </div>
+        </div>
         <div class="mensaje">
         <p id="errorPass" class="error"></p>
         <p id="bienPass" class="bien"></p>
         </div>
 
-        <button class="olvidadizo" type="submit" name="action" value="register">Olvidé mi contraseña</button>
+        <button id="olvidadizo" type="submit" name="action" value="register">Olvidé mi contraseña</button>
         <br><br>
 
     <div>
