@@ -41,7 +41,7 @@ class ControladorRegistro extends Controller
         if($action === 'login'){
             return redirect()->route('login.get');
         }elseif($action === 'register'){
-            return redirect()->route('registrar.contrasena');
+            return redirect()->route('registrar.contrasena.get');
         }
     }
 
@@ -52,7 +52,7 @@ class ControladorRegistro extends Controller
     public function guardarContrasena(Request $request){
         $contrasena = $request->input('confirmacion');
         session(['contrasena' => $contrasena]);
-        return redirect()->route('registrar.direccion'); 
+        return redirect()->route('registrar.direccion.get'); 
     }
 
     public function mostrarDireccion(){

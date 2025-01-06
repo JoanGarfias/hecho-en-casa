@@ -21,14 +21,12 @@
         <p id="errorPass" class="error"></p>
         <p id="bienPass" class="bien"></p>
         </div>
-
-        <a href="" id="olvidadizo">Olvidé mi contraseña</a><br><br>
-
-    <div>
-        <button class="botoncito" type="submit" name="action" value="register">Registrarme</button>
-        <button class="botoncito" type="submit" name="action" value="login" onclick="validateForm()">Continuar</button>
-    </div>
-</form>
+        <div>
+            <button class="botoncito" type="submit" name="action" value="recuperar" id="olvidadizo">Olvide mi contraseña</button>
+            <button class="botoncito" type="submit" name="action" value="register">Registrarme</button>
+            <button class="botoncito" type="submit" name="action" value="login" onclick="validateForm()">Continuar</button>
+        </div>
+    </form>
 </div>
 <x-pie/>
 

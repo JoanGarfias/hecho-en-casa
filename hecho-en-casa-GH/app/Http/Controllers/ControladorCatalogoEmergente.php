@@ -35,6 +35,18 @@ class ControladorCatalogoEmergente extends Controller
         return response()->json($emergentes);
     }
 
+    public function seleccionar(Request $request){
+        $validated = $request->validate([
+            'id_postre' => 'required|integer',
+        ]);
+
+        session([
+            'postre' => $validated['id_postre'],
+        ]);
+
+        return redirect()->route('emergente.detallesPedido.get');
+    }
+
     public function mostrarDetalles(){
         //ESTO DEBERIA JALARSE DE LA VISTA ANTERIOR AQUI SOLO VA UN EJEMP
         session([
@@ -73,7 +85,7 @@ class ControladorCatalogoEmergente extends Controller
         ]);
 
         if($tipo_entrega == 'domicilio'){
-            return redirect()->route('pedido.direccion');  //SI SELECCIONO ENTREGA A DOMICILIO ENTONCES NOS VAMOS A DETALLES DIRECCION
+            return redirect()->route('emergente.direccion.get');  //SI SELECCIONO ENTREGA A DOMICILIO ENTONCES NOS VAMOS A DETALLES DIRECCION
         }
 
         $id_postre = session('postre');
@@ -113,7 +125,7 @@ class ControladorCatalogoEmergente extends Controller
             'folio' => $pedido->id_ped,
         ]);
 
-        return redirect()->route('pedido.resumen');   
+        return redirect()->route('emergente.ticket.get');   
     }
 
     public function seleccionarDireccion(Request $request){ 
@@ -192,7 +204,7 @@ class ControladorCatalogoEmergente extends Controller
             'folio' => $pedido->id_ped,
         ]);
 
-        return redirect()->route('pedido.resumen');   
+        return redirect()->route('emergente.ticket.get');   
 
     }
 }
