@@ -67,6 +67,7 @@ class ControladorCatalogo extends Controller
         ]);
 
         session([
+            'postre'=> $id_postre,
             'id_postre' => $datos['id_postre'],
             'id_tipopostre' => $id_tipopostre,
             'nombre_postre' => $datos['nombre_postre'],
@@ -193,9 +194,8 @@ class ControladorCatalogo extends Controller
     public function mostrarDetalles(){
         session([
             'id_usuario' => "1",
-            'fecha' => "2025-01-07",
-            'hora_entrega' => "01:03:33",
-            'postre' => "1",
+            'fecha' => session("fecha_entrega"),
+            'hora_entrega' => session("hora_entrega"),
             'cantidad_minima' => "6",
         ]);
 
@@ -203,7 +203,7 @@ class ControladorCatalogo extends Controller
         //if (!session('postre') || !session('fecha')) {
         //    return redirect()->route('seleccionarFecha')->with('error', 'No se ha seleccionado un postre o fecha.');
         //}
-
+        
         $postre = Catalogo::where('id_postre', session('postre'))->first();
         if ($postre) {
             session([
@@ -274,18 +274,17 @@ class ControladorCatalogo extends Controller
         $tipo_entrega = $request->input('tipo_entrega');
         session()->put('opcion_envio', $tipo_entrega);
         $id_usuario = 1;
+        session(['tipo_entrega'=> $tipo_entrega,]);
 
-        //$fechaEscogida = session('fecha');
-        //$horaEntrega = session('hora_entrega');
-        $fechaEscogida = "2025-01-08";  // Fecha en formato Y-m-d
-        $horaEntrega = "12:30";         // Hora en formato H:i
-        // Concatenas la fecha y la hora 
+        $fechaEscogida = session('fecha');
+        $horaEntrega = session('hora_entrega');
         $fecha_hora_entrega = Carbon::parse($fechaEscogida . ' ' . $horaEntrega);
         $fecha_hora_registro = now();
         $id_tipopostre = 'fijo'; 
 
+
         $sabor = session('sabor_postre');
-        $unidadm = intval($request->input('unidad_m'));
+        $unidadm = intval($request->input('unidadm'));
         $cantidad = intval($request->input('cantidad'));
         $valoresSeleccionados = [];
         foreach (session('atributosSesion', []) as $nombreTipo => $atributos) {
@@ -312,7 +311,7 @@ class ControladorCatalogo extends Controller
             session()->put('datos_pedido', $datos);
 
 
-            return redirect()->route('fijo.direccion.get');            ;
+            return redirect()->route('fijo.direccion.get');      
         }
         else{
             // Instanciación de postrefijo
@@ -329,8 +328,8 @@ class ControladorCatalogo extends Controller
             $pedido = new Pedido;
             $pedido->id_usuario = $id_usuario;
             $pedido->id_tipopostre = $id_tipopostre;
-            $pedido->id_seleccion_usuario = 11;
-            $pedido->porcionespedidas = $unidadm * $cantidad;
+            $pedido->id_seleccion_usuario = 11; 
+            $pedido->porcionespedidas = $unidadm * $cantidad; //verificar //$cantidad
             $pedido->status = 'pendiente';
             $pedido->precio_final = $costo;
             $pedido->fecha_hora_registro = $fecha_hora_registro;
@@ -338,7 +337,9 @@ class ControladorCatalogo extends Controller
             $pedido->save();  // Guardamos el pedido
 
             $id_pedido = $pedido->id_ped;
-
+            session([
+                'folio' => $id_pedido,
+            ]);
 
             $datos = [
                 'costo' => $costo,
@@ -410,13 +411,14 @@ class ControladorCatalogo extends Controller
     }
     
     public function mostrarTicket(){
-        $pedido = Pedido::find(session('folio'));
+        $pedido = Pedido::find(session("folio"));
         $fechaHoraEntrega = $pedido->fecha_hora_entrega;
 
         list($fecha, $hora) = explode(' ', $fechaHoraEntrega);
 
         $usuario = Usuario::find($pedido->id_usuario); 
+        $tipo_entrega = session('tipo_entrega');
 
-        return view('pedido', compact('pedido', 'usuario', 'fecha', 'hora'));
+        return view('pedido', compact('pedido', 'usuario', 'fecha', 'hora', 'tipo_entrega'));
     }
 }
