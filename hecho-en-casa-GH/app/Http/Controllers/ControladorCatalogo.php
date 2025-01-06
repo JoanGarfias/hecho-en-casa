@@ -287,7 +287,6 @@ class ControladorCatalogo extends Controller
         //$horaEntrega = session('hora_entrega');
         $fechaEscogida = "2025-01-08";  // Fecha en formato Y-m-d
         $horaEntrega = "12:30";         // Hora en formato H:i
-        // Concatenas la fecha y la hora 
         $fecha_hora_entrega = Carbon::parse($fechaEscogida . ' ' . $horaEntrega);
         $fecha_hora_registro = now();
         $id_tipopostre = 'fijo'; 
@@ -320,7 +319,7 @@ class ControladorCatalogo extends Controller
             session()->put('datos_pedido', $datos);
 
 
-            return redirect()->route('fijo.direccion.get');            ;
+            return redirect()->route('fijo.direccion.get');      
         }
         else{
             // Instanciación de postrefijo
@@ -346,7 +345,9 @@ class ControladorCatalogo extends Controller
             $pedido->save();  // Guardamos el pedido
 
             $id_pedido = $pedido->id_ped;
-
+            session([
+                'folio' => $id_pedido,
+            ]);
 
             $datos = [
                 'costo' => $costo,
@@ -418,7 +419,7 @@ class ControladorCatalogo extends Controller
     }
     
     public function mostrarTicket(){
-        $pedido = Pedido::find(session('folio'));
+        $pedido = Pedido::find(session("folio"));
         $fechaHoraEntrega = $pedido->fecha_hora_entrega;
 
         list($fecha, $hora) = explode(' ', $fechaHoraEntrega);
