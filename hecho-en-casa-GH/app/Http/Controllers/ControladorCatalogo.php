@@ -328,8 +328,8 @@ class ControladorCatalogo extends Controller
             // Instanciación de postrefijo  //NO SE COMO RELLENAR ESA TABLA
             $fijo = new Postrefijo;
             //$fijo->id_atributo= ;
-            $fijo->id_um = 1;//$unidadm;
-            $fijo->id_postre_elegido= 1;//$id_tipopostre;
+            $fijo->id_um = 1;  //1
+            $fijo->id_postre_elegido = $id_postre;  //1 NUEVO
             $fijo->save();  
 
             // Obtenemos el ID del postre creado

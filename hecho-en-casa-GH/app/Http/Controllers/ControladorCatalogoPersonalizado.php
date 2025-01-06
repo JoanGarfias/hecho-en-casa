@@ -28,7 +28,7 @@ class ControladorCatalogoPersonalizado extends Controller
     }
 
     public function mostrarDetalles(){ //GET: Vista de detalles para personalizado
-        $sabores = Cache::remember('sabores', 60, function () {
+        $sabores = Cache::remember('sabores', 10, function () {
             return SaborPan::select('id_sp', 'nom_pan', 'precio_p')
             ->get();
         });
