@@ -84,4 +84,24 @@ class ControladorRegistro extends Controller
         
         return redirect()->route('login.get');
     }
+
+    public function mostrarRecuperacion()
+    {
+        return view('prueba-recuperacion');
+    } 
+
+    public function mostrarCambio(){
+        $correo = session('correo');
+        $usuario = usuario::where('correo_electronico', $correo);
+        if($usuario){
+            //if($usuario->token_recuperacion === $)
+        }
+        return view('cambiar-contrasenaPrueba');
+    }
+
+    public function actualizarContrasena(Request $request){
+        $contrasena = $request->input('confirmar_contraseña');
+        $correo = session('correo');
+        //$usuario =
+    }
 }

@@ -7,7 +7,6 @@
 </head>
 <body>
     <p>Gracias por usar nuestra aplicación.</p>
-    <p>Pulsa en el siguiente enlace para recuperar tu contraseña</p>
-    <a href=""></a>
+    <p>Pulsa <a href="{{route('cambiar-clave.get')}}">aqui</a> para recuperar tu contraseña</p>
 </body>
 </html>
