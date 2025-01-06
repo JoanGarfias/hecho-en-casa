@@ -3,8 +3,6 @@
 
 <x-menu />
 
-<x-banner />
-
 </head>
 <body>
   <div class="main-container">
