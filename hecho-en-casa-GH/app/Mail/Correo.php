@@ -8,17 +8,18 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
 
 class Correo extends Mailable
 {
     use Queueable, SerializesModels;
-    public $detalles;
+    public $token;
     /**
      * Create a new message instance.
      */
-    public function __construct($detalles)
+    public function __construct($token)
     {
-        $this->detalles = $detalles;
+        $this->token = $token;
     }
 
     /**
@@ -27,7 +28,8 @@ class Correo extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Correo desde laravel',
+            from: new Address('dxicode@gmail.com', 'Hecho en casa'),
+            subject: 'Token de recuperacion',
         );
     }
 
@@ -37,8 +39,7 @@ class Correo extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.mi_correo',
-            with: ['detalles' => $this->detalles],
+            markdown: 'emails.mi-correo',
         );
     }
 

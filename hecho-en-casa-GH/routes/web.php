@@ -30,19 +30,20 @@ Route::get('/login', [AuthController::class, 'mostrarLogin'])->name('login.get')
 Route::post('/login', [AuthController::class, 'Logear'])->name('login.post');
 
 //REGISTRO DE USUARIO NUEVO
-Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar.index');
-Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.registro');
+Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar.get');
+Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.post');
 
-Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena');
-Route::post('/contrasena', [ControladorRegistro::class, 'guardarContrasena'])->name('registrar.guardarContrasena');
+Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena.get');
+Route::post('/contrasena', [ControladorRegistro::class, 'guardarContrasena'])->name('registrar.guardarContrasena.post');
 
-Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name('registrar.direccion');
-Route::post('/direccion', [ControladorRegistro::class, 'guardarDireccion'])->name('registrar.guardarDireccion');
+Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name('registrar.direccion.get');
+Route::post('/direccion', [ControladorRegistro::class, 'guardarDireccion'])->name('registrar.guardarDireccion.post');
 
 Route::get('/cerrar-sesion', [AuthController::class, 'logout'])
 ->middleware(CheckSession::class);
 
 //Route::delete('/cerrar-sesion', [ControladorCalendario::class, 'logout.post']);
+//antes de entrar a esta vista el correo tiene que estar validado y ser enviado
 Route::get('/recuperar-clave', [MailController::class, 'mostrar'])->name('recuperar-clave.get');
 Route::post('/recuperar-clave', [MailController::class, 'enviarCorreo'])->name('enviar-correo.post');
 Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);

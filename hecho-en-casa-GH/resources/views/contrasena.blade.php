@@ -5,7 +5,7 @@
 
 <div class="flexi">
     <div class = "contenedor"><!-- café-->
-        <form id="validandoContra" action="{{route('registrar.guardarContrasena')}}" method="POST">
+        <form id="validandoContra" action="{{route('registrar.guardarContrasena.post')}}" method="POST">
             @csrf
             <h2 class="titule">Regístrate</h2>
             
