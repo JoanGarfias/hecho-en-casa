@@ -10,7 +10,7 @@
     <p>Entra al siguiente enlace:</p>
     <a href="#" onclick="document.getElementById('recuperar-form').submit()">/recuperacion/{{$token}}</a>
 
-    <form id="recuperar-form" action="{{ route('recuperar-clave.get', ['token' => $token]) }}" method="POST" style="display: none;">
+    <form id="recuperar-form" action="{{ route('recuperacion.get', ['token' => $token]) }}" method="POST" style="display: none;">
         @csrf
     </form>
 </body>
