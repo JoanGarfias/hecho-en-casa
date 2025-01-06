@@ -116,7 +116,7 @@ class ControladorCatalogo extends Controller
     public function seleccionarFecha(Request $request)
     {
 
-        $fechaEscogida = "2025-01-08";
+        $fechaEscogida = "2025-01-30";
         $horaEntrega = "12:00";
         $postre = session('id_postre');
         $tipopostre = session('id_tipopostre');
