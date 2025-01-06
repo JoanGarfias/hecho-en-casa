@@ -274,7 +274,7 @@ class ControladorCatalogo extends Controller
         $tipo_entrega = $request->input('tipo_entrega');
         session()->put('opcion_envio', $tipo_entrega);
         $id_usuario = 1;
-        session(['tipo_entrega'=> $tipo_entrega,]);
+        session(['tipo_entrega'=> $tipo_entrega, 'costo'=> $costo]);
 
         $fechaEscogida = session('fecha');
         $horaEntrega = session('hora_entrega');
@@ -286,6 +286,7 @@ class ControladorCatalogo extends Controller
         $sabor = session('sabor_postre');
         $unidadm = intval($request->input('unidadm'));
         $cantidad = intval($request->input('cantidad'));
+        session(['porcionespedidas'=> $unidadm * $cantidad]);
         $valoresSeleccionados = [];
         foreach (session('atributosSesion', []) as $nombreTipo => $atributos) {
             $campo = strtolower($nombreTipo);  // Usamos el mismo nombre dinámico que en la vista
@@ -379,7 +380,7 @@ class ControladorCatalogo extends Controller
         $id_usuario = session('id_usuario');
         //por defecto cargamos la ubicacion del usuario predeterminado
         $user = usuario::where('id_u', $id_usuario)->first();
-
+        $datos = session('datos_pedido'); 
         $codigo_postal = $user->Codigo_postal_u;
         $estado = $user->estado_u;
         $ciudad = $user->ciudad_u;
@@ -387,16 +388,67 @@ class ControladorCatalogo extends Controller
         $calle = $user->calle_u;
         $numero = $user->num_exterior_u;
 
-        //si elige otra entonces sobreescribimos los valores
-        if($tipo_domicilio=='Domicilio'){
-            
-            //Aqui inserta la logica para meter un pedido fijo con los datos de domicilio del usuario
-        }
-        else{
-            //Aquí inserta la lógica para meter un pedido fijo con los datos de la ubicación del formulario
-            //y además actualizar la ubicación del usuario en la BD
+        if($tipo_domicilio=='otra'){
+            $codigo_postal = $request->input('codigo_postal');
+            $estado = $request->input('estado');
+            $ciudad = $request->input('ciudad');
+            $colonia = $request->input('colonia');
+            $calle = $request->input('calle');
+            $numero = $request->input('numero'); 
+            //$referencia = $request->input('referencia');
+
+            //si elige volverla su ubicacion predeterminada entonces lo actualizamos en el perfil del usuario
+            if($request->has('predeterminado')){
+                $user->Codigo_postal_u = $codigo_postal;
+                $user->estado_u = $estado;
+                $user->ciudad_u = $ciudad;
+                $user->colonia_u = $colonia;
+                $user->calle_u = $calle;
+                $user->num_exterior_u = $numero;
+                //$user->referencia_u = $referencia;
+                $user->save();
+            }
 
         }
+
+
+        $fijo = new Postrefijo;
+        //$fijo->id_atributo= ;
+        $fijo->id_um = 1;//$unidadm;
+        $fijo->id_postre_elegido= 1;//$id_tipopostre;
+        $fijo->save();  
+
+        // Obtenemos el ID del postre creado
+        $id_nuevo_postre = $fijo->id_pf;
+
+        // Instanciación de Pedido
+        $pedido = new Pedido;
+        $pedido->id_usuario = session('id_u');
+        $pedido->id_tipopostre = $datos['id_tipopostre'];
+        $pedido->id_seleccion_usuario = $id_nuevo_postre;
+        $pedido->estado_e = $estado;
+        $pedido->Codigo_postal_e = $codigo_postal;
+        $pedido->ciudad_e = $ciudad;
+        $pedido->colonia_e = $colonia;
+        $pedido->calle_e = $calle;
+        $pedido->num_exterior_e = $numero; 
+        //$pedido->referencia_e = $referencia;
+        $pedido->porcionespedidas = session("porcionespedidas");
+        $pedido->fecha_hora_entrega =  session('fecha') . " " . session('hora_entrega'); 
+        $pedido->fecha_hora_registro = now();
+        $pedido->status = "pendiente";
+        $pedido->precio_final = session("costo");
+
+        try {
+            $pedido->save();
+        } catch (\Exception $e) {
+            dd("Error al guardar el pedido: " . $e->getMessage());
+        }
+
+        $id_pedido = $pedido->id_ped;
+        session([
+            'folio' => $id_pedido,
+        ]);
 
         session([
             'codigo_postal' => $codigo_postal,
