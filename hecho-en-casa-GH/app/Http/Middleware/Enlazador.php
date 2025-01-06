@@ -10,105 +10,65 @@ class Enlazador
 {
     public function handle(Request $request, Closure $next)
     {
-        $flujo = $this->obtenerFlujo($request);
+        $flujo = $this->obtenerFlujo();
 
-        if (!$flujo) {
-            return redirect()->route('fijo.catalogo.get');
-        }
+
+        //VALIDAR QUE NO SEA NULL
+        $estadoActual = session('estado_flujo');
+        // Validar si la ruta actual corresponde al estado actual
         $rutaActual = $request->route()->getName();
-        $ultimaEtapaCompletada = session()->get('ultima_etapa', null);
 
-        if (!in_array($rutaActual, $flujo)) {
-            return redirect()->route('fijo.catalogo.get');
-        }
+        //dd($rutaActual);
 
-        $indiceRutaActual = array_search($rutaActual, $flujo);
-        $indiceUltimaEtapa = $ultimaEtapaCompletada ? array_search($ultimaEtapaCompletada, $flujo) : -1;
+        //dd($estadoActual, $flujo, $rutaActual);
+        $rutaActual = trim($request->route()->getName());
+        
 
-        if ($indiceRutaActual === false || $indiceRutaActual > $indiceUltimaEtapa + 1) {
-            return redirect()->route('fijo.catalogo.get');
-        }
+        //ESTO SE TIENE QUE VALIDAR QUE NO SEA NULL
+        $permitidas = array_map('trim', $flujo[$estadoActual]['permitidas']);
 
-        session()->put('ultima_etapa', $rutaActual);
+        //dd(gettype($rutaActual), $rutaActual, array_map('gettype', $permitidas), $permitidas);
+
+        foreach ($permitidas as $permitida) {
+            if ($rutaActual === $permitida) {
+                dd('Match found', $rutaActual, $permitida);
+            }
+        }        
+
+        // Si la ruta actual corresponde a una etapa válida, actualizar el estado
+        session(['estado_flujo' => $flujo[$estadoActual]['siguiente']]);
+
         return $next($request);
     }
 
-    private function obtenerFlujo(Request $request)
+    private function obtenerFlujo()
     {
-
-        // Obtener la opción seleccionada por el usuario
-        $opcionEnvio = session()->get('opcion_envio', null);
-
-        if ($request->is('fijo/*')) {
-            $rutaBase = [
-                //'fijo.catalogo.get',
-                'fijo.catalogo.get',
-                'fijo.catalogo.post',
-                'calendario.get',
-                'calendario.post',
-                'fijo.detallesPedido.get',
-                'fijo.detallesPedido.post'
-            ];
-            if($opcionEnvio === "Domicilio"){
-                return array_merge($rutaBase, [
-                    'fijo.direccion.get',
-                    'fijo.direccion.post',
-                    'fijo.ticket.get',
-                ]);
-            }
-            else{
-                return array_merge($rutaBase, [
-                    'fijo.ticket.get',
-                ]);
-            }
-        }
-
-        if ($request->is('personalizado/*')) {
-            $rutaBase = [
-                'personalizado.catalogo.get',
-                'personalizado.catalogo.post',
-                'personalizado.calendario.get',
-                'personalizado.calendario.post',
-                'personalizado.detallesPedido.get',
-                'personalizado.detallesPedido.post'
-            ];
-            if($opcionEnvio === "Domicilio"){
-                return array_merge($rutaBase, [
-                    'personalizado.direccion.get',
-                    'personalizado.direccion.post',
-                    'personalizado.ticket.get',
-                ]);
-            }
-            else{
-                return array_merge($rutaBase, [
-                    'personalizado.ticket.get',
-                ]);
-            }
-        }
-
-        if ($request->is('emergentes/*')) {
-            $rutaBase = [
-                'emergente.catalogo.get',
-                'emergente.catalogo.post',
-                'emergente.calendario.get',
-                'emergente.calendario.post',
-                'emergente.detallesPedido.get',
-                'emergente.detallesPedido.post'
-            ];
-            if($opcionEnvio === "Domicilio"){
-                return array_merge($rutaBase, [
-                    'emergente.direccion.get',
-                    'emergente.direccion.post',
-                    'emergente.ticket.get',
-                ]);
-            }
-            else{
-                return array_merge($rutaBase, [
-                    'emergente.ticket.get',
-                ]);
-            }
-        }
-
-        return null;
-    }
+        return [
+            // Flujo para fijo
+            'fijo.catalogo.get' => [
+                'permitidas' => ['fijo.catalogo.get', 'inicio'],
+                'siguiente' => 'fijo.calendario.post',
+            ],
+            'fijo.catalogo.post' => [
+                'permitidas' => ['fijo.catalogo.get'],
+                'siguiente' => 'fijo.calendario.get',
+            ],
+            'fijo.calendario.get' => [
+                'permitidas' => ['fijo.calendario.get'],
+                'siguiente' => 'fijo.calendario.post',
+            ],
+            'fijo.calendario.post' => [
+                'permitidas' => ['fijo.calendario.post'],
+                'siguiente' => 'fijo.detallesPedido.get',
+            ],
+            'fijo.detallesPedido.get' => [
+                'permitidas' => ['fijo.detallesPedido.get'],
+                'siguiente' => 'fijo.ticket.get',
+            ],
+            'fijo.ticket.get' => [
+                'permitidas' => ['fijo.ticket.get'],
+                'siguiente' => null, // Fin del flujo
+            ],
+        ];
+    }   
 }
