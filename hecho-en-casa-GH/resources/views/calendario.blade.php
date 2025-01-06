@@ -36,8 +36,8 @@
     </form>-->
 
     <script>
-        let datos = @json($diasDelMes);
-        console.log(datos);
+        const calendario = @json($calendarioJson);
+        console.log(calendario);
     </script>
 </body>
 </html>

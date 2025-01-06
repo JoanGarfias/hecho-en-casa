@@ -86,6 +86,7 @@ class ControladorCatalogo extends Controller
         }
         
         $primerDiaDelMes = $fecha->copy()->startOfMonth();
+        $diaSemana = $primerDiaDelMes->dayName;
         $ultimoDiaDelMes = $fecha->copy()->endOfMonth();
         
         $pedidos = Cache::remember('pedidos', 30, function () use ($primerDiaDelMes, $ultimoDiaDelMes){
@@ -112,7 +113,13 @@ class ControladorCatalogo extends Controller
                 $diasDelMes[$indice]['porciones'] += $pedido->porcionespedidas;
             }
         }
-        return view('calendario', compact('diasDelMes'));
+
+        $calendarioJson = json_encode([
+            'diasDelMes' => $diasDelMes,
+            'diaSemana' => $diaSemana,
+        ]);
+
+        return view('calendario', compact('calendarioJson'));
     }
 
     public function seleccionarFecha(Request $request)
