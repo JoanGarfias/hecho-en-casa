@@ -118,7 +118,7 @@ class ControladorCatalogo extends Controller
     public function seleccionarFecha(Request $request)
     {
 
-        $fechaEscogida = "2025-01-30";
+        $fechaEscogida = "2025-05-05";
         $horaEntrega = "12:00";
         $postre = session('id_postre');
         $tipopostre = session('id_tipopostre');
@@ -199,7 +199,7 @@ class ControladorCatalogo extends Controller
             'id_usuario' => "1",
             'fecha' => session("fecha_entrega"),
             'hora_entrega' => session("hora_entrega"),
-            'cantidad_minima' => "6",
+            'cantidad_minima' => "3",
         ]);
 
         //COMO SON DATOS DIRECTOS NO ES NECESARIO ESTO
