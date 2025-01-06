@@ -68,7 +68,7 @@ class ControladorCatalogoEmergente extends Controller
             'nombre_postre' => $postre->nombre,
         ]);
 
-        return view('detalles');
+        return view('detallesEmergente');
     }
 
     public function seleccionarDetalles(Request $request){
@@ -78,13 +78,14 @@ class ControladorCatalogoEmergente extends Controller
         ]);
 
         $tipo_entrega = $validated['tipo_entrega'];
+        session()->put('opcion_envio', $tipo_entrega);
 
         session([
             'cantidad_pedida' => $validated['cantidad'],
             'tipo_entrega' => $validated['tipo_entrega'],
         ]);
 
-        if($tipo_entrega == 'domicilio'){
+        if($tipo_entrega === 'Domicilio'){
             return redirect()->route('emergente.direccion.get');  //SI SELECCIONO ENTREGA A DOMICILIO ENTONCES NOS VAMOS A DETALLES DIRECCION
         }
 

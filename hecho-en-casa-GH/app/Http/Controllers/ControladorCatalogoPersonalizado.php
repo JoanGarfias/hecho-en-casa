@@ -48,6 +48,8 @@ class ControladorCatalogoPersonalizado extends Controller
         $tipo_entrega = $request->input('tipo_entrega');
         $id_usuario = 1;
 
+        session()->put('opcion_envio', $tipo_entrega);
+
         $fechaEscogida = session('fecha_entrega');
         $horaEntrega = session('hora_entrega');
         $fecha_hora_entrega = Carbon::parse($fechaEscogida . ' ' . $horaEntrega); 
