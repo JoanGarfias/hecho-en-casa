@@ -71,4 +71,4 @@
     </div>
   </div>
 </body>
-<?php require('./Plantillas/piePg.php'); ?>
+<x-pie/>
