@@ -39,7 +39,7 @@ class ControladorRegistro extends Controller
         ]);
 
         if($action === 'login'){
-            return redirect()->route('login.index');
+            return redirect()->route('login.get');
         }elseif($action === 'register'){
             return redirect()->route('registrar.contrasena');
         }
