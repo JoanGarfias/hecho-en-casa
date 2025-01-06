@@ -23,7 +23,6 @@ class ControladorCatalogo extends Controller
 
     public function mostrarCatalogo($categoria = null){ //GET: Muestra los productos
         $estadoActual = session()->put('estado_flujo', 'fijo.catalogo.get');
-
         $categorias = Cache::remember('categorias', 30, function () {
             return Categoria::all();
         });
