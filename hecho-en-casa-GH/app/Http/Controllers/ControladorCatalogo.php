@@ -67,6 +67,7 @@ class ControladorCatalogo extends Controller
         ]);
 
         session([
+            'postre'=> $id_postre,
             'id_postre' => $datos['id_postre'],
             'id_tipopostre' => $id_tipopostre,
             'nombre_postre' => $datos['nombre_postre'],
@@ -202,9 +203,8 @@ class ControladorCatalogo extends Controller
     public function mostrarDetalles(){
         session([
             'id_usuario' => "1",
-            'fecha' => "2025-01-07",
-            'hora_entrega' => "01:03:33",
-            'postre' => "1",
+            'fecha' => session("fecha_entrega"),
+            'hora_entrega' => session("hora_entrega"),
             'cantidad_minima' => "6",
         ]);
 
@@ -212,7 +212,7 @@ class ControladorCatalogo extends Controller
         //if (!session('postre') || !session('fecha')) {
         //    return redirect()->route('seleccionarFecha')->with('error', 'No se ha seleccionado un postre o fecha.');
         //}
-
+        
         $postre = Catalogo::where('id_postre', session('postre'))->first();
         if ($postre) {
             session([
