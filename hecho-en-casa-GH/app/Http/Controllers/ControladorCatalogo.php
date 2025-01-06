@@ -282,14 +282,14 @@ class ControladorCatalogo extends Controller
         $costo = intval($request->input('costo'));
         $tipo_entrega = $request->input('tipo_entrega');
         $id_usuario = 1;
+        session(['tipo_entrega'=> $tipo_entrega,]);
 
-        //$fechaEscogida = session('fecha');
-        //$horaEntrega = session('hora_entrega');
-        $fechaEscogida = "2025-01-08";  // Fecha en formato Y-m-d
-        $horaEntrega = "12:30";         // Hora en formato H:i
+        $fechaEscogida = session('fecha');
+        $horaEntrega = session('hora_entrega');
         $fecha_hora_entrega = Carbon::parse($fechaEscogida . ' ' . $horaEntrega);
         $fecha_hora_registro = now();
         $id_tipopostre = 'fijo'; 
+
 
         $sabor = session('sabor_postre');
         $unidadm = intval($request->input('unidad_m'));
@@ -337,7 +337,7 @@ class ControladorCatalogo extends Controller
             $pedido->id_usuario = $id_usuario;
             $pedido->id_tipopostre = $id_tipopostre;
             $pedido->id_seleccion_usuario = 11;
-            $pedido->porcionespedidas = $unidadm * $cantidad;
+            $pedido->porcionespedidas = $unidadm * $cantidad; //verificar
             $pedido->status = 'pendiente';
             $pedido->precio_final = $costo;
             $pedido->fecha_hora_registro = $fecha_hora_registro;
@@ -425,7 +425,8 @@ class ControladorCatalogo extends Controller
         list($fecha, $hora) = explode(' ', $fechaHoraEntrega);
 
         $usuario = Usuario::find($pedido->id_usuario); 
+        $tipo_entrega = session('tipo_entrega');
 
-        return view('pedido', compact('pedido', 'usuario', 'fecha', 'hora'));
+        return view('pedido', compact('pedido', 'usuario', 'fecha', 'hora', 'tipo_entrega'));
     }
 }
