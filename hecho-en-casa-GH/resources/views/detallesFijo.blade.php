@@ -79,11 +79,11 @@
         <br>
         <div>
             <label>
-                <input type="radio" name="tipo_entrega" value="sucursal" 
+                <input type="radio" name="tipo_entrega" value="Sucursal" 
                     {{ old('tipo_entrega', 'sucursal') == 'sucursal' ? 'checked' : '' }}> Recoger en sucursal
             </label>
             <label>
-                <input type="radio" name="tipo_entrega" value="domicilio" 
+                <input type="radio" name="tipo_entrega" value="Domicilio" 
                     {{ old('tipo_entrega', 'sucursal') == 'domicilio' ? 'checked' : '' }}> Envío a domicilio
             </label>
         </div>

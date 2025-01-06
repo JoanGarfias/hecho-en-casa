@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Log;
 class ControladorCatalogoEmergente extends Controller
 {
     public function mostrar(){
+        session()->put('estado_flujo', 'emergente.catalogo.get');
+
         $emergentes = Cache::remember('catalogoemergentes', 600, function () {
             return [
                 'temporada' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre')

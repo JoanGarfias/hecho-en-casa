@@ -66,13 +66,13 @@ Route::post('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'guardarS
 //esta ruta usa el mismo metodo para los tres tipos de postre entonces todo se manejara desde aqui
 
 Route::get('fijo/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])
-->name('calendario.get')
+->name('fijo.calendario.get')
 ->middleware([CheckSession::class, Enlazador::class]);
 
 //->middleware([CheckSession::class, Enlazador::class]);
 
 Route::post('fijo/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'seleccionarFecha'])
-->name('calendario.post')
+->name('fijo.calendario.post')
 ->middleware([CheckSession::class, Enlazador::class]);
 
 Route::get('fijo/detalles-pedido', [ControladorCatalogo::class, 'mostrarDetalles'])
@@ -88,7 +88,7 @@ Route::get('fijo/dex|talles-direccion', [ControladorCatalogo::class, 'mostrarDir
 ->name('fijo.direccion.get')
 ->middleware([CheckSession::class, Enlazador::class]);
 
-Route::post('fijo/detalles-direccion', [ControladorCatalogo::class, 'seleccionarDireccion'])
+Route::post('fijo/detalles-direccion', [ControladorCatalogo::class, 'guardarDireccion'])
 ->name('fijo.direccion.post')
 ->middleware(CheckSession::class);
 
