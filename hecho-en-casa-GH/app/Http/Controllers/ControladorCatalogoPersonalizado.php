@@ -15,6 +15,7 @@ Use Carbon\Carbon;
 class ControladorCatalogoPersonalizado extends Controller
 {
     public function mostrarCatalogo(){
+        session()->put('estado_flujo', 'personalizado.catalogo.get');
         session([
             'id_tipopostre' => "personalizado"
         ]);

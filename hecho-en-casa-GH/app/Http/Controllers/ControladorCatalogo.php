@@ -22,7 +22,8 @@ class ControladorCatalogo extends Controller
 {
 
     public function mostrarCatalogo($categoria = null){ //GET: Muestra los productos
-        $estadoActual = session()->put('estado_flujo', 'fijo.catalogo.get');
+        session()->put('estado_flujo', 'fijo.catalogo.get');
+
         $categorias = Cache::remember('categorias', 30, function () {
             return Categoria::all();
         });
@@ -74,7 +75,7 @@ class ControladorCatalogo extends Controller
             'nombre_postre' => $datos['nombre_postre'],
         ]);
 
-        return redirect()->route('calendario.get');
+        return redirect()->route('fijo.calendario.get');
     }
 
     
@@ -157,7 +158,7 @@ class ControladorCatalogo extends Controller
 
                 if($porciones_dia + $cantidad_minima >= 1000){
                     dd($porciones_dia + $cantidad_minima);
-                    return redirect()->route('calendario.get'); //Aqui se le tiene que mandar un mensaje de error
+                    return redirect()->route('fijo.calendario.get'); //Aqui se le tiene que mandar un mensaje de error
                 }
 
                 session([
@@ -327,8 +328,8 @@ class ControladorCatalogo extends Controller
             // Instanciación de postrefijo  //NO SE COMO RELLENAR ESA TABLA
             $fijo = new Postrefijo;
             //$fijo->id_atributo= ;
-            $fijo->id_um = 1;//$unidadm;
-            $fijo->id_postre_elegido= 1;//$id_tipopostre;
+            $fijo->id_um = 1;  //1
+            $fijo->id_postre_elegido = $id_postre;  //1 NUEVO
             $fijo->save();  
 
             // Obtenemos el ID del postre creado
