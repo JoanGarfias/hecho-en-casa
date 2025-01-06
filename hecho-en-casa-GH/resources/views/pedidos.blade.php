@@ -18,13 +18,14 @@
                     </div>
                     <div class="fila">
                         <label for="horaEntrega">Hora de entrega:</label>
-                        <div class="hora-selector">
+                        <input type="text" id="horaEntrega" name="horaEntrega" readonly>
+                        <!--<div class="hora-selector">
                             <input type="time" id="horaEntrega" name="horaEntrega" min="11:00" max="19:00" required>
                             <div class="boton-wrapper">
                                 <button type="button" id="incrementarHora" class="hora-boton">🔺</button>
                                 <button type="button" id="decrementarHora" class="hora-boton">🔻</button>                                        
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="fila">
                         <label for="tipoPostre">Tipo de postre:</label>
@@ -79,7 +80,10 @@
                     </div>
                 </div>
             </div>
-            
+            <div class="arrows">
+                <button id="prev" class="arrow">⬅</button>
+                <button id="next" class="arrow">➡</button>
+            </div>
         </form>  
     </div>
 </div>

@@ -1,6 +1,6 @@
 *{
     font-family: "Poppins", serif;
-    font-weight: 400;
+    
     font-style: normal;
     font-weight: bold;
 }
@@ -277,4 +277,32 @@ select {
 .custom-select-button:focus + .custom-select-options {
     display: block;
 }
+
+/*Fin tipo entrega*/
+
+/*Para las flechas*/
+.arrows {
+    display: flex;
+    justify-content: right;
+    margin-top: 10px;
+    gap: 10px; /* Espacio entre las flechas */
+}
+
+.arrow {
+    padding: 10px 15px;
+    font-size: /*16px*/1.5rem;
+    background-color: #c0a061; /* Color de fondo */
+    color:white; /* Color de texto */
+    border: none;
+    border-radius: 100%;
+    cursor: pointer;
+
+    margin: 10px;
+    font-weight: bold;  
+}
+
+.arrow:hover {
+    background-color: #a7854e; /* Color al pasar el cursor */
+}
+/*Acá termina*/
 
