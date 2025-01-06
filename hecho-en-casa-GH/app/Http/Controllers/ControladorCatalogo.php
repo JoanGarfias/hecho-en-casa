@@ -363,12 +363,13 @@ class ControladorCatalogo extends Controller
     }
     
     public function mostrarDireccion(){
-
-        $id_usuario = session('id_usuario');
-        
+        /*$id_usuario = session('id_usuario');
         $usuario = usuario::where('id_u', $id_usuario)
                             ->first();
-        return view('direccionFijo', compact('usuario'));
+        return view('direccionFijo', compact('usuario'));*/
+
+        $datos = session('datos_pedido');
+        return view('direccionFijo', compact('datos'));
     }
 
     public function guardarDireccion(Request $request){ //POST: Mandamos a la ruta del ticket
@@ -386,7 +387,7 @@ class ControladorCatalogo extends Controller
         $calle = $user->calle_u;
         $numero = $user->num_exterior_u;
 
-        //si elige otra entocnes sobreescribimos los valores
+        //si elige otra entonces sobreescribimos los valores
         if($tipo_domicilio=='Domicilio'){
             
             //Aqui inserta la logica para meter un pedido fijo con los datos de domicilio del usuario
