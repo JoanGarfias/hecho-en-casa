@@ -134,34 +134,20 @@ class ControladorCatalogo extends Controller
     
 
         $porciones_dia = $pedidos_dia->sum('porcionespedidas');
+        $porciones_unidad_minima = Cache::remember('porcionesunidadminima', 30, function () use ($postre) {
+            return PostreFijoUnidad::join('unidad_medida', 'postre_fijo_unidad_medidas.id_um', '=', 'unidad_medida.id_um')
+            ->where('id_pf', $postre)
+            ->orderBy('unidad_medida.cantidad', 'asc')
+            ->select('unidad_medida.cantidad')
+            ->first();
+        });
+
+        $cantidad_minima = $porciones_unidad_minima ? $porciones_unidad_minima->cantidad : 0;
 
         switch($tipopostre){
             case "fijo":
-                $porciones_unidad_minima = Cache::remember('porcionesunidadminima', 30, function () use ($postre) {
-                    return PostreFijoUnidad::join('unidad_medida', 'postre_fijo_unidad_medidas.id_um', '=', 'unidad_medida.id_um')
-                    ->where('id_pf', $postre)
-                    ->orderBy('unidad_medida.cantidad', 'asc')
-                    ->select('unidad_medida.cantidad')
-                    ->first();
-                });
 
-                $cantidad_minima = $porciones_unidad_minima ? $porciones_unidad_minima->cantidad : 0;
-            
-                /*
-                $request->validate([
-                    'fecha' => [
-                        'required',
-                        'date',
-                        'after_or_equal:today',
-                        function ($attribute, $value, $fail) use ($porciones_dia, $cantidad_minima) {
-                            if (($porciones_dia + $cantidad_minima) >= 300) {
-                                $fail('No se puede seleccionar esta fecha, el límite de porciones diarias es de 100.');
-                            }
-                        },
-                    ],
-                ]);*/
-
-                if($porciones_dia + $cantidad_minima >= 300){
+                if($porciones_dia + $cantidad_minima >= 100){
                     return redirect()->route('calendario.get'); //Aqui se le tiene que mandar un mensaje de error
                 }
 
@@ -173,6 +159,11 @@ class ControladorCatalogo extends Controller
 
                 return redirect()->route('fijo.detallesPedido.get');
             case "personalizado":
+
+                if($porciones_dia + $cantidad_minima >= 100){
+                    return redirect()->route('personalizado.calendario.get'); //Aqui se le tiene que mandar un mensaje de error
+                }
+
                 session([
                     'fecha' => $fechaEscogida,
                     'postre' => $postre,
@@ -281,6 +272,7 @@ class ControladorCatalogo extends Controller
                             ->first();
         $costo = intval($request->input('costo'));
         $tipo_entrega = $request->input('tipo_entrega');
+        session()->put('opcion_envio', $tipo_entrega);
         $id_usuario = 1;
         session(['tipo_entrega'=> $tipo_entrega,]);
 

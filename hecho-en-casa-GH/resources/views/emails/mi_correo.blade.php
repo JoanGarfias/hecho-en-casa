@@ -7,6 +7,11 @@
 </head>
 <body>
     <p>Gracias por usar nuestra aplicación.</p>
-    <p>Pulsa <a href="{{route('cambiar-clave.get')}}">aqui</a> para recuperar tu contraseña</p>
+    <p>Entra al siguiente enlace:</p>
+    <a href="#" onclick="document.getElementById('recuperar-form').submit()">/recuperacion/{{$token}}</a>
+
+    <form id="recuperar-form" action="{{ route('recuperacion.get', ['token' => $token]) }}" method="POST" style="display: none;">
+        @csrf
+    </form>
 </body>
 </html>

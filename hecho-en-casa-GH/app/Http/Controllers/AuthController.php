@@ -52,9 +52,9 @@ class AuthController extends Controller
             $usuario = Usuario::where('correo_electronico', $credentials['correo_electronico'])->first();
             if($usuario){
                 $correo = $credentials['correo_electronico'];
-                $token = $usuario->token_recuperacion;
+                $token = Str::random(64);
                 Mail::to($correo)->send(new Correo($token));
-                //$usuario->token_recuperacion = Str::random(64);
+                $usuario->token_recuperacion = $token;
                 try{
                     $usuario->save();
                 }catch(\Exception $e){

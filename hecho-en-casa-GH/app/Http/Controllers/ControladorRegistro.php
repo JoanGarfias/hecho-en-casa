@@ -75,7 +75,6 @@ class ControladorRegistro extends Controller
         $usuario->num_exterior_u = $request->input('num'); ///<-----------AQUI SE TIENE QUE SEPARAR EN DOS CAMPOS
         //$usuario->referencia_u = $request->input('referencia');
         $usuario->contraseña = bcrypt(session('contrasena'));
-        $usuario->token_recuperacion = Str::random(64);
         try{
             $usuario->save();
         }catch(\Exception $e){
@@ -90,18 +89,34 @@ class ControladorRegistro extends Controller
         return view('prueba-recuperacion');
     } 
 
+    public function validarRecuperacion($token){
+        $usuario = Usuario::where('token_recuperacion', $token)->first();
+        if ($usuario){
+            session([
+                'usuario' => $usuario->id_u,
+            ]);
+            return redirect()->route('cambiar-clave.get');
+        } 
+        return redirect()->route('inicio.get')->with('error', 'Token inválido');
+    }
+
     public function mostrarCambio(){
-        $correo = session('correo');
-        $usuario = usuario::where('correo_electronico', $correo);
-        if($usuario){
-            //if($usuario->token_recuperacion === $)
-        }
         return view('cambiar-contrasenaPrueba');
     }
 
     public function actualizarContrasena(Request $request){
         $contrasena = $request->input('confirmar_contraseña');
-        $correo = session('correo');
-        //$usuario =
+        $usuario = usuario::where('id_u', session('usuario'))->first();
+        if ($usuario){
+            $usuario->contraseña = bcrypt($contrasena);
+            $usuario->token_recuperacion = null;
+            try{
+                $usuario->save();
+            }catch(\Exception $e){
+                dd("Error: " . $e->getMessage());
+            }
+        }
+
+        return redirect()->route('login.get');
     }
 }
