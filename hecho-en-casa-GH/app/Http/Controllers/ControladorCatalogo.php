@@ -188,7 +188,7 @@ class ControladorCatalogo extends Controller
                     'porciones_dia' => $porciones_dia,
                 ]);
 
-                return redirect()->route('emergente.pedido');
+                return redirect()->route('emergente.detallesPedido.get');
 
                 // return ERROR;
         }

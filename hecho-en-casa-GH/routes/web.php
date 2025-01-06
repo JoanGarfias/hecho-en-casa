@@ -102,6 +102,14 @@ Route::get('/personalizado', [ControladorCatalogoPersonalizado::class, 'mostrarC
 Route::post('/personalizado', [ControladorCatalogoPersonalizado::class, 'seleccionarCatalogo'])
 ->name('personalizado.catalogo.post');
 
+Route::get('personalizado/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])
+->name('calendario.get');
+//->middleware([CheckSession::class, Enlazador::class]);
+
+Route::post('personalizado/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'seleccionarFecha'])
+->name('calendario.post')
+->middleware(CheckSession::class);
+
 Route::get('personalizado/detalles-pedido', [ControladorCatalogoPersonalizado::class, 'mostrarDetalles'])
 ->name('personalizado.detallesPedido.get')
 ->middleware([CheckSession::class, Enlazador::class]);
@@ -129,6 +137,15 @@ Route::get('personalizado/ticket/{folio}', [ControladorCatalogoPersonalizado::cl
 Route::get('/emergentes', [ControladorCatalogoEmergente::class, 'mostrar'])
 ->name('emergente.catalogo.get')
 ->middleware(Enlazador::class);
+
+Route::get('emergentes/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])
+->name('calendario.get');
+//->middleware([CheckSession::class, Enlazador::class]);
+
+
+Route::post('emergentes/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'seleccionarFecha'])
+->name('calendario.post')
+->middleware(CheckSession::class);
 
 Route::get('emergentes/detalles-pedido', [ControladorCatalogoEmergente::class, 'mostrarDetalles'])
 ->name('emergente.detallesPedido.get')
