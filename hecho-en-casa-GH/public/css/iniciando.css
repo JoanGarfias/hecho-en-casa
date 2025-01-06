@@ -46,9 +46,12 @@ h2{
     text-align: center;
 }
 
-a{
+.olvidadizo{
     font-size: small;
     color: #955128;
+    background: white;
+    border: white;
+    cursor: pointer;
 }
 
 label{

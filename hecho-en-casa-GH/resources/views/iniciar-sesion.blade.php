@@ -21,7 +21,8 @@
         <p id="bienPass" class="bien"></p>
         </div>
 
-        <a href="" id="olvidadizo">Olvidé mi contraseña</a><br><br>
+        <button class="olvidadizo" type="submit" name="action" value="register">Olvidé mi contraseña</button>
+        <br><br>
 
     <div>
         <button class="botoncito" type="submit" name="action" value="register">Registrarme</button>
