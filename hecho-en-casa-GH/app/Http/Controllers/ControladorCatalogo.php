@@ -59,16 +59,16 @@ class ControladorCatalogo extends Controller
     public function guardarSeleccionCatalogo(Request $request){ //POST: guarda la selección en session 
         $id_postre = $request->input('id_postre');
         $nombre_postre = $request->input('nombre_postre');
+        $id_tipopostre = "fijo";
 
         $datos = $request->validate([
             'id_postre' => 'required|integer',
-            'id_tipopostre' => 'required|integer',
             'nombre_postre' => 'required|string|min:3|max:255',
         ]);
 
         session([
             'id_postre' => $datos['id_postre'],
-            'id_tipopostre' => 'required|integer',
+            'id_tipopostre' => $id_tipopostre,
             'nombre_postre' => $datos['nombre_postre'],
         ]);
 
@@ -119,7 +119,7 @@ class ControladorCatalogo extends Controller
         $horaEntrega = "12:00";
         $postre = session('id_postre');
         $tipopostre = session('id_tipopostre');
-    
+
         session(['fecha_entrega' => $fechaEscogida]);
         session(['hora_entrega' => $horaEntrega]);
 
@@ -133,13 +133,15 @@ class ControladorCatalogo extends Controller
     
 
         $porciones_dia = $pedidos_dia->sum('porcionespedidas');
+        dd($porciones_dia);
 
         switch($tipopostre){
             case "fijo":
                 $porciones_unidad_minima = Cache::remember('porcionesunidadminima', 30, function () use ($postre) {
-                    return PostreFijoUnidad::with('unidadMedida')
+                    return PostreFijoUnidad::join('unidad_medida', 'postre_fijo_unidad_medidas.id_um', '=', 'unidad_medida.id_um')
                     ->where('id_pf', $postre)
-                    ->orderBy('unidadMedida.cantidad', 'asc')
+                    ->orderBy('unidad_medida.cantidad', 'asc')
+                    ->select('unidad_medida.cantidad')
                     ->first();
                 });
             
@@ -165,7 +167,6 @@ class ControladorCatalogo extends Controller
                 ]);
 
                 return redirect()->route('fijo.detallesPedido.get');
-                
             case "personalizado":
                 session([
                     'fecha' => $fechaEscogida,

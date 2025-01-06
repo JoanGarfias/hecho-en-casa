@@ -6,8 +6,8 @@
     <title>Correo</title>
 </head>
 <body>
-    <h1>Hola, {{ $detalles['nombre'] }}</h1>
-    <p>{{ $detalles['mensaje'] }}</p>
     <p>Gracias por usar nuestra aplicación.</p>
+    <p>Pulsa en el siguiente enlace para recuperar tu contraseña</p>
+    <a href=""></a>
 </body>
 </html>
