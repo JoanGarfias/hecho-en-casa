@@ -183,8 +183,8 @@ class ControladorCatalogo extends Controller
                 ]);
 
                 return redirect()->route('emergente.pedido');
-            
-            return "Error";
+
+                // return ERROR;
         }
         /* return view('fechaSeleccionada', [
             'fecha' => $fechaEscogida,
@@ -199,7 +199,7 @@ class ControladorCatalogo extends Controller
             'id_u' => "1",
             'fecha' => "2025-01-07",
             'hora_entrega' => "01:03:33",
-            'postre' => "27",
+            'postre' => "1",
             'cantidad_minima' => "6",
         ]);
 
@@ -274,60 +274,93 @@ class ControladorCatalogo extends Controller
         $id_postre = session('postre');
         $postre = Catalogo::where('id_postre', $id_postre)
                             ->first();
-
         $costo = intval($request->input('costo'));
         $tipo_entrega = $request->input('tipo_entrega');
         $id_usuario = session('id_u');
 
-        $fechaEscogida = session('fecha');
-        $horaEntrega = session('hora_entrega');
-        $fecha_hora_entrega = Carbon::parse($fechaEscogida . ' ' . $horaEntrega); 
+        //$fechaEscogida = session('fecha');
+        //$horaEntrega = session('hora_entrega');
+        $fechaEscogida = "2025-01-08";  // Fecha en formato Y-m-d
+        $horaEntrega = "12:30";         // Hora en formato H:i
+        // Concatenas la fecha y la hora 
+        $fecha_hora_entrega = Carbon::parse($fechaEscogida . ' ' . $horaEntrega);
         $fecha_hora_registro = now();
-        $id_tipopostre = $postre->id_tipo_postre;
+        $id_tipopostre = 'fijo'; 
 
-        $porciones = 50; //prueba
+        $sabor = session('sabor_postre');
+        $unidadm = intval($request->input('unidad_m'));
+        $cantidad = intval($request->input('cantidad'));
+        $valoresSeleccionados = [];
+        foreach (session('atributosSesion', []) as $nombreTipo => $atributos) {
+            $campo = strtolower($nombreTipo);  // Usamos el mismo nombre dinámico que en la vista
+            $valor = $request->input($campo);  // Capturamos el valor enviado
+            $valoresSeleccionados[$campo] = $valor;
+        }
+    
+        // Ahora se puede usar los valores capturados
+        session(['valoresSeleccionados' => $valoresSeleccionados]); // Captura como array
+        
 
-        $datos = [
-            'costo' => $costo,
-            'tipo_entrega' => $tipo_entrega,
-            'id_usuario' => $id_usuario,
-            'fecha_hora_entrega' => $fecha_hora_entrega,
-            'fecha_hora_registro' => $fecha_hora_registro,
-            'id_tipopostre' => $id_tipopostre,
-            'porciones' => $porciones,
-        ];
-
-        if ($tipo_entrega === "Domicilio") {
-            session([
+        if ($tipo_entrega == "Domicilio") {
+            $datos = [
+                'id_sabor' => $sabor,
                 'id_tipopostre' => $id_tipopostre,
-                'porciones' => $porciones,
+                'unidadm' => $unidadm,
+                'valoresSeleccionados' => $valoresSeleccionados,
                 'costo' => $costo,
                 'tipo_entrega' => $tipo_entrega,
-            ]);
-            return redirect()->route('fijo.direccion.get'); 
+                'fecha_hora_registro' => $fecha_hora_registro,
+                'fecha_hora_entrega' => $fecha_hora_entrega
+            ];
+            session()->put('datos_pedido', $datos);
+
+
+            return redirect()->route('fijo.direccion.get');            ;
         }
         else{
+            // Instanciación de postrefijo
+            $fijo = new Postrefijo;
+            //$fijo->id_atributo= ;
+            $fijo->id_um = 1;//$unidadm;
+            $fijo->id_postre_elegido= 1;//$id_tipopostre;
+            $fijo->save();  
 
-            /*$pastel = Postrefijo::create([
-                'id_pf' => session('id_cat'),
-                //'id_atributo' => 2,
-                'id_um' => 1,
-                'id_postre_elegido' => 37,
-            ]);*/
-            
+            // Obtenemos el ID del postre creado
+            $id_nuevo_postre = $fijo->id_pf;
 
-            $pedido = Pedido::create([
+            // Instanciación de Pedido
+            $pedido = new Pedido;
+            $pedido->id_usuario = $id_usuario;
+            $pedido->id_tipopostre = $id_tipopostre;
+            $pedido->id_seleccion_usuario = 11;
+            $pedido->porcionespedidas = $unidadm * $cantidad;
+            $pedido->status = 'pendiente';
+            $pedido->precio_final = $costo;
+            $pedido->fecha_hora_registro = $fecha_hora_registro;
+            $pedido->fecha_hora_entrega = $fecha_hora_entrega;
+            $pedido->save();  // Guardamos el pedido
+
+            $id_pedido = $pedido->id_ped;
+
+
+            $datos = [
+                'costo' => $costo,
+                'tipo_entrega' => $tipo_entrega,
                 'id_usuario' => $id_usuario,
-                'id_seleccion_usuario' => session('id_cat'),
-                'id_tipopostre' => $id_tipopostre,
-                'porcionespedidas' => $porciones,
-                'status' => 'pendiente',
-                'precio_final' => $costo,
-                'fecha_hora_registro' => $fecha_hora_registro,
                 'fecha_hora_entrega' => $fecha_hora_entrega,
-            ]);
-
-            return redirect()->route('fijo.direccion.get'); 
+                'fecha_hora_registro' => $fecha_hora_registro,
+                'id_tipopostre' => $id_tipopostre,
+                'id_pf' =>  $id_nuevo_postre,
+                'pedido' => [
+                    'id_pedido' => $pedido->id_ped,
+                    'porcionespedidas' => $pedido->porcionespedidas,
+                    'status' => $pedido->status,
+                    'precio_final' => $pedido->precio_final,
+                    'fecha_hora_registro' => $pedido->fecha_hora_registro,
+                    'fecha_hora_entrega' => $pedido->fecha_hora_entrega,
+                ],
+            ];
+            return redirect()->route('fijo.ticket.get', ['folio' => $id_pedido]);            
         }
     }
     
@@ -392,7 +425,6 @@ class ControladorCatalogo extends Controller
     
     public function mostrarTicket(){
         $pedido = Pedido::find(session('folio'));
-
         $fechaHoraEntrega = $pedido->fecha_hora_entrega;
 
         list($fecha, $hora) = explode(' ', $fechaHoraEntrega);
