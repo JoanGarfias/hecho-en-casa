@@ -292,7 +292,7 @@ class ControladorCatalogo extends Controller
 
 
         $sabor = session('sabor_postre');
-        $unidadm = intval($request->input('unidad_m'));
+        $unidadm = intval($request->input('unidadm'));
         $cantidad = intval($request->input('cantidad'));
         $valoresSeleccionados = [];
         foreach (session('atributosSesion', []) as $nombreTipo => $atributos) {
@@ -336,8 +336,8 @@ class ControladorCatalogo extends Controller
             $pedido = new Pedido;
             $pedido->id_usuario = $id_usuario;
             $pedido->id_tipopostre = $id_tipopostre;
-            $pedido->id_seleccion_usuario = 11;
-            $pedido->porcionespedidas = $unidadm * $cantidad; //verificar
+            $pedido->id_seleccion_usuario = 11; 
+            $pedido->porcionespedidas = $unidadm * $cantidad; //verificar //$cantidad
             $pedido->status = 'pendiente';
             $pedido->precio_final = $costo;
             $pedido->fecha_hora_registro = $fecha_hora_registro;
