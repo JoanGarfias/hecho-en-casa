@@ -54,7 +54,7 @@ class AuthController extends Controller
                 $correo = $credentials['correo_electronico'];
                 $token = $usuario->token_recuperacion;
                 Mail::to($correo)->send(new Correo($token));
-                $usuario->token_recuperacion = Str::random(64);
+                //$usuario->token_recuperacion = Str::random(64);
                 try{
                     $usuario->save();
                 }catch(\Exception $e){
