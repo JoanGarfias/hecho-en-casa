@@ -201,7 +201,7 @@ class ControladorCatalogo extends Controller
 
     public function mostrarDetalles(){
         session([
-            'id_u' => "1",
+            'id_usuario' => "1",
             'fecha' => "2025-01-07",
             'hora_entrega' => "01:03:33",
             'postre' => "27",
@@ -282,7 +282,7 @@ class ControladorCatalogo extends Controller
 
         $costo = intval($request->input('costo'));
         $tipo_entrega = $request->input('tipo_entrega');
-        $id_usuario = session('id_u');
+        $id_usuario = 1;
 
         $fechaEscogida = session('fecha');
         $horaEntrega = session('hora_entrega');
@@ -339,19 +339,21 @@ class ControladorCatalogo extends Controller
     public function mostrarDireccion(){
         //AQUI DEBERIA JALAR EL ID DEL USUARIO DE ALGUN ALMACEN LOCAL PERO ESTO ES UNA PRUEBA
 
-        $id_usuario = session('id_u');
+        $id_usuario = session('id_usuario');
         
         $usuario = usuario::where('id_u', $id_usuario)
                             ->first();
-        return view('direccion', compact('usuario'));
+        return view('direccionFijo', compact('usuario'));
     }
 
     public function seleccionarDireccion(Request $request){ //POST: Mandamos a la ruta del ticket
 
-        $ubicacion = $request->input('ubicacion');
-        $id_usuario = $request->input('id_usuario');
+        $tipo_domicilio = $request->input('tipo_domicilio'); //ACÁ SE DEBERÍA JALAR LA UBICACIÓN DEL FORMULARIO
+        //PERO TOMAMOS LA DEL USUARIO POR AHORA
+        $id_usuario = session('id_usuario');
         //por defecto cargamos la ubicacion del usuario predeterminado
         $user = usuario::where('id_u', $id_usuario)->first();
+
         $codigo_postal = $user->Codigo_postal_u;
         $estado = $user->estado_u;
         $ciudad = $user->ciudad_u;
@@ -360,25 +362,13 @@ class ControladorCatalogo extends Controller
         $numero = $user->num_exterior_u;
 
         //si elige otra entocnes sobreescribimos los valores
-        if($ubicacion=='otra'){
-            $codigo_postal = $request->input('codigo_postal');
-            $estado = $request->input('estado');
-            $ciudad = $request->input('ciudad');
-            $colonia = $request->input('colonia');
-            $calle = $request->input('calle');
-            $numero = $request->input('numero');
-
-            //si elige volverla su ubicacion predeterminada entonces lo actualizamos en el perfil del usuario
-            if($request->has('predeterminado')){
-                $user = usuario::where('id_u', $id_usuario)->first();
-                $user->Codigo_postal_u = $codigo_postal;
-                $user->estado_u = $estado;
-                $user->ciudad_u = $ciudad;
-                $user->colonia_u = $colonia;
-                $user->calle_u = $calle;
-                $user->num_exterior_u = $numero;
-                $user->save();
-            }
+        if($tipo_domicilio=='Domicilio'){
+            
+            //Aqui inserta la logica para meter un pedido fijo con los datos de domicilio del usuario
+        }
+        else{
+            //Aquí inserta la lógica para meter un pedido fijo con los datos de la ubicación del formulario
+            //y además actualizar la ubicación del usuario en la BD
 
         }
 
@@ -391,7 +381,7 @@ class ControladorCatalogo extends Controller
             'numero' => $numero,
         ]);
         
-        return redirect()->route('pedido.resumen');
+        return redirect()->route('fijo.ticket.get');
 
     }
     
