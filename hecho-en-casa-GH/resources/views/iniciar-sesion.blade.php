@@ -4,7 +4,7 @@
 
 <div class = "contenedor">   
     
-    <form action="{{route('login.post')}}" method="POST" id = "inicioSesion">
+    <form action="{{route('login.post')}}" method="POST" id="inicioSesion">
         @csrf
         <h2>Iniciar sesión</h2>
         <label for="email">Correo: </label>
@@ -16,7 +16,7 @@
 
         <br>
         <label for="password">Contraseña: </label>
-        <input type="password" id = "pass" name ="contraseña" required> 
+        <input type="password" id = "pass" name ="contraseña"> 
         <div class="mensaje">
         <p id="errorPass" class="error"></p>
         <p id="bienPass" class="bien"></p>
