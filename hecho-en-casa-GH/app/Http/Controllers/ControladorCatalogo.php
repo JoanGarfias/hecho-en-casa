@@ -310,7 +310,7 @@ class ControladorCatalogo extends Controller
                 'id_sabor' => $sabor,
                 'id_tipopostre' => $id_tipopostre,
                 'unidadm' => $unidadm,
-                'valoresSeleccionados' => $valoresSeleccionados,
+                'valoresSeleccionados' => $valoresSeleccionados,  //No se como mandar esos datos
                 'costo' => $costo,
                 'tipo_entrega' => $tipo_entrega,
                 'fecha_hora_registro' => $fecha_hora_registro,
@@ -322,7 +322,7 @@ class ControladorCatalogo extends Controller
             return redirect()->route('fijo.direccion.get');      
         }
         else{
-            // Instanciación de postrefijo
+            // Instanciación de postrefijo  //NO SE COMO RELLENAR ESA TABLA
             $fijo = new Postrefijo;
             //$fijo->id_atributo= ;
             $fijo->id_um = 1;//$unidadm;
@@ -337,7 +337,7 @@ class ControladorCatalogo extends Controller
             $pedido->id_usuario = $id_usuario;
             $pedido->id_tipopostre = $id_tipopostre;
             $pedido->id_seleccion_usuario = 11; 
-            $pedido->porcionespedidas = $unidadm * $cantidad; //verificar //$cantidad
+            $pedido->porcionespedidas = $unidadm * $cantidad; 
             $pedido->status = 'pendiente';
             $pedido->precio_final = $costo;
             $pedido->fecha_hora_registro = $fecha_hora_registro;
