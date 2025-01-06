@@ -8,6 +8,7 @@
 </head>
 <body>
     <form action="{{route('guardar-contrasena.post')}}" method="POST">
+        @csrf
         <h1>Ingrese su nueva contraseña</h1>
         <input type="text" name="nueva_contraseña" required>
         
