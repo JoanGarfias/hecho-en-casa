@@ -133,7 +133,6 @@ class ControladorCatalogo extends Controller
     
 
         $porciones_dia = $pedidos_dia->sum('porcionespedidas');
-        dd($porciones_dia);
 
         switch($tipopostre){
             case "fijo":
@@ -144,21 +143,26 @@ class ControladorCatalogo extends Controller
                     ->select('unidad_medida.cantidad')
                     ->first();
                 });
-            
+
                 $cantidad_minima = $porciones_unidad_minima ? $porciones_unidad_minima->cantidad : 0;
             
+                /*
                 $request->validate([
                     'fecha' => [
                         'required',
                         'date',
                         'after_or_equal:today',
                         function ($attribute, $value, $fail) use ($porciones_dia, $cantidad_minima) {
-                            if (($porciones_dia + $cantidad_minima) >= 100) {
+                            if (($porciones_dia + $cantidad_minima) >= 300) {
                                 $fail('No se puede seleccionar esta fecha, el límite de porciones diarias es de 100.');
                             }
                         },
                     ],
-                ]);
+                ]);*/
+
+                if($porciones_dia + $cantidad_minima >= 300){
+                    return redirect()->route('calendario.get'); //Aqui se le tiene que mandar un mensaje de error
+                }
 
                 session([
                     'postre' => $postre,
