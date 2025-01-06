@@ -14,7 +14,7 @@
         <label for="mes">Mes: </label>
         <input type="number" id="mes" name="mes" min="1" max="12" required>
         <label for="anio">Año: </label>
-        <input type="number" id="anio" name="anio" required>
+        <input type="number" id="anio" name="anio" min="1" required>
         @csrf <!-- Token CSRF obligatorio -->
         <button type="submit">Cargar Calendario</button>
     </form>
