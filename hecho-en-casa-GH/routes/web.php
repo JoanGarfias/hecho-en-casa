@@ -46,8 +46,8 @@ Route::get('/cerrar-sesion', [AuthController::class, 'logout'])
 //Route::delete('/cerrar-sesion', [ControladorCalendario::class, 'logout.post']);
 //antes de entrar a esta vista el correo tiene que estar validado y ser enviado
 Route::get('/recuperar-clave', [MailController::class, 'mostrar'])->name('recuperar-clave.get');
-Route::post('/recuperar-clave', [MailController::class, 'enviarCorreo'])->name('enviar-correo.post');
-Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);
+//Route::post('/recuperar-clave', [MailController::class, 'enviarCorreo'])->name('enviar-correo.post');
+//Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);
 
 /*
 

@@ -7,7 +7,7 @@
     <title>Mensaje</title>
 </head>
 <body>
-    <h1>Se ha enviado un token a su correo: {{$correo}}</h1>
+    <h1>Se ha enviado un token a su correo: {{session('correo')}}</h1>
     <button>OK</button>
 </body>
 </html>
