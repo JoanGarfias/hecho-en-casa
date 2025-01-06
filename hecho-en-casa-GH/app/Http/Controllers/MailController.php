@@ -25,8 +25,9 @@ class MailController extends Controller
         ]);
     }
 
-    public function mostrar()
+    public function mostrar(Request $request)
     {
-        return view('prueba-recuperacion');
+        $correo = $request->query('email');
+        return view('prueba-recuperacion', compact('correo'));
     }   
 }

@@ -7,8 +7,8 @@
     <title>Mensaje</title>
 </head>
 <body>
-    <form action="/recuperar" method="post">
-        <h1>Se ha enviado un token a su correo</h1>
+    <form action="{{route('')}}" method="post">
+        <h1>Se ha enviado un token a su correo: {{$correo}}</h1>
         <button>OK</button>
     </form>
 </body>
