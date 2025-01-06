@@ -57,15 +57,15 @@ class Enlazador
                     'siguiente' => 'fijo.calendario.post',
                 ],
                 'fijo.catalogo.post' => [
-                    'permitidas' => ['fijo.catalogo.post'],
+                    'permitidas' => ['fijo.catalogo.get'],
                     'siguiente' => 'fijo.calendario.get',
                 ],
                 'fijo.calendario.get' => [
-                    'permitidas' => ['fijo.calendario.get'],
+                    'permitidas' => ['fijo.catalogo.post'],
                     'siguiente' => 'fijo.calendario.post',
                 ],
                 'fijo.calendario.post' => [
-                    'permitidas' => ['fijo.calendario.post'],
+                    'permitidas' => ['fijo.calendario.get'],
                     'siguiente' => 'fijo.detallesPedido.get',
                 ],
                 'fijo.detallesPedido.get' => [

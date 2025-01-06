@@ -397,7 +397,7 @@ class ControladorCatalogo extends Controller
         $colonia = $user->colonia_u;
         $calle = $user->calle_u;
         $numero = $user->num_exterior_u;
-
+/*
         if($tipo_domicilio=='otra'){
             $codigo_postal = $request->input('codigo_postal');
             $estado = $request->input('estado');
@@ -420,7 +420,7 @@ class ControladorCatalogo extends Controller
             }
 
         }
-
+*/
 
         $fijo = new Postrefijo;
         //$fijo->id_atributo= ;
@@ -430,10 +430,10 @@ class ControladorCatalogo extends Controller
 
         // Obtenemos el ID del postre creado
         $id_nuevo_postre = $fijo->id_pf;
-
+        
         // Instanciación de Pedido
         $pedido = new Pedido;
-        $pedido->id_usuario = session('id_u');
+        $pedido->id_usuario = session('id_usuario');
         $pedido->id_tipopostre = $datos['id_tipopostre'];
         $pedido->id_seleccion_usuario = $id_nuevo_postre;
         $pedido->estado_e = $estado;
@@ -448,12 +448,7 @@ class ControladorCatalogo extends Controller
         $pedido->fecha_hora_registro = now();
         $pedido->status = "pendiente";
         $pedido->precio_final = session("costo");
-
-        try {
-            $pedido->save();
-        } catch (\Exception $e) {
-            dd("Error al guardar el pedido: " . $e->getMessage());
-        }
+        $pedido->save();
 
         $id_pedido = $pedido->id_ped;
         session([
@@ -468,8 +463,8 @@ class ControladorCatalogo extends Controller
             'calle' => $calle,
             'numero' => $numero,
         ]);
-        
-        return redirect()->route('fijo.ticket.get');
+
+        return redirect()->route('fijo.ticket.get',['folio' => $id_pedido]);
 
     }
     
