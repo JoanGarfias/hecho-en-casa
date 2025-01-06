@@ -84,7 +84,7 @@ Route::post('fijo/detalles-pedido', [ControladorCatalogo::class, 'seleccionarDet
 ->name('fijo.detallesPedido.post')
 ->middleware([CheckSession::class, Enlazador::class]);
 
-Route::get('fijo/dex|talles-direccion', [ControladorCatalogo::class, 'mostrarDireccion'])
+Route::get('fijo/detalles-direccion', [ControladorCatalogo::class, 'mostrarDireccion'])
 ->name('fijo.direccion.get')
 ->middleware([CheckSession::class, Enlazador::class]);
 
