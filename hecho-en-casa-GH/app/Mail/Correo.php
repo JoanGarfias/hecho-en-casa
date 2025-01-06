@@ -39,7 +39,7 @@ class Correo extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.mi-correo',
+            markdown: 'emails.mi_correo',
         );
     }
 
