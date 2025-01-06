@@ -7,7 +7,7 @@
 <main>
     <h2>DESCUBRE</h2>
     <div class="contenedor">
-        <div class="seccion temporada">
+        <div class="seccionTemp">
             <h3>TEMPORADA</h3>
             <img src="{{ asset('img/temporada.png') }}" alt="Pasteles de temporada">
         </div>
