@@ -38,12 +38,46 @@
                         </div>
                     </div>
                     <div class="fila">
-                        <label for="cantidad">Cantidad:</label>
-                        
+                        <label for="saborPan">Sabor de pan:</label>
+                        <div class="custom-select">
+                            <div>                               
+                                <input type="text" id="agarrarValor" readonly placeholder="Seleccione una opción">
+                                <input type="hidden" id="tipoEntrega" name="tipoEntrega">
+                            </div> 
+                            <button id="seleccionar" class="diseñandobutton">🔻</button>
+                            <div id="seleccionadoOpcion" class="customizandoOpciones" style="display: none;">
+                                <div class="darOpciones" data-value="opcion1">Opción 1</div>
+                                <div class="darOpciones" data-value="opcion2">Opción 2</div>
+                            </div>                       
+                        </div>
                     </div>
                     <div class="fila">
-                        <label for="sabor">Sabor:</label>
-                        <input type="text" id="sabor" name="sabor" readonly>
+                        <label for="saborRelleno">Sabor de relleno:</label>
+                        <div class="custom-select">
+                            <div>                               
+                                <input type="text" id="agarrarValor" readonly placeholder="Seleccione una opción">
+                                <input type="hidden" id="tipoEntrega" name="tipoEntrega">
+                            </div> 
+                            <button id="seleccionar" class="diseñandobutton">🔻</button>
+                            <div id="seleccionadoOpcion" class="customizandoOpciones" style="display: none;">
+                                <div class="darOpciones" data-value="opcion1">Opción 1</div>
+                                <div class="darOpciones" data-value="opcion2">Opción 2</div>
+                            </div>                       
+                        </div>
+                    </div>
+                    <div class="fila">
+                        <label for="cobertura">Cobertura:</label>
+                        <div class="custom-select">
+                            <div>                               
+                                <input type="text" id="agarrarValor" readonly placeholder="Seleccione una opción">
+                                <input type="hidden" id="tipoEntrega" name="tipoEntrega">
+                            </div> 
+                            <button id="seleccionar" class="diseñandobutton">🔻</button>
+                            <div id="seleccionadoOpcion" class="customizandoOpciones" style="display: none;">
+                                <div class="darOpciones" data-value="opcion1">Opción 1</div>
+                                <div class="darOpciones" data-value="opcion2">Opción 2</div>
+                            </div>                       
+                        </div>
                     </div>
                 </div>
                 <div class="columna">
@@ -51,11 +85,11 @@
                         <label for="elementos">Elementos:</label>
                         <div class="opciones">
                             <label>
-                                <input type="radio" name="elementos" value="figura" required>
+                                <input type="checkbox" name="elementos[]" value="figura" required>
                                 <p class="blanca"> Figura de fondant</p>
                             </label>
                             <label>
-                                <input type="radio" name="elementos" value="figura">
+                                <input type="checkbox" name="elementos[]" value="figura">
                                 <p class="blanca"> Impresion de oblea</p>
                             </label>
                         </div>
@@ -89,11 +123,11 @@
                 <div class="columna">
                     <div class="fila">
                         <label for="imagen">Añadir imagen:</label>
-                        <textarea id="imagen" name="imagen" class="escribiendo" required></textarea>
+                        <textarea id="imagen" name="imagen" class="escribiendo" placeholder="Pega aquí un enlace de Google o Pinterest..." required></textarea>
                     </div>
                     <div class="fila">
                         <label for="descripcion">Descripción detallada:</label>
-                        <textarea id="descripcion" name="descripcion" class="escribiendo" required></textarea>
+                        <textarea id="descripcion" name="descripcion" class="escribiendo" placeholder="Describe tu pedido" required></textarea>
                     </div>
 
                     <div class="fila"> 
@@ -104,12 +138,16 @@
                     </div>
                 </div>
             </div>
+            <div class="arrows">
+                <button id="prev" class="arrow">⬅</button>
+                <button id="next" class="arrow">➡</button>
+            </div>
         </form>  
     </div>
 </div>
 <x-pie/>
 
-<script src="{{ asset('js/pidiendo.js') }}" defer></script>
+<script src="{{ asset('js/pidiendoPersonalizados.js') }}" defer></script>
 
 <!--Para la animación del logo de usuario-->
 <script src="{{ asset('js/icono.js') }}" defer></script>
