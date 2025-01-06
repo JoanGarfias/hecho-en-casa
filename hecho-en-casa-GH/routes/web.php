@@ -66,6 +66,9 @@ Route::delete('/cerrar-sesion', [ControladorCalendario::class, 'index']);
 
 Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);
 
+
+Route::get('/registrar', [ControladorRegistrar::class, 'index']);
+Route::put('/registrar', [ControladorRegistrar::class, 'index']);
 /*
 
 /*RUTAS DE POSTRES FIJOS */
