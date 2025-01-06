@@ -379,7 +379,7 @@ class ControladorCatalogo extends Controller
         return view('direccion', compact('usuario'));
     }
 
-    public function seleccionarDireccion(Request $request){ //POST: Mandamos a la ruta del ticket
+    public function guardarDireccion(Request $request){ //POST: Mandamos a la ruta del ticket
 
         $ubicacion = $request->input('ubicacion');
         $id_usuario = $request->input('id_usuario');
@@ -424,7 +424,7 @@ class ControladorCatalogo extends Controller
             'numero' => $numero,
         ]);
         
-        return redirect()->route('pedido.resumen');
+        return redirect()->route('fijo.ticket.get');
 
     }
     
