@@ -22,7 +22,8 @@ class ControladorCatalogo extends Controller
 {
 
     public function mostrarCatalogo($categoria = null){ //GET: Muestra los productos
-        $estadoActual = session()->put('estado_flujo', 'fijo.catalogo.get');
+        session()->put('estado_flujo', 'fijo.catalogo.get');
+
         $categorias = Cache::remember('categorias', 30, function () {
             return Categoria::all();
         });
@@ -74,7 +75,7 @@ class ControladorCatalogo extends Controller
             'nombre_postre' => $datos['nombre_postre'],
         ]);
 
-        return redirect()->route('calendario.get');
+        return redirect()->route('fijo.calendario.get');
     }
 
     
@@ -85,6 +86,7 @@ class ControladorCatalogo extends Controller
         }
         
         $primerDiaDelMes = $fecha->copy()->startOfMonth();
+        $diaSemana = $primerDiaDelMes->dayName;
         $ultimoDiaDelMes = $fecha->copy()->endOfMonth();
         
         $pedidos = Cache::remember('pedidos', 30, function () use ($primerDiaDelMes, $ultimoDiaDelMes){
@@ -111,7 +113,13 @@ class ControladorCatalogo extends Controller
                 $diasDelMes[$indice]['porciones'] += $pedido->porcionespedidas;
             }
         }
-        return view('calendario', compact('diasDelMes'));
+
+        $calendarioJson = json_encode([
+            'diasDelMes' => $diasDelMes,
+            'diaSemana' => $diaSemana,
+        ]);
+
+        return view('calendario', compact('calendarioJson'));
     }
 
     public function seleccionarFecha(Request $request)
@@ -150,7 +158,7 @@ class ControladorCatalogo extends Controller
 
                 if($porciones_dia + $cantidad_minima >= 1000){
                     dd($porciones_dia + $cantidad_minima);
-                    return redirect()->route('calendario.get'); //Aqui se le tiene que mandar un mensaje de error
+                    return redirect()->route('fijo.calendario.get'); //Aqui se le tiene que mandar un mensaje de error
                 }
 
                 session([
