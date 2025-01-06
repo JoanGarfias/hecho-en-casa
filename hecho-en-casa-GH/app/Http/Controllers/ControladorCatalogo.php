@@ -370,7 +370,6 @@ class ControladorCatalogo extends Controller
     }
     
     public function mostrarDireccion(){
-        //AQUI DEBERIA JALAR EL ID DEL USUARIO DE ALGUN ALMACEN LOCAL PERO ESTO ES UNA PRUEBA
 
         $id_usuario = session('id_u');
         
