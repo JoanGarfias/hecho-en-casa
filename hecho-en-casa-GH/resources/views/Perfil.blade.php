@@ -1,5 +1,5 @@
+<link rel="stylesheet" href="{{ asset('css/Perfil.css') }}">
 <title>Perfil de Usuario</title>
-  <link rel="stylesheet" href="/ProyectoHC_Modificacion_CalendarioFijo/Pagina/css/Perfil.css"> 
   <?php require('./Plantillas/menu.php'); ?>
 </head>
 <body>
