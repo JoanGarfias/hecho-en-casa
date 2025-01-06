@@ -84,7 +84,7 @@ Route::get('fijo/detalles-direccion', [ControladorCatalogo::class, 'mostrarDirec
 ->name('fijo.direccion.get')
 ->middleware([CheckSession::class, Enlazador::class]);
 
-Route::post('fijo/detalles-direccion', [ControladorCatalogo::class, 'guardarDireccion'])
+Route::post('fijo/detalles-direccion', [ControladorCatalogo::class, 'seleccionarDireccion'])
 ->name('fijo.direccion.post')
 ->middleware(CheckSession::class);
 

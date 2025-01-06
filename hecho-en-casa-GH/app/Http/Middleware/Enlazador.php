@@ -10,6 +10,7 @@ class Enlazador
 {
     public function handle(Request $request, Closure $next)
     {
+        /*
         $flujo = $this->obtenerFlujo($request);
 
         if (!$flujo) {
@@ -30,7 +31,7 @@ class Enlazador
         }
 
         session()->put('ultima_etapa', $rutaActual);
-
+        */
         return $next($request);
     }
 
