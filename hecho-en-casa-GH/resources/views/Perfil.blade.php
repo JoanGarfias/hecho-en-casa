@@ -1,6 +1,10 @@
 <link rel="stylesheet" href="{{ asset('css/Perfil.css') }}">
 <title>Perfil de Usuario</title>
-  <?php require('./Plantillas/menu.php'); ?>
+
+<x-menu />
+
+<x-banner />
+
 </head>
 <body>
   <div class="main-container">
