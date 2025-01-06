@@ -10,8 +10,8 @@
     <div class="menu">
         <nav>
             <ul class="menu-izquierdo">
-                <li><a href="#">Inicio</a></li>
-                <li><a href="#">Calendario</a></li>
+                <li><a href="{{ url('/') }}">Inicio</a></li>
+                <li><a href="{{ url('/calFijo') }}">Calendario</a></li>
                 <li><a href="#">Catálogo</a></li>
             </ul>
 
@@ -26,8 +26,8 @@
                                  <img src="{{ asset('img/usuario.png') }}" alt="Usuario">
                             </a>
                              <div class="dropdown-menu" id="menu-usuario">
-                                <button>Iniciar sesión</button>
-                                <a href="registrar/" class="btn">Registrarme</a>
+                                <button onclick="window.location.href='iniciar-sesion/'">Iniciar sesion</button>
+                                <button onclick="window.location.href='registrar'">Registrarme</button>
 
                              </div>
                         </li> 

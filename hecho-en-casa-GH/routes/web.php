@@ -19,6 +19,11 @@ Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 Route::get('/buscarpedido', [ControladorCalendario::class, 'index']);
 Route::post('/buscarpedido', [ControladorCalendario::class, 'index']);
 
+Route::get('/pedidosPersonalizados', function(){
+    return view('pedidosPersonalizados');
+});
+Route::post('/calEdit', [ControladorCalendario::class, 'index']);
+
 /*INICIO DE SESIÓN */
 
 Route::get('/perfil', [ControladorCalendario::class, 'index']);

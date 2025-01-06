@@ -1,0 +1,308 @@
+*{
+    font-family: "Poppins", serif;
+    
+    font-style: normal;
+    font-weight: bold;
+}
+
+#fechaEntrega{
+    background: none;
+    border: none;
+    font-weight: bold;
+}
+
+.titule{
+    margin-top: 70px;
+    color: #7E643B;
+    text-align: center;
+    font-size: large;
+}
+
+body {  
+    background: white; /* Fondo del sitio */  
+}
+
+.flexi{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Hace que el diseño esté centrado en pantalla */
+    margin-top: 0px;
+    margin-bottom: 5%;
+}
+
+.contenedor {
+    position: relative;
+    background: #EADAC6;
+    border-radius: 22px;
+    padding: 36px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    top: 0px;
+    width: 90%;
+    max-width: 1400px;
+    overflow: hidden;
+}
+
+.dosColumnas {
+    display: flex;
+    gap: 30px; /* Espacio entre columnas */
+    justify-content: space-between; /* Ajustar el espacio entre columnas */
+}
+
+.columna {
+    
+    flex: 1; /* Ambas columnas ocupan el mismo ancho */
+    max-width: 45%; /* Limita el tamaño máximo */
+    display: flex;
+    flex-direction: column; /* Apila filas verticalmente */
+    gap: 20px; /* Espacio entre filas */
+}
+
+.fila{
+    display: flex;
+    background: #FCF5C7;
+    flex-direction: row;
+    align-items: center; /* Centrar el contenido dentro de cada columna */
+    text-align: center; /* Alinear el texto en el centro */
+    padding: 12px;
+    border-radius: 10px;
+    flex-wrap: wrap; /* Permite que los elementos se ajusten automáticamente */
+    align-items: center; /* Alinea verticalmente el label y el input */
+    gap: 10px; /* Espaciado entre los elementos */
+}
+
+.fila .nota {
+    margin-top: 10px; /* Espaciado entre la nota y los elementos de la fila */
+    flex-basis: 100%; /* Asegura que el párrafo ocupe toda la fila */
+
+}
+
+a{
+    font-size: small;
+    color: #955128;
+}
+
+
+label {
+    color: #7E643B;
+    display: block;
+    font-weight: bold;
+}
+
+input {
+    background: white;
+    border: 1px solid #E8D9C2;
+    border-radius: 4px;
+    width: 30%;
+    padding: 5px;
+    margin-left: 36px;
+    
+}
+
+.mensaje{
+    margin-top: 6px;
+}
+
+.error {
+    color: rgb(200, 32, 32);
+    font-weight: bold;
+    font-size: 10px;
+    margin: -5px 0 10px 10px;
+}
+
+.bien {
+    color: rgb(73, 255, 89);
+    font-weight: bold;
+    font-size: 10px;
+    margin: -10px 0 10px 10px;
+}
+
+.botoncito {
+    background: #FBAF35;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+   
+    margin: 10px;
+}
+
+.botoncito:hover {
+    background: #d9902e;
+}
+
+form {
+    text-align: center;
+}
+
+#fechaEntrega{
+    font-weight: bold;
+}
+
+.nota{
+    margin: 10px;
+    color: #C7C0B5;
+}
+
+
+.opciones{
+    display: flex;
+    flex-direction: row;
+}
+
+/*Para la hora*/
+.hora-selector{
+    display: flex;
+    flex-direction: row;
+    width: 5%;
+    height: auto;
+}
+
+input[type="time"] {
+    background-color: #ffffff;
+    border: 1px solid #E8D9C2;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 16px;
+    width: 120px;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    background-color: #FBAF35;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+}
+
+/*Acá termina la hora*/
+
+.fila label {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre el botón y el texto */
+}
+
+.fila input[type="radio"] {
+    accent-color: #FBAF35; /* Cambia el color del botón radio */
+    width: 20px;
+    height: 20px;
+    border: 2px solid #FBAF35; /* Añade un borde para darle forma de cuadrado */
+}
+
+select {
+    background: white;
+    border: 1px solid #E8D9C2;
+    border-radius: 4px;
+    width: 70%; /* Ajusta el ancho según sea necesario */
+    padding: 5px;
+}
+
+.blanca{
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.cantidad-wrapper {
+    display: flex;
+    align-items: center; /* Centra el contenido verticalmente */
+}
+
+.boton-wrapper {
+    display: flex;
+    flex-direction: column; /* Coloca los botones uno encima del otro */
+    margin-right: 10px; /* Espacio entre los botones y el input */
+    margin-left: 10px;
+}
+
+.boton-wrapper button {
+    background-color: #F8CFA0;
+    border: none;
+    color: white;
+    font-size: 18px;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.boton-wrapper button:hover {
+    background-color: #ffb25a;
+}
+
+.cantidad-wrapper input {
+    width: 50px;
+    text-align: center;
+    margin: 16px;
+}
+
+/*Tipo entrega*/
+
+.custom-select {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-select-button {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.custom-select-options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0px;
+    right: 0px;
+    background-color: #FCF5C7;
+    border: 1px solid #E8D9C2;
+    border-radius: 4px;
+    max-height: 224px;
+    overflow-y: visible;
+    z-index: 1;
+    width: 150px;
+}
+
+.custom-select-options .option {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.custom-select-options .option:hover {
+    background-color: #E8D9C2;
+}
+
+.custom-select-button:focus + .custom-select-options {
+    display: block;
+}
+
+/*Fin tipo entrega*/
+
+/*Para las flechas*/
+.arrows {
+    display: flex;
+    justify-content: right;
+    margin-top: 10px;
+    gap: 10px; /* Espacio entre las flechas */
+}
+
+.arrow {
+    padding: 10px 15px;
+    font-size: /*16px*/1.5rem;
+    background-color: #c0a061; /* Color de fondo */
+    color:white; /* Color de texto */
+    border: none;
+    border-radius: 100%;
+    cursor: pointer;
+
+    margin: 10px;
+    font-weight: bold;  
+}
+
+.arrow:hover {
+    background-color: #a7854e; /* Color al pasar el cursor */
+}
+/*Acá termina*/
+
