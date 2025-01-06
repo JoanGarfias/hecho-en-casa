@@ -67,6 +67,7 @@ class ControladorCatalogo extends Controller
         ]);
 
         session([
+            'postre'=> $id_postre,
             'id_postre' => $datos['id_postre'],
             'id_tipopostre' => $id_tipopostre,
             'nombre_postre' => $datos['nombre_postre'],
@@ -133,34 +134,20 @@ class ControladorCatalogo extends Controller
     
 
         $porciones_dia = $pedidos_dia->sum('porcionespedidas');
+        $porciones_unidad_minima = Cache::remember('porcionesunidadminima', 30, function () use ($postre) {
+            return PostreFijoUnidad::join('unidad_medida', 'postre_fijo_unidad_medidas.id_um', '=', 'unidad_medida.id_um')
+            ->where('id_pf', $postre)
+            ->orderBy('unidad_medida.cantidad', 'asc')
+            ->select('unidad_medida.cantidad')
+            ->first();
+        });
+
+        $cantidad_minima = $porciones_unidad_minima ? $porciones_unidad_minima->cantidad : 0;
 
         switch($tipopostre){
             case "fijo":
-                $porciones_unidad_minima = Cache::remember('porcionesunidadminima', 30, function () use ($postre) {
-                    return PostreFijoUnidad::join('unidad_medida', 'postre_fijo_unidad_medidas.id_um', '=', 'unidad_medida.id_um')
-                    ->where('id_pf', $postre)
-                    ->orderBy('unidad_medida.cantidad', 'asc')
-                    ->select('unidad_medida.cantidad')
-                    ->first();
-                });
 
-                $cantidad_minima = $porciones_unidad_minima ? $porciones_unidad_minima->cantidad : 0;
-            
-                /*
-                $request->validate([
-                    'fecha' => [
-                        'required',
-                        'date',
-                        'after_or_equal:today',
-                        function ($attribute, $value, $fail) use ($porciones_dia, $cantidad_minima) {
-                            if (($porciones_dia + $cantidad_minima) >= 300) {
-                                $fail('No se puede seleccionar esta fecha, el límite de porciones diarias es de 100.');
-                            }
-                        },
-                    ],
-                ]);*/
-
-                if($porciones_dia + $cantidad_minima >= 300){
+                if($porciones_dia + $cantidad_minima >= 100){
                     return redirect()->route('calendario.get'); //Aqui se le tiene que mandar un mensaje de error
                 }
 
@@ -172,6 +159,11 @@ class ControladorCatalogo extends Controller
 
                 return redirect()->route('fijo.detallesPedido.get');
             case "personalizado":
+
+                if($porciones_dia + $cantidad_minima >= 100){
+                    return redirect()->route('personalizado.calendario.get'); //Aqui se le tiene que mandar un mensaje de error
+                }
+
                 session([
                     'fecha' => $fechaEscogida,
                     'postre' => $postre,
@@ -202,9 +194,8 @@ class ControladorCatalogo extends Controller
     public function mostrarDetalles(){
         session([
             'id_usuario' => "1",
-            'fecha' => "2025-01-07",
-            'hora_entrega' => "01:03:33",
-            'postre' => "1",
+            'fecha' => session("fecha_entrega"),
+            'hora_entrega' => session("hora_entrega"),
             'cantidad_minima' => "6",
         ]);
 
@@ -212,7 +203,7 @@ class ControladorCatalogo extends Controller
         //if (!session('postre') || !session('fecha')) {
         //    return redirect()->route('seleccionarFecha')->with('error', 'No se ha seleccionado un postre o fecha.');
         //}
-
+        
         $postre = Catalogo::where('id_postre', session('postre'))->first();
         if ($postre) {
             session([
@@ -281,19 +272,19 @@ class ControladorCatalogo extends Controller
                             ->first();
         $costo = intval($request->input('costo'));
         $tipo_entrega = $request->input('tipo_entrega');
+        session()->put('opcion_envio', $tipo_entrega);
         $id_usuario = 1;
+        session(['tipo_entrega'=> $tipo_entrega,]);
 
-        //$fechaEscogida = session('fecha');
-        //$horaEntrega = session('hora_entrega');
-        $fechaEscogida = "2025-01-08";  // Fecha en formato Y-m-d
-        $horaEntrega = "12:30";         // Hora en formato H:i
-        // Concatenas la fecha y la hora 
+        $fechaEscogida = session('fecha');
+        $horaEntrega = session('hora_entrega');
         $fecha_hora_entrega = Carbon::parse($fechaEscogida . ' ' . $horaEntrega);
         $fecha_hora_registro = now();
         $id_tipopostre = 'fijo'; 
 
+
         $sabor = session('sabor_postre');
-        $unidadm = intval($request->input('unidad_m'));
+        $unidadm = intval($request->input('unidadm'));
         $cantidad = intval($request->input('cantidad'));
         $valoresSeleccionados = [];
         foreach (session('atributosSesion', []) as $nombreTipo => $atributos) {
@@ -320,7 +311,7 @@ class ControladorCatalogo extends Controller
             session()->put('datos_pedido', $datos);
 
 
-            return redirect()->route('fijo.direccion.get');            ;
+            return redirect()->route('fijo.direccion.get');      
         }
         else{
             // Instanciación de postrefijo
@@ -337,8 +328,8 @@ class ControladorCatalogo extends Controller
             $pedido = new Pedido;
             $pedido->id_usuario = $id_usuario;
             $pedido->id_tipopostre = $id_tipopostre;
-            $pedido->id_seleccion_usuario = 11;
-            $pedido->porcionespedidas = $unidadm * $cantidad;
+            $pedido->id_seleccion_usuario = 11; 
+            $pedido->porcionespedidas = $unidadm * $cantidad; //verificar //$cantidad
             $pedido->status = 'pendiente';
             $pedido->precio_final = $costo;
             $pedido->fecha_hora_registro = $fecha_hora_registro;
@@ -346,7 +337,9 @@ class ControladorCatalogo extends Controller
             $pedido->save();  // Guardamos el pedido
 
             $id_pedido = $pedido->id_ped;
-
+            session([
+                'folio' => $id_pedido,
+            ]);
 
             $datos = [
                 'costo' => $costo,
@@ -418,13 +411,14 @@ class ControladorCatalogo extends Controller
     }
     
     public function mostrarTicket(){
-        $pedido = Pedido::find(session('folio'));
+        $pedido = Pedido::find(session("folio"));
         $fechaHoraEntrega = $pedido->fecha_hora_entrega;
 
         list($fecha, $hora) = explode(' ', $fechaHoraEntrega);
 
         $usuario = Usuario::find($pedido->id_usuario); 
+        $tipo_entrega = session('tipo_entrega');
 
-        return view('pedido', compact('pedido', 'usuario', 'fecha', 'hora'));
+        return view('pedido', compact('pedido', 'usuario', 'fecha', 'hora', 'tipo_entrega'));
     }
 }
