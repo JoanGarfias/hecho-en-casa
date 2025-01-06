@@ -48,7 +48,7 @@ Route::get('/cerrar-sesion', [AuthController::class, 'logout'])
 Route::get('/recuperar-clave', [ControladorRegistro::class, 'mostrarRecuperacion'])->name('recuperar-clave.get');
 Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecuperacion'])->name('recuperacion.get');
 Route::get('/cambiar-clave', [ControladorRegistro::class, 'mostrarCambio'])->name('cambiar-clave.get');
-Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContrasena'])->name('guardar-contrasena.post');
+Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post');
 //Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);
 
 /*
@@ -84,7 +84,7 @@ Route::post('fijo/detalles-pedido', [ControladorCatalogo::class, 'seleccionarDet
 ->name('fijo.detallesPedido.post')
 ->middleware([CheckSession::class, Enlazador::class]);
 
-Route::get('fijo/dex|talles-direccion', [ControladorCatalogo::class, 'mostrarDireccion'])
+Route::get('fijo/detalles-direccion', [ControladorCatalogo::class, 'mostrarDireccion'])
 ->name('fijo.direccion.get')
 ->middleware([CheckSession::class, Enlazador::class]);
 

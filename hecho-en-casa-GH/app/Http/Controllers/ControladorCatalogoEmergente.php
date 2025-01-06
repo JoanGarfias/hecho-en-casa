@@ -63,8 +63,10 @@ class ControladorCatalogoEmergente extends Controller
         ]);
 
         //ESTO ES LA CONSULTA A PARTIR DEL ID QUE ME LLEGO DE LA VISTA ANTERIOR
-        $postre = Catalogo::where('id_postre', session('postre'))
+        $postre = Cache::remember('postresession', 10, function () {
+            return Catalogo::where('id_postre', session('postre'))
                             ->first();
+        });
 
         session([   
             'nombre_postre' => $postre->nombre,
@@ -92,8 +94,11 @@ class ControladorCatalogoEmergente extends Controller
         }
 
         $id_postre = session('postre');
-        $postre = Catalogo::where('id_postre', $id_postre)
+        $postre = Cache::remember('postres2', 10, function () use ($id_postre){
+            Catalogo::where('id_postre', $id_postre)
                             ->first();
+        });
+
         $emergente = new Postreemergente;
         $emergente->id_postre_elegido = $postre->id_postre;
         try{
@@ -169,8 +174,11 @@ class ControladorCatalogoEmergente extends Controller
 
         }
 
-        $postre = Catalogo::where('id_postre', session('postre'))
+        //ESTO ES LA CONSULTA A PARTIR DEL ID QUE ME LLEGO DE LA VISTA ANTERIOR
+        $postre = Cache::remember('postresession', 10, function () {
+            return Catalogo::where('id_postre', session('postre'))
                             ->first();
+        });
         
         $emergente = new Postreemergente;
         $emergente->id_postre_elegido = $postre->id_postre;

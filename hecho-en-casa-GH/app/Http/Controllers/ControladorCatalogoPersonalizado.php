@@ -28,14 +28,22 @@ class ControladorCatalogoPersonalizado extends Controller
     }
 
     public function mostrarDetalles(){ //GET: Vista de detalles para personalizado
-        $sabores = SaborPan::select('id_sp', 'nom_pan', 'precio_p')
-        ->get();
-        $rellenos = SaborRelleno::select('id_sr', 'nom_relleno', 'precio_sr')
-        ->get();
-        $coberturas = Cobertura::select('id_c', 'nom_cobertura', 'precio_c')
-        ->get();
-        $elementos = Elemento::select('id_e', 'nom_elemento', 'precio_e')
-        ->get();
+        $sabores = Cache::remember('sabores', 60, function () {
+            return SaborPan::select('id_sp', 'nom_pan', 'precio_p')
+            ->get();
+        });
+        $rellenos = Cache::remember('rellenos', 10, function () {
+            return SaborRelleno::select('id_sr', 'nom_relleno', 'precio_sr')
+            ->get();
+        });
+        $coberturas = Cache::remember('coberturas', 10, function () {
+            return Cobertura::select('id_c', 'nom_cobertura', 'precio_c')
+            ->get();
+        });
+        $elementos = Cache::remember('elementos', 10, function () {
+             Elemento::select('id_e', 'nom_elemento', 'precio_e')
+            ->get();
+        });
         
         return view('detallesPersonalizado', compact('sabores', 'rellenos', 'coberturas', 'elementos'));
     }

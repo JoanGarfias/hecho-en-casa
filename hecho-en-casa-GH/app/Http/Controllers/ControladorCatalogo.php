@@ -86,6 +86,7 @@ class ControladorCatalogo extends Controller
         }
         
         $primerDiaDelMes = $fecha->copy()->startOfMonth();
+        $diaSemana = $primerDiaDelMes->dayName;
         $ultimoDiaDelMes = $fecha->copy()->endOfMonth();
         
         $pedidos = Cache::remember('pedidos', 30, function () use ($primerDiaDelMes, $ultimoDiaDelMes){
@@ -112,13 +113,19 @@ class ControladorCatalogo extends Controller
                 $diasDelMes[$indice]['porciones'] += $pedido->porcionespedidas;
             }
         }
-        return view('calendario', compact('diasDelMes'));
+
+        $calendarioJson = json_encode([
+            'diasDelMes' => $diasDelMes,
+            'diaSemana' => $diaSemana,
+        ]);
+
+        return view('calendario', compact('calendarioJson'));
     }
 
     public function seleccionarFecha(Request $request)
     {
 
-        $fechaEscogida = "2025-01-08";
+        $fechaEscogida = "2025-05-05";
         $horaEntrega = "12:00";
         $postre = session('id_postre');
         $tipopostre = session('id_tipopostre');
@@ -199,7 +206,7 @@ class ControladorCatalogo extends Controller
             'id_usuario' => "1",
             'fecha' => session("fecha_entrega"),
             'hora_entrega' => session("hora_entrega"),
-            'cantidad_minima' => "6",
+            'cantidad_minima' => "3",
         ]);
 
         //COMO SON DATOS DIRECTOS NO ES NECESARIO ESTO
