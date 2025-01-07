@@ -218,6 +218,7 @@ class ControladorCatalogoEmergente extends Controller
             $emergente->save();
         }catch(\Exception $e){
             dd("Error al guardar el postre emergente: ".$e->getMessage());
+            return redirect()->route('inicio.get')->with('error', 'Error al guardar el pedido');
         }
 
         $pedido = new Pedido;
@@ -241,6 +242,7 @@ class ControladorCatalogoEmergente extends Controller
             $pedido->save();
         } catch (\Exception $e) {
             dd("Error al guardar el pedido: " . $e->getMessage());
+            return redirect()->route('inicio.get')->with('error', 'Error al guardar el pedido');
         }
         
         session([
