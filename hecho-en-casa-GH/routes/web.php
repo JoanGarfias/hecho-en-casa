@@ -138,6 +138,9 @@ Route::get('personalizado/ticket/{folio}', [ControladorCatalogoPersonalizado::cl
 Route::get('/emergentes', [ControladorCatalogoEmergente::class, 'mostrar'])
 ->name('emergente.catalogo.get');
 
+Route::post('/emergentes', [ControladorCatalogoEmergente::class, 'guardarSeleccion'])
+->name('emergente.catalogo.post');
+
 Route::get('emergentes/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])
 ->name('emergente.calendario.get')
 ->middleware([CheckSession::class, Enlazador::class]);

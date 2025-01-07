@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 
 class ControladorCatalogoEmergente extends Controller
 {
-
+    
     public function mostrar(Request $request){
     /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
     session()->put('id_tipopostre', 'emergente');
@@ -40,6 +40,20 @@ class ControladorCatalogoEmergente extends Controller
         }
         
         return response()->json($emergentes);
+    }
+
+    public function guardarSeleccion(Request $request){
+        $validated = $request->validate([
+            'id_postre' => 'required|integer',
+        ]);
+
+        session([
+            'id_tipopostre' => 'emergente',
+            'postre' => $validated['id_postre'],
+        ]);
+
+        return redirect()->route('emergente.calendario.get');
+        
     }
 
     public function seleccionar(Request $request){
