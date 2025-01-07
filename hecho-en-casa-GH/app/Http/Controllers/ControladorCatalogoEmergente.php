@@ -12,8 +12,13 @@ use Illuminate\Support\Facades\Log;
 
 class ControladorCatalogoEmergente extends Controller
 {
-    public function mostrar(){
-        session()->put('estado_flujo', 'emergente.catalogo.get');
+
+    public function mostrar(Request $request){
+    /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+    session()->put('id_tipopostre', 'emergente');
+    session()->put('proceso_compra', $request->route()->getName());
+    //No deberia estar aca pero jeyson no puso un POST para el catalogo
+    /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $emergentes = Cache::remember('catalogoemergentes', 600, function () {
             return [
@@ -38,6 +43,11 @@ class ControladorCatalogoEmergente extends Controller
     }
 
     public function seleccionar(Request $request){
+
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
         $validated = $request->validate([
             'id_postre' => 'required|integer',
         ]);
@@ -75,14 +85,18 @@ class ControladorCatalogoEmergente extends Controller
         return view('detallesEmergente');
     }
 
-    public function seleccionarDetalles(Request $request){
+    public function seleccionarDetalles(Request $request){        
         $validated = $request->validate([
             'cantidad' => 'required|integer',
             'tipo_entrega' => 'required',
         ]);
 
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         $tipo_entrega = $validated['tipo_entrega'];
+        
         session()->put('opcion_envio', $tipo_entrega);
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         session([
             'cantidad_pedida' => $validated['cantidad'],
@@ -95,7 +109,7 @@ class ControladorCatalogoEmergente extends Controller
 
         $id_postre = session('postre');
         $postre = Cache::remember('postres2', 10, function () use ($id_postre){
-            Catalogo::where('id_postre', $id_postre)
+            return Catalogo::where('id_postre', $id_postre)
                             ->first();
         });
 
@@ -137,6 +151,10 @@ class ControladorCatalogoEmergente extends Controller
     }
 
     public function seleccionarDireccion(Request $request){ 
+
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $ubicacion = $request->input('ubicacion');
         $id_usuario = $request->input('id_usuario');

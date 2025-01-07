@@ -18,7 +18,7 @@ class AuthController extends Controller
         return view('iniciar-sesion');
     }
 
-    public function  logear(Request $request)
+    public function Logear(Request $request)
     {
         $action = $request->input('solicitud');//esto borrar
         
@@ -42,7 +42,7 @@ class AuthController extends Controller
                 return redirect()->route('inicio.get')->withCookie(cookie('session_token', $sessionToken, 60 * 72)); // 72 horas
             }
 
-            return redirect('/login')->withErrors(['correo_electronico' => 'Credenciales incorrectas.']);
+            return redirect('login.get')->withErrors(['correo_electronico' => 'Credenciales incorrectas.']);
         }elseif($action === 'recuperar'){
             
             $credentials = $request->validate([
@@ -64,8 +64,11 @@ class AuthController extends Controller
                     'correo' => $correo,
                 ]);
 
-                return redirect()->route('recuperar-clave.get');
+                return redirect()->back()
+                ->with('success', 'Se ha enviado un enlace de recuperación a tu correo.');
             }
+            return redirect()->back()
+                ->with('error', 'Correo no registrado.');
         }elseif($action === 'register'){
             return redirect()->route('registrar.get');
         }

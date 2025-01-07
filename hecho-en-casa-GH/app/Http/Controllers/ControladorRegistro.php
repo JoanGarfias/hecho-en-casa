@@ -50,6 +50,7 @@ class ControladorRegistro extends Controller
     }
 
     public function guardarContrasena(Request $request){
+        dd($request->all());
         $contrasena = $request->input('confirmacion');
         session(['contrasena' => $contrasena]);
         return redirect()->route('registrar.direccion.get'); 
@@ -78,7 +79,7 @@ class ControladorRegistro extends Controller
         try{
             $usuario->save();
         }catch(\Exception $e){
-            dd("Error al guardar el pedido: " . $e->getMessage());
+            return redirect()->route('registrar.get')->with('error', 'Error al guardar el usuario');    
         }
         
         return redirect()->route('login.get');
@@ -95,9 +96,12 @@ class ControladorRegistro extends Controller
             session([
                 'usuario' => $usuario->id_u,
             ]);
-            return redirect()->route('cambiar-clave.get');
+            return view('cambiar-clave.get');
         } 
-        return redirect()->route('inicio.get')->with('error', 'Token inválido');
+        return view('inicio', [
+            'error' => 'Token inválido',
+        ]);
+        
     }
 
     public function mostrarCambio(){

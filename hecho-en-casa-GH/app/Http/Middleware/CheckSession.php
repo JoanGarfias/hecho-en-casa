@@ -9,21 +9,19 @@ use App\Models\usuario;
 
 class CheckSession
 {
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next) : Response
     {
         //Obtengo el token desde la galleta
         $sessionToken = $request->cookie('session_token');
-    
-        if (!$sessionToken) { //No hay token, mandar al inicio
-            return redirect('/login')->with('error', 'Debes iniciar sesión.');
+        if (!$sessionToken) { 
+            return redirect()->route('login.get')->with('error', 'Debes iniciar sesión.');
         }
 
         $usuario = usuario::where('token_sesion', $sessionToken)->first();
-    
         if (!$usuario) {
-            return redirect('/login')->with('error', 'Sesión inválida.');
+            return redirect()->route('login.get')->with('error', 'Sesión inválida.');
         }
-    
+
         return $next($request);
     }
     
