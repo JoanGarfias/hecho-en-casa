@@ -10,13 +10,15 @@ const enlaceOlvidado = document.getElementById('olvidadizo');
         
         //Hacer la validación del correo desde la BD para ver si existe
 
+        let validarEmail = document.getElementById("mensajeEmail")
+        validarEmail.textContent = ""
         // Verificar si el campo de email tiene valor
         if (emailInput.value.trim() === "") {
-            document.getElementById('bienEmail').textContent = '';
-            document.getElementById('errorEmail').textContent = 'Ingresa tu correo electrónico para continuar.';
+            validarEmail.textContent = 'Ingresa tu correo electrónico para continuar.';
+            validarEmail.className = "error";
         } else {
-            document.getElementById('errorEmail').textContent = '';
-            document.getElementById('bienEmail').textContent = 'Correo válido.';
+            validarEmail.textContent = 'Correo válido.';
+            validarEmail.className = "bien"; 
             /*Para el blur*/
             // Obtener referencias a los elementos
             const fondoEmergente = document.getElementById('fondoEmergente');

@@ -7,12 +7,10 @@
     <form action="procesar.php" method="POST" id = "inicioSesion">
         <h2>Iniciar sesión</h2>
         <label for="email">Correo: </label>
-        <input type="email" id = "email" name = "email" required> 
-        <div class="mensaje">
-        <p id="errorEmail" class="error"></p>
-        <p id="bienEmail" class="bien"></p>
+        <input type="email" id = "email" name = "email" onfocus="borrarParrafo('mensajeEmail')" required> 
+        <div class="mensajito">
+            <p id="mensajeEmail" class="bien"></p>
         </div>
-
         <br>
         <div class="alineando">
             <label for="password">Contraseña: </label>
@@ -21,9 +19,8 @@
                 <i class="fi fi-rs-crossed-eye visibility" onclick="visibility('password', this)"></i>
             </div>
         </div>
-        <div class="mensaje">
-        <p id="errorPass" class="error"></p>
-        <p id="bienPass" class="bien"></p>
+        <div class="mensajito">
+            <p id="mensajePass" class="bien"></p>
         </div>
 
         <button id="olvidadizo" type="submit" name="action" value="register">Olvidé mi contraseña</button>
@@ -52,3 +49,5 @@
 <script src="{{ asset('js/iniciando.js') }}"></script>
 <!--Para la animación del logo de usuario-->
 <script src="{{ asset('js/icono.js') }}" defer></script>
+<!--Para borrar el parrafo al hacer click al input-->
+<script src="{{ asset('js/borrandoParrafo.js') }}" defer></script>
