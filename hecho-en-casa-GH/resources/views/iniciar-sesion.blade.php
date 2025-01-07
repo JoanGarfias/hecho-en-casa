@@ -14,14 +14,20 @@
         </div>
 
         <br>
-        <label for="password">Contraseña: </label>
-        <input type="password" id = "pass" name = "pass" required> 
+        <div class="alineando">
+            <label for="password">Contraseña: </label>
+            <div class="campo-contrasena">
+                <input type="password" id="password" name="password" required>
+                <i class="fi fi-rs-crossed-eye visibility" onclick="visibility('password', this)"></i>
+            </div>
+        </div>
         <div class="mensaje">
         <p id="errorPass" class="error"></p>
         <p id="bienPass" class="bien"></p>
         </div>
 
-        <a href="" id="olvidadizo">Olvidé mi contraseña</a><br><br>
+        <button id="olvidadizo" type="submit" name="action" value="register">Olvidé mi contraseña</button>
+        <br><br>
 
     <div>
         <button class="botoncito" type="submit" name="action" value="register">Registrarme</button>
@@ -29,7 +35,18 @@
     </div>
 </form>
 </div>
+
+<div class="fondo-emergente" id="fondoEmergente">
+    <div class="emergente">    
+        <p class="mensajeEmergente">Se ha enviado un código de seguridad a tu correo.</p>
+        <p class="mensajeEmergente"></p>
+        <button id="aceptar" class="aceptando">✔</button>
+    </div>
 </div>
+
+</div>
+
+
 <x-pie/>
 
 <script src="{{ asset('js/iniciando.js') }}"></script>

@@ -23,6 +23,8 @@ function validateForm() {
     const emailReg = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}$/;
     const telefonoReg = /^\d{2,3}[-.\s]?\d{2,3}[-.\s]?\d{4}$/
 
+    
+
     // Limpiar mensajes de error
     document.getElementById("errorName").textContent = "";
     document.getElementById("errorApellidoPaterno").textContent = "";
@@ -87,3 +89,4 @@ function validateForm() {
         formulario.submit(); // Enviamos el formulario si todo es correcto
     }
 }
+

@@ -11,13 +11,13 @@ use App\Http\Controllers\ControladorRegistrar;
 Route::get('/', [ControladorInicio::class, 'index']);
 Route::get('/inicio', [ControladorInicio::class, 'index']);
 
-Route::get('/calFijo', function(){
-    return view('calFijo');
+Route::get('/pedidos', function(){
+    return view('pedidos');
 });
 Route::post('/calFijo', [ControladorCalendario::class, 'index']);
 
-Route::get('/calEdit', function(){
-    return view('calEdit');
+Route::get('/registrar', function(){
+    return view('registrar');
 });
 Route::post('/calEdit', [ControladorCalendario::class, 'index']);
 
