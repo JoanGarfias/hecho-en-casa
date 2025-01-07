@@ -19,15 +19,30 @@
     <div id="productos">
         @foreach($catalogo as $producto)
             <div class="producto">
-                <a href="fijo/seleccionar-fecha">{{ $producto->nombre }}</a><br>  <!--Cambiarlos a Href-->
+                <form action="{{route('fijo.catalogo.post')}}" method="POST" style="display: inline;">
+                    @csrf <!-- Laravel CSRF -->
+                    <input type="hidden" name="id_postre" value="{{ $producto->id_postre }}">
+                    <input type="hidden" name="nombre_postre" value="{{ $producto->nombre }}">
+                    <button type="submit" style="border: none; background: none; color: red; text-decoration: underline; cursor: pointer;">
+                        {{ $producto->nombre }}
+                    </button>
+                </form>
+                <br>
                 <img src="{{ $producto->imagen }}" alt="{{ $producto->nombre }}">
                 <p>{{ $producto->descripcion }}</p>
             </div>
         @endforeach
     </div>
+    
 
     </div>
     <script>
+        let productos = @json($categorias);
+        let catalogo = @json($catalogo);
+
+        console.log("Productos: ", productos);
+        console.log("Catalogo: ", catalogo);
+
         // Función para cambiar la URL y recargar la página
         function cambiarCategoria(categoriaId) {
             // Cambiar la URL y recargar la página

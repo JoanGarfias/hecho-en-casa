@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Correo;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -15,28 +18,57 @@ class AuthController extends Controller
         return view('iniciar-sesion');
     }
 
-    public function logear(Request $request)
+    public function  logear(Request $request)
     {
-        $credentials = $request->validate([
-            'correo_electronico' => 'required|email',
-            'contraseña' => 'required',
-        ]);
-
-        $usuario = Usuario::where('correo_electronico', $credentials['correo_electronico'])->first();
-
-        if ($usuario && Hash::check($credentials['contraseña'], $usuario->contraseña)) {
-            // Generar un nuevo token de sesión encriptado
-            $sessionToken = bin2hex(random_bytes(32));
-
-            $usuario->update([
-                'token_sesion' => $sessionToken,
+        $action = $request->input('solicitud');//esto borrar
+        
+        if($action === 'login'){
+            
+            $credentials = $request->validate([
+                'correo_electronico' => 'required|email',
+                'contraseña' => 'required',
             ]);
+    
+            $usuario = Usuario::where('correo_electronico', $credentials['correo_electronico'])->first();
+            if ($usuario && Hash::check($credentials['contraseña'], $usuario->contraseña)) {
+                // Generar un nuevo token de sesión encriptado
+                $sessionToken = bin2hex(random_bytes(32));
 
-            // Crear la galleta con el token de sesión
-            return redirect()->route('inicio.get')->withCookie(cookie('session_token', $sessionToken, 60 * 72)); // 72 horas
+                $usuario->update([
+                    'token_sesion' => $sessionToken,
+                ]);
+
+                // Crear la galleta con el token de sesión
+                return redirect()->route('inicio.get')->withCookie(cookie('session_token', $sessionToken, 60 * 72)); // 72 horas
+            }
+
+            return redirect('/login')->withErrors(['correo_electronico' => 'Credenciales incorrectas.']);
+        }elseif($action === 'recuperar'){
+            
+            $credentials = $request->validate([
+                'correo_electronico' => 'required|email',
+            ]);
+    
+            $usuario = Usuario::where('correo_electronico', $credentials['correo_electronico'])->first();
+            if($usuario){
+                $correo = $credentials['correo_electronico'];
+                $token = Str::random(64);
+                Mail::to($correo)->send(new Correo($token));
+                $usuario->token_recuperacion = $token;
+                try{
+                    $usuario->save();
+                }catch(\Exception $e){
+                    dd("Error al guardar el postre emergente: ".$e->getMessage());
+                }
+                session([
+                    'correo' => $correo,
+                ]);
+
+                return redirect()->route('recuperar-clave.get');
+            }
+        }elseif($action === 'register'){
+            return redirect()->route('registrar.get');
         }
-
-        return redirect('/login')->withErrors(['correo_electronico' => 'Credenciales incorrectas.']);
     }
 
     public function logout(Request $request)

@@ -6,7 +6,7 @@
     <title>Formulario de Pedidos fijos</title>
 </head>
 <body>
-    <form action="{{ route('fijo.detallesPedido.get') }}" method="POST">
+    <form action="{{ route('fijo.detallesPedido.post') }}" method="POST">
         @csrf
 
         <label for="fecha-entrega">Fecha de entrega:</label>
@@ -78,16 +78,23 @@
         <br>
         <br>
         <div>
-            <label><input type="radio" name="tipo_entrega" value="sucursal" {{ old('tipo_entrega') == 'sucursal' ? 'checked' : '' }}> Recoger en sucursal</label>
-            <label><input type="radio" name="tipo_entrega" value="domicilio" {{ old('tipo_entrega') == 'domicilio' ? 'checked' : '' }}> Envío a domicilio</label>
+            <label>
+                <input type="radio" name="tipo_entrega" value="Sucursal" 
+                    {{ old('tipo_entrega', 'sucursal') == 'sucursal' ? 'checked' : '' }}> Recoger en sucursal
+            </label>
+            <label>
+                <input type="radio" name="tipo_entrega" value="Domicilio" 
+                    {{ old('tipo_entrega', 'sucursal') == 'domicilio' ? 'checked' : '' }}> Envío a domicilio
+            </label>
         </div>
+        
         @error('tipo_entrega')
             <p style="color: red; font-size: 12px;">{{ $message }}</p>
         @enderror
 
         <br>
         <label>Costo:</label><br>
-        <input type="number" name="costo" value="0" min="100" max="1000"></input>
+        <input type="number" name="costo" value="100" min="100" max="1000"></input>
         <br><br>
         <button type="submit">Continuar</button>
     </form>

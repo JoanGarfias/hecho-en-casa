@@ -7,7 +7,7 @@ let valorBoton = ""; // Variable para almacenar el valor del botón presionado
 // Captura el botón presionado
 botones.forEach((boton) => {
     boton.addEventListener("click", () => {
-        valorBoton = boton.value; // Guarda el valor del botón presionado
+        valorBoton = boton.value; // Gua rda el valor del botón presionado
     });
 });
 

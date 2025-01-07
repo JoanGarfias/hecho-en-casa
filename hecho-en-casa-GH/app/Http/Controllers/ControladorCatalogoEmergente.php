@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Log;
 class ControladorCatalogoEmergente extends Controller
 {
     public function mostrar(){
+        session()->put('estado_flujo', 'emergente.catalogo.get');
+
         $emergentes = Cache::remember('catalogoemergentes', 600, function () {
             return [
                 'temporada' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre')
@@ -35,6 +37,18 @@ class ControladorCatalogoEmergente extends Controller
         return response()->json($emergentes);
     }
 
+    public function seleccionar(Request $request){
+        $validated = $request->validate([
+            'id_postre' => 'required|integer',
+        ]);
+
+        session([
+            'postre' => $validated['id_postre'],
+        ]);
+
+        return redirect()->route('emergente.detallesPedido.get');
+    }
+
     public function mostrarDetalles(){
         //ESTO DEBERIA JALARSE DE LA VISTA ANTERIOR AQUI SOLO VA UN EJEMP
         session([
@@ -49,14 +63,16 @@ class ControladorCatalogoEmergente extends Controller
         ]);
 
         //ESTO ES LA CONSULTA A PARTIR DEL ID QUE ME LLEGO DE LA VISTA ANTERIOR
-        $postre = Catalogo::where('id_postre', session('postre'))
+        $postre = Cache::remember('postresession', 10, function () {
+            return Catalogo::where('id_postre', session('postre'))
                             ->first();
+        });
 
         session([   
             'nombre_postre' => $postre->nombre,
         ]);
 
-        return view('detalles');
+        return view('detallesEmergente');
     }
 
     public function seleccionarDetalles(Request $request){
@@ -66,19 +82,23 @@ class ControladorCatalogoEmergente extends Controller
         ]);
 
         $tipo_entrega = $validated['tipo_entrega'];
+        session()->put('opcion_envio', $tipo_entrega);
 
         session([
             'cantidad_pedida' => $validated['cantidad'],
             'tipo_entrega' => $validated['tipo_entrega'],
         ]);
 
-        if($tipo_entrega == 'domicilio'){
-            return redirect()->route('pedido.direccion');  //SI SELECCIONO ENTREGA A DOMICILIO ENTONCES NOS VAMOS A DETALLES DIRECCION
+        if($tipo_entrega === 'Domicilio'){
+            return redirect()->route('emergente.direccion.get');  //SI SELECCIONO ENTREGA A DOMICILIO ENTONCES NOS VAMOS A DETALLES DIRECCION
         }
 
         $id_postre = session('postre');
-        $postre = Catalogo::where('id_postre', $id_postre)
+        $postre = Cache::remember('postres2', 10, function () use ($id_postre){
+            Catalogo::where('id_postre', $id_postre)
                             ->first();
+        });
+
         $emergente = new Postreemergente;
         $emergente->id_postre_elegido = $postre->id_postre;
         try{
@@ -113,7 +133,7 @@ class ControladorCatalogoEmergente extends Controller
             'folio' => $pedido->id_ped,
         ]);
 
-        return redirect()->route('pedido.resumen');   
+        return redirect()->route('emergente.ticket.get');   
     }
 
     public function seleccionarDireccion(Request $request){ 
@@ -154,8 +174,11 @@ class ControladorCatalogoEmergente extends Controller
 
         }
 
-        $postre = Catalogo::where('id_postre', session('postre'))
+        //ESTO ES LA CONSULTA A PARTIR DEL ID QUE ME LLEGO DE LA VISTA ANTERIOR
+        $postre = Cache::remember('postresession', 10, function () {
+            return Catalogo::where('id_postre', session('postre'))
                             ->first();
+        });
         
         $emergente = new Postreemergente;
         $emergente->id_postre_elegido = $postre->id_postre;
@@ -192,7 +215,7 @@ class ControladorCatalogoEmergente extends Controller
             'folio' => $pedido->id_ped,
         ]);
 
-        return redirect()->route('pedido.resumen');   
+        return redirect()->route('emergente.ticket.get');   
 
     }
 }

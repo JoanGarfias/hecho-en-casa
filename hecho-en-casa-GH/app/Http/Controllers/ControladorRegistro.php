@@ -13,11 +13,21 @@ class ControladorRegistro extends Controller
     }
 
     public function registrar(Request $request){
+
         $nombre = $request->input('name');
         $apellido_paterno = $request->input('apellidoP');
         $apellido_materno = $request->input('apellidoM');
         $telefono = $request->input('phone');
         $correo = $request->input('email');
+        $correo_existe = usuario::where('correo_electronico', $correo)->first();
+
+        if ($correo_existe) {
+            // Redirigir de vuelta con un mensaje de error
+            return redirect()->back()
+            ->withErrors(['email' => 'El correo ya está registrado. Por favor, ingresa otro.'])
+            ->withInput();
+        }
+
         $action = $request->input('action');
         
         session([
@@ -29,9 +39,9 @@ class ControladorRegistro extends Controller
         ]);
 
         if($action === 'login'){
-            return redirect()->route('login.index');
+            return redirect()->route('login.get');
         }elseif($action === 'register'){
-            return redirect()->route('registrar.contrasena');
+            return redirect()->route('registrar.contrasena.get');
         }
     }
 
@@ -42,7 +52,7 @@ class ControladorRegistro extends Controller
     public function guardarContrasena(Request $request){
         $contrasena = $request->input('confirmacion');
         session(['contrasena' => $contrasena]);
-        return redirect()->route('registrar.direccion'); 
+        return redirect()->route('registrar.direccion.get'); 
     }
 
     public function mostrarDireccion(){
@@ -65,13 +75,48 @@ class ControladorRegistro extends Controller
         $usuario->num_exterior_u = $request->input('num'); ///<-----------AQUI SE TIENE QUE SEPARAR EN DOS CAMPOS
         //$usuario->referencia_u = $request->input('referencia');
         $usuario->contraseña = bcrypt(session('contrasena'));
-        $usuario->token_recuperacion = Str::random(64);
         try{
             $usuario->save();
         }catch(\Exception $e){
             dd("Error al guardar el pedido: " . $e->getMessage());
         }
         
-        return redirect()->route('login.index');
+        return redirect()->route('login.get');
+    }
+
+    public function mostrarRecuperacion()
+    {
+        return view('prueba-recuperacion');
+    } 
+
+    public function validarRecuperacion($token){
+        $usuario = Usuario::where('token_recuperacion', $token)->first();
+        if ($usuario){
+            session([
+                'usuario' => $usuario->id_u,
+            ]);
+            return redirect()->route('cambiar-clave.get');
+        } 
+        return redirect()->route('inicio.get')->with('error', 'Token inválido');
+    }
+
+    public function mostrarCambio(){
+        return view('cambiar-contrasenaPrueba');
+    }
+
+    public function actualizarContrasena(Request $request){
+        $contrasena = $request->input('confirmar_contraseña');
+        $usuario = usuario::where('id_u', session('usuario'))->first();
+        if ($usuario){
+            $usuario->contraseña = bcrypt($contrasena);
+            $usuario->token_recuperacion = null;
+            try{
+                $usuario->save();
+            }catch(\Exception $e){
+                dd("Error: " . $e->getMessage());
+            }
+        }
+
+        return redirect()->route('login.get');
     }
 }

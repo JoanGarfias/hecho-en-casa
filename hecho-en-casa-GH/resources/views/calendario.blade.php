@@ -10,11 +10,11 @@
     <h1>Seleccionar Fecha</h1>
 
     <!-- Formulario para seleccionar mes y año -->
-    <form id="calendario-form" method="POST" action="{{ route('calendario.post') }}">
+    <form id="calendario-form" method="POST" action="{{ route('fijo.calendario.post') }}">
         <label for="mes">Mes: </label>
         <input type="number" id="mes" name="mes" min="1" max="12" required>
         <label for="anio">Año: </label>
-        <input type="number" id="anio" name="anio" required>
+        <input type="number" id="anio" name="anio" min="1" required>
         @csrf <!-- Token CSRF obligatorio -->
         <button type="submit">Cargar Calendario</button>
     </form>
@@ -36,8 +36,8 @@
     </form>-->
 
     <script>
-        let datos = @json($diasDelMes);
-        console.log(datos);
+        const calendario = @json($calendarioJson);
+        console.log(calendario);
     </script>
 </body>
 </html>

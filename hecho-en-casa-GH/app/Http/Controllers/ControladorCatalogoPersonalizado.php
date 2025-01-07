@@ -15,6 +15,7 @@ Use Carbon\Carbon;
 class ControladorCatalogoPersonalizado extends Controller
 {
     public function mostrarCatalogo(){
+        session()->put('estado_flujo', 'personalizado.catalogo.get');
         session([
             'id_tipopostre' => "personalizado"
         ]);
@@ -27,14 +28,22 @@ class ControladorCatalogoPersonalizado extends Controller
     }
 
     public function mostrarDetalles(){ //GET: Vista de detalles para personalizado
-        $sabores = SaborPan::select('id_sp', 'nom_pan', 'precio_p')
-        ->get();
-        $rellenos = SaborRelleno::select('id_sr', 'nom_relleno', 'precio_sr')
-        ->get();
-        $coberturas = Cobertura::select('id_c', 'nom_cobertura', 'precio_c')
-        ->get();
-        $elementos = Elemento::select('id_e', 'nom_elemento', 'precio_e')
-        ->get();
+        $sabores = Cache::remember('sabores', 10, function () {
+            return SaborPan::select('id_sp', 'nom_pan', 'precio_p')
+            ->get();
+        });
+        $rellenos = Cache::remember('rellenos', 10, function () {
+            return SaborRelleno::select('id_sr', 'nom_relleno', 'precio_sr')
+            ->get();
+        });
+        $coberturas = Cache::remember('coberturas', 10, function () {
+            return Cobertura::select('id_c', 'nom_cobertura', 'precio_c')
+            ->get();
+        });
+        $elementos = Cache::remember('elementos', 10, function () {
+             Elemento::select('id_e', 'nom_elemento', 'precio_e')
+            ->get();
+        });
         
         return view('detallesPersonalizado', compact('sabores', 'rellenos', 'coberturas', 'elementos'));
     }
@@ -47,6 +56,8 @@ class ControladorCatalogoPersonalizado extends Controller
         $costo = intval($request->input('costo'));
         $tipo_entrega = $request->input('tipo_entrega');
         $id_usuario = 1;
+
+        session()->put('opcion_envio', $tipo_entrega);
 
         $fechaEscogida = session('fecha_entrega');
         $horaEntrega = session('hora_entrega');
