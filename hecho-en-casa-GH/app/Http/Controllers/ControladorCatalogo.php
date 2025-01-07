@@ -295,6 +295,14 @@ class ControladorCatalogo extends Controller
 
         $sabor = session('sabor_postre');
         $unidadm = intval($request->input('unidadm'));
+        $unidadSeleccionada = $request->input('unidadm');  // "5|kilogramo"
+        list($cantidadPorciones, $nombreUnidad) = explode('|', $unidadSeleccionada);
+        //Obtener id_um 
+        $id_um = UnidadMedida::where('cantidad', $cantidadPorciones)
+                    ->where('nombre_unidad', $nombreUnidad)
+                    ->first(['id_um']);  
+
+        session(['id_um'=> $id_um->id_um]);
         $cantidad = intval($request->input('cantidad'));
         session(['porcionespedidas'=> $unidadm * $cantidad]);
         $valoresSeleccionados = [];
@@ -325,10 +333,11 @@ class ControladorCatalogo extends Controller
             return redirect()->route('fijo.direccion.get');      
         }
         else{
-            // Instanciación de postrefijo  //NO SE COMO RELLENAR ESA TABLA
+            // Instanciación de postrefijo  
+
             $fijo = new Postrefijo;
             //$fijo->id_atributo= ;
-            $fijo->id_um = 1;  //1
+            $fijo->id_um = $id_um->id_um;  //1
             $fijo->id_postre_elegido = $id_postre;  //1 NUEVO
             $fijo->save();  
 
@@ -424,7 +433,7 @@ class ControladorCatalogo extends Controller
 
         $fijo = new Postrefijo;
         //$fijo->id_atributo= ;
-        $fijo->id_um = 1;//$unidadm;
+        $fijo->id_um = session('id_um'); //$unidadm;
         $fijo->id_postre_elegido = session("postre");//1;
         $fijo->save();  
 
