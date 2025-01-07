@@ -1,0 +1,38 @@
+/* Menú lateral */
+.menu-lateral {
+    width: 200px; /* Ancho fijo para que sea pequeño */
+    background-color: #d9b485;
+    color: white;
+    padding: 15px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    height: auto; /* Ajusta la altura al contenido */
+    margin-top: 50px; /* Espacio superior para que no inicie desde el borde */
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+.menu-lateral h3 {
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.menu-lateral ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-lateral ul li {
+    margin: 8px 0;
+}
+
+.menu-lateral ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.menu-lateral ul li a:hover {
+    text-decoration: underline;
+}
