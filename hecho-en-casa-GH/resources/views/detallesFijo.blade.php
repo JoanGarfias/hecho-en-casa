@@ -42,7 +42,9 @@
         <select id="unidadm" name="unidadm">
             @if (session('lista_unidad') && count(session('lista_unidad')) > 0)
                 @foreach (session('lista_unidad') as $unidad)
-                    <option value="{{ $unidad['cantidadporciones'] }}">{{ $unidad['cantidadporciones'] }} {{ $unidad['nombreunidad'] }}</option>
+                <option value="{{ $unidad['cantidadporciones'] }}|{{ $unidad['nombreunidad'] }}">
+                    {{ $unidad['cantidadporciones'] }} {{ $unidad['nombreunidad'] }}
+                </option>
                 @endforeach
             @else
                 <option>No hay opciones disponibles</option>

@@ -41,17 +41,18 @@ Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar
 Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.post');
 
 Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena.get');
-Route::post('/contrasena', [ControladorRegistro::class, 'guardarContrasena'])->name('registrar.guardarContrasena.post');
+Route::post('/contrasena', [ControladorRegistro::class, 'guardarContrasena'])->name('registrar.contrasena.post');
 
 Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name('registrar.direccion.get');
-Route::post('/direccion', [ControladorRegistro::class, 'guardarDireccion'])->name('registrar.guardarDireccion.post');
+Route::post('/direccion', [ControladorRegistro::class, 'guardarDireccion'])->name('registrar.direccion.post');
 
 Route::get('/cerrar-sesion', [AuthController::class, 'logout'])
 ->middleware(CheckSession::class);
 
 //Route::delete('/cerrar-sesion', [ControladorCalendario::class, 'logout.post']);
 //antes de entrar a esta vista el correo tiene que estar validado y ser enviado
-Route::get('/recuperar-clave', [ControladorRegistro::class, 'mostrarRecuperacion'])->name('recuperar-clave.get');
+//LA RUTA SIGUINTE NO ES UNA VISTA
+//Route::get('/recuperar-clave', [ControladorRegistro::class, 'mostrarRecuperacion'])->name('recuperar-clave.get');
 Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecuperacion'])->name('recuperacion.get');
 Route::get('/cambiar-clave', [ControladorRegistro::class, 'mostrarCambio'])->name('cambiar-clave.get');
 Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post');
@@ -61,8 +62,10 @@ Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContr
 Route::get('/registrar', [ControladorRegistrar::class, 'index']);
 Route::put('/registrar', [ControladorRegistrar::class, 'index']);
 
-/*RUTAS DE POSTRES FIJOS */
+/*RUTA PARA EL CALENDARIO QUE NO ES INTERACTIVO*/
+Route::get('/calendario', [ControladorCalendario::class, 'index'])->name('calendario.get');
 
+/*RUTAS DE POSTRES FIJOS */
 Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrarCatalogo'])
 ->name('fijo.catalogo.get');
 

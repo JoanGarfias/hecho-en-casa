@@ -315,6 +315,14 @@ class ControladorCatalogo extends Controller
 
         $sabor = session('sabor_postre');
         $unidadm = intval($request->input('unidadm'));
+        $unidadSeleccionada = $request->input('unidadm');  // "5|kilogramo"
+        list($cantidadPorciones, $nombreUnidad) = explode('|', $unidadSeleccionada);
+        //Obtener id_um 
+        $id_um = UnidadMedida::where('cantidad', $cantidadPorciones)
+                    ->where('nombre_unidad', $nombreUnidad)
+                    ->first(['id_um']);  
+
+        session(['id_um'=> $id_um->id_um]);
         $cantidad = intval($request->input('cantidad'));
         session(['porcionespedidas'=> $unidadm * $cantidad]);
         $valoresSeleccionados = [];
@@ -323,7 +331,12 @@ class ControladorCatalogo extends Controller
             $valor = $request->input($campo);  // Capturamos el valor enviado
             $valoresSeleccionados[$campo] = $valor;
         }
-    
+        $id_tipoatributo = TipoAtributo::where('nombre_atributo', $campo)->first();
+        $id_atributo = AtributosExtra::where('id_tipo_atributo', $id_tipoatributo->idtipo_atributo)
+        ->where('nom_atributo', $valor)
+        ->first(['id_atributo']);
+        session(['id_atributo'=> $id_atributo->id_atributo]);
+
         // Ahora se puede usar los valores capturados
         session(['valoresSeleccionados' => $valoresSeleccionados]); // Captura como array
         
@@ -333,7 +346,7 @@ class ControladorCatalogo extends Controller
                 'id_sabor' => $sabor,
                 'id_tipopostre' => $id_tipopostre,
                 'unidadm' => $unidadm,
-                'valoresSeleccionados' => $valoresSeleccionados,  //No se como mandar esos datos
+                'valoresSeleccionados' => $valoresSeleccionados,  
                 'costo' => $costo,
                 'tipo_entrega' => $tipo_entrega,
                 'fecha_hora_registro' => $fecha_hora_registro,
@@ -345,10 +358,11 @@ class ControladorCatalogo extends Controller
             return redirect()->route('fijo.direccion.get');      
         }
         else{
-            // Instanciación de postrefijo  //NO SE COMO RELLENAR ESA TABLA
+            // Instanciación de postrefijo  
+
             $fijo = new Postrefijo;
-            //$fijo->id_atributo= ;
-            $fijo->id_um = 1;  //1
+            $fijo->id_atributo= $id_atributo->id_atributo;
+            $fijo->id_um = $id_um->id_um;  //1
             $fijo->id_postre_elegido = $id_postre;  //1 NUEVO
             $fijo->save();  
 
@@ -447,8 +461,8 @@ class ControladorCatalogo extends Controller
 
 
         $fijo = new Postrefijo;
-        //$fijo->id_atributo= ;
-        $fijo->id_um = 1;//$unidadm;
+        $fijo->id_atributo = session('id_atributo');
+        $fijo->id_um = session('id_um'); //$unidadm;
         $fijo->id_postre_elegido = session("postre");//1;
         $fijo->save();  
 
