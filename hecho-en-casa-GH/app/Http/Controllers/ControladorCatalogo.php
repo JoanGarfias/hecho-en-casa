@@ -329,7 +329,7 @@ class ControladorCatalogo extends Controller
             $fijo = new Postrefijo;
             //$fijo->id_atributo= ;
             $fijo->id_um = 1;  //1
-            $fijo->id_postre_elegido = 1;  //1 NUEVO
+            $fijo->id_postre_elegido = $id_postre;  //1 NUEVO
             $fijo->save();  
 
             // Obtenemos el ID del postre creado
@@ -425,7 +425,7 @@ class ControladorCatalogo extends Controller
         $fijo = new Postrefijo;
         //$fijo->id_atributo= ;
         $fijo->id_um = 1;//$unidadm;
-        $fijo->id_postre_elegido= 1;//$id_tipopostre;
+        $fijo->id_postre_elegido = session("postre");//1;
         $fijo->save();  
 
         // Obtenemos el ID del postre creado
