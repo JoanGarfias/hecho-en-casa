@@ -56,7 +56,6 @@ class ControladorCatalogoEmergente extends Controller
         ]);
 
         return redirect()->route('emergente.calendario.get');
-        
     }
 
     public function seleccionar(Request $request){
@@ -79,14 +78,15 @@ class ControladorCatalogoEmergente extends Controller
     public function mostrarDetalles(){
         //ESTO DEBERIA JALARSE DE LA VISTA ANTERIOR AQUI SOLO VA UN EJEMP
         session([
-            'id_u' => "1", //<----OJITO AQUI DEBERIA DE JALARSE EL ID DE LA SESION
             //RECORDARIO DE ACTUALIZAR ESTO CUANDO SE MANEJE LA SESION
             //TALVEZ AQUI GUARDEMOS EL ID DEL USUARIO O ANTES PERO HAY QUE RECUPERARLO CUANDO INICIE SESION
             //O DE LA CACHE CREO PERO CON RECORDATORIO ->>>>>>>>>>>>
+            'id_usuario' => 1,
             'fecha' => "2025-01-03",
             'hora_entrega' => "12:00",
             'postre' => "30",
             'cantidad_minima' => "4",
+            
         ]);
 
         //ESTO ES LA CONSULTA A PARTIR DEL ID QUE ME LLEGO DE LA VISTA ANTERIOR
@@ -118,6 +118,13 @@ class ControladorCatalogoEmergente extends Controller
         session([
             'cantidad_pedida' => $validated['cantidad'],
             'tipo_entrega' => $validated['tipo_entrega'],
+        ]);
+
+        $usuario = usuario::where('id_u', session('id_usuario'))->first();
+        $direccion = $usuario->calle_u . " " . $usuario->num_exterior_u . ", " . $usuario->colonia_u;
+        session([
+            'telefono' => $usuario->telefono,
+            'direccion' => $direccion,
         ]);
 
         if($tipo_entrega === 'Domicilio'){
@@ -168,8 +175,8 @@ class ControladorCatalogoEmergente extends Controller
     }
 
     public function mostrarDireccion(){
-        $datos = session('datos_pedido');
-        return view('direccionEmergente', compact('datos'));
+        //$datos = session('datos_pedido');
+        return view('direccionEmergente');
     }
 
     public function seleccionarDireccion(Request $request){ 
@@ -179,9 +186,8 @@ class ControladorCatalogoEmergente extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $ubicacion = $request->input('ubicacion');
-        $id_usuario = $request->input('id_usuario');
         //por defecto cargamos la ubicacion del usuario predeterminado
-        $user = usuario::where('id_u', $id_usuario)->first();
+        $user = usuario::where('id_u', session('id_usuario'))->first();
         $codigo_postal = $user->Codigo_postal_u;
         $estado = $user->estado_u;
         $ciudad = $user->ciudad_u;
@@ -191,8 +197,8 @@ class ControladorCatalogoEmergente extends Controller
         //$referencia = $user->referencia_u;
 
         //si elige otra entocnes sobreescribimos los valores
-        if($ubicacion=='otra'){
-            $codigo_postal = $request->input('codigo_postal');
+        if($ubicacion=='Nueva'){
+            $codigo_postal = $request->input('codigo-postal');
             $estado = $request->input('estado');
             $ciudad = $request->input('ciudad');
             $colonia = $request->input('colonia');
@@ -201,7 +207,7 @@ class ControladorCatalogoEmergente extends Controller
             //$referencia = $request->input('referencia');
 
             //si elige volverla su ubicacion predeterminada entonces lo actualizamos en el perfil del usuario
-            if($request->has('predeterminado')){
+            if($request->has('cambiar')){
                 $user->Codigo_postal_u = $codigo_postal;
                 $user->estado_u = $estado;
                 $user->ciudad_u = $ciudad;
@@ -230,7 +236,7 @@ class ControladorCatalogoEmergente extends Controller
         }
 
         $pedido = new Pedido;
-        $pedido->id_usuario = session('id_u');
+        $pedido->id_usuario = session('id_usuario');
         $pedido->id_tipopostre = $postre->id_tipo_postre;
         $pedido->id_seleccion_usuario = $emergente->id_pt;//este es el id de la tabla postre emergente que se guardara en pedido
         $pedido->estado_e = $estado;

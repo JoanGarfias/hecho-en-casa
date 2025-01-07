@@ -142,9 +142,8 @@ Route::post('/emergentes', [ControladorCatalogoEmergente::class, 'guardarSelecci
 ->name('emergente.catalogo.post');
 
 Route::get('emergentes/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])
-->name('emergente.calendario.get')
-->middleware([CheckSession::class, Enlazador::class]);
-
+->name('emergente.calendario.get');
+//->middleware([CheckSession::class, Enlazador::class]);
 
 Route::post('emergentes/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'seleccionarFecha'])
 ->name('emergente.calendario.post')
