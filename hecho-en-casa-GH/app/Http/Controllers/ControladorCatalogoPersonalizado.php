@@ -183,7 +183,7 @@ class ControladorCatalogoPersonalizado extends Controller
 
         $tipo_domicilio = $request->input('tipo_domicilio');
         //dd($tipo_domicilio);
-        $datos = session('datos_pedido'); 
+        //$datos = session('datos_pedido'); 
         
         $id_usuario = 1; //Prueba
         $user = usuario::where('id_u', $id_usuario)->first();
@@ -195,7 +195,7 @@ class ControladorCatalogoPersonalizado extends Controller
         $calle = $user->calle_u;
         $numero = $user->num_exterior_u;
 
-        if($tipo_domicilio=='Nueva'){ //Datos prueba
+        if($tipo_domicilio==="Nueva"){ //Datos prueba
             $codigo_postal = "77890";
             $estado = "Queretaro";
             $ciudad = "Palenque";
@@ -205,7 +205,7 @@ class ControladorCatalogoPersonalizado extends Controller
             //$referencia = $request->input('referencia');
 
             //Si elige volverla su ubicacion predeterminada entonces lo actualizamos en el perfil del usuario
-            if($request->has('Default')){
+            if($request->has("Default")){
                 $user->Codigo_postal_u = $codigo_postal;
                 $user->estado_u = $estado;
                 $user->ciudad_u = $ciudad;
@@ -243,6 +243,12 @@ class ControladorCatalogoPersonalizado extends Controller
         $pedido->precio_final = $datos['costo'];
         $pedido->fecha_hora_registro = $datos['fecha_hora_registro'];
         $pedido->fecha_hora_entrega = $datos['fecha_hora_entrega'];
+        $pedido->estado_e = $estado;
+        $pedido->Codigo_postal_e = $codigo_postal;
+        $pedido->ciudad_e = $ciudad;
+        $pedido->colonia_e = $colonia;
+        $pedido->calle_e = $calle;
+        $pedido->num_exterior_e = $numero; 
         $pedido->save();  // Guardamos el pedido en la base de datos
 
             $id_pedido = $pedido->id_ped;
