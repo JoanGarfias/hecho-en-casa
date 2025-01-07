@@ -14,6 +14,7 @@ use App\Http\Controllers\MailController;
 use App\Http\Middleware\CheckSession;
 use App\Http\Middleware\Enlazador;
 use App\Http\Controllers\ControladorRegistrar;
+use App\Http\Controllers\ControladorPerfil;
 
 Route::get('/', [ControladorInicio::class, 'index'])->name('inicio.get');
 
@@ -29,8 +30,10 @@ Route::post('/calEdit', [ControladorCalendario::class, 'index']);
 
 /*INICIO DE SESIÓN */
 
-Route::get('/perfil', [ControladorCalendario::class, 'index']);
-Route::put('/perfil', [ControladorCalendario::class, 'index']);
+Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])
+->middleware(CheckSession::class);
+Route::put('/perfil', [ControladorPerfil::class, 'editar'])
+->middleware(CheckSession::class);
 
 /*Route::get('/iniciar-sesion', [ControladorCalendario::class, 'index']);*/
 Route::get('/login', [AuthController::class, 'mostrarLogin'])->name('login.get');
@@ -57,10 +60,6 @@ Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecupe
 Route::get('/cambiar-clave', [ControladorRegistro::class, 'mostrarCambio'])->name('cambiar-clave.get');
 Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post');
 //Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);
-
-
-Route::get('/registrar', [ControladorRegistrar::class, 'index']);
-Route::put('/registrar', [ControladorRegistrar::class, 'index']);
 
 /*RUTA PARA EL CALENDARIO QUE NO ES INTERACTIVO*/
 Route::get('/calendario', [ControladorCalendario::class, 'index'])->name('calendario.get');
