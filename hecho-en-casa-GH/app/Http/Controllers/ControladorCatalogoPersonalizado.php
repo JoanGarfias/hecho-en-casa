@@ -174,6 +174,7 @@ class ControladorCatalogoPersonalizado extends Controller
     }
 
     public function guardarDireccion(Request $request){
+
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
@@ -190,13 +191,13 @@ class ControladorCatalogoPersonalizado extends Controller
         $pastel->tipo_evento = $datos['tematica'];
         $pastel->descripciondetallada = $datos['descripcion'];
         $pastel->id_postre_elegido = 37;
-        $pastel->save();  // Guardamos el pastel en la base de datos
+        $pastel->save();    // Guardamos el pastel en la base de datos
         
         // Obtenemos el ID del pastel recién creado
         $id_detalles_pastel = $pastel->id_pp;
-
         $id_usuario = 1;
-            // Instanciación de Pedido
+
+        // Instanciación de Pedido
         $pedido = new Pedido;
         $pedido->id_usuario = $id_usuario;
         $pedido->id_tipopostre = $datos['id_tipopostre'];
@@ -220,6 +221,7 @@ class ControladorCatalogoPersonalizado extends Controller
     }
 
     public function mostrarTicket(Request $request, $folio = null){
+        
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->forget('proceso_compra');
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */

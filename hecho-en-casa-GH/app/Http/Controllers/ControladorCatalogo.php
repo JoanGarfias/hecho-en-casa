@@ -408,10 +408,7 @@ class ControladorCatalogo extends Controller
     }
     
     public function mostrarDireccion(){
-        /*$id_usuario = session('id_usuario');
-        $usuario = usuario::where('id_u', $id_usuario)
-                            ->first();
-        return view('direccionFijo', compact('usuario'));*/
+        //ANEXAR LÓGICA PARA OBTENER LA DIRECCIÓN DEL USUARIO
 
         $datos = session('datos_pedido');
         return view('direccionFijo', compact('datos'));
@@ -423,10 +420,10 @@ class ControladorCatalogo extends Controller
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
-        $tipo_domicilio = $request->input('tipo_domicilio'); //ACÁ SE DEBERÍA JALAR LA UBICACIÓN DEL FORMULARIO
-        //PERO TOMAMOS LA DEL USUARIO POR AHORA
+        $tipo_domicilio = $request->input('tipo_domicilio'); 
+        //ACÁ SE DEBERÍA JALAR LA UBICACIÓN DEL FORMULARIO
+        
         $id_usuario = session('id_usuario');
-        //por defecto cargamos la ubicacion del usuario predeterminado
         $user = usuario::where('id_u', $id_usuario)->first();
         $datos = session('datos_pedido'); 
         $codigo_postal = $user->Codigo_postal_u;
@@ -445,7 +442,7 @@ class ControladorCatalogo extends Controller
             $numero = "21";
             //$referencia = $request->input('referencia');
 
-            //si elige volverla su ubicacion predeterminada entonces lo actualizamos en el perfil del usuario
+            //Si elige volverla su ubicacion predeterminada entonces lo actualizamos en el perfil del usuario
             if($request->has('Default')){
                 $user->Codigo_postal_u = $codigo_postal;
                 $user->estado_u = $estado;
