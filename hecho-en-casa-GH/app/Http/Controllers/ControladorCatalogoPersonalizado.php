@@ -11,11 +11,11 @@ use App\Models\ListaElementos;
 use App\Models\Pedido;
 use App\Models\Pastelpersonalizado;
 Use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 class ControladorCatalogoPersonalizado extends Controller
 {
     public function mostrarCatalogo(){
-        session()->put('estado_flujo', 'personalizado.catalogo.get');
         session([
             'id_tipopostre' => "personalizado"
         ]);
@@ -23,8 +23,12 @@ class ControladorCatalogoPersonalizado extends Controller
         return view("personalizados");
     }
 
-    public function seleccionarCatalogo(){
-        return redirect()->route('calendario.get');
+    public function seleccionarCatalogo(Request $request){
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('id_tipopostre', 'personalizado');
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        return redirect()->route('personalizado.calendario.get');
     }
 
     public function mostrarDetalles(){ //GET: Vista de detalles para personalizado
@@ -41,7 +45,7 @@ class ControladorCatalogoPersonalizado extends Controller
             ->get();
         });
         $elementos = Cache::remember('elementos', 10, function () {
-             Elemento::select('id_e', 'nom_elemento', 'precio_e')
+            return Elemento::select('id_e', 'nom_elemento', 'precio_e')
             ->get();
         });
         
@@ -49,6 +53,12 @@ class ControladorCatalogoPersonalizado extends Controller
     }
 
     public function seleccionarDetalles(Request $request){ //POST: Guardar las opciones de personalización
+
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        $tipo_entrega = $request->input('tipo_entrega');
+        session()->put('proceso_compra', $request->route()->getName());
+        session()->put('opcion_envio', $tipo_entrega);
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $tematica = $request->input('tematica');
         $imagen = $request->input('imagen');
@@ -164,6 +174,11 @@ class ControladorCatalogoPersonalizado extends Controller
     }
 
     public function guardarDireccion(Request $request){
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
+
         $tipo_domicilio = $request->input('tipo_domicilio');
         $datos = session('datos_pedido');       
 
@@ -204,7 +219,11 @@ class ControladorCatalogoPersonalizado extends Controller
             return redirect()->route('personalizado.ticket.get', ['folio' => $id_pedido]);  
     }
 
-    public function mostrarTicket($folio = null){
+    public function mostrarTicket(Request $request, $folio = null){
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->forget('proceso_compra');
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
         if ($folio !== null) {
             // Consulta el pedido con el folio
             $ticket_pedido = Pedido::select('id_ped','id_seleccion_usuario','id_tipopostre', 'porcionespedidas', 'status', 'precio_final')

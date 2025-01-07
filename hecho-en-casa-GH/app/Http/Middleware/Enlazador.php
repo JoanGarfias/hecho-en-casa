@@ -4,112 +4,131 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
-
-use function PHPUnit\Framework\isEmpty;
 
 class Enlazador
 {
     public function handle(Request $request, Closure $next)
     {
+        $rutaActual = $request->route()->getName();
+        $postAsignado = session()->get('proceso_compra');
+        $tipopostre = session()->get('id_tipopostre');
+        $opcion_envio = session()->get('opcion_envio');
+        
+        //dd($rutaActual);
 
-
-        //VALIDAR QUE NO SEA NULL
-        $estadoActual = session('estado_flujo');
-        //dd($estadoActual);
-
-        if($estadoActual === null){
-            return redirect()->route('inicio.get');
+        // Validar datos esenciales
+        if ($this->datosSesionInvalidos($postAsignado, $rutaActual, $tipopostre)) {
+            $pag_regreso = $this->obtenerPaginaRegreso($tipopostre);
+            return redirect()->route($pag_regreso)->with('error', 'No sigue la estructura de la ruta.');
         }
 
-        $flujo = $this->obtenerFlujo($estadoActual);
-
-        // Validar si la ruta actual corresponde al estado actual
+        $flujo = $this->obtenerPostSecuencia($tipopostre, $opcion_envio);
         
-        $rutaActual = $request->route()->getName();
-        //dd("Ruta actual: ".$rutaActual, $flujo[$rutaActual]['permitidas']);
+        //dd($flujo);
 
+        if ($flujo === null) {
+            $pag_regreso = $this->obtenerPaginaRegreso($tipopostre);
+            return redirect()->route($pag_regreso)->with('error', 'No sigue la estructura de la ruta.');
+        }
 
-        //ESTO SE TIENE QUE VALIDAR QUE NO SEA NULL
-        $permitidas = array_map('trim', $flujo[$rutaActual]['permitidas']);
-
-        foreach ($permitidas as $permitida) {
-            if ($rutaActual !== $permitida) {
-                dd('Match found', $rutaActual, $permitida);
-            }
-        }        
-
-        // Si la ruta actual corresponde a una etapa válida, actualizar el estado
-        //session(['estado_flujo' => $flujo[$rutaActual]['siguiente']]);
+        $postFlujo = $flujo[$rutaActual];
+        if($postAsignado !== $postFlujo){
+            $pag_regreso = $this->obtenerPaginaRegreso($tipopostre);
+            return redirect()->route($pag_regreso)->with('error', 'No sigue la estructura de la ruta.');
+        }
 
         return $next($request);
     }
 
-    private function obtenerFlujo($estado)
+    private function obtenerPostSecuencia($tipopostre, $opcion_envio)
     {
-        $opcion_envio = session('opcion_envio');
-        //dd($opcion_envio);
-        if($estado === 'fijo.catalogo.get'){
+        if ($tipopostre === "fijo") {
             $rutaBase = [
-                // Flujo para fijo
-                'fijo.catalogo.get' => [
-                    'permitidas' => ['fijo.catalogo.get', 'inicio'],
-                    'siguiente' => 'fijo.calendario.post',
-                ],
-                'fijo.catalogo.post' => [
-                    'permitidas' => ['fijo.catalogo.get'],
-                    'siguiente' => 'fijo.calendario.get',
-                ],
-                'fijo.calendario.get' => [
-                    'permitidas' => ['fijo.catalogo.post'],
-                    'siguiente' => 'fijo.calendario.post',
-                ],
-                'fijo.calendario.post' => [
-                    'permitidas' => ['fijo.calendario.get'],
-                    'siguiente' => 'fijo.detallesPedido.get',
-                ],
-                'fijo.detallesPedido.get' => [
-                    'permitidas' => ['fijo.detallesPedido.get'],
-                    'siguiente' => 'fijo.detallesPedido.post',
-                ],
-                'fijo.detallesPedido.post' => [
-                    'permitidas' => ['fijo.detallesPedido.post'],
-                    'siguiente' => ($opcion_envio==='Domicilio')? 'fijo.direccion.get' : 'fijo.ticket.get', // Fin del flujo
-                ],
+                'fijo.calendario.get' => 'fijo.catalogo.post',
+                'fijo.detallesPedido.get' => 'fijo.calendario.post',
             ];
-            if($opcion_envio==='Domicilio'){
-                $rutaComplementaria = [
-                    'fijo.direccion.get' => [
-                        'permitidas' => ['fijo.direccion.get'],
-                        'siguiente' => 'fijo.direccion.post',
-                    ],
-                    'fijo.direccion.post' => [
-                        'permitidas' => ['fijo.direccion.post'],
-                        'siguiente' => 'fijo.ticket.get',
-                    ],
-                    'fijo.ticket.get' => [
-                        'permitidas' => ['fijo.ticket.get'],
-                        'siguiente' => null,
-                    ],
+
+            if ($opcion_envio === "Domicilio") {
+                $flujoEnvioDomicilio = [
+                    'fijo.direccion.get' => 'fijo.detallesPedido.post',
+                    'fijo.ticket.get' => 'fijo.direccion.post',
                 ];
+                return array_merge($rutaBase, $flujoEnvioDomicilio);
+            } elseif ($opcion_envio === "Sucursal") {
+                $flujoEnvioSucursal = [
+                    'fijo.ticket.get' => 'fijo.detallesPedido.post',
+                ];
+                return array_merge($rutaBase, $flujoEnvioSucursal);
             }
             else{
-                $rutaComplementaria = [
-                    'fijo.ticket.get' => [
-                        'permitidas' => ['fijo.ticket.get'],
-                        'siguiente' => null,
-                    ],
-                ];
+                return $rutaBase;
             }
-            return array_merge($rutaBase, $rutaComplementaria);
         }
-        if($estado === 'personalizado.catalogo.get'){
+        else if($tipopostre === "personalizado"){
+            $rutaBase = [
+                'personalizado.calendario.get' => 'personalizado.catalogo.post',
+                'personalizado.detallesPedido.get' => 'personalizado.calendario.post',
+            ];
 
+            if ($opcion_envio === "Domicilio") {
+                $flujoEnvioDomicilio = [
+                    'personalizado.direccion.get' => 'personalizado.detallesPedido.post',
+                    'personalizado.ticket.get' => 'personalizado.direccion.post',
+                ];
+                return array_merge($rutaBase, $flujoEnvioDomicilio);
+            } elseif ($opcion_envio === "Sucursal") {
+                $flujoEnvioSucursal = [
+                    'personalizado.ticket.get' => 'personalizado.detallesPedido.post',
+                ];
+                return array_merge($rutaBase, $flujoEnvioSucursal);
+            }
+            else{
+                return $rutaBase;
+            }
+        }
+        else if($tipopostre === "emergente"){
+            $rutaBase = [
+                'emergente.calendario.get' => 'emergente.catalogo.get',
+                'emergente.detallesPedido.get' => 'emergente.calendario.post',
+            ];
+
+            if ($opcion_envio === "Domicilio") {
+                $flujoEnvioDomicilio = [
+                    'emergente.direccion.get' => 'emergente.detallesPedido.post',
+                    'emergente.ticket.get' => 'emergente.direccion.post',
+                ];
+                return array_merge($rutaBase, $flujoEnvioDomicilio);
+            } elseif ($opcion_envio === "Sucursal") {
+                $flujoEnvioSucursal = [
+                    'emergente.ticket.get' => 'emergente.detallesPedido.post',
+                ];
+                return array_merge($rutaBase, $flujoEnvioSucursal);
+            }
+            else{
+                return $rutaBase;
+            }
         }
 
-        if($estado === 'emergente.catalogo.get'){
-
+        else{
+            return null;
         }
+    }
 
-    }   
+    private function datosSesionInvalidos(...$variables): bool
+    {
+        foreach ($variables as $variable) {
+            if ($variable === null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function obtenerPaginaRegreso($tipopostre){
+        if($tipopostre === null){
+            return 'inicio.get';
+        }
+        return $tipopostre . '.catalogo.get';
+    }
+
 }

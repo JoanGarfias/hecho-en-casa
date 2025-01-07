@@ -22,7 +22,6 @@ class ControladorCatalogo extends Controller
 {
 
     public function mostrarCatalogo($categoria = null){ //GET: Muestra los productos
-        session()->put('estado_flujo', 'fijo.catalogo.get');
 
         $categorias = Cache::remember('categorias', 30, function () {
             return Categoria::all();
@@ -59,6 +58,11 @@ class ControladorCatalogo extends Controller
     }
 
     public function guardarSeleccionCatalogo(Request $request){ //POST: guarda la selección en session 
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('id_tipopostre', 'fijo');
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
         $id_postre = $request->input('id_postre');
         $nombre_postre = $request->input('nombre_postre');
         $id_tipopostre = "fijo";
@@ -125,7 +129,7 @@ class ControladorCatalogo extends Controller
     public function seleccionarFecha(Request $request)
     {
 
-        $fechaEscogida = "2025-05-05";
+        $fechaEscogida = "2025-09-05";
         $horaEntrega = "12:00";
         $postre = session('id_postre');
         $tipopostre = session('id_tipopostre');
@@ -155,6 +159,9 @@ class ControladorCatalogo extends Controller
 
         switch($tipopostre){
             case "fijo":
+                /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+                session()->put('proceso_compra', 'fijo.calendario.post');
+                /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
                 if($porciones_dia + $cantidad_minima >= 1000){
                     dd($porciones_dia + $cantidad_minima);
@@ -169,6 +176,9 @@ class ControladorCatalogo extends Controller
 
                 return redirect()->route('fijo.detallesPedido.get');
             case "personalizado":
+                /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+                session()->put('proceso_compra', 'personalizado.calendario.post');
+                /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
                 if($porciones_dia + $cantidad_minima >= 100){
                     return redirect()->route('personalizado.calendario.get'); //Aqui se le tiene que mandar un mensaje de error
@@ -182,7 +192,11 @@ class ControladorCatalogo extends Controller
 
                 return redirect()->route('personalizado.detallesPedido.get');
                 
-            case "temporada": case "pop-up":
+            case "emergente":
+                /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+                session()->put('proceso_compra', 'emergente.calendario.post');
+                /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
                 session([
                     'fecha' => $fechaEscogida,
                     'postre' => $postre,
@@ -277,12 +291,18 @@ class ControladorCatalogo extends Controller
 
 
     public function seleccionarDetalles(Request $request){
+        
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        $tipo_entrega = $request->input('tipo_entrega');
+        session()->put('proceso_compra', $request->route()->getName());
+        session()->put('opcion_envio', $tipo_entrega);
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
+
         $id_postre = session('postre');
         $postre = Catalogo::where('id_postre', $id_postre)
                             ->first();
         $costo = intval($request->input('costo'));
-        $tipo_entrega = $request->input('tipo_entrega');
-        session()->put('opcion_envio', $tipo_entrega);
         $id_usuario = 1;
         session(['tipo_entrega'=> $tipo_entrega, 'costo'=> $costo]);
 
@@ -385,6 +405,10 @@ class ControladorCatalogo extends Controller
 
     public function guardarDireccion(Request $request){ //POST: Mandamos a la ruta del ticket
 
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
         $tipo_domicilio = $request->input('tipo_domicilio'); //ACÁ SE DEBERÍA JALAR LA UBICACIÓN DEL FORMULARIO
         //PERO TOMAMOS LA DEL USUARIO POR AHORA
         $id_usuario = session('id_usuario');
@@ -469,6 +493,11 @@ class ControladorCatalogo extends Controller
     }
     
     public function mostrarTicket(){
+
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->forget('proceso_compra');
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
         $pedido = Pedido::find(session("folio"));
         $fechaHoraEntrega = $pedido->fecha_hora_entrega;
 

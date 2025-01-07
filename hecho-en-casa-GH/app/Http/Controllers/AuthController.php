@@ -18,7 +18,7 @@ class AuthController extends Controller
         return view('iniciar-sesion');
     }
 
-    public function  logear(Request $request)
+    public function Logear(Request $request)
     {
         $action = $request->input('solicitud');//esto borrar
         

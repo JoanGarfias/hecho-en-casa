@@ -30,8 +30,8 @@
 
         <label>Tipo de entrega:</label>
         <div>
-            <label><input type="radio" name="tipo_entrega" value="sucursal" {{ old('tipo_entrega') == 'sucursal' ? 'checked' : '' }}> Recoger en sucursal</label>
-            <label><input type="radio" name="tipo_entrega" value="domicilio" {{ old('tipo_entrega') == 'domicilio' ? 'checked' : '' }}> Envío a domicilio</label>
+            <label><input type="radio" name="tipo_entrega" value="Sucursal" {{ old('tipo_entrega') == 'sucursal' ? 'checked' : '' }}> Recoger en sucursal</label>
+            <label><input type="radio" name="tipo_entrega" value="Domicilio" {{ old('tipo_entrega') == 'domicilio' ? 'checked' : '' }}> Envío a domicilio</label>
         </div>
         @error('tipo_entrega')
             <p style="color: red; font-size: 12px;">{{ $message }}</p>
