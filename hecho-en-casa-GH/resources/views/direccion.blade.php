@@ -12,28 +12,41 @@
                     
             <div class="dosColumnas">
                 <div class="columna">
-                    <label for="codigoPostal">Codigo postal:</label>
-                    <input type="text" id="codigoPostal" name="codigoPostal" required>
+                    <div class="fila">
+                        <label for="codigoPostal">Codigo postal:</label>
+                        <input type="text" id="codigoPostal" name="codigoPostal" required>
+                    </div>
+                    
+                    <div class="fila">
+                        <label for="estado">Estado:</label>
+                        <input type="text" id="estado" name="estado" required>
+                    </div>
+                    <div class="fila">
+                        <label for="ciudad">Ciudad:</label>
+                        <input type="text" id="ciudad" name="ciudad" required>
+                    </div>
+                    <div class="fila">
+                        <label for="calle">Calle: </label>
+                        <input type="text" id="calle" name="calle" required>
+                    </div>
                 </div>
                 <div class="columna">
-                    <label for="calle">Calle: </label>
-                    <input type="text" id="calle" name="calle" required>
-                </div>
-                <div class="columna">
-                    <label for="estado">Estado:</label>
-                    <input type="text" id="estado" name="estado" required>
-                </div>
-                <div class="columna">
-                    <label for="num">Número:</label>
-                    <input type="text" id="num" name="num" required>
-                </div>
-                <div class="columna">
-                    <label for="ciudad">Ciudad:</label>
-                    <input type="text" id="ciudad" name="ciudad" required>
-                </div>
-                <div class="columna">
-                    <label for="colonia">Colonia:</label>
-                    <input type="text" id="colonia" name="colonia" required>
+                    <div class="fila">
+                        <label for="numInt">Número int.:</label>
+                        <input type="text" id="numInt" name="numInt">
+                    </div>
+                    <div class="fila">
+                        <label for="numExt">Número ext.:</label>
+                        <input type="text" id="numExt" name="numExt" required>
+                    </div>
+                    <div class="fila">
+                        <label for="colonia">Colonia:</label>
+                        <input type="text" id="colonia" name="colonia" required>
+                    </div>
+                    <div class="fila">
+                        <label for="referencias">Referencias:</label>
+                        <textarea id="referencias" name="referencias" required></textarea>
+                    </div>
                 </div>
             </div>
             <br>

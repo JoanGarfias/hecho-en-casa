@@ -37,7 +37,7 @@ function validateForm() {
     const apellidoPReg =  /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ'-]{2,}$/;
     const apellidoMReg =  /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ'-]{2,}$/;
     const emailReg = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}$/;
-    const telefonoReg = /^\d{2,4}[-.\s]?\d{2,4}[-.\s]?\d{2,4}$/; // Teléfono de 10 dígitos
+    const telefonoReg = /^\d{2,3}[-.\s]?\d{2,3}[-.\s]?\d{4}$/
 
     // Limpiar mensajes de error
     document.getElementById("errorName").textContent = "";

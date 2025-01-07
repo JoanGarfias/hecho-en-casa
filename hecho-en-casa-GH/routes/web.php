@@ -21,6 +21,11 @@ Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 Route::get('/buscarpedido', [ControladorCalendario::class, 'index']);
 Route::post('/buscarpedido', [ControladorCalendario::class, 'index']);
 
+Route::get('/pedidosPersonalizados', function(){
+    return view('pedidosPersonalizados');
+});
+Route::post('/calEdit', [ControladorCalendario::class, 'index']);
+
 /*INICIO DE SESIÓN */
 
 Route::get('/perfil', [ControladorCalendario::class, 'index']);
@@ -51,6 +56,9 @@ Route::get('/cambiar-clave', [ControladorRegistro::class, 'mostrarCambio'])->nam
 Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post');
 //Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);
 
+
+Route::get('/registrar', [ControladorRegistrar::class, 'index']);
+Route::put('/registrar', [ControladorRegistrar::class, 'index']);
 /*
 
 /*RUTAS DE POSTRES FIJOS */

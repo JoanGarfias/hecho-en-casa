@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="{{ asset('css/pie.css') }}">
 
-<div class="piePa">
+<footer class="piePa">
     <img src="{{ asset('img/piePag.png') }}" alt="Pie de página">
-</div>
+</footer>
