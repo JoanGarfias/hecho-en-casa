@@ -2,12 +2,13 @@
 <title>Iniciar sesión</title>
 <x-menu />    
 
-<div class="flexi">
-<div class = "contenedor">         
-    <form action="procesar.php" method="POST" id = "inicioSesion">
+<div class = "contenedor">   
+    
+    <form action="{{route('login.post')}}" method="POST" id = "inicioSesion">
+        @csrf
         <h2>Iniciar sesión</h2>
         <label for="email">Correo: </label>
-        <input type="email" id = "email" name = "email" required> 
+        <input type="email" id = "email" name = "correo_electronico" required> 
         <div class="mensaje">
         <p id="errorEmail" class="error"></p>
         <p id="bienEmail" class="bien"></p>
@@ -15,7 +16,7 @@
 
         <br>
         <label for="password">Contraseña: </label>
-        <input type="password" id = "pass" name = "pass" required> 
+        <input type="password" id = "pass" name ="contraseña" required> 
         <div class="mensaje">
         <p id="errorPass" class="error"></p>
         <p id="bienPass" class="bien"></p>

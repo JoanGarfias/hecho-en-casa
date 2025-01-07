@@ -5,7 +5,8 @@
 
 <div class="flexi">
     <div class = "contenedor"><!-- café-->
-        <form id="validandoContra" action="" method="">
+        <form id="validandoContra" action="{{route('registrar.guardarContrasena')}}" method="POST">
+            @csrf
             <h2 class="titule">Regístrate</h2>
             <br>
             <label for="password" class = "campos">Contraseña:</label>
@@ -24,13 +25,8 @@
                 <input type="password" id="confirmacion" name="confirmacion" required>
                 <i class="fi fi-rs-crossed-eye visibility" onclick="visibility('confirmacion', this)"></i>
             </div>
-            <div class="mensaje">
-                <p id="errorConfirmacion" class="error"></p>
-                <p id="asegurarConfirmacion" class="error"></p>
-                <p id="bienConfirmacion" class="bien"></p>
-            </div>
-            <br>
-            <button class="botoncito" type="submit" name="action" value="contrasena" onclick="validateContra()">Continuar</button>
+
+            <button class="botoncito" type="submit" name="action" value="contrasena">Continuar</button>
         </form>  
     </div>
 </div>

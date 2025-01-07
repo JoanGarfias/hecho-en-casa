@@ -5,7 +5,8 @@
 
 <div class="flexi">
     <div class = "contenedor"><!-- café-->
-        <form id="formularioRegistro" action="" method="">
+        <form id="formularioRegistro" action="{{route('registrar.registro')}}" method="POST">
+            @csrf
             <h2 class="titule">Regístrate</h2>
             
             <label for="name" id = "campos">Nombre:</label>
@@ -43,14 +44,13 @@
             <p id="bienEmail" class="bien"></p><br>
             </div>
 
-            <button class="botoncito" type="submit" name="action" value="login">Iniciar sesión</button>
-            <button class="botoncito" type="submit" name="action" value="register" onclick="validateForm()">Continuar</button>
+            <button class="botoncito" type="submit" name="botones" value="login">Iniciar sesión</button>
+            <button class="botoncito" type="submit" name="botones" value="register">Continuar</button>
             <p></p>
         </form>  
     </div>
 </div>
 
-<x-pie/>
 
     <script src="{{ asset('js/registrando.js') }}"></script>
     <!--Para la animación del logo de usuario-->
