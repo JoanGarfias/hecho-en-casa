@@ -50,3 +50,6 @@
     <script src="{{ asset('js/registrando.js') }}"></script>
     <!--Para la animación del logo de usuario-->
 <script src="{{ asset('js/icono.js') }}" defer></script>
+
+<!--Para borrar el parrafo al hacer click al input-->
+<script src="{{ asset('js/borrandoParrafo.js') }}" defer></script>
