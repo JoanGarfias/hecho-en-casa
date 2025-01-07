@@ -5,7 +5,8 @@
 
 <div class="flexi">
     <div class = "contenedor"><!-- café-->
-        <form id="validandoContra" action="" method="">
+        <form id="validandoContra" action="{{route('registrar.contrasena.post')}}" method="POST">
+            @csrf
             <h2 class="titule">Regístrate</h2>
             <br>
             <label for="password" class = "campos">Contraseña:</label>

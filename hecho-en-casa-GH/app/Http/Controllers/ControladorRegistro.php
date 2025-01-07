@@ -50,13 +50,14 @@ class ControladorRegistro extends Controller
     }
 
     public function guardarContrasena(Request $request){
-        dd($request->all());
         $contrasena = $request->input('confirmacion');
         session(['contrasena' => $contrasena]);
         return redirect()->route('registrar.direccion.get'); 
     }
 
     public function mostrarDireccion(){
+
+        dd("Entro");    
         return view('direccion');
     }
 
@@ -79,6 +80,7 @@ class ControladorRegistro extends Controller
         try{
             $usuario->save();
         }catch(\Exception $e){
+            dd("Error: " . $e->getMessage());
             return redirect()->route('registrar.get')->with('error', 'Error al guardar el usuario');    
         }
         
