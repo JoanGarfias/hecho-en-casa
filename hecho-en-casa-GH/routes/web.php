@@ -43,10 +43,8 @@ Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])
 Route::put('/perfil', [ControladorPerfil::class, 'editar'])
 ->middleware(CheckSession::class);
 
-Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name('registrar.direccion.get')
-->middleware(CheckSession::class);
-Route::post('/direccion', [ControladorRegistro::class, 'guardarDireccion'])->name('registrar.direccion.post')
-->middleware(CheckSession::class);
+Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name('registrar.direccion.get');
+Route::post('/direccion', [ControladorRegistro::class, 'guardarDireccion'])->name('registrar.direccion.post');
 
 Route::get('/cerrar-sesion', [AuthController::class, 'logout'])
 ->middleware(CheckSession::class);
@@ -144,7 +142,6 @@ Route::post('/emergentes', [ControladorCatalogoEmergente::class, 'guardarSelecci
 Route::get('emergentes/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])
 ->name('emergente.calendario.get')
 ->middleware([CheckSession::class, Enlazador::class]);
-
 
 Route::post('emergentes/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'seleccionarFecha'])
 ->name('emergente.calendario.post')
