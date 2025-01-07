@@ -5,14 +5,14 @@
     font-size: medium;
     font-weight: bold;
 }
-
-body {
-    margin: 0;
+.flexi{
+    margin-top: -50px;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh; /* Hace que el diseño esté centrado en pantalla */
-    background: #f4f4f4; /* Fondo del sitio */
+    margin-bottom: 0%;
+
 }
 
 .contenedor {

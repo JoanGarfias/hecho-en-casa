@@ -26,7 +26,7 @@ header {
     left: 50%; /* Centra horizontalmente */
     transform: translateX(-50%); /* Centrado perfecto */
     width: 100%; /* Ancho relativo al viewport */
-    max-width: 1370px;/* Ancho máximo */
+    max-width: 1602px;/* Ancho máximo */
     overflow: visible;
     display: flex; /* Usamos flexbox */
     justify-content: center; /* Centra horizontalmente el contenido */

@@ -28,6 +28,7 @@
         </div>
     </form>
 </div>
+</div>
 <x-pie/>
 
 <script src="{{ asset('js/iniciando.js') }}"></script>

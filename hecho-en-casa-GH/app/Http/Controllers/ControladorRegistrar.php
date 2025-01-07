@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ControladorCalendario extends Controller
+class ControladorRegistrar extends Controller
 {
     public function index(){
-        return view('calendario');
+        return view('registrar');
     }
 }
