@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\TipoAtributo;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -14,6 +13,8 @@ class Enlazador
         $postAsignado = session()->get('proceso_compra');
         $tipopostre = session()->get('id_tipopostre');
         $opcion_envio = session()->get('opcion_envio');
+        
+        //dd($rutaActual);
 
         // Validar datos esenciales
         if ($this->datosSesionInvalidos($postAsignado, $rutaActual, $tipopostre)) {
@@ -22,6 +23,8 @@ class Enlazador
         }
 
         $flujo = $this->obtenerPostSecuencia($tipopostre, $opcion_envio);
+        
+        //dd($flujo);
 
         if ($flujo === null) {
             $pag_regreso = $this->obtenerPaginaRegreso($tipopostre);
@@ -122,7 +125,10 @@ class Enlazador
     }
 
     private function obtenerPaginaRegreso($tipopostre){
-        return ($tipopostre===null)? 'inicio.get' : ($tipopostre . '.catalogo.get');
+        if($tipopostre === null){
+            return 'inicio.get';
+        }
+        return $tipopostre . '.catalogo.get';
     }
 
 }
