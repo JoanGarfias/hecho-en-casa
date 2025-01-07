@@ -17,7 +17,6 @@ class ControladorCatalogoEmergente extends Controller
     /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
     session()->put('id_tipopostre', 'emergente');
     session()->put('proceso_compra', $request->route()->getName());
-    //No deberia estar aca pero jeyson no puso un POST para el catalogo
     /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $emergentes = Cache::remember('catalogoemergentes', 600, function () {
@@ -43,6 +42,10 @@ class ControladorCatalogoEmergente extends Controller
     }
 
     public function guardarSeleccion(Request $request){
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
         $validated = $request->validate([
             'id_postre' => 'required|integer',
         ]);
