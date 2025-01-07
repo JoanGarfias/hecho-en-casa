@@ -138,3 +138,53 @@ form {
     font-size: 1.2em; /* Ajusta el tamaño del ícono */
     color: #555; /* Cambia el color del ícono */
 }
+
+
+/*Para lo emergente*/
+
+/* Fondo emergente */
+.fondo-emergente {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.mensajeEmergente{
+    font-size: medium;
+    font-weight: 100;
+    color: #857355;
+}
+
+/* Contenedor emergente */
+.emergente {
+    background: #E8DBC7;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px #857355;
+    text-align: center;
+    max-width: 90%;
+    width: 400px;
+}
+
+/* Botones */
+.aceptando {
+    padding: 10px 20px;
+    margin-top: 10px;
+    background: #857355;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.aceptando:hover {
+    background: #555;
+}

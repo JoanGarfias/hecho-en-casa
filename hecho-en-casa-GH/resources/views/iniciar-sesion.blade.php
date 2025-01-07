@@ -35,7 +35,18 @@
     </div>
 </form>
 </div>
+
+<div class="fondo-emergente" id="fondoEmergente">
+    <div class="emergente">    
+        <p class="mensajeEmergente">Se ha enviado un código de seguridad a tu correo.</p>
+        <p class="mensajeEmergente"></p>
+        <button id="aceptar" class="aceptando">✔</button>
+    </div>
 </div>
+
+</div>
+
+
 <x-pie/>
 
 <script src="{{ asset('js/iniciando.js') }}"></script>
