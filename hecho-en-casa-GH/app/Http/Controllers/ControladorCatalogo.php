@@ -339,7 +339,7 @@ class ControladorCatalogo extends Controller
             $pedido = new Pedido;
             $pedido->id_usuario = $id_usuario;
             $pedido->id_tipopostre = $id_tipopostre;
-            $pedido->id_seleccion_usuario = 11; 
+            $pedido->id_seleccion_usuario = $id_nuevo_postre; 
             $pedido->porcionespedidas = $unidadm * $cantidad; 
             $pedido->status = 'pendiente';
             $pedido->precio_final = $costo;
@@ -397,18 +397,18 @@ class ControladorCatalogo extends Controller
         $colonia = $user->colonia_u;
         $calle = $user->calle_u;
         $numero = $user->num_exterior_u;
-/*
-        if($tipo_domicilio=='otra'){
-            $codigo_postal = $request->input('codigo_postal');
-            $estado = $request->input('estado');
-            $ciudad = $request->input('ciudad');
-            $colonia = $request->input('colonia');
-            $calle = $request->input('calle');
-            $numero = $request->input('numero'); 
+
+        if($tipo_domicilio=='Nueva'){ //Datos prueba
+            $codigo_postal = "70500";
+            $estado = "Puebla";
+            $ciudad = "Cuatlancingo";
+            $colonia = "4 caminos";
+            $calle = "Frenos 21";
+            $numero = "21";
             //$referencia = $request->input('referencia');
 
             //si elige volverla su ubicacion predeterminada entonces lo actualizamos en el perfil del usuario
-            if($request->has('predeterminado')){
+            if($request->has('Default')){
                 $user->Codigo_postal_u = $codigo_postal;
                 $user->estado_u = $estado;
                 $user->ciudad_u = $ciudad;
@@ -420,12 +420,12 @@ class ControladorCatalogo extends Controller
             }
 
         }
-*/
+
 
         $fijo = new Postrefijo;
         //$fijo->id_atributo= ;
         $fijo->id_um = 1;//$unidadm;
-        $fijo->id_postre_elegido= 1;//$id_tipopostre;
+        $fijo->id_postre_elegido = session("postre");//1;
         $fijo->save();  
 
         // Obtenemos el ID del postre creado

@@ -1,6 +1,5 @@
 *{
     font-family: "Poppins", serif;
-    font-weight: 400;
     font-style: normal;
     font-size: medium;
     font-weight: bold;
@@ -17,6 +16,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh; /* Hace que el diseño esté centrado en pantalla */
+    margin-bottom: 10%;
 
 }
 

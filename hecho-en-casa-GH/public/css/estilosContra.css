@@ -1,3 +1,5 @@
+@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css');
+
 .flexi{
     margin-top: -55px
 }
@@ -26,4 +28,24 @@
     border-radius: 22px;
     z-index: -1; /* Coloca este fondo detrás del contenido */
     transform: translate(10px, 10px); /* Desplazamiento para crear el efecto */
+}
+
+/*Para la visualizacion de la contraseña*/
+.campo-contrasena {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.campo-contrasena input {
+    width: 100%;
+    padding-right: 40px; /* Espacio para el ícono */
+}
+
+.visibility {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    font-size: 1.2em; /* Ajusta el tamaño del ícono */
+    color: #555; /* Cambia el color del ícono */
 }
