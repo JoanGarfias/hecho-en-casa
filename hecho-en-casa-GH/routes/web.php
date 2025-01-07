@@ -16,6 +16,8 @@ use App\Http\Middleware\Enlazador;
 use App\Http\Controllers\ControladorRegistrar;
 use App\Http\Controllers\ControladorPerfil;
 
+/*VISTAS PRINCIPALES*/
+
 Route::get('/', [ControladorInicio::class, 'index'])->name('inicio.get');
 
 Route::get('/conocenos', [ControladorCalendario::class, 'index']);
@@ -23,46 +25,37 @@ Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 Route::get('/buscarpedido', [ControladorCalendario::class, 'index']);
 Route::post('/buscarpedido', [ControladorCalendario::class, 'index']);
 
-Route::get('/pedidosPersonalizados', function(){
-    return view('pedidosPersonalizados');
-});
-Route::post('/calEdit', [ControladorCalendario::class, 'index']);
+Route::get('/calendario', [ControladorCalendario::class, 'index'])->name('calendario.get');
 
-/*INICIO DE SESIÓN */
+/*LOGIN - REGISTER*/
 
-Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])
-->middleware(CheckSession::class);
-Route::put('/perfil', [ControladorPerfil::class, 'editar'])
-->middleware(CheckSession::class);
-
-/*Route::get('/iniciar-sesion', [ControladorCalendario::class, 'index']);*/
 Route::get('/login', [AuthController::class, 'mostrarLogin'])->name('login.get');
 Route::post('/login', [AuthController::class, 'Logear'])->name('login.post');
 
-//REGISTRO DE USUARIO NUEVO
 Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar.get');
 Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.post');
 
 Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena.get');
 Route::post('/contrasena', [ControladorRegistro::class, 'guardarContrasena'])->name('registrar.contrasena.post');
 
-Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name('registrar.direccion.get');
-Route::post('/direccion', [ControladorRegistro::class, 'guardarDireccion'])->name('registrar.direccion.post');
+Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])
+->middleware(CheckSession::class);
+Route::put('/perfil', [ControladorPerfil::class, 'editar'])
+->middleware(CheckSession::class);
+
+Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name('registrar.direccion.get')
+->middleware(CheckSession::class);
+Route::post('/direccion', [ControladorRegistro::class, 'guardarDireccion'])->name('registrar.direccion.post')
+->middleware(CheckSession::class);
 
 Route::get('/cerrar-sesion', [AuthController::class, 'logout'])
 ->middleware(CheckSession::class);
 
-//Route::delete('/cerrar-sesion', [ControladorCalendario::class, 'logout.post']);
-//antes de entrar a esta vista el correo tiene que estar validado y ser enviado
-//LA RUTA SIGUINTE NO ES UNA VISTA
-//Route::get('/recuperar-clave', [ControladorRegistro::class, 'mostrarRecuperacion'])->name('recuperar-clave.get');
 Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecuperacion'])->name('recuperacion.get');
 Route::get('/cambiar-clave', [ControladorRegistro::class, 'mostrarCambio'])->name('cambiar-clave.get');
 Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post');
-//Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);
 
-/*RUTA PARA EL CALENDARIO QUE NO ES INTERACTIVO*/
-Route::get('/calendario', [ControladorCalendario::class, 'index'])->name('calendario.get');
+
 
 /*RUTAS DE POSTRES FIJOS */
 Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrarCatalogo'])
@@ -98,6 +91,7 @@ Route::post('fijo/detalles-direccion', [ControladorCatalogo::class, 'guardarDire
 Route::get('fijo/ticket/{folio}', [ControladorCatalogo::class, 'mostrarTicket'])
 ->name('fijo.ticket.get')
 ->middleware([CheckSession::class, Enlazador::class]);
+
 
 
 /*RUTAS DE POSTRES PERSONALIZADOS */
