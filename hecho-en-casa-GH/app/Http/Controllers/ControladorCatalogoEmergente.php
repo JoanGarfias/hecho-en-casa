@@ -164,6 +164,11 @@ class ControladorCatalogoEmergente extends Controller
         return redirect()->route('emergente.ticket.get');   
     }
 
+    public function mostrarDireccion(){
+        $datos = session('datos_pedido');
+        return view('direccionEmergente', compact('datos'));
+    }
+
     public function seleccionarDireccion(Request $request){ 
 
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */

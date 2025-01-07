@@ -158,7 +158,7 @@ Route::post('emergentes/detalles-pedido', [ControladorCatalogoEmergente::class, 
 ->name('emergente.detallesPedido.post')
 ->middleware(CheckSession::class);
 
-Route::get('emergentes/detalles-direccion', [ControladorCatalogo::class, 'mostrarDireccion'])
+Route::get('emergentes/detalles-direccion', [ControladorCatalogoEmergente::class, 'mostrarDireccion'])
 ->name('emergente.direccion.get')
 ->middleware([CheckSession::class, Enlazador::class]);
 
