@@ -25,8 +25,13 @@
                 <input type="password" id="confirmacion" name="confirmacion" required>
                 <i class="fi fi-rs-crossed-eye visibility" onclick="visibility('confirmacion', this)"></i>
             </div>
-
-            <button class="botoncito" type="submit" name="action" value="contrasena">Continuar</button>
+            <div class="mensaje">
+                <p id="errorConfirmacion" class="error"></p>
+                <p id="asegurarConfirmacion" class="error"></p>
+                <p id="bienConfirmacion" class="bien"></p>
+            </div>
+            <br>
+            <button class="botoncito" type="submit" name="action" value="contrasena" onclick="validateContra()">Continuar</button>
         </form>  
     </div>
 </div>
