@@ -184,7 +184,6 @@ class Enlazador
             'personalizado.detallesPedido.get',
             'personalizado.direccion.get',
             'personalizado.ticket.get',
-            'emergente.calendario.get',
             'emergente.detallesPedido.get',
             'emergente.direccion.get',
             'emergente.ticket.get',
