@@ -24,16 +24,16 @@
                 <input type="password" id="confirmacion" name="confirmacion" onfocus="borrarParrafo('mensajeConfirmacion')" required>
                 <i class="fi fi-rs-crossed-eye visibility" onclick="visibility('confirmacion', this)"></i>
             </div>
-<<<<<<< HEAD
+
             <div class="mensajito">
                 <p id="mensajeConfirmacion" class="bien"></p>
             </div>
             <br>
             <button class="botoncito" type="submit" name="action" value="contrasena" onclick="validateContra()">Continuar</button>
-=======
+
 
             <button class="botoncito" type="submit" name="action" value="contrasena">Continuar</button>
->>>>>>> main
+
         </form>  
     </div>
 </div>
