@@ -8,19 +8,19 @@
         @csrf
         <h2>Iniciar sesión</h2>
         <label for="email">Correo: </label>
-<<<<<<< HEAD
+
         <input type="email" id = "email" name = "email" onfocus="borrarParrafo('mensajeEmail')" required> 
         <div class="mensajito">
             <p id="mensajeEmail" class="bien"></p>
-=======
+
         <input type="email" id = "email" name = "correo_electronico" required> 
         <div class="mensaje">
         <p id="errorEmail" class="error"></p>
         <p id="bienEmail" class="bien"></p>
->>>>>>> main
+
         </div>
         <br>
-<<<<<<< HEAD
+
         <div class="alineando">
             <label for="password">Contraseña: </label>
             <div class="campo-contrasena">
