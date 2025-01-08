@@ -21,12 +21,12 @@ class ControladorCatalogoEmergente extends Controller
 
         $emergentes = Cache::remember('catalogoemergentes', 600, function () {
             return [
-                'temporada' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre')
+                'temporada' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre', 'nombre', 'precio_emergentes') 
                                     ->where('id_tipo_postre', 'temporada')
                                     ->where('disponible', '1')
                                     ->get(),
 
-                'pop-up' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre', 'nombre', 'descripcion', 'stock')
+                'pop-up' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre', 'nombre', 'descripcion', 'stock', 'precio_emergentes')
                                     ->where('id_tipo_postre', 'pop-up')
                                     ->where('stock', '>', 0)
                                     ->get(),
@@ -37,8 +37,8 @@ class ControladorCatalogoEmergente extends Controller
             Log::info('Cache is empty or expired.');
             return response()->json([]);
         }
-        
-        return response()->json($emergentes);
+
+        return view('emergentes-prueba', compact('emergentes'));
     }
 
     public function guardarSeleccion(Request $request){
@@ -46,13 +46,13 @@ class ControladorCatalogoEmergente extends Controller
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
-        $validated = $request->validate([
-            'id_postre' => 'required|integer',
-        ]);
-
+        $idPostre = $request->input('comprar');
+        $postre = Catalogo::where('id_postre', $idPostre)->first();
+        
         session([
             'id_tipopostre' => 'emergente',
-            'postre' => $validated['id_postre'],
+            'postre' => $idPostre,
+            'nombre_postre' => $postre->nombre,
         ]);
 
         return redirect()->route('emergente.calendario.get');
@@ -84,19 +84,7 @@ class ControladorCatalogoEmergente extends Controller
             'id_usuario' => 1,
             'fecha' => "2025-01-03",
             'hora_entrega' => "12:00",
-            'postre' => "30",
             'cantidad_minima' => "4",
-            
-        ]);
-
-        //ESTO ES LA CONSULTA A PARTIR DEL ID QUE ME LLEGO DE LA VISTA ANTERIOR
-        $postre = Cache::remember('postresession', 10, function () {
-            return Catalogo::where('id_postre', session('postre'))
-                            ->first();
-        });
-
-        session([   
-            'nombre_postre' => $postre->nombre,
         ]);
 
         return view('detallesEmergente');
@@ -130,8 +118,9 @@ class ControladorCatalogoEmergente extends Controller
         if($tipo_entrega === 'Domicilio'){
             return redirect()->route('emergente.direccion.get');  //SI SELECCIONO ENTREGA A DOMICILIO ENTONCES NOS VAMOS A DETALLES DIRECCION
         }
-
+        
         $id_postre = session('postre');
+        
         $postre = Cache::remember('postres2', 10, function () use ($id_postre){
             return Catalogo::where('id_postre', $id_postre)
                             ->first();
@@ -146,7 +135,7 @@ class ControladorCatalogoEmergente extends Controller
         }
 
         $pedido = new Pedido;
-        $pedido->id_usuario = session('id_u');
+        $pedido->id_usuario = session('id_usuario');
         $pedido->id_tipopostre = $postre->id_tipo_postre;
         $pedido->id_seleccion_usuario = $emergente->id_pt;//este es el id de la tabla postre emergente que se guardara en pedido
         $pedido->porcionespedidas = session('cantidad_pedida');
@@ -164,7 +153,11 @@ class ControladorCatalogoEmergente extends Controller
         //para reducir su stock en caso de que tenga si es null entonces no maneja stock
         if($postre->stock != null){
             $postre->stock = $postre->stock - session('cantidad_pedida');
-            $postre->save();
+            try{
+                $postre->save();
+            }catch(\Exception $e){
+                dd("Error al actualizar stock: ".$e->getMessage());
+            }
         }
 
         session([

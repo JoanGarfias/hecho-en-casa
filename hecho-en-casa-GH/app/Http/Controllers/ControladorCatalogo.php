@@ -131,7 +131,8 @@ class ControladorCatalogo extends Controller
 
         $fechaEscogida = "2025-09-05";
         $horaEntrega = "12:00";
-        $postre = session('id_postre');
+        $postre = session('postre');
+        
         $tipopostre = session('id_tipopostre');
 
         session(['fecha_entrega' => $fechaEscogida]);
