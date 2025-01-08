@@ -117,12 +117,10 @@ function validateForm() {
     }
 
     // Si todo es válido, mostrar un mensaje
-<<<<<<< HEAD
-    if (isValid) {  
-=======
+
     if (isValid) {
 //        alert("Formulario enviado exitosamente. ¡Gracias!");
->>>>>>> main
+
         formulario.submit(); // Enviamos el formulario si todo es correcto
     }
 }

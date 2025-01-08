@@ -8,19 +8,19 @@
         @csrf
         <h2>Iniciar sesión</h2>
         <label for="email">Correo: </label>
-<<<<<<< HEAD
+
         <input type="email" id = "email" name = "email" onfocus="borrarParrafo('mensajeEmail')" required> 
         <div class="mensajito">
             <p id="mensajeEmail" class="bien"></p>
-=======
+
         <input type="email" id = "email" name = "correo_electronico" required> 
         <div class="mensaje">
         <p id="errorEmail" class="error"></p>
         <p id="bienEmail" class="bien"></p>
->>>>>>> main
+
         </div>
         <br>
-<<<<<<< HEAD
+
         <div class="alineando">
             <label for="password">Contraseña: </label>
             <div class="campo-contrasena">
@@ -40,8 +40,8 @@
         <button class="botoncito" type="submit" name="action" value="login" onclick="validateForm()">Continuar</button>
     </div>
 </form>
-=======
-        <label for="password">Contraseña: </label>
+<!--
+       <label for="password">Contraseña: </label>
         <input type="password" id = "pass" name ="contraseña"> 
         <div class="mensaje">
         <p id="errorPass" class="error"></p>
@@ -53,7 +53,8 @@
             <button class="botoncito" type="submit" name="action" value="login" onclick="validateForm()">Continuar</button>
         </div>
     </form>
->>>>>>> main
+-->
+
 </div>
 
 <div class="fondo-emergente" id="fondoEmergente">
