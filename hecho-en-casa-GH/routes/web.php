@@ -52,9 +52,6 @@ Route::get('/cerrar-sesion', [AuthController::class, 'logout'])
 Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecuperacion'])->name('recuperacion.get');
 Route::get('/cambiar-clave', [ControladorRegistro::class, 'mostrarCambio'])->name('cambiar-clave.get');
 Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post');
-
-
-<<<<<<< HEAD
 //Route::post('/iniciar-sesion', [ControladorCalendario::class, 'index']);
 
 Route::get('/direccion', function(){
