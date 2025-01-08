@@ -322,24 +322,30 @@ class ControladorCatalogo extends Controller
                     ->where('nombre_unidad', $nombreUnidad)
                     ->first(['id_um']);  
 
-        session(['id_um'=> $id_um->id_um]);
+        //session(['id_um'=> $id_um->id_um]);
         $cantidad = intval($request->input('cantidad'));
         session(['porcionespedidas'=> $unidadm * $cantidad]);
-        $valoresSeleccionados = [];
-        foreach (session('atributosSesion', []) as $nombreTipo => $atributos) {
-            $campo = strtolower($nombreTipo);  // Usamos el mismo nombre dinámico que en la vista
-            $valor = $request->input($campo);  // Capturamos el valor enviado
-            $valoresSeleccionados[$campo] = $valor;
-        }
-        $id_tipoatributo = TipoAtributo::where('nombre_atributo', $campo)->first();
-        $id_atributo = AtributosExtra::where('id_tipo_atributo', $id_tipoatributo->idtipo_atributo)
-        ->where('nom_atributo', $valor)
-        ->first(['id_atributo']);
-        session(['id_atributo'=> $id_atributo->id_atributo]);
+        $valoresSeleccionados = session('atributosSesion');
+        session(['id_um' => $id_um->id_um]);
 
-        // Ahora se puede usar los valores capturados
+        if (!empty($valoresSeleccionados)) {
+            foreach (session('atributosSesion', []) as $nombreTipo => $atributos) { //$valoresSeleccionados as $nombreTipo
+                $campo = strtolower($nombreTipo);  // Usamos el mismo nombre dinámico que en la vista
+                $valor = $request->input($campo);  // Capturamos el valor enviado
+                $valoresSeleccionados[$campo] = $valor;
+            }
+
+    
+            $id_tipoatributo = TipoAtributo::where('nombre_atributo', $campo)->first();
+                $id_atributo = AtributosExtra::where('id_tipo_atributo', $id_tipoatributo->idtipo_atributo)
+                ->where('nom_atributo', $valor)
+                ->first(['id_atributo']);
+                session(['id_atributo'=> $id_atributo->id_atributo]);
+        } else {
+            session(['id_atributo' => null]);  
+        }
+
         session(['valoresSeleccionados' => $valoresSeleccionados]); // Captura como array
-        
 
         if ($tipo_entrega == "Domicilio") {
             $datos = [
@@ -361,8 +367,8 @@ class ControladorCatalogo extends Controller
             // Instanciación de postrefijo  
 
             $fijo = new Postrefijo;
-            $fijo->id_atributo= $id_atributo->id_atributo;
-            $fijo->id_um = $id_um->id_um;  //1
+            $fijo->id_atributo= session("id_atributo");//$id_atributo->id_atributo;
+            $fijo->id_um = session("id_um");  //$id_um->id_um
             $fijo->id_postre_elegido = $id_postre;  //1 NUEVO
             $fijo->save();  
 
