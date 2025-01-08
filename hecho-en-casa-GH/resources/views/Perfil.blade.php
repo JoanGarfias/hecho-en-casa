@@ -1,6 +1,4 @@
-<title>Perfil de Usuario</title>
-  <link rel="stylesheet" href="/ProyectoHC_Modificacion_CalendarioFijo/Pagina/css/Perfil.css"> 
-  <?php require('./Plantillas/menu.php'); ?>
+<x-menu />
 </head>
 <body>
   <div class="main-container">
@@ -71,4 +69,4 @@
     </div>
   </div>
 </body>
-<?php require('./Plantillas/piePg.php'); ?>
+<x-pie/>

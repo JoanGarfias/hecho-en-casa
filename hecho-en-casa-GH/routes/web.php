@@ -5,45 +5,56 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControladorInicio;
 use App\Http\Controllers\ControladorCalendario;
 use App\Http\Controllers\ControladorCatalogo;
-use App\Http\Controllers\ControladorIniciarSesion;
+use App\Http\Controllers\ControladorCatalogoEmergente;
+use App\Http\Controllers\ControladorCatalogoPersonalizado;
+use App\Http\Controllers\ControladorLogIn;
+use App\Http\Controllers\ControladorRegistro;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MailController;
+use App\Http\Middleware\CheckSession;
+use App\Http\Middleware\Enlazador;
 use App\Http\Controllers\ControladorRegistrar;
+use App\Http\Controllers\ControladorPerfil;
 
-Route::get('/', [ControladorInicio::class, 'index']);
-Route::get('/inicio', [ControladorInicio::class, 'index']);
+/*VISTAS PRINCIPALES*/
 
-Route::get('/calFijo', function(){
-    return view('calFijo');
-});
-Route::post('/calFijo', [ControladorCalendario::class, 'index']);
-
-Route::get('/calEdit', function(){
-    return view('calEdit');
-});
-Route::post('/calEdit', [ControladorCalendario::class, 'index']);
+Route::get('/', [ControladorInicio::class, 'index'])->name('inicio.get');
 
 Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 
 Route::get('/buscarpedido', [ControladorCalendario::class, 'index']);
 Route::post('/buscarpedido', [ControladorCalendario::class, 'index']);
 
-Route::get('/pedidosPersonalizados', function(){
-    return view('pedidosPersonalizados');
-});
-Route::post('/calEdit', [ControladorCalendario::class, 'index']);
+Route::get('/calendario', [ControladorCalendario::class, 'index'])->name('calendario.get');
 
-/*INICIO DE SESIÓN */
+/*LOGIN - REGISTER*/
 
-Route::get('/perfil', [ControladorCalendario::class, 'index']);
-Route::put('/perfil', [ControladorCalendario::class, 'index']);
+Route::get('/login', [AuthController::class, 'mostrarLogin'])->name('login.get');
+Route::post('/login', [AuthController::class, 'Logear'])->name('login.post');
 
-//Route::get('/iniciar-sesion', [ControladorCalendario::class, 'index']);
-Route::get('/iniciar-sesion', function(){
-    return view('iniciar-sesion');
-});
+Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar.get');
+Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.post');
 
-Route::post('/iniciar-sesion', [ControladorIniciarSesion::class, 'index']);
+Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena.get');
+Route::post('/contrasena', [ControladorRegistro::class, 'guardarContrasena'])->name('registrar.contrasena.post');
+
+Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])
+->middleware(CheckSession::class);
+Route::put('/perfil', [ControladorPerfil::class, 'editar'])
+->middleware(CheckSession::class);
+
+Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name('registrar.direccion.get');
+Route::post('/direccion', [ControladorRegistro::class, 'guardarDireccion'])->name('registrar.direccion.post');
+
+Route::get('/cerrar-sesion', [AuthController::class, 'logout'])
+->middleware(CheckSession::class);
+
+Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecuperacion'])->name('recuperacion.get');
+Route::get('/cambiar-clave', [ControladorRegistro::class, 'mostrarCambio'])->name('cambiar-clave.get');
+Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post');
 
 
+<<<<<<< HEAD
 //Route::post('/iniciar-sesion', [ControladorCalendario::class, 'index']);
 
 Route::get('/direccion', function(){
@@ -67,64 +78,117 @@ Route::delete('/cerrar-sesion', [ControladorCalendario::class, 'index']);
 Route::get('/recuperar-clave/{token}', [ControladorCalendario::class, 'index']);
 
 /*
+=======
+>>>>>>> 5303ad1a4e4ab8c9d45e833e7f1268f79ba43103
 
 /*RUTAS DE POSTRES FIJOS */
-/*
-Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrar']);
-Route::post('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrar']);
+Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrarCatalogo'])
+->name('fijo.catalogo.get');
 
-Route::get('fijo/seleccionar-fecha', [ControladorCatalogo::class, 'mostrar-calendario']);
-Route::post('fijo/seleccionar-fecha', [ControladorCatalogo::class, 'seleccionar-fecha']);
+Route::post('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'guardarSeleccionCatalogo'])
+->name('fijo.catalogo.post');
 
-Route::get('fijo/detalles-pedido', [ControladorCatalogo::class, 'mostrar-detalles']);
-Route::post('fijo/detalles-pedido', [ControladorCatalogo::class, 'seleccionar-detalles']);
+Route::get('fijo/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])
+->name('fijo.calendario.get')
+->middleware([CheckSession::class, Enlazador::class]);
 
-Route::get('fijo/detalles-pedido', [ControladorCatalogo::class, 'mostrar-detalles']);
-Route::post('fijo/detalles-pedido', [ControladorCatalogo::class, 'seleccionar-detalles']);
+Route::post('fijo/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'seleccionarFecha'])
+->name('fijo.calendario.post')
+->middleware(CheckSession::class);
 
-Route::get('fijo/detalles-entrega', [ControladorCatalogo::class, 'mostrar-detalles-entrega']);
-Route::post('fijo/detalles-entrega', [ControladorCatalogo::class, 'seleccionar-detalles-entrega']);
+Route::get('fijo/detalles-pedido', [ControladorCatalogo::class, 'mostrarDetalles'])
+->name('fijo.detallesPedido.get')
+->middleware([CheckSession::class, Enlazador::class]);
 
-Route::get('fijo/ticket/{folio}', [ControladorCatalogo::class, 'mostrar-ticket']);
-*/
+Route::post('fijo/detalles-pedido', [ControladorCatalogo::class, 'seleccionarDetalles'])
+->name('fijo.detallesPedido.post')
+->middleware(CheckSession::class);
+
+Route::get('fijo/detalles-direccion', [ControladorCatalogo::class, 'mostrarDireccion'])
+->name('fijo.direccion.get')
+->middleware([CheckSession::class, Enlazador::class]);
+
+Route::post('fijo/detalles-direccion', [ControladorCatalogo::class, 'guardarDireccion'])
+->name('fijo.direccion.post')
+->middleware(CheckSession::class);
+
+Route::get('fijo/ticket/{folio}', [ControladorCatalogo::class, 'mostrarTicket'])
+->name('fijo.ticket.get')
+->middleware([CheckSession::class, Enlazador::class]);
+
+
 
 /*RUTAS DE POSTRES PERSONALIZADOS */
 
-/*
-Route::get('/personalizados', [ControladorCatalogo::class, 'mostrar']);
+Route::get('/personalizado', [ControladorCatalogoPersonalizado::class, 'mostrarCatalogo'])
+->name('personalizado.catalogo.get');
 
-Route::get('personalizado/seleccionar-fecha', [ControladorCatalogo::class, 'mostrar-calendario']);
-Route::post('personalizado/seleccionar-fecha', [ControladorCatalogo::class, 'seleccionar-fecha']);
+Route::post('/personalizado', [ControladorCatalogoPersonalizado::class, 'seleccionarCatalogo'])
+->name('personalizado.catalogo.post')
+->middleware(CheckSession::class);
 
-Route::get('personalizado/detalles-pedido', [ControladorCatalogo::class, 'mostrar-detalles']);
-Route::post('personalizado/detalles-pedido', [ControladorCatalogo::class, 'seleccionar-detalles']);
+Route::get('personalizado/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])
+->name('personalizado.calendario.get')
+->middleware([CheckSession::class, Enlazador::class]);
 
-Route::get('personalizado/detalles-pedido', [ControladorCatalogo::class, 'mostrar-detalles']);
-Route::post('personalizado/detalles-pedido', [ControladorCatalogo::class, 'seleccionar-detalles']);
+Route::post('personalizado/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'seleccionarFecha'])
+->name('personalizado.calendario.post')
+->middleware(CheckSession::class);
 
-Route::get('personalizado/detalles-entrega', [ControladorCatalogo::class, 'mostrar-detalles-entrega']);
-Route::post('personalizado/detalles-entrega', [ControladorCatalogo::class, 'seleccionar-detalles-entrega']);
+Route::get('personalizado/detalles-pedido', [ControladorCatalogoPersonalizado::class, 'mostrarDetalles'])
+->name('personalizado.detallesPedido.get')
+->middleware([CheckSession::class, Enlazador::class]);
 
-Route::get('personalizado/ticket/{folio}', [ControladorCatalogo::class, 'mostrar-ticket']);
-*/
+Route::post('personalizado/detalles-pedido', [ControladorCatalogoPersonalizado::class, 'seleccionarDetalles'])
+->name('personalizado.detallesPedido.post')
+->middleware(CheckSession::class);
+
+Route::get('personalizado/detalles-direccion', [ControladorCatalogoPersonalizado::class, 'mostrarDireccion'])
+->name('personalizado.direccion.get')
+->middleware([CheckSession::class, Enlazador::class]);
+
+Route::post('personalizado/detalles-direccion', [ControladorCatalogoPersonalizado::class, 'guardarDireccion'])
+->name('personalizado.direccion.post')
+->middleware(CheckSession::class);
+
+Route::get('personalizado/ticket/{folio}', [ControladorCatalogoPersonalizado::class, 'mostrarTicket'])
+->name('personalizado.ticket.get')
+->middleware([CheckSession::class, Enlazador::class]);
 
 
 /* RUTAS DE POSTRES EMERGENTES  */
 
 
-Route::get('/emergentes', [ControladorCatalogo::class, 'mostrar']);
+Route::get('/emergentes', [ControladorCatalogoEmergente::class, 'mostrar'])
+->name('emergente.catalogo.get');
 
-Route::get('emergentes/seleccionar-fecha', [ControladorCatalogo::class, 'mostrar-calendario']);
-Route::post('emergentes/seleccionar-fecha', [ControladorCatalogo::class, 'seleccionar-fecha']);
+Route::post('/emergentes', [ControladorCatalogoEmergente::class, 'guardarSeleccion'])
+->name('emergente.catalogo.post');
 
-Route::get('emergentes/detalles-pedido', [ControladorCatalogo::class, 'mostrar-detalles']);
-Route::post('emergentes/detalles-pedido', [ControladorCatalogo::class, 'seleccionar-detalles']);
+Route::get('emergentes/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])
+->name('emergente.calendario.get')
+->middleware([CheckSession::class, Enlazador::class]);
 
-Route::get('emergentes/detalles-pedido', [ControladorCatalogo::class, 'mostrar-detalles']);
-Route::post('emergentes/detalles-pedido', [ControladorCatalogo::class, 'seleccionar-detalles']);
+Route::post('emergentes/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'seleccionarFecha'])
+->name('emergente.calendario.post')
+->middleware(CheckSession::class);
 
-Route::get('emergentes/detalles-entrega', [ControladorCatalogo::class, 'mostrar-detalles-entrega']);
-Route::post('emergentes/detalles-entrega', [ControladorCatalogo::class, 'seleccionar-detalles-entrega']);
+Route::get('emergentes/detalles-pedido', [ControladorCatalogoEmergente::class, 'mostrarDetalles'])
+->name('emergente.detallesPedido.get')
+->middleware([CheckSession::class, Enlazador::class]);
 
-Route::get('emergentes/ticket/{folio}', [ControladorCatalogo::class, 'mostrar-ticket']);
+Route::post('emergentes/detalles-pedido', [ControladorCatalogoEmergente::class, 'seleccionarDetalles'])
+->name('emergente.detallesPedido.post')
+->middleware(CheckSession::class);
 
+Route::get('emergentes/detalles-direccion', [ControladorCatalogoEmergente::class, 'mostrarDireccion'])
+->name('emergente.direccion.get')
+->middleware([CheckSession::class, Enlazador::class]);
+
+Route::post('emergentes/detalles-direccion', [ControladorCatalogoEmergente::class, 'seleccionarDireccion'])
+->name('emergente.direccion.post')
+->middleware(CheckSession::class);
+
+Route::get('emergentes/ticket/', [ControladorCatalogo::class, 'mostrarTicket'])
+->name('emergente.ticket.get')
+->middleware([CheckSession::class, Enlazador::class]);
