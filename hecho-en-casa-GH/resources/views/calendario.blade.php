@@ -10,7 +10,7 @@
     <h1>Seleccionar Fecha</h1>
 
     <!-- Formulario para seleccionar mes y año -->
-    <form id="calendario-form" method="POST" action="{{ route('fijo.calendario.post') }}">
+    <form id="calendario-form" method="POST" action="{{ route('emergente.calendario.post') }}">
         <label for="mes">Mes: </label>
         <input type="number" id="mes" name="mes" min="1" max="12" required>
         <label for="anio">Año: </label>
