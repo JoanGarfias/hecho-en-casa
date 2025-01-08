@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Correo;
+use App\Mail\CorreoRegistro;
 use App\Models\usuario;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ControladorRegistro extends Controller
 {
@@ -82,7 +85,7 @@ class ControladorRegistro extends Controller
             dd("Error: " . $e->getMessage());
             return redirect()->route('registrar.get')->with('error', 'Error al guardar el usuario');    
         }
-        
+        Mail::to($usuario->correo_electronico)->send(new CorreoRegistro($usuario->nombre));
         return redirect()->route('login.get');
     }
 
