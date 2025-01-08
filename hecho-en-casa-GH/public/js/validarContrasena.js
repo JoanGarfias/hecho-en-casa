@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 });
-<<<<<<< HEAD
+
 
 function validateContra() {
     const password = document.getElementById("password").value.trim();
@@ -130,5 +130,3 @@ function visibility(id, icon) {
         icon.classList.add("fi-rs-crossed-eye");   // Agrega el ícono de ojo cerrado
     }
 }
-=======
->>>>>>> main
