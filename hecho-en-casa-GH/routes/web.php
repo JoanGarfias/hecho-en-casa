@@ -15,7 +15,6 @@ use App\Http\Middleware\CheckSession;
 use App\Http\Middleware\Enlazador;
 use App\Http\Controllers\ControladorRegistrar;
 
-<<<<<<< HEAD
 Route::get('/', [ControladorInicio::class, 'index']);
 Route::get('/inicio', [ControladorInicio::class, 'index']);
 
@@ -28,9 +27,6 @@ Route::get('/registrar', function(){
     return view('registrar');
 });
 Route::post('/calEdit', [ControladorCalendario::class, 'index']);
-=======
-Route::get('/', [ControladorInicio::class, 'index'])->name('inicio.get');
->>>>>>> main
 
 Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 
