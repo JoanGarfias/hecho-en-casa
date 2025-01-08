@@ -40,8 +40,8 @@
         <button class="botoncito" type="submit" name="action" value="login" onclick="validateForm()">Continuar</button>
     </div>
 </form>
-=======
-        <label for="password">Contraseña: </label>
+<!--
+       <label for="password">Contraseña: </label>
         <input type="password" id = "pass" name ="contraseña"> 
         <div class="mensaje">
         <p id="errorPass" class="error"></p>
@@ -53,7 +53,8 @@
             <button class="botoncito" type="submit" name="action" value="login" onclick="validateForm()">Continuar</button>
         </div>
     </form>
->>>>>>> main
+-->
+
 </div>
 
 <div class="fondo-emergente" id="fondoEmergente">
