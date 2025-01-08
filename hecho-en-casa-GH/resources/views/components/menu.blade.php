@@ -10,9 +10,15 @@
     <div class="menu">
         <nav>
             <ul class="menu-izquierdo">
+<<<<<<< HEAD
                 <li><a href="{{ url('/') }}">Inicio</a></li>
                 <li><a href="{{ url('/calFijo') }}">Calendario</a></li>
                 <li><a href="{{ url('/catalogo') }}">Catalogo</a></li>
+=======
+                <li><a href="{{route('inicio.get')}}">Inicio</a></li>
+                <li><a href="{{route('calendario.get') }}">Calendario</a></li>
+                <li><a href="{{route('fijo.catalogo.get')}}">Catálogo</a></li>
+>>>>>>> main
             </ul>
 
             <!-- Logo directamente en el menú -->
@@ -26,8 +32,8 @@
                                  <img src="{{ asset('img/usuario.png') }}" alt="Usuario">
                             </a>
                              <div class="dropdown-menu" id="menu-usuario">
-                                <button onclick="window.location.href='iniciar-sesion/'">Iniciar sesion</button>
-                                <button onclick="window.location.href='registrar/'">Registrarme</button>
+                                <button onclick="window.location.href='{{route('login.get')}}'">Iniciar sesion</button>
+                                <button onclick="window.location.href='{{route('registrar.get')}}'">Registrarme</button>
 
                              </div>
                         </li> 

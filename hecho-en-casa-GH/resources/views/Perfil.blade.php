@@ -1,8 +1,4 @@
-<link rel="stylesheet" href="{{ asset('css/Perfil.css') }}">
-<title>Perfil de Usuario</title>
-
 <x-menu />
-
 </head>
 <body>
   <div class="main-container">
