@@ -66,8 +66,12 @@ class ControladorBuscarPedido extends Controller{
             $fecha_hora_entrega_obj = Carbon::parse($fecha_hora_entrega);
             $fecha_entrega = $fecha_hora_entrega_obj->toDateString(); // 'YYYY-MM-DD'
             $hora_entrega = $fecha_hora_entrega_obj->toTimeString();  // 'HH:MM:SS'
-            $tipo_entrega = "Como lo recupero ???";
-            //dd($tipo_entrega);
+
+            if($pedido->Codigo_postal_e === null){
+                $tipo_entrega = "Sucursal";
+            }else{
+                $tipo_entrega = "Domicilio";
+            }
             $precio_final = $pedido->precio_final;
 
 
