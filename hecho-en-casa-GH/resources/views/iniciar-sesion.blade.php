@@ -2,6 +2,7 @@
 <title>Iniciar sesión</title>
 <x-menu />    
 
+<div class="flexi">
 <div class = "contenedor">   
     
     <form action="{{route('login.post')}}" method="POST" id="inicioSesion">
@@ -16,34 +17,30 @@
         <div class="alineando">
             <label for="password">Contraseña: </label>
             <div class="campo-contrasena">
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password"  onfocus="borrarParrafo('mensajePass')" required>
                 <i class="fi fi-rs-crossed-eye visibility" onclick="visibility('password', this)"></i>
             </div>
         </div>
         <div class="mensajito">
             <p id="mensajePass" class="bien"></p>
         </div>
-
-        <button id="olvidadizo" type="submit" name="action" value="register">Olvidé mi contraseña</button>
-        <br><br>
-
     <div>
+        <button class ="botoncito" id="olvidadizo" type="submit" name="action" value="recuperar">Olvidé mi contraseña</button>
+        <br><br>
         <button class="botoncito" type="submit" name="action" value="register">Registrarme</button>
-        <button class="botoncito" type="submit" name="action" value="login" onclick="validateForm()">Continuar</button>
+        <button class="botoncito" type="submit" name="action" value="login" >Continuar</button>
     </div>
 </form>
 </div>
 
-<div class="fondo-emergente" id="fondoEmergente">
-    <div class="emergente">    
-        <p class="mensajeEmergente">Se ha enviado un código de seguridad a tu correo.</p>
-        <p class="mensajeEmergente"></p>
-        <button id="aceptar" class="aceptando">✔</button>
+    <div class="fondo-emergente" id="fondoEmergente">
+        <div class="emergente">    
+            <p class="mensajeEmergente">Se ha enviado un código de seguridad a tu correo.</p>
+            <p class="mensajeEmergente"></p>
+            <button id="aceptar" class="aceptando">✔</button>
+        </div>
     </div>
 </div>
-
-</div>
-
 
 <x-pie/>
 

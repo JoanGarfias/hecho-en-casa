@@ -23,21 +23,26 @@ formulario.addEventListener("submit", (e) => {
 /////////////////
 function validateForm() {
     // Agregar un  evento de clic al enlace
-    enlaceOlvidado.addEventListener('click', function(event) {
-        let valido = false;
-        event.preventDefault(); // Evita que el enlace navegue
+    console.log("validandoForm")
     
-        // Si quieres hacer una validación antes de mostrar algo, puedes agregar lógica aquí
+    enlaceOlvidado.addEventListener('click', function(event) {
+        console.log("presionando olvidar")
+
+        // Si quieres hacer una validación uantes de mostrar algo, puedes agregar lógica aquí
         const emailInput = document.getElementById('email');
         //Hacer la validación del correo desde la BD para ver si existe
 
         let validarEmail = document.getElementById("mensajeEmail")
-        validarEmail.textContent = ""
+        
         // Verificar si el campo de email tiene valor
         if (emailInput.value.trim() === "") {
+            validarEmail.textContent = ''
+            console.log("Ingresa un correo")
             validarEmail.textContent = 'Ingresa tu correo electrónico para continuar.';
             validarEmail.className = "error";
+            
         } else {
+            validarEmail.textContent = ''
             validarEmail.textContent = 'Correo válido.';
             validarEmail.className = "bien"; 
             /*Para el blur*/
@@ -56,6 +61,8 @@ function validateForm() {
         }
 
     });
+
+    formulario.submit()
 
 } //Se agregó una llave faltante en la línea 60
 
