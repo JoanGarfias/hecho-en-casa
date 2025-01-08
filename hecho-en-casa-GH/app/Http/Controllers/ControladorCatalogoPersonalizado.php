@@ -16,10 +16,11 @@ use Illuminate\Support\Facades\Cache;
 
 class ControladorCatalogoPersonalizado extends Controller
 {
-    public function mostrarCatalogo(){
-        session([
-            'id_tipopostre' => "personalizado"
-        ]);
+    public function mostrarCatalogo(Request $request){
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('id_tipopostre', 'personalizado');
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         return view("personalizados");
     }
@@ -32,7 +33,11 @@ class ControladorCatalogoPersonalizado extends Controller
         return redirect()->route('personalizado.calendario.get');
     }
 
-    public function mostrarDetalles(){ //GET: Vista de detalles para personalizado
+    public function mostrarDetalles(Request $request){ //GET: Vista de detalles para personalizado
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
         $sabores = Cache::remember('sabores', 10, function () {
             return SaborPan::select('id_sp', 'nom_pan', 'precio_p')
             ->get();
@@ -169,7 +174,11 @@ class ControladorCatalogoPersonalizado extends Controller
         }
     }
 
-    public function mostrarDireccion(){
+    public function mostrarDireccion(Request $request){
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        
         $datos = session('datos_pedido');
         return view('direccionPersonalizado', compact('datos'));
     }
@@ -259,7 +268,7 @@ class ControladorCatalogoPersonalizado extends Controller
                 $listarElemento->id_elemento = $elem;
                 $listarElemento->save();
             }
-            return redirect()->route('personalizado.ticket.get', ['folio' => $id_pedido]);  
+        return redirect()->route('personalizado.ticket.get', ['folio' => $id_pedido]);  
     }
 
     public function mostrarTicket(Request $request, $folio = null){

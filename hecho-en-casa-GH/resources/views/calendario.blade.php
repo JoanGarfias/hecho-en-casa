@@ -19,6 +19,8 @@
         <button type="submit">Cargar Calendario</button>
     </form>
 
+    <p class="error"></p>>
+
     <div id="calendario"></div>
 
     <hr>
@@ -37,7 +39,14 @@
 
     <script>
         const calendario = @json($calendarioJson);
+        const error = @json($error);
         console.log(calendario);
+        console.log(error);
+
+
+        if(error !== null){
+            document.querySelector('.error').textContent = error;
+        }
     </script>
 </body>
 </html>
