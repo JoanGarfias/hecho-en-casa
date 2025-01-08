@@ -21,7 +21,11 @@ use Illuminate\Support\Facades\Cache;
 class ControladorCatalogo extends Controller
 {
 
-    public function mostrarCatalogo($categoria = null){ //GET: Muestra los productos
+    public function mostrarCatalogo(Request $request, $categoria = null){ //GET: Muestra los productos
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('id_tipopostre', 'fijo');
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $categorias = Cache::remember('categorias', 30, function () {
             return Categoria::all();
@@ -83,12 +87,17 @@ class ControladorCatalogo extends Controller
     }
 
     
-    public function mostrarCalendario($mes = null, $anio = null){ //GET: Mostrar calendario
+    public function mostrarCalendario(Request $request, $mes = null, $anio = null){ //GET: Mostrar calendario
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        $error = session('error'); // Recuperar el mensaje de error
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+    
         $fecha = Carbon::now();
         if($mes && $anio){
             $fecha = Carbon::createFromDate($anio, $mes, 1);
         }
-        
+
         $primerDiaDelMes = $fecha->copy()->startOfMonth();
         $diaSemana = $primerDiaDelMes->dayName;
         $ultimoDiaDelMes = $fecha->copy()->endOfMonth();
@@ -123,7 +132,7 @@ class ControladorCatalogo extends Controller
             'diaSemana' => $diaSemana,
         ]);
 
-        return view('calendario', compact('calendarioJson'));
+        return view('calendario', compact('calendarioJson', 'error'));
     }
 
     public function seleccionarFecha(Request $request)
@@ -175,23 +184,29 @@ class ControladorCatalogo extends Controller
                 ]);
 
                 return redirect()->route('fijo.detallesPedido.get');
+                break;
             case "personalizado":
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
                 session()->put('proceso_compra', 'personalizado.calendario.post');
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
-                if($porciones_dia + $cantidad_minima >= 100){
-                    return redirect()->route('personalizado.calendario.get'); //Aqui se le tiene que mandar un mensaje de error
+                if($porciones_dia + $cantidad_minima >= 1000){
+                    /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+                    session()->put('proceso_compra', 'personalizado.catalogo.post');
+                    /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+                    return redirect()->route('personalizado.calendario.get')
+                    ->with('error', 'Las porciones superan el límite, ya no se puede pedir');                    
                 }
-
-                session([
-                    'fecha' => $fechaEscogida,
-                    'postre' => $postre,
-                    'porciones_dia' => $porciones_dia,
-                ]);
-
-                return redirect()->route('personalizado.detallesPedido.get');
-                
+                else{
+                    session([
+                        'fecha' => $fechaEscogida,
+                        'postre' => $postre,
+                        'porciones_dia' => $porciones_dia,
+                    ]);
+    
+                    return redirect()->route('personalizado.detallesPedido.get');
+                }
+                break;
             case "emergente":
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
                 session()->put('proceso_compra', 'emergente.calendario.post');
@@ -204,7 +219,7 @@ class ControladorCatalogo extends Controller
                 ]);
 
                 return redirect()->route('emergente.detallesPedido.get');
-
+                break;
                 // return ERROR;
         }
         /* return view('fechaSeleccionada', [
@@ -215,7 +230,11 @@ class ControladorCatalogo extends Controller
         ]); */
     }
 
-    public function mostrarDetalles(){
+    public function mostrarDetalles(Request $request){
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
         session([
             'id_usuario' => "1",
             'fecha' => session("fecha_entrega"),
@@ -407,7 +426,11 @@ class ControladorCatalogo extends Controller
         }
     }
     
-    public function mostrarDireccion(){
+    public function mostrarDireccion(Request $request){
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
         //ANEXAR LÓGICA PARA OBTENER LA DIRECCIÓN DEL USUARIO
 
         $datos = session('datos_pedido');
@@ -415,7 +438,6 @@ class ControladorCatalogo extends Controller
     }
 
     public function guardarDireccion(Request $request){ //POST: Mandamos a la ruta del ticket
-
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */

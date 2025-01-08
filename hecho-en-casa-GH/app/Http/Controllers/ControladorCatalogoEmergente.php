@@ -75,7 +75,12 @@ class ControladorCatalogoEmergente extends Controller
         return redirect()->route('emergente.detallesPedido.get');
     }
 
-    public function mostrarDetalles(){
+    public function mostrarDetalles(Request $request){
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
+
         //ESTO DEBERIA JALARSE DE LA VISTA ANTERIOR AQUI SOLO VA UN EJEMP
         session([
             //RECORDARIO DE ACTUALIZAR ESTO CUANDO SE MANEJE LA SESION
@@ -102,7 +107,7 @@ class ControladorCatalogoEmergente extends Controller
         return view('detallesEmergente');
     }
 
-    public function seleccionarDetalles(Request $request){        
+    public function seleccionarDetalles(Request $request){    
         $validated = $request->validate([
             'cantidad' => 'required|integer',
             'tipo_entrega' => 'required',
@@ -110,10 +115,11 @@ class ControladorCatalogoEmergente extends Controller
 
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         $tipo_entrega = $validated['tipo_entrega'];
-        
         session()->put('opcion_envio', $tipo_entrega);
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
+
 
         session([
             'cantidad_pedida' => $validated['cantidad'],
@@ -174,13 +180,17 @@ class ControladorCatalogoEmergente extends Controller
         return redirect()->route('emergente.ticket.get');   
     }
 
-    public function mostrarDireccion(){
+    public function mostrarDireccion(Request $request){
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
+
         //$datos = session('datos_pedido');
         return view('direccionEmergente');
     }
 
     public function seleccionarDireccion(Request $request){ 
-
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
