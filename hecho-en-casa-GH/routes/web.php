@@ -10,6 +10,7 @@ use App\Http\Controllers\ControladorCatalogoPersonalizado;
 use App\Http\Controllers\ControladorLogIn;
 use App\Http\Controllers\ControladorRegistro;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ControladorBuscarPedido;
 use App\Http\Controllers\MailController;
 use App\Http\Middleware\CheckSession;
 use App\Http\Middleware\Enlazador;
@@ -22,8 +23,8 @@ Route::get('/', [ControladorInicio::class, 'index'])->name('inicio.get');
 
 Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 
-Route::get('/buscarpedido', [ControladorCalendario::class, 'index']);
-Route::post('/buscarpedido', [ControladorCalendario::class, 'index']);
+Route::get('/buscarpedido', [ControladorBuscarPedido::class, 'ObtenerFolio'])->name('buscarpedido.get');
+Route::post('/buscarpedido', [ControladorBuscarPedido::class, 'MostrarPedido'])->name('buscarpedido.post');
 
 Route::get('/calendario', [ControladorCalendario::class, 'index'])->name('calendario.get');
 
