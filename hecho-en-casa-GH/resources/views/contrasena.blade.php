@@ -32,7 +32,7 @@
             <button class="botoncito" type="submit" name="action" value="contrasena" onclick="validateContra()">Continuar</button>
 
 
-            <button class="botoncito" type="submit" name="action" value="contrasena">Continuar</button>
+            <!--button class="botoncito" type="submit" name="action" value="contrasena">Continuar</button-->
 
         </form>  
     </div>
