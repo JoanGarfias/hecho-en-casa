@@ -6,7 +6,8 @@
 
 <div class="flexi">
     <div class = "contenedor"><!-- café-->
-        <form id="formularioRegistro" action="" method="">
+        <form id="formularioRegistro" action="{{route('registrar.direccion.post')}}" method="POST">
+            @csrf
             <h2 class="titule">Regístrate</h2>
                     
             <div class="dosColumnas">
@@ -50,7 +51,7 @@
             </div>
             <br>
 
-            <button class="botoncito" type="submit" name="action" value="register" onclick="">Confirmar</button>
+            <button class="botoncito" type="submit" name="action" value="register">Confirmar</button>
             <p></p>
         </form>  
     </div>

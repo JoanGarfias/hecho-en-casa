@@ -1,8 +1,24 @@
 // Capturar el formulario
 let formulario = document.querySelector('#formularioRegistro');
+const botones = document.querySelectorAll('button[type="submit"]');
+
+let valorBoton = ""; // Variable para almacenar el valor del botón presionado
+
+// Captura el botón presionado
+botones.forEach((boton) => {
+    boton.addEventListener("click", () => {
+        valorBoton = boton.value; // Gua rda el valor del botón presionado
+    });
+});
 
 formulario.addEventListener("submit", (e) => {
+    
     e.preventDefault(); // Detenemos el envío del formulario
+    const inputOculto = document.createElement("input");
+    inputOculto.type = "hidden";
+    inputOculto.name = "action";
+    inputOculto.value = valorBoton;
+    formulario.appendChild(inputOculto);
     validateForm(); // Llamamos a la función de validación
 });
 
@@ -101,7 +117,12 @@ function validateForm() {
     }
 
     // Si todo es válido, mostrar un mensaje
+<<<<<<< HEAD
     if (isValid) {  
+=======
+    if (isValid) {
+//        alert("Formulario enviado exitosamente. ¡Gracias!");
+>>>>>>> main
         formulario.submit(); // Enviamos el formulario si todo es correcto
     }
 }

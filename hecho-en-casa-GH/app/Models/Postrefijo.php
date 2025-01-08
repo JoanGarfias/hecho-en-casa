@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Elemento extends Model
+class Postrefijo extends Model
 {
     use HasFactory;
-    protected $table = 'elemento';
+    protected $table = 'postrefijo';
     public $timestamps = false;
-    protected $primaryKey = 'id_e'; 
+    protected $primaryKey = 'id_pf'; 
     public $incrementing = true; 
 
     protected $fillable = [
-        'nom_elemento', 'precio_e'
+        'id_atributo', 'id_um', 'id_postre_elegido'
     ];
 
 }
