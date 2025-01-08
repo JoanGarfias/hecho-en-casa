@@ -30,10 +30,6 @@ class Enlazador
             $pag_regreso = $this->obtenerPaginaRegreso($tipopostre);
             return redirect()->route($pag_regreso)->with('error', 'No sigue la estructura de la ruta.');
         }
-        if(!isset($flujo[$rutaActual])){
-            $pag_regreso = $this->obtenerPaginaRegreso($tipopostre);
-            return redirect()->route($pag_regreso)->with('error', 'No sigue la estructura de la ruta.');
-        }
 
         $postFlujo = $flujo[$rutaActual];
         if($postAsignado !== $postFlujo){
@@ -92,7 +88,7 @@ class Enlazador
         }
         else if($tipopostre === "emergente"){
             $rutaBase = [
-                'emergente.calendario.get' => 'emergente.catalogo.post',
+                'emergente.calendario.get' => 'emergente.catalogo.get',
                 'emergente.detallesPedido.get' => 'emergente.calendario.post',
             ];
 
