@@ -18,22 +18,31 @@
                 <p id="mensajePass" class="bien"></p>
             </div>
             <br>
-
             <label for="confirmacion" class = "campos">Confirmar contraseña:</label>
             <div class="campo-contrasena">
                 <input type="password" id="confirmacion" name="confirmacion" onfocus="borrarParrafo('mensajeConfirmacion')" required>
                 <i class="fi fi-rs-crossed-eye visibility" onclick="visibility('confirmacion', this)"></i>
             </div>
-<<<<<<< HEAD
+ HEAD
+ HEAD
             <div class="mensajito">
                 <p id="mensajeConfirmacion" class="bien"></p>
             </div>
             <br>
             <button class="botoncito" type="submit" name="action" value="contrasena" onclick="validateContra()">Continuar</button>
-=======
+
 
             <button class="botoncito" type="submit" name="action" value="contrasena">Continuar</button>
->>>>>>> main
+ main
+
+            <div class="mensaje">
+                <p id="errorConfirmacion" class="error"></p>
+                <p id="asegurarConfirmacion" class="error"></p>
+                <p id="bienConfirmacion" class="bien"></p>
+            </div>
+            <br>
+            <button class="botoncito" type="submit" name="action" value="contrasena" onclick="validateContra()">Continuar</button>
+ origin/Backend-main
         </form>  
     </div>
 </div>
