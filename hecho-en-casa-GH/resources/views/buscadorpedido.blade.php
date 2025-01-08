@@ -26,8 +26,8 @@
         @if (isset($pedido))
             <h2>Detalles del pedido:</h2>
             <p>Folio: {{ $pedido->id_ped }}</p>
-            <p>Tipo postre: {{ $tipopopstre }}</p>
-            <p>Porciones {{ $pedido->porcionespedidas }}</p>
+            <p>Tipo postre: {{ $tipopostre }}</p>
+            <p>{{ $nombre_unidad }}: {{ (int)$pedido->porcionespedidas }}</p>
             <p>Estatus: {{ $pedido->status }}</p>
             <hr>
             <p>Nombre: {{ $nombre_completo }}</p>
