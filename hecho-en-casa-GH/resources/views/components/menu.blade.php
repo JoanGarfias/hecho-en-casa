@@ -11,9 +11,6 @@
         <nav>
             <ul class="menu-izquierdo">
 
-                <li><a href="{{ url('/') }}">Inicio</a></li>
-                <li><a href="{{ url('/calFijo') }}">Calendario</a></li>
-                <li><a href="{{ url('/catalogo') }}">Catalogo</a></li>
 
                 <li><a href="{{route('inicio.get')}}">Inicio</a></li>
                 <li><a href="{{route('calendario.get') }}">Calendario</a></li>
