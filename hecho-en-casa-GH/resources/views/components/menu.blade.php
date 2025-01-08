@@ -20,17 +20,17 @@
 
             <ul class="menu-derecho">
                 <li><a href="#">Conócenos</a></li>
-                        <li><a href="#">Buscar pedido</a></li>
-                        <li class="dropdown">
-                            <a href="#" id="usuario-icon">
-                                 <img src="{{ asset('img/usuario.png') }}" alt="Usuario">
-                            </a>
-                             <div class="dropdown-menu" id="menu-usuario">
-                                <button onclick="window.location.href='{{route('login.get')}}'">Iniciar sesion</button>
-                                <button onclick="window.location.href='{{route('registrar.get')}}'">Registrarme</button>
+                <li><a href="{{route('buscarpedido.get')}}">Buscar pedido</a></li>
+                <li class="dropdown">
+                    <a href="#" id="usuario-icon">
+                            <img src="{{ asset('img/usuario.png') }}" alt="Usuario">
+                    </a>
+                    <div class="dropdown-menu" id="menu-usuario">
+                        <button onclick="window.location.href='{{route('login.get')}}'">Iniciar sesion</button>
+                        <button onclick="window.location.href='{{route('registrar.get')}}'">Registrarme</button>
 
-                             </div>
-                        </li> 
+                    </div>
+                </li> 
             </ul>
         </nav>
     </div>
