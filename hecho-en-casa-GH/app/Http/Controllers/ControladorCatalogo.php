@@ -342,7 +342,8 @@ class ControladorCatalogo extends Controller
                     ->where('nombre_unidad', $nombreUnidad)
                     ->first(['id_um']);  
 
-        //session(['id_um'=> $id_um->id_um]);
+        
+        session(['nombre_unidad'=> $nombreUnidad]);
         $cantidad = intval($request->input('cantidad'));
         session(['porcionespedidas'=> $unidadm * $cantidad]);
         $valoresSeleccionados = session('atributosSesion');
