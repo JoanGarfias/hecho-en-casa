@@ -195,7 +195,7 @@ class ControladorCatalogoPersonalizado extends Controller
         //$datos = session('datos_pedido'); 
         
         $id_usuario = 1; //Prueba
-        $user = Cache::remember('user', 10, function () {
+        $user = Cache::remember('user', 10, function () use ($id_usuario){
             return usuario::where('id_u', $id_usuario)->first(); 
         });
         $datos = session('datos_pedido'); 
