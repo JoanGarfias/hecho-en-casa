@@ -110,23 +110,18 @@ class ControladorCatalogo extends Controller
 
         $diasDelMes = [];
         $diaActual = $primerDiaDelMes->copy();
+        $diaSiguiente = $diaActual->copy()->addDay();
                     
+        //obtencion de los dias del calendario
         while ($diaActual->lte($ultimoDiaDelMes)) {
             $diasDelMes[] = [
                 'fecha' => $diaActual->toDateString(), // Solo la fecha
-                'porciones' => 0,
+                'porciones' => $pedidos->whereBetween('fecha_hora_entrega', [$diaActual, $diaSiguiente])->sum('porcionespedidas'),
             ];
             $diaActual->addDay();
+            $diaSiguiente->addDay();
         }
-
-        foreach ($pedidos as $pedido) {
-            $fechaPedido = Carbon::parse($pedido->fecha_hora_entrega)->toDateString();
-            $indice = array_search($fechaPedido, array_column($diasDelMes, 'fecha'));
-            if ($indice !== false) {
-                $diasDelMes[$indice]['porciones'] += $pedido->porcionespedidas;
-            }
-        }
-
+        
         $calendarioJson = json_encode([
             'diasDelMes' => $diasDelMes,
             'diaSemana' => $diaSemana,
