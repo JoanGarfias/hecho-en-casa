@@ -33,27 +33,25 @@ Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])
 Route::put('/perfil', [ControladorPerfil::class, 'editar'])
 ->middleware(CheckSession::class);
 
-/*LOGIN - REGISTER*/
-
+/*PROCESO DE LOGIN */
 Route::get('/login', [AuthController::class, 'mostrarLogin'])->name('login.get');
 Route::post('/login', [AuthController::class, 'Logear'])->name('login.post');
-
-Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar.get');
-Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.post');
-
-Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena.get');
-Route::post('/contrasena', [ControladorRegistro::class, 'guardarContrasena'])->name('registrar.contrasena.post');
-
-Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name('registrar.direccion.get');
-Route::post('/direccion', [ControladorRegistro::class, 'guardarDireccion'])->name('registrar.direccion.post');
-
 Route::get('/cerrar-sesion', [AuthController::class, 'logout'])
 ->middleware(CheckSession::class);
 
-Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecuperacion'])->name('recuperacion.get');
+/*PROCESO DE REGISTRO*/
+Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar.get');
+Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.post');
+Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena.get');
+Route::post('/contrasena', [ControladorRegistro::class, 'guardarContrasena'])->name('registrar.contrasena.post');
+Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name('registrar.direccion.get');
+Route::post('/direccion', [ControladorRegistro::class, 'guardarDireccion'])->name('registrar.direccion.post');
+
+/*PROCESOS PARA RECUPERACION*/
+
 Route::get('/cambiar-clave', [ControladorRegistro::class, 'mostrarCambio'])->name('cambiar-clave.get');
 Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post');
-
+Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecuperacion'])->name('recuperacion.get');
 
 
 /*RUTAS DE POSTRES FIJOS */
