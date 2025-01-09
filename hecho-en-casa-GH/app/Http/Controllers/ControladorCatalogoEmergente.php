@@ -19,7 +19,7 @@ class ControladorCatalogoEmergente extends Controller
     session()->put('proceso_compra', $request->route()->getName());
     /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
-        $emergentes = Cache::remember('catalogoemergentes', 600, function () {
+        $emergentes = Cache::remember('catalogoemergentes', 30, function () {
             return [
                 'temporada' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre', 'nombre', 'precio_emergentes') 
                                     ->where('id_tipo_postre', 'temporada')
@@ -47,7 +47,9 @@ class ControladorCatalogoEmergente extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $idPostre = $request->input('comprar');
-        $postre = Catalogo::where('id_postre', $idPostre)->first();
+        $postre = Cache::remember('postres', 30, function () use ($idPostre){
+            return Catalogo::where('id_postre', $idPostre)->first();
+        });
         
         session([
             'id_tipopostre' => 'emergente',
@@ -114,7 +116,10 @@ class ControladorCatalogoEmergente extends Controller
             'tipo_entrega' => $validated['tipo_entrega'],
         ]);
 
-        $usuario = usuario::where('id_u', session('id_usuario'))->first();
+        $usuario = Cache::remember('usuario', 30, function () {
+            return usuario::where('id_u', session('id_usuario'))->first();
+        });
+
         $direccion = $usuario->calle_u . " " . $usuario->num_exterior_u . ", " . $usuario->colonia_u;
         session([
             'telefono' => $usuario->telefono,
@@ -190,7 +195,9 @@ class ControladorCatalogoEmergente extends Controller
 
         $ubicacion = $request->input('ubicacion');
         //por defecto cargamos la ubicacion del usuario predeterminado
-        $user = usuario::where('id_u', session('id_usuario'))->first();
+        $user = Cache::remember('usuario', 30, function () {
+            return usuario::where('id_u', session('id_usuario'))->first();
+        });
         $codigo_postal = $user->Codigo_postal_u;
         $estado = $user->estado_u;
         $ciudad = $user->ciudad_u;

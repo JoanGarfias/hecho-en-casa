@@ -195,7 +195,9 @@ class ControladorCatalogoPersonalizado extends Controller
         //$datos = session('datos_pedido'); 
         
         $id_usuario = 1; //Prueba
-        $user = usuario::where('id_u', $id_usuario)->first();
+        $user = Cache::remember('user', 10, function () use ($id_usuario){
+            return usuario::where('id_u', $id_usuario)->first(); 
+        });
         $datos = session('datos_pedido'); 
         $codigo_postal = $user->Codigo_postal_u;
         $estado = $user->estado_u;
@@ -279,6 +281,7 @@ class ControladorCatalogoPersonalizado extends Controller
 
         if ($folio !== null) {
             // Consulta el pedido con el folio
+            //Cache innecesario, por ser una consulta que se realiza una sola vez, y es improbable que se realice la misma consulta con un mismo folio dos veces seguidas
             $ticket_pedido = Pedido::select('id_ped','id_seleccion_usuario','id_tipopostre', 'porcionespedidas', 'status', 'precio_final')
             ->where('id_ped', $folio)
             ->first();
@@ -290,7 +293,7 @@ class ControladorCatalogoPersonalizado extends Controller
             // Si hay una relación con Pastelpersonalizado
             $id_pastel = $ticket_pedido->id_seleccion_usuario;
             $datos = ["id_pastel" => $id_pastel];
-
+            //Cache innecesario, por ser una consulta que se realiza una sola vez, y es improbable que se realice la misma consulta con un mismo folio dos veces seguidas
             $ticket_pastel = Pastelpersonalizado::select('id_saborpan', 'id_saborrelleno', 'id_cobertura', 'tipo_evento', 'descripciondetallada', 'imagendescriptiva')
             ->where('id_pp', $id_pastel)
             ->first();
