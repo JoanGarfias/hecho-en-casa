@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\usuario;
 
-class CheckSession
+class ProtectorSesion
 {
+    /*Este protector permite que solamente se pueda acceder a una ruta si el usuario tiene una sesión válida*/
     public function handle(Request $request, Closure $next) : Response
     {
         //Obtengo el token desde la galleta

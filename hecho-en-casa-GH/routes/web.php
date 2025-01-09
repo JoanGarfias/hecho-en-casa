@@ -7,14 +7,12 @@ use App\Http\Controllers\ControladorCalendario;
 use App\Http\Controllers\ControladorCatalogo;
 use App\Http\Controllers\ControladorCatalogoEmergente;
 use App\Http\Controllers\ControladorCatalogoPersonalizado;
-use App\Http\Controllers\ControladorLogIn;
 use App\Http\Controllers\ControladorRegistro;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ControladorLogin;
 use App\Http\Controllers\ControladorBuscarPedido;
 use App\Http\Controllers\MailController;
-use App\Http\Middleware\CheckSession;
-use App\Http\Middleware\Enlazador;
-use App\Http\Controllers\ControladorRegistrar;
+use App\Http\Middleware\ProtectorSesion;
+use App\Http\Middleware\EnlazadorPedido;
 use App\Http\Controllers\ControladorPerfil;
 
 /*VISTAS PRINCIPALES*/
@@ -29,15 +27,15 @@ Route::post('/buscarpedido', [ControladorBuscarPedido::class, 'MostrarPedido'])-
 Route::get('/calendario', [ControladorCalendario::class, 'index'])->name('calendario.get');
 
 Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])
-->middleware(CheckSession::class);
+->middleware(ProtectorSesion::class);
 Route::put('/perfil', [ControladorPerfil::class, 'editar'])
-->middleware(CheckSession::class);
+->middleware(ProtectorSesion::class);
 
 /*PROCESO DE LOGIN */
-Route::get('/login', [AuthController::class, 'mostrarLogin'])->name('login.get');
-Route::post('/login', [AuthController::class, 'Logear'])->name('login.post');
-Route::get('/cerrar-sesion', [AuthController::class, 'logout'])
-->middleware(CheckSession::class);
+Route::get('/login', [ControladorLogin::class, 'mostrarLogin'])->name('login.get');
+Route::post('/login', [ControladorLogin::class, 'Logear'])->name('login.post');
+Route::get('/cerrar-sesion', [ControladorLogin::class, 'logout'])
+->middleware(ProtectorSesion::class);
 
 /*PROCESO DE REGISTRO*/
 Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar.get');
@@ -60,35 +58,35 @@ Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrarCa
 
 Route::post('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'guardarSeleccionCatalogo'])
 ->name('fijo.catalogo.post')
-->middleware(CheckSession::class);
+->middleware(ProtectorSesion::class);
 
 Route::get('fijo/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])
 ->name('fijo.calendario.get')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
 
 Route::post('fijo/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'seleccionarFecha'])
 ->name('fijo.calendario.post')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
 
 Route::get('fijo/detalles-pedido', [ControladorCatalogo::class, 'mostrarDetalles'])
 ->name('fijo.detallesPedido.get')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
 
 Route::post('fijo/detalles-pedido', [ControladorCatalogo::class, 'seleccionarDetalles'])
 ->name('fijo.detallesPedido.post')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
 
 Route::get('fijo/detalles-direccion', [ControladorCatalogo::class, 'mostrarDireccion'])
 ->name('fijo.direccion.get')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
 
 Route::post('fijo/detalles-direccion', [ControladorCatalogo::class, 'guardarDireccion'])
 ->name('fijo.direccion.post')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
 
 Route::get('fijo/ticket/{folio}', [ControladorCatalogo::class, 'mostrarTicket'])
 ->name('fijo.ticket.get')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
 
 
 
@@ -99,35 +97,35 @@ Route::get('/personalizado', [ControladorCatalogoPersonalizado::class, 'mostrarC
 
 Route::post('/personalizado', [ControladorCatalogoPersonalizado::class, 'seleccionarCatalogo'])
 ->name('personalizado.catalogo.post')
-->middleware(CheckSession::class);
+->middleware(ProtectorSesion::class);
 
 Route::get('personalizado/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])
 ->name('personalizado.calendario.get')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
 
 Route::post('personalizado/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'seleccionarFecha'])
 ->name('personalizado.calendario.post')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
 
 Route::get('personalizado/detalles-pedido', [ControladorCatalogoPersonalizado::class, 'mostrarDetalles'])
 ->name('personalizado.detallesPedido.get')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
 
 Route::post('personalizado/detalles-pedido', [ControladorCatalogoPersonalizado::class, 'seleccionarDetalles'])
 ->name('personalizado.detallesPedido.post')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
 
 Route::get('personalizado/detalles-direccion', [ControladorCatalogoPersonalizado::class, 'mostrarDireccion'])
 ->name('personalizado.direccion.get')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
 
 Route::post('personalizado/detalles-direccion', [ControladorCatalogoPersonalizado::class, 'guardarDireccion'])
 ->name('personalizado.direccion.post')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
 
 Route::get('personalizado/ticket/{folio}', [ControladorCatalogoPersonalizado::class, 'mostrarTicket'])
 ->name('personalizado.ticket.get')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
 
 
 /* RUTAS DE POSTRES EMERGENTES  */
@@ -141,28 +139,28 @@ Route::post('/emergentes', [ControladorCatalogoEmergente::class, 'guardarSelecci
 
 Route::get('emergentes/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])
 ->name('emergente.calendario.get')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
 
 Route::post('emergentes/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'seleccionarFecha'])
 ->name('emergente.calendario.post')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
 
 Route::get('emergentes/detalles-pedido', [ControladorCatalogoEmergente::class, 'mostrarDetalles'])
 ->name('emergente.detallesPedido.get')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
 
 Route::post('emergentes/detalles-pedido', [ControladorCatalogoEmergente::class, 'seleccionarDetalles'])
 ->name('emergente.detallesPedido.post')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
 
 Route::get('emergentes/detalles-direccion', [ControladorCatalogoEmergente::class, 'mostrarDireccion'])
 ->name('emergente.direccion.get')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
 
 Route::post('emergentes/detalles-direccion', [ControladorCatalogoEmergente::class, 'seleccionarDireccion'])
 ->name('emergente.direccion.post')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
 
 Route::get('emergentes/ticket/', [ControladorCatalogo::class, 'mostrarTicket'])
 ->name('emergente.ticket.get')
-->middleware([CheckSession::class, Enlazador::class]);
+->middleware([ProtectorSesion::class, EnlazadorPedido::class]);
