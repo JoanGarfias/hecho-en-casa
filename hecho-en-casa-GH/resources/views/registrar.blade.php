@@ -46,6 +46,8 @@
     </div>
 </div>
 
+<x-pie/>
+
 
     <script src="{{ asset('js/registrando.js') }}"></script>
     <!--Para la animación del logo de usuario-->
