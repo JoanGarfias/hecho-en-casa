@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Correo;
+use App\Mail\CorreoRegistro;
 use App\Models\usuario;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ControladorRegistro extends Controller
 {
@@ -50,7 +53,6 @@ class ControladorRegistro extends Controller
     }
 
     public function guardarContrasena(Request $request){
-        dd($request->all());
         $contrasena = $request->input('confirmacion');
         session(['contrasena' => $contrasena]);
         return redirect()->route('registrar.direccion.get'); 
@@ -73,15 +75,17 @@ class ControladorRegistro extends Controller
         $usuario->ciudad_u = $request->input('ciudad');
         $usuario->colonia_u = $request->input('colonia');
         $usuario->calle_u = $request->input('calle');
-        $usuario->num_exterior_u = $request->input('num'); ///<-----------AQUI SE TIENE QUE SEPARAR EN DOS CAMPOS
-        //$usuario->referencia_u = $request->input('referencia');
+        $usuario->num_exterior_u = $request->input('numExt');
+        $usuario->num_interior_u = $request->input('numInt');
+        $usuario->referencia_u = $request->input('referencias');
         $usuario->contraseña = bcrypt(session('contrasena'));
         try{
             $usuario->save();
         }catch(\Exception $e){
+            dd("Error: " . $e->getMessage());
             return redirect()->route('registrar.get')->with('error', 'Error al guardar el usuario');    
         }
-        
+        Mail::to($usuario->correo_electronico)->send(new CorreoRegistro($usuario->nombre));
         return redirect()->route('login.get');
     }
 

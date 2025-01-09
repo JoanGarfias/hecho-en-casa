@@ -10,15 +10,17 @@ use App\Models\Elemento;
 use App\Models\ListaElementos;
 use App\Models\Pedido;
 use App\Models\Pastelpersonalizado;
+use App\Models\usuario;
 Use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
 class ControladorCatalogoPersonalizado extends Controller
 {
-    public function mostrarCatalogo(){
-        session([
-            'id_tipopostre' => "personalizado"
-        ]);
+    public function mostrarCatalogo(Request $request){
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('id_tipopostre', 'personalizado');
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         return view("personalizados");
     }
@@ -31,7 +33,11 @@ class ControladorCatalogoPersonalizado extends Controller
         return redirect()->route('personalizado.calendario.get');
     }
 
-    public function mostrarDetalles(){ //GET: Vista de detalles para personalizado
+    public function mostrarDetalles(Request $request){ //GET: Vista de detalles para personalizado
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
         $sabores = Cache::remember('sabores', 10, function () {
             return SaborPan::select('id_sp', 'nom_pan', 'precio_p')
             ->get();
@@ -168,19 +174,58 @@ class ControladorCatalogoPersonalizado extends Controller
         }
     }
 
-    public function mostrarDireccion(){
+    public function mostrarDireccion(Request $request){
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        
         $datos = session('datos_pedido');
         return view('direccionPersonalizado', compact('datos'));
     }
 
     public function guardarDireccion(Request $request){
+
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
 
         $tipo_domicilio = $request->input('tipo_domicilio');
-        $datos = session('datos_pedido');       
+        //dd($tipo_domicilio);
+        //$datos = session('datos_pedido'); 
+        
+        $id_usuario = 1; //Prueba
+        $user = usuario::where('id_u', $id_usuario)->first();
+        $datos = session('datos_pedido'); 
+        $codigo_postal = $user->Codigo_postal_u;
+        $estado = $user->estado_u;
+        $ciudad = $user->ciudad_u;
+        $colonia = $user->colonia_u;
+        $calle = $user->calle_u;
+        $numero = $user->num_exterior_u;
+
+        if($tipo_domicilio==="Nueva"){ //Datos prueba
+            $codigo_postal = "77890";
+            $estado = "Queretaro";
+            $ciudad = "Palenque";
+            $colonia = "Reforma 5";
+            $calle = "Sin nombre";
+            $numero = "1";
+            //$referencia = $request->input('referencia');
+
+            //Si elige volverla su ubicacion predeterminada entonces lo actualizamos en el perfil del usuario
+            if($request->has("Default")){
+                $user->Codigo_postal_u = $codigo_postal;
+                $user->estado_u = $estado;
+                $user->ciudad_u = $ciudad;
+                $user->colonia_u = $colonia;
+                $user->calle_u = $calle;
+                $user->num_exterior_u = $numero;
+                //$user->referencia_u = $referencia;
+                $user->save();
+            }
+
+        }
 
         // Instanciación de Pastelpersonalizado
         $pastel = new Pastelpersonalizado;
@@ -190,13 +235,14 @@ class ControladorCatalogoPersonalizado extends Controller
         $pastel->tipo_evento = $datos['tematica'];
         $pastel->descripciondetallada = $datos['descripcion'];
         $pastel->id_postre_elegido = 37;
-        $pastel->save();  // Guardamos el pastel en la base de datos
+        $pastel->save();    // Guardamos el pastel en la base de datos
+
         
         // Obtenemos el ID del pastel recién creado
         $id_detalles_pastel = $pastel->id_pp;
+        //$id_usuario = 1;
 
-        $id_usuario = 1;
-            // Instanciación de Pedido
+        // Instanciación de Pedido
         $pedido = new Pedido;
         $pedido->id_usuario = $id_usuario;
         $pedido->id_tipopostre = $datos['id_tipopostre'];
@@ -206,6 +252,12 @@ class ControladorCatalogoPersonalizado extends Controller
         $pedido->precio_final = $datos['costo'];
         $pedido->fecha_hora_registro = $datos['fecha_hora_registro'];
         $pedido->fecha_hora_entrega = $datos['fecha_hora_entrega'];
+        $pedido->estado_e = $estado;
+        $pedido->Codigo_postal_e = $codigo_postal;
+        $pedido->ciudad_e = $ciudad;
+        $pedido->colonia_e = $colonia;
+        $pedido->calle_e = $calle;
+        $pedido->num_exterior_e = $numero; 
         $pedido->save();  // Guardamos el pedido en la base de datos
 
             $id_pedido = $pedido->id_ped;
@@ -216,10 +268,11 @@ class ControladorCatalogoPersonalizado extends Controller
                 $listarElemento->id_elemento = $elem;
                 $listarElemento->save();
             }
-            return redirect()->route('personalizado.ticket.get', ['folio' => $id_pedido]);  
+        return redirect()->route('personalizado.ticket.get', ['folio' => $id_pedido]);  
     }
 
     public function mostrarTicket(Request $request, $folio = null){
+        
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->forget('proceso_compra');
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
