@@ -100,7 +100,7 @@ class ControladorRegistro extends Controller
             session([
                 'usuario' => $usuario->id_u,
             ]);
-            return view('cambiar-clave.get');
+            return redirect()->route('cambiar-clave.get');
         } 
         return view('inicio', [
             'error' => 'Token inválido',
