@@ -23,8 +23,8 @@ Route::get('/', [ControladorInicio::class, 'index'])->name('inicio.get');
 
 Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 
-Route::get('/buscarpedido', [ControladorBuscarPedido::class, 'ObtenerFolio'])->name('buscarpedido.get');
-Route::post('/buscarpedido', [ControladorBuscarPedido::class, 'MostrarPedido'])->name('buscarpedido.post');
+//Route::get('/buscarpedido', [ControladorBuscarPedido::class, 'ObtenerFolio'])->name('buscarpedido.get');
+//Route::post('/buscarpedido', [ControladorBuscarPedido::class, 'MostrarPedido'])->name('buscarpedido.post');
 
 Route::get('/calendario', [ControladorCalendario::class, 'index'])->name('calendario.get');
 
@@ -39,17 +39,6 @@ Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('regi
 Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena.get');
 Route::post('/contrasena', [ControladorRegistro::class, 'guardarContrasena'])->name('registrar.contrasena.post');
 
-<<<<<<< Updated upstream
-//Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])
-//->middleware(CheckSession::class);
-/*Route::put('/perfil', [ControladorPerfil::class, 'editar'])
-->middleware(CheckSession::class);*/
-=======
-/*Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])
-->middleware(CheckSession::class);
-Route::put('/perfil', [ControladorPerfil::class, 'editar'])
-->middleware(CheckSession::class); */
->>>>>>> Stashed changes
 
 Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name('registrar.direccion.get');
 Route::post('/direccion', [ControladorRegistro::class, 'guardarDireccion'])->name('registrar.direccion.post');
@@ -61,7 +50,10 @@ Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecupe
 Route::get('/cambiar-clave', [ControladorRegistro::class, 'mostrarCambio'])->name('cambiar-clave.get');
 Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post');
 
-
+/* */
+/*Route::get('/recuperacioncontrasena', function(){
+    return view('recuperacioncontrasena');
+});*/
 
 /*RUTAS DE POSTRES FIJOS */
 Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrarCatalogo'])
