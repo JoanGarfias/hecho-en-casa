@@ -10,7 +10,6 @@ use App\Http\Controllers\ControladorCatalogoPersonalizado;
 use App\Http\Controllers\ControladorRegistro;
 use App\Http\Controllers\ControladorLogin;
 use App\Http\Controllers\ControladorBuscarPedido;
-use App\Http\Controllers\MailController;
 use App\Http\Middleware\ProtectorSesion;
 use App\Http\Middleware\EnlazadorPedido;
 use App\Http\Controllers\ControladorPerfil;
