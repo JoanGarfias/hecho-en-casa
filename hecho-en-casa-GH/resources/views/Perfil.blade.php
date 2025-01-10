@@ -112,4 +112,6 @@
   </div>
 </body>
 
+<script src="{{ asset('js/Perfil.js') }}"></script>
+
 <x-pie/>
