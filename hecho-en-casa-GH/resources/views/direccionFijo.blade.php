@@ -19,7 +19,7 @@
         </select>
         <div id="nuevaDireccion" style="display: none; margin-top: 20px;">
             <label for="codigo_postal">Código Postal:</label>
-            <input type="number" id="codigo_postal" name="codigo_postal" maxlength="5" pattern="\d{5}" placeholder="Ingresa código postal" required><br><br>
+            <input type="number" id="codigo_postal" name="codigo_postal" maxlength="5" pattern="\d{5}" placeholder="Ingresa código postal"><br><br>
             
             <label for="estado">Estado:</label>
             <input type="text" id="estado" name="estado" readonly placeholder="Estado"><br><br>
@@ -46,6 +46,20 @@
 
     <script>
         $(document).ready(function () {
+            /*$('#domicilio').on('change', function () {
+                if ($(this).val() === 'Nueva') {
+                    $('#nuevaDireccion').show();
+                } else {
+                    $('#nuevaDireccion').hide();
+                }
+            });*/
+
+            if ($('#domicilio').val() === 'Nueva') {
+                $('#nuevaDireccion').show();
+            } else {
+                $('#nuevaDireccion').hide();
+            }
+
             $('#domicilio').on('change', function () {
                 if ($(this).val() === 'Nueva') {
                     $('#nuevaDireccion').show();
@@ -76,7 +90,8 @@
 
                                 if (asentamientos && asentamientos.length > 0) {
                                     asentamientos.forEach(function(asentamiento) {
-                                        $asentamientoSelect.append('<option value="' + asentamiento.id_asenta_cpcons + '">' + asentamiento.asentamiento + '</option>');
+                                        //$asentamientoSelect.append('<option value="' + asentamiento.id_asenta_cpcons + '">' + asentamiento.asentamiento + '</option>');
+                                        $asentamientoSelect.append('<option value="' + asentamiento.asentamiento + '">' + asentamiento.asentamiento + '</option>')
                                     });
                                     $asentamientoSelect.prop('disabled', false);
                                 } else {
