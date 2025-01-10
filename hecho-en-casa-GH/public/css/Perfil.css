@@ -1,3 +1,5 @@
+/* General */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 * {
@@ -5,92 +7,98 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /**/background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
 }
-
 
 body {
     font-family: "Poppins", sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f8f4eb;
-    color: #7a5a23;
-  }
-  
-  .main-container {
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+h1 {
+    width: 100%;
+    font-size: 2rem;
+    text-align: center;
+    padding: 10px;
+    margin: 50px 0 20px;
+    color: #7E643B;
+}
+
+.main-container {
     width: 90%;
     margin: 20px auto;
     text-align: center;
-  }
-  
-  /* Título de la página */
-  .page-title {
-    font-size: 2em;
-    margin: 20px 0;
-  }
-  
-  /* Tarjeta de perfil */
-  .profile-card {
-    background-color: #f0e9db;
+    padding: 40px;
+    background-color: #EADAC6;
     border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 700px;
-    margin: 0 auto;
-  }
-  
-  .user-info {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  
+}
+
+.profile-card {
+    width: 100%;
+    margin: 20px auto;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.save-button {
+    background-color: #D9B87B;
+    color: #FFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0 0 auto; /* Mueve el botón hacia el lado derecho */
+    width: fit-content;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.save-button:hover{
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px #7E643B;
+    cursor: pointer;
+}
+
+.user-info {
+    padding: 10px;
+    display: flex;
+    text-align: center;
     align-items: center;
     margin-bottom: 20px;
-  }
-  
-  .user-photo {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.user-info img {
     width: 80px;
     height: 80px;
-    border-radius: 50%;
-    margin-right: 20px;
-  }
-  
-  .user-name {
+    border-radius: 10%;
+    margin-bottom: 20px;
+}
+
+.user-name {
     font-size: 1.5em;
+    font-weight: 700;
     color: #7E643B;
-  }
-  
-  .details {
+    padding: 10px 20px;
+}
+
+.details {
     display: flex;
     justify-content: space-between;
-  }
-  
-  .details .left-column,
-  .details .right-column {
-    width: 45%;
-    text-align: left;
-  }
-  
-  label {
-    font-size: 0.9em;
-    margin-top: 10px;
-    display: block;
-  }
-  
-  input {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0 15px;
-    border: 1px solid #d9b87b;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #7a5a23;
-  }
-  
-  input[readonly] {
-    background-color: #f8f4eb;
-  }
-  
-  .save-button {
+    gap: 20px;
+}
+
+.left-column,.right-column {
+    width: 60%;
+}
+
+.editar{
     background-color: #d9b87b;
     color: #fff;
     padding: 10px 20px;
@@ -102,30 +110,45 @@ body {
     align-items: center;
     justify-content: center;
     margin-top: 20px;
-  }
-  
-  .save-button img {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
   }
 
-  .editar{
-    background-color: #d9b87b;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
+  .editar:hover{
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px #7E643B;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-  }
+}
   
-  .editar img {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-  }
+
+label {
+    font-size: 0.9em;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    display: block;
+    color: #7A5A23;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 3px solid #D9B87B;
+    border-radius: 5px;
+    background-color: #FFF;
+    color: black;
+    font-size: 0.9em;
+}
+
+.detailsd {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.left-columnd,.right-columnd {
+    width: 60%;
+    padding: 40px;
+}
+
+/*input[readonly] {
+    background-color: #f8f4eb;
+  } */
