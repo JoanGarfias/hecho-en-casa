@@ -14,7 +14,6 @@ header {
     padding: 35px 0;
 }
 
-
 /* Contenedor principal del menú */
 .menu nav {
     position: fixed; /* Fija el contenedor en el viewport */
@@ -30,7 +29,7 @@ header {
     overflow: visible;
     display: flex; /* Usamos flexbox */
     justify-content: center; /* Centra horizontalmente el contenido */
-    align-items: center; /
+    align-items: center; /* Centra verticalmente */
 }
 
 .menu nav::before {
@@ -45,7 +44,6 @@ header {
     z-index: -1; /* Coloca este fondo detrás del contenido */
     transform: translate(0px, 0px); /* Efecto de sombra */
 }
-
 
 /* Listas del menú */
 .menu nav ul {
@@ -90,6 +88,7 @@ header {
     align-items: center;
     padding: 0 90px; /* Espacio horizontal para evitar colisión con el logo */
 }
+
 .menu-izquierdo{
     padding-left: 2%;
 }
@@ -97,7 +96,6 @@ header {
 .menu-derecho{
     padding-right: 2%;
 }
-
 
 /* Iconos e imágenes dentro del menú */
 .menu nav ul li img {
@@ -107,7 +105,6 @@ header {
 
 /* Dropdown (menú desplegable) */
 .dropdown {
-    
     position: relative; /* Para posicionar el menú relativo al ícono */
 }
 
@@ -127,7 +124,6 @@ header {
     width: 230px; /* Cambia este valor para hacerlo más ancho */
     height: 120px; /* Cambia este valor para hacerlo más largo */
     overflow: auto; /* Permite desplazamiento si el contenido supera la altura */
-
 }
 
 /* Botones del menú desplegable */
@@ -148,4 +144,81 @@ header {
 
 .dropdown-menu button:hover {
     background-color: #7E643B; /* Color más oscuro al pasar el mouse */
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 1024px) {
+    .menu nav {
+        padding: 20px; /* Reduce el padding en pantallas medianas */
+    }
+
+    .menu nav ul {
+        gap: 40px; /* Reduce el espacio entre elementos en pantallas medianas */
+    }
+
+    .logo {
+        height: 90px; /* Reduce el tamaño del logo en pantallas medianas */
+    }
+}
+
+@media (max-width: 768px) {
+    .menu nav {
+        padding: 10px; /* Reduce aún más el padding en pantallas pequeñas */
+        flex-direction: column; /* Cambia la dirección del menú a columna */
+    }
+
+    .menu nav ul {
+        gap: 30px; /* Reduce aún más el espacio entre elementos en pantallas pequeñas */
+    }
+
+    .logo {
+        height: 70px; /* Reduce aún más el tamaño del logo en pantallas pequeñas */
+    }
+
+    .menu-izquierdo,
+    .menu-derecho {
+        padding: 0; /* Ajusta el padding para pantallas pequeñas */
+        width: 100%; /* Asegura que ocupen todo el ancho */
+        justify-content: center; /* Centra los elementos */
+    }
+}
+
+@media (max-width: 480px) {
+    .menu nav {
+        padding: 5px; /* Reduce aún más el padding en pantallas muy pequeñas */
+        flex-direction: column; /* Coloca el menú en columna */
+        align-items: flex-start; /* Alinea los elementos al inicio */
+    }
+
+    .menu nav ul {
+        gap: 20px; /* Espacio entre elementos en columna */
+        flex-direction: column; /* Coloca los elementos del menú en columna */
+    }
+
+    .logo {
+        height: 60px; /* Ajusta el tamaño del logo */
+    }
+
+    .menu-izquierdo,
+    .menu-derecho {
+        width: 100%; /* Asegura que ocupen todo el ancho */
+        justify-content: center; /* Centra los elementos */
+    }
+}
+
+/* Modificación para las opciones */
+.menu nav ul.izquierda {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    margin-right: auto;
+}
+
+.menu nav ul.derecha {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+    margin-left: auto;
 }

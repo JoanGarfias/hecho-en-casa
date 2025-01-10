@@ -9,7 +9,6 @@
 
 /* CSS para la sección del banner */
 
-
 /* CSS para el contenido principal */
 main {
     text-align: center;
@@ -54,19 +53,17 @@ main h2 {
     margin-bottom: 10px; /* Mantén el espacio inferior */
 }
 
-
-
 .contenedor-flex {
     display: flex; /* Alinea la imagen y el botón en la misma fila */
     align-items: center; /* Centra el botón verticalmente */
     justify-content: center; /* Centra el contenido horizontalmente */
-    
 }
 
 .contenedor-flex img {
     width: 70%; /* Ajusta el tamaño de la imagen */
     height: auto;
     border-radius: 25px;
+    margin-bottom: 20px;
 }
 
 .seccion-temporada img {
@@ -90,10 +87,10 @@ main h2 {
     border-radius: 20px; /* Hace que los bordes sean redondeados */
     font-weight: 700; /* Negrita */
     transition: all 0.3s ease; /* Agrega transición suave para todos los cambios */
-
-
 }
+
 .personaliza:hover {
+
     background-color: #D0A974; /* Cambia el color de fondo cuando pasa el mouse */
     transform: scale(1.05); /* Aumenta el tamaño del botón ligeramente */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Agrega una sombra suave */
@@ -103,9 +100,7 @@ main h2 {
     margin-right: 5px; /* Reduce el espacio entre la varita y el texto */
     width: 55px; /* Ajusta el tamaño de la varita */
     height: 55px; /* Mantén las proporciones de la imagen */
-    
 }
-
 
 /* CSS para la imagen de temporada */
 .temporada img {
@@ -117,11 +112,67 @@ main h2 {
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: 25px;
-
-    
 }
 
 .seccion img:hover {
     transform: scale(1.01); /* Aumenta ligeramente el tamaño */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Agrega una sombra */
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
+    .seccion {
+        width: 100%;
+    }
+
+    .pasteles h3 {
+        margin-right: 0;
+    }
+
+    .contenedor-flex img {
+        width: 90%;
+    }
+
+    .personaliza {
+        font-size: 0.8em;
+        padding: 8px 16px;
+        margin-left: 0;
+    }
+
+    .personaliza img {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    main h2 {
+        font-size: 1.5em;
+    }
+
+    .seccion h3 {
+        font-size: 1.2em;
+    }
+
+    .personaliza {
+        font-size: 0.7em;
+        padding: 6px 12px;
+    }
+
+    .personaliza img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .contenedor-flex {
+        flex-direction: column;
+    }
+
+    .contenedor-flex img {
+        width: 100%;
+    }
+
+    .contenedor img {
+        width: 100%;
+    }
 }
