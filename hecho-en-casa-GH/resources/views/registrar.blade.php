@@ -44,6 +44,9 @@
             <p id="bienEmail" class="bien"></p><br>
             </div>
 
+            {!! NoCaptcha::renderJs() !!}
+            {!! NoCaptcha::display() !!}
+
             <button class="botoncito" type="submit" name="botones" value="login">Iniciar sesión</button>
             <button class="botoncito" type="submit" name="botones" value="register">Continuar</button>
             <p></p>

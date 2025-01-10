@@ -21,6 +21,10 @@
         <p id="errorPass" class="error"></p>
         <p id="bienPass" class="bien"></p>
         </div>
+
+        {!! NoCaptcha::renderJs() !!}
+        {!! NoCaptcha::display(['data-size' => 'invisible']) !!}
+
         <div>
             <button class="botoncito" type="submit" name="action" value="recuperar" id="olvidadizo">Olvide mi contraseña</button>
             <button class="botoncito" type="submit" name="action" value="register">Registrarme</button>

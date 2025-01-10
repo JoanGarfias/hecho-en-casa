@@ -11,17 +11,36 @@ use Illuminate\Support\Facades\Mail;
 
 class ControladorRegistro extends Controller
 {
-    public function index(){
+    public function index(Request $request){
+        /*ENLAZADOR DE REGISTRO */
+        session()->put('proceso_registro', $request->route()->getName());
+
         return view('registrar');
     }
 
     public function registrar(Request $request){
+        /*ENLAZADOR DE REGISTRO */
+        session()->put('proceso_registro', $request->route()->getName());
+        /*ENLAZADOR DE REGISTRO */
 
-        $nombre = $request->input('name');
-        $apellido_paterno = $request->input('apellidoP');
-        $apellido_materno = $request->input('apellidoM');
-        $telefono = $request->input('phone');
-        $correo = $request->input('email');
+        $credentials = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email',
+            'telefono' => 'required|numeric|digits_between:10,15',
+            'apellidoP' => 'required|string|max:255',
+            'apellidoM' => 'required|string|max:255',
+            'g-recaptcha-response' => 'required|captcha',  // Validación del reCAPTCHA
+        ], [
+            'g-recaptcha-response.required' => 'Por favor, confirma que no eres un robot.',
+            'g-recaptcha-response.captcha' => 'La validación de seguridad falló. Por favor, intenta nuevamente.',  // Mensaje personalizado
+        ]);
+        
+        $nombre = $credentials['name'];
+        $apellido_paterno = $credentials['apellidoP'];
+        $apellido_materno = $credentials['apellidoM'];
+        $telefono = $credentials['phone'];
+        $correo = $credentials['email'];
+        
         $correo_existe = usuario::where('correo_electronico', $correo)->first();
 
         if ($correo_existe) {
@@ -48,22 +67,37 @@ class ControladorRegistro extends Controller
         }
     }
 
-    public function contrasena(){
+    public function contrasena(Request $request){
+        /*ENLAZADOR DE REGISTRO */
+        session()->put('proceso_registro', $request->route()->getName());
+        /*ENLAZADOR DE REGISTRO */
+
         return view('contrasena');
     }
 
     public function guardarContrasena(Request $request){
+        /*ENLAZADOR DE REGISTRO */
+        session()->put('proceso_registro', $request->route()->getName());
+        /*ENLAZADOR DE REGISTRO */
+
         $contrasena = $request->input('confirmacion');
         session(['contrasena' => $contrasena]);
         return redirect()->route('registrar.direccion.get'); 
     }
 
-    public function mostrarDireccion(){
+    public function mostrarDireccion(Request $request){
+        /*ENLAZADOR DE REGISTRO */
+        session()->put('proceso_registro', $request->route()->getName());
+        /*ENLAZADOR DE REGISTRO */
+
         return view('direccion');
     }
 
     public function guardarDireccion(Request $request){
-        
+        /*ENLAZADOR DE REGISTRO */
+        session()->put('proceso_registro', $request->route()->getName());
+        /*ENLAZADOR DE REGISTRO */
+
         $usuario = new usuario;
         $usuario->correo_electronico = session('correo');
         $usuario->nombre = session('nombre');
@@ -94,22 +128,22 @@ class ControladorRegistro extends Controller
         return view('prueba-recuperacion');
     } 
 
-    public function validarRecuperacion($token){
+    public function validarRecuperacion(Request $request, $token = null){
+        if(!$token){
+            return redirect()->route('inicio.get')->withErrors(['error' => 'Token no proporcionado']);
+        }
         $usuario = Usuario::where('token_recuperacion', $token)->first();
         if ($usuario){
             session([
                 'usuario' => $usuario->id_u,
+                'proceso_recuperacion' => $request->route()->getName(),
             ]);
-            return view('cambiar-clave.get');
+            return view('cambiar-contrasenaPrueba');
         } 
         return view('inicio', [
             'error' => 'Token inválido',
         ]);
         
-    }
-
-    public function mostrarCambio(){
-        return view('cambiar-contrasenaPrueba');
     }
 
     public function actualizarContrasena(Request $request){
@@ -121,7 +155,7 @@ class ControladorRegistro extends Controller
             try{
                 $usuario->save();
             }catch(\Exception $e){
-                dd("Error: " . $e->getMessage());
+                return redirect()->route('login.get')->with('error', 'Error al actualizar la contraseña');
             }
         }
 
