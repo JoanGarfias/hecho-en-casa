@@ -39,91 +39,67 @@ function validateForm() {
     const emailReg = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}$/;
     const telefonoReg = /^\d{2,3}[-.\s]?\d{2,3}[-.\s]?\d{4}$/
 
-
     // Limpiar mensajes de error
-    document.getElementById("mensajeName").textContent = ""
-    document.getElementById("mensajeApellidoP").textContent = ""
-    document.getElementById("mensajeApellidoM").textContent = ""
-    document.getElementById("mensajeEmail").textContent = ""
-    document.getElementById("mensajePhone").textContent = ""
-
-    //document.getElementById("errorName").textContent = "";
-    //document.getElementById("errorApellidoPaterno").textContent = "";
-    //document.getElementById("errorApellidoMaterno").textContent = "";
-   // document.getElementById("errorEmail").textContent = "";
-    //document.getElementById("errorPhone").textContent = "";
-    //document.getElementById("bienName").textContent = "";
-    //document.getElementById("bienApellidoPaterno").textContent = "";
-    //document.getElementById("bienApellidoMaterno").textContent = "";
-    //document.getElementById("bienEmail").textContent = "";
-    //document.getElementById("bienPhone").textContent = "";
+    document.getElementById("errorName").textContent = "";
+    document.getElementById("errorApellidoPaterno").textContent = "";
+    document.getElementById("errorApellidoMaterno").textContent = "";
+    document.getElementById("errorEmail").textContent = "";
+    document.getElementById("errorPhone").textContent = "";
+    document.getElementById("bienName").textContent = "";
+    document.getElementById("bienApellidoPaterno").textContent = "";
+    document.getElementById("bienApellidoMaterno").textContent = "";
+    document.getElementById("bienEmail").textContent = "";
+    document.getElementById("bienPhone").textContent = "";
     
 
     let isValid = true;
-    let validarName = document.getElementById("mensajeName")
-    let validarApellidoP = document.getElementById("mensajeApellidoP")
-    let validarApellidoM = document.getElementById("mensajeApellidoM")
-    let validarEmail = document.getElementById("mensajeEmail")
-    let validarPhone = document.getElementById("mensajePhone")
 
     // Validar nombre
     if (nombreReg.test(nombre)) {
-        validarName.textContent = "Nombre válido.";
-        validarName.className = "bien"; 
+        document.getElementById("bienName").textContent = "Nombre válido.";
         
     } else {
-        validarName.textContent = "El nombre debe contener solo letras y espacios.";
-        validarName.className = "error"; 
+        document.getElementById("errorName").textContent = "El nombre debe contener solo letras y espacios.";
         isValid = false
     }
 
     if (apellidoPReg.test(apellidoP)) {
-        validarApellidoP.textContent = "Apellido válido."; 
-        validarApellidoP.className = "bien";      
+        document.getElementById("bienApellidoPaterno").textContent = "Apellido válido.";
+        
     } else {
-        validarApellidoP.textContent = "El apellido debe contener solo letras.";
-        validarApellidoP.className = "error"; 
+        document.getElementById("errorApellidoPaterno").textContent = "El apellido debe contener solo letras.";
         isValid = false
     }
 
     if (apellidoMReg.test(apellidoM)) {
-        validarApellidoM.textContent = "Apellido válido.";
-        validarApellidoM.className = "bien"; 
+        document.getElementById("bienApellidoMaterno").textContent = "Apellido válido.";
         
     } else {
-        validarApellidoM.textContent = "El apellido debe contener solo letras";
-        validarApellidoM.className = "error"; 
+        document.getElementById("errorApellidoMaterno").textContent = "El apellido debe contener solo letras";
         isValid = false
     }
 
+
     // Validar correo electrónico
     if (emailReg.test(email)) {
-        validarEmail.textContent = "Correo válido.";
-        validarEmail.className = "bien";     
+        document.getElementById("bienEmail").textContent = "Correo válido.";
+      
     } else {
-        validarEmail.textContent = "Introduce un correo electrónico válido.";
-        validarEmail.className = "error";   
+        document.getElementById("errorEmail").textContent = "Introduce un correo electrónico válido.";
         isValid = false
     }
 
     // Validar número de teléfono
     if (telefonoReg.test(telefono)) {
-        validarPhone.textContent = "Número de teléfono válido.";
-        validarPhone.className = "bien";   
+        document.getElementById("bienPhone").textContent = "Número de teléfono válido.";
     } else {
-        validarPhone.textContent = "Introduce un número de teléfono válido (10 dígitos).";
-        validarPhone.className = "error"; 
+        document.getElementById("errorPhone").textContent = "Introduce un número de teléfono válido (10 dígitos).";
         isValid = false
     }
 
     // Si todo es válido, mostrar un mensaje
-
     if (isValid) {
 //        alert("Formulario enviado exitosamente. ¡Gracias!");
-
         formulario.submit(); // Enviamos el formulario si todo es correcto
     }
 }
-
-
-
