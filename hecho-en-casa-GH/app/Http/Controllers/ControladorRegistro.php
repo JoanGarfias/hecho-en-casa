@@ -11,11 +11,17 @@ use Illuminate\Support\Facades\Mail;
 
 class ControladorRegistro extends Controller
 {
-    public function index(){
+    public function index(Request $request){
+        /*ENLAZADOR DE REGISTRO */
+        session()->put('proceso_registro', $request->route()->getName());
+
         return view('registrar');
     }
 
     public function registrar(Request $request){
+        /*ENLAZADOR DE REGISTRO */
+        session()->put('proceso_registro', $request->route()->getName());
+        /*ENLAZADOR DE REGISTRO */
 
         $nombre = $request->input('name');
         $apellido_paterno = $request->input('apellidoP');
@@ -48,22 +54,37 @@ class ControladorRegistro extends Controller
         }
     }
 
-    public function contrasena(){
+    public function contrasena(Request $request){
+        /*ENLAZADOR DE REGISTRO */
+        session()->put('proceso_registro', $request->route()->getName());
+        /*ENLAZADOR DE REGISTRO */
+
         return view('contrasena');
     }
 
     public function guardarContrasena(Request $request){
+        /*ENLAZADOR DE REGISTRO */
+        session()->put('proceso_registro', $request->route()->getName());
+        /*ENLAZADOR DE REGISTRO */
+
         $contrasena = $request->input('confirmacion');
         session(['contrasena' => $contrasena]);
         return redirect()->route('registrar.direccion.get'); 
     }
 
-    public function mostrarDireccion(){
+    public function mostrarDireccion(Request $request){
+        /*ENLAZADOR DE REGISTRO */
+        session()->put('proceso_registro', $request->route()->getName());
+        /*ENLAZADOR DE REGISTRO */
+
         return view('direccion');
     }
 
     public function guardarDireccion(Request $request){
-        
+        /*ENLAZADOR DE REGISTRO */
+        session()->put('proceso_registro', $request->route()->getName());
+        /*ENLAZADOR DE REGISTRO */
+
         $usuario = new usuario;
         $usuario->correo_electronico = session('correo');
         $usuario->nombre = session('nombre');

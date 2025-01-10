@@ -14,6 +14,7 @@ use App\Http\Middleware\ProtectorSesion;
 use App\Http\Middleware\EnlazadorPedido;
 use App\Http\Controllers\ControladorPerfil;
 use App\Http\Middleware\EnlazadorRecuperacion;
+use App\Http\Middleware\EnlazadorRegistro;
 
 /* VISTAS PRINCIPALES */
 Route::get('/', [ControladorInicio::class, 'index'])->name('inicio.get');
@@ -30,12 +31,15 @@ Route::post('/login', [ControladorLogin::class, 'Logear'])->name('login.post');
 Route::get('/cerrar-sesion', [ControladorLogin::class, 'logout'])->middleware(ProtectorSesion::class);
 
 /* PROCESO DE REGISTRO */
+
 Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar.get');
-Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.post');
-Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena.get');
-Route::post('/contrasena', [ControladorRegistro::class, 'guardarContrasena'])->name('registrar.contrasena.post');
-Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name('registrar.direccion.get');
-Route::post('/direccion', [ControladorRegistro::class, 'guardarDireccion'])->name('registrar.direccion.post');
+Route::middleware(EnlazadorRegistro::class)->group(function () {
+    Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.post');
+    Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena.get');
+    Route::post('/contrasena', [ControladorRegistro::class, 'guardarContrasena'])->name('registrar.contrasena.post');
+    Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name('registrar.direccion.get');
+    Route::post('/direccion', [ControladorRegistro::class, 'guardarDireccion'])->name('registrar.direccion.post');
+});
 
 /* PROCESOS PARA RECUPERACION */
 Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecuperacion'])->name('recuperacion.get')
