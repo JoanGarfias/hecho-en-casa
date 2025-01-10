@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 
 class ControladorCP extends Controller
 {
-       public function buscar(Request $request)
+    public function buscar(Request $request)
     {
         $codigoPostal = $request->input('codigo_postal');
     
