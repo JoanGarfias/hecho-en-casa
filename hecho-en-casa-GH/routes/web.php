@@ -57,6 +57,7 @@ Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(funct
 
     Route::get('fijo/ticket/{folio}', [ControladorCatalogo::class, 'mostrarTicket'])->name('fijo.ticket.get');
 });
+Route::post('fijo/detalles-direccion/buscar', [App\Http\Controllers\ControladorCP::class, 'buscar'])->name('buscar');
 
 /* RUTAS DE POSTRES PERSONALIZADOS */
 Route::get('/personalizado', [ControladorCatalogoPersonalizado::class, 'mostrarCatalogo'])->name('personalizado.catalogo.get');
