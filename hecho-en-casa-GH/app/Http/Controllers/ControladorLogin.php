@@ -21,16 +21,20 @@ class ControladorLogin extends Controller
     public function Logear(Request $request)
     {
         $action = $request->input('solicitud');//esto borrar
-        
+
         if($action === 'login'){
             
             $credentials = $request->validate([
                 'correo_electronico' => 'required|email',
-                'contraseña' => 'required',
+                'contrasena' => 'required',
+                'g-recaptcha-response' => 'required|captcha',
             ]);
     
-            $usuario = Usuario::where('correo_electronico', $credentials['correo_electronico'])->first();
-            if ($usuario && Hash::check($credentials['contraseña'], $usuario->contraseña)) {
+            $usuario = Usuario::select('id_u', 'contraseña')
+            ->where('correo_electronico', $credentials['correo_electronico'])
+            ->first();
+
+            if ($usuario && Hash::check($credentials['contrasena'], $usuario->contraseña)) {
                 // Generar un nuevo token de sesión encriptado
                 $sessionToken = bin2hex(random_bytes(32));
                 session([
@@ -39,12 +43,12 @@ class ControladorLogin extends Controller
                 $usuario->update([
                     'token_sesion' => $sessionToken,
                 ]);
-
                 // Crear la galleta con el token de sesión
                 return redirect()->route('inicio.get')->withCookie(cookie('session_token', $sessionToken, 60 * 72)); // 72 horas
             }
-
-            return redirect('login.get')->withErrors(['correo_electronico' => 'Credenciales incorrectas.']);
+            else{
+                return redirect()->route('login.get')->withErrors(['correo_electronico' => 'Credenciales incorrectas.']);
+            }
         }elseif($action === 'recuperar'){
             
             $credentials = $request->validate([

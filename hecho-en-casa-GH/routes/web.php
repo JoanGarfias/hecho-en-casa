@@ -14,6 +14,7 @@ use App\Http\Middleware\ProtectorSesion;
 use App\Http\Middleware\EnlazadorPedido;
 use App\Http\Controllers\ControladorPerfil;
 use App\Http\Middleware\EnlazadorRecuperacion;
+use App\Http\Middleware\EnlazadorRegistro;
 use App\Http\Middleware\ProtectorRouteUserLogin;
 
 /* VISTAS PRINCIPALES */
@@ -22,21 +23,28 @@ Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 Route::get('/buscarpedido', [ControladorBuscarPedido::class, 'ObtenerFolio'])->name('buscarpedido.get');
 Route::post('/buscarpedido', [ControladorBuscarPedido::class, 'MostrarPedido'])->name('buscarpedido.post');
 Route::get('/calendario', [ControladorCalendario::class, 'index'])->name('calendario.get');
-//Route::get('/perfil', [ControladorPerfil::class, ''])->name('perfil.get');
+
+Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])->name('perfil.get')
+->middleware(ProtectorSesion::class);
 //Route::post('/perfil', [ControladorPerfil::class, ''])->name('perfil.post');
 
 /* PROCESO DE LOGIN */
-Route::get('/login', [ControladorLogin::class, 'mostrarLogin'])->name('login.get')->middleware(ProtectorRouteUserLogin::class);
-Route::post('/login', [ControladorLogin::class, 'Logear'])->name('login.post')->middleware(ProtectorRouteUserLogin::class);
+Route::get('/login', [ControladorLogin::class, 'mostrarLogin'])->name('login.get');
+//->middleware(ProtectorRouteUserLogin::class);
+Route::post('/login', [ControladorLogin::class, 'Logear'])->name('login.post');
+//->middleware(ProtectorRouteUserLogin::class);
 Route::get('/cerrar-sesion', [ControladorLogin::class, 'logout'])->middleware(ProtectorSesion::class)->middleware(ProtectorRouteUserLogin::class);
 
 /* PROCESO DE REGISTRO */
-Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar.get')->middleware(ProtectorRouteUserLogin::class);
-Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.post')->middleware(ProtectorRouteUserLogin::class);
-Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena.get')->middleware(ProtectorRouteUserLogin::class);
-Route::post('/contrasena', [ControladorRegistro::class, 'guardarContrasena'])->name('registrar.contrasena.post')->middleware(ProtectorRouteUserLogin::class);
-Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name('registrar.direccion.get')->middleware(ProtectorRouteUserLogin::class);
-Route::post('/direccion', [ControladorRegistro::class, 'guardarDireccion'])->name('registrar.direccion.post')->middleware(ProtectorRouteUserLogin::class);
+
+Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar.get');
+Route::middleware(EnlazadorRegistro::class)->group(function () {
+    Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.post');
+    Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena.get');
+    Route::post('/contrasena', [ControladorRegistro::class, 'guardarContrasena'])->name('registrar.contrasena.post');
+    Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name('registrar.direccion.get');
+    Route::post('/direccion', [ControladorRegistro::class, 'guardarDireccion'])->name('registrar.direccion.post');
+});
 
 /* PROCESOS PARA RECUPERACION */
 Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecuperacion'])->name('recuperacion.get')

@@ -16,17 +16,23 @@
 
         <br>
         <label for="password">Contraseña: </label>
-        <input type="password" id = "pass" name ="contraseña"> 
+        <input type="password" id = "pass" name ="contrasena"> 
         <div class="mensaje">
         <p id="errorPass" class="error"></p>
         <p id="bienPass" class="bien"></p>
         </div>
+
+        {!! NoCaptcha::renderJs() !!}
+        {!! NoCaptcha::display() !!}
+
         <div>
             <button class="botoncito" type="submit" name="action" value="recuperar" id="olvidadizo">Olvide mi contraseña</button>
             <button class="botoncito" type="submit" name="action" value="register">Registrarme</button>
             <button class="botoncito" type="submit" name="action" value="login" onclick="validateForm()">Continuar</button>
         </div>
     </form>
+
+
 </div>
 </div>
 <x-pie/>
