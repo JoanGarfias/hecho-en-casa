@@ -88,6 +88,10 @@ Route::post('fijo/detalles-direccion', [ControladorCatalogo::class, 'guardarDire
 ->name('fijo.direccion.post')
 ->middleware([CheckSession::class, Enlazador::class]);
 
+// routes para el CP
+//Route::get('fijo/detalles-direccion/nueva-direccion', [App\Http\Controllers\ControladorCP::class, 'mostrarFormulario'])->name('nueva.direccion');
+Route::post('fijo/detalles-direccion/buscar', [App\Http\Controllers\ControladorCP::class, 'buscar'])->name('buscar');
+
 Route::get('fijo/ticket/{folio}', [ControladorCatalogo::class, 'mostrarTicket'])
 ->name('fijo.ticket.get')
 ->middleware([CheckSession::class, Enlazador::class]);
