@@ -94,22 +94,22 @@ class ControladorRegistro extends Controller
         return view('prueba-recuperacion');
     } 
 
-    public function validarRecuperacion($token){
+    public function validarRecuperacion(Request $request, $token = null){
+        if(!$token){
+            return redirect()->route('inicio.get')->withErrors(['error' => 'Token no proporcionado']);
+        }
         $usuario = Usuario::where('token_recuperacion', $token)->first();
         if ($usuario){
             session([
                 'usuario' => $usuario->id_u,
+                'proceso_recuperacion' => $request->route()->getName(),
             ]);
-            return redirect()->route('cambiar-clave.get');
+            return view('cambiar-contrasenaPrueba');
         } 
         return view('inicio', [
             'error' => 'Token inválido',
         ]);
         
-    }
-
-    public function mostrarCambio(){
-        return view('cambiar-contrasenaPrueba');
     }
 
     public function actualizarContrasena(Request $request){
@@ -121,7 +121,7 @@ class ControladorRegistro extends Controller
             try{
                 $usuario->save();
             }catch(\Exception $e){
-                dd("Error: " . $e->getMessage());
+                return redirect()->route('login.get')->with('error', 'Error al actualizar la contraseña');
             }
         }
 

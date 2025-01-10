@@ -13,6 +13,7 @@ use App\Http\Controllers\ControladorBuscarPedido;
 use App\Http\Middleware\ProtectorSesion;
 use App\Http\Middleware\EnlazadorPedido;
 use App\Http\Controllers\ControladorPerfil;
+use App\Http\Middleware\EnlazadorRecuperacion;
 
 /* VISTAS PRINCIPALES */
 Route::get('/', [ControladorInicio::class, 'index'])->name('inicio.get');
@@ -37,9 +38,10 @@ Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name
 Route::post('/direccion', [ControladorRegistro::class, 'guardarDireccion'])->name('registrar.direccion.post');
 
 /* PROCESOS PARA RECUPERACION */
-Route::get('/cambiar-clave', [ControladorRegistro::class, 'mostrarCambio'])->name('cambiar-clave.get');
-Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post');
-Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecuperacion'])->name('recuperacion.get');
+Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecuperacion'])->name('recuperacion.get')
+->middleware(EnlazadorRecuperacion::class);
+Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post')
+->middleware(EnlazadorRecuperacion::class);;
 
 /* RUTAS DE POSTRES FIJOS */
 Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrarCatalogo'])->name('fijo.catalogo.get');
