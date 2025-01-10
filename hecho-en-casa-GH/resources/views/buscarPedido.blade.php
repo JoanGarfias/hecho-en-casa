@@ -7,6 +7,15 @@
     <title>Buscador de Pedidos</title>
 </head>
 <body>
+    <!-- Encabezado con título y buscador --> <div class="header"> 
+        <div class="header">
+            <h1 class="titulo">BUSCADOR DE PEDIDOS</h1>
+            <div class="search-container">
+                <input type="text" placeholder="Buscar pedido">
+                <img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="Buscar">
+            </div>
+        </div>
+
     <div class="container">
         <div class="folio">
             Pedido con folio: <span class="folio-number">00025</span>
@@ -64,9 +73,6 @@
                     <label>Costo aprox:</label>
                     <span class="costo-aprox">$550.00</span>
                 </div>
-
-                
-
             </div>
         </div>
     </div>
