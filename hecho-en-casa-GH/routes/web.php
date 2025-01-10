@@ -51,8 +51,8 @@ Route::get('/cambiar-clave', [ControladorRegistro::class, 'mostrarCambio'])->nam
 Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post');
 
 /* */
-Route::get('/conocenos', function(){
-    return view('conocenos');
+Route::get('/pedidosTempPop', function(){
+    return view('pedidosTempPop');
 });
 
 /*RUTAS DE POSTRES FIJOS */
