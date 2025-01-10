@@ -65,6 +65,11 @@ h1 {
     cursor: pointer;
 }
 
+.save-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .user-info {
     padding: 10px;
     display: flex;
@@ -98,7 +103,7 @@ h1 {
     width: 60%;
 }
 
-.editar{
+.editarTel, .editarPas, .editarDir {
     background-color: #d9b87b;
     color: #fff;
     padding: 10px 20px;
@@ -112,7 +117,7 @@ h1 {
     margin-top: 20px;
   }
 
-  .editar:hover{
+  .editarTel:hover, .editarPas:hover, .editarDir:hover{
     transform: scale(1.1);
     box-shadow: 0 4px 10px #7E643B;
     cursor: pointer;
@@ -134,7 +139,7 @@ input {
     border: 3px solid #D9B87B;
     border-radius: 5px;
     background-color: #FFF;
-    color: black;
+    color: #7A5A23;
     font-size: 0.9em;
 }
 
@@ -149,6 +154,51 @@ input {
     padding: 40px;
 }
 
-/*input[readonly] {
-    background-color: #f8f4eb;
-  } */
+/* Estilos generales para el contenedor */
+.form-control {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+/* Estilo para la etiqueta */
+.form-control label {
+    font-size: 0.9em;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    display: block;
+    color: #7A5A23;
+}
+
+/* Estilo para el select */
+.form-control select {
+    border: 3px solid #D9B87B;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9; /* Fondo claro */
+    color: #333;
+    transition: border-color 0.3s ease;
+}
+
+/* Cambia el borde al hacer hover */
+.form-control select:hover {
+    border: 3px solid #D9B87B;
+    border-color: #D9B87B; /* Color que usaste en otros estilos */
+}
+
+/* Cambia el borde al enfocar el select */
+.form-control select:focus {
+    border-color: #D9B87B;
+    outline: none;
+    box-shadow: 0 0 5px rgba(217, 184, 123, 0.5); /* Sombra */
+}
+
+/* Estilo para el texto debajo (p) */
+.form-control p {
+    font-size: 0.9rem;
+    color: #666; /* Texto en gris */
+    margin-top: 5px;
+}
+
