@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 
-class AuthController extends Controller
+class ControladorLogin extends Controller
 {
     public function mostrarLogin()
     {   
