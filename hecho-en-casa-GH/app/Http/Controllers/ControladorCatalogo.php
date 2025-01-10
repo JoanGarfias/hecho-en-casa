@@ -168,7 +168,7 @@ class ControladorCatalogo extends Controller
                 session()->put('proceso_compra', 'fijo.calendario.post');
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
-                if($porciones_dia + $cantidad_minima >= 1000){
+                if($porciones_dia + $cantidad_minima >= 10000000){
                     //dd($porciones_dia + $cantidad_minima);
                     return redirect()->route('fijo.calendario.get'); //Aqui se le tiene que mandar un mensaje de error
                 }
@@ -447,7 +447,7 @@ class ControladorCatalogo extends Controller
 
         $tipo_domicilio = $request->input('tipo_domicilio'); 
         //ACÁ SE DEBERÍA JALAR LA UBICACIÓN DEL FORMULARIO
-        
+        //dd($tipo_domicilio);
         $id_usuario = session('id_usuario');
         $user = usuario::where('id_u', $id_usuario)->first();
         $datos = session('datos_pedido'); 
@@ -458,17 +458,17 @@ class ControladorCatalogo extends Controller
         $calle = $user->calle_u;
         $numero = $user->num_exterior_u;
 
-        if($tipo_domicilio=='Nueva'){ //Datos prueba
-            $codigo_postal = "70500";
-            $estado = "Puebla";
-            $ciudad = "Cuatlancingo";
-            $colonia = "4 caminos";
-            $calle = "Frenos 21";
-            $numero = "21";
+        if($tipo_domicilio==='Nueva'){ 
+            $codigo_postal = $request->input('codigo_postal');
+            $estado = $request->input('estado');
+            $ciudad = $request->input('municipio');
+            $colonia = $request->input('asentamiento');
+            $calle = $request->input('calle');
+            $numero = $request->input('numero');
             //$referencia = $request->input('referencia');
 
             //Si elige volverla su ubicacion predeterminada entonces lo actualizamos en el perfil del usuario
-            if($request->has('Default')){
+            if($request->has('aceptar')){
                 $user->Codigo_postal_u = $codigo_postal;
                 $user->estado_u = $estado;
                 $user->ciudad_u = $ciudad;
