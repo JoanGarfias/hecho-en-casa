@@ -38,7 +38,8 @@ Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name
 Route::post('/direccion', [ControladorRegistro::class, 'guardarDireccion'])->name('registrar.direccion.post');
 
 /* PROCESOS PARA RECUPERACION */
-Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecuperacion'])->name('recuperacion.get');
+Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecuperacion'])->name('recuperacion.get')
+->middleware(EnlazadorRecuperacion::class);
 Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post')
 ->middleware(EnlazadorRecuperacion::class);;
 

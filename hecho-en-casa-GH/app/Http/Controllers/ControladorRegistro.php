@@ -94,7 +94,10 @@ class ControladorRegistro extends Controller
         return view('prueba-recuperacion');
     } 
 
-    public function validarRecuperacion(Request $request, $token){
+    public function validarRecuperacion(Request $request, $token = null){
+        if(!$token){
+            return redirect()->route('inicio.get')->withErrors(['error' => 'Token no proporcionado']);
+        }
         $usuario = Usuario::where('token_recuperacion', $token)->first();
         if ($usuario){
             session([
