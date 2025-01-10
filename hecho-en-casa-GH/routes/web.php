@@ -23,12 +23,16 @@ Route::get('/conocenos', [ControladorCalendario::class, 'index']);
 Route::get('/buscarpedido', [ControladorBuscarPedido::class, 'ObtenerFolio'])->name('buscarpedido.get');
 Route::post('/buscarpedido', [ControladorBuscarPedido::class, 'MostrarPedido'])->name('buscarpedido.post');
 Route::get('/calendario', [ControladorCalendario::class, 'index'])->name('calendario.get');
-//Route::get('/perfil', [ControladorPerfil::class, ''])->name('perfil.get');
+
+Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])->name('perfil.get')
+->middleware(ProtectorSesion::class);
 //Route::post('/perfil', [ControladorPerfil::class, ''])->name('perfil.post');
 
 /* PROCESO DE LOGIN */
-Route::get('/login', [ControladorLogin::class, 'mostrarLogin'])->name('login.get')->middleware(ProtectorRouteUserLogin::class);
-Route::post('/login', [ControladorLogin::class, 'Logear'])->name('login.post')->middleware(ProtectorRouteUserLogin::class);
+Route::get('/login', [ControladorLogin::class, 'mostrarLogin'])->name('login.get');
+//->middleware(ProtectorRouteUserLogin::class);
+Route::post('/login', [ControladorLogin::class, 'Logear'])->name('login.post');
+//->middleware(ProtectorRouteUserLogin::class);
 Route::get('/cerrar-sesion', [ControladorLogin::class, 'logout'])->middleware(ProtectorSesion::class)->middleware(ProtectorRouteUserLogin::class);
 
 /* PROCESO DE REGISTRO */
