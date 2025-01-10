@@ -30,27 +30,22 @@
     transform: translate(10px, 10px); /* Desplazamiento para crear el efecto */
 }
 
-/*Código de la contraseña*/
+/*Para la visualizacion de la contraseña*/
 .campo-contrasena {
     position: relative;
     display: flex;
-    align-items: center; /* Alinea verticalmente los elementos */
-    width: 70%; /* Define el ancho del contenedor */
-    margin: 0 auto; /* Centra el contenedor si es necesario */
+    align-items: center;
 }
 
 .campo-contrasena input {
-    width: 100%; /* Asegura que el input ocupe todo el ancho del contenedor */
+    width: 100%;
     padding-right: 40px; /* Espacio para el ícono */
 }
 
 .visibility {
     position: absolute;
-    right: 10px; /* Espaciado desde el borde derecho */
-    top: 50%; /* Posiciona el ícono en el centro vertical */
-    transform: translateY(-50%); /* Ajusta para centrar completamente */
+    right: 10px;
     cursor: pointer;
     font-size: 1.2em; /* Ajusta el tamaño del ícono */
     color: #555; /* Cambia el color del ícono */
 }
-
