@@ -23,11 +23,24 @@ class ControladorRegistro extends Controller
         session()->put('proceso_registro', $request->route()->getName());
         /*ENLAZADOR DE REGISTRO */
 
-        $nombre = $request->input('name');
-        $apellido_paterno = $request->input('apellidoP');
-        $apellido_materno = $request->input('apellidoM');
-        $telefono = $request->input('phone');
-        $correo = $request->input('email');
+        $credentials = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email',
+            'telefono' => 'required|numeric|digits_between:10,15',
+            'apellidoP' => 'required|string|max:255',
+            'apellidoM' => 'required|string|max:255',
+            'g-recaptcha-response' => 'required|captcha',  // Validación del reCAPTCHA
+        ], [
+            'g-recaptcha-response.required' => 'Por favor, confirma que no eres un robot.',
+            'g-recaptcha-response.captcha' => 'La validación de seguridad falló. Por favor, intenta nuevamente.',  // Mensaje personalizado
+        ]);
+        
+        $nombre = $credentials['name'];
+        $apellido_paterno = $credentials['apellidoP'];
+        $apellido_materno = $credentials['apellidoM'];
+        $telefono = $credentials['phone'];
+        $correo = $credentials['email'];
+        
         $correo_existe = usuario::where('correo_electronico', $correo)->first();
 
         if ($correo_existe) {

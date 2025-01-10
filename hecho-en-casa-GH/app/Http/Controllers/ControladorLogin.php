@@ -21,12 +21,14 @@ class ControladorLogin extends Controller
     public function Logear(Request $request)
     {
         $action = $request->input('solicitud');//esto borrar
-        
+
+
         if($action === 'login'){
             
             $credentials = $request->validate([
                 'correo_electronico' => 'required|email',
                 'contraseña' => 'required',
+                'g-recaptcha-response' => 'required|captcha',
             ]);
     
             $usuario = Usuario::where('correo_electronico', $credentials['correo_electronico'])->first();
