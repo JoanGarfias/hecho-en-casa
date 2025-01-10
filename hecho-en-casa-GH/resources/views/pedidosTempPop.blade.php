@@ -5,7 +5,14 @@
     <x-menu />
   
 <div class = "titule">
-    <h2>PEDIDOS DE TEMPORADA</h2>
+
+    
+    @if (false) <!--Recuerda poner este-->
+        <h2>PEDIDOS DE TEMPORADA</h2>   
+    @else
+        <h2>PEDIDOS POP UP</h2>   
+    @endif
+    
 </div>
 <div class="flexi">
     
@@ -44,8 +51,8 @@
                         <div class="custom-select">
                             <button id="toggleSelect" class="custom-select-button">🔻</button>
                             <div id="selectOptions" class="custom-select-options" style="display: none;">
-                                <div class="option" data-value="opcion1">Recoger en sucursal</div>
-                                <div class="option" data-value="opcion2">Envío a domicilio</div>
+                                <div class="option" value="Sucursal">Recoger en sucursal</div>
+                                <div class="option" value="Domicilio">Envío a domicilio</div>
                             </div>
                             <input type="hidden" id="tipoEntrega" name="tipoEntrega">
                         </div>

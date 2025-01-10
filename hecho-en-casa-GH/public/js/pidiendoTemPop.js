@@ -20,7 +20,7 @@ document.getElementById('toggleSelect').addEventListener('click', function(event
 
 document.querySelectorAll('.custom-select-options .option').forEach(option => {
     option.addEventListener('click', function() {
-        const value = this.getAttribute('data-value');
+        const value = this.getAttribute('value');
         document.getElementById('tipoEntrega').value = value;
         document.getElementById('toggleSelect').textContent = this.textContent;
         document.getElementById('selectOptions').style.display = 'none';
