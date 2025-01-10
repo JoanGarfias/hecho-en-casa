@@ -15,10 +15,11 @@ use Illuminate\Support\Facades\Cache;
 
 class ControladorCatalogoPersonalizado extends Controller
 {
-    public function mostrarCatalogo(){
-        session([
-            'id_tipopostre' => "personalizado"
-        ]);
+    public function mostrarCatalogo(Request $request){
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('id_tipopostre', 'personalizado');
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         return view("personalizados");
     }
@@ -31,7 +32,11 @@ class ControladorCatalogoPersonalizado extends Controller
         return redirect()->route('personalizado.calendario.get');
     }
 
-    public function mostrarDetalles(){ //GET: Vista de detalles para personalizado
+    public function mostrarDetalles(Request $request){ //GET: Vista de detalles para personalizado
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
         $sabores = Cache::remember('sabores', 10, function () {
             return SaborPan::select('id_sp', 'nom_pan', 'precio_p')
             ->get();
@@ -168,7 +173,11 @@ class ControladorCatalogoPersonalizado extends Controller
         }
     }
 
-    public function mostrarDireccion(){
+    public function mostrarDireccion(Request $request){
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        
         $datos = session('datos_pedido');
         return view('direccionPersonalizado', compact('datos'));
     }
@@ -180,7 +189,43 @@ class ControladorCatalogoPersonalizado extends Controller
 
 
         $tipo_domicilio = $request->input('tipo_domicilio');
-        $datos = session('datos_pedido');       
+        //dd($tipo_domicilio);
+        //$datos = session('datos_pedido'); 
+        
+        $id_usuario = 1; //Prueba
+        $user = Cache::remember('user', 10, function () use ($id_usuario){
+            return usuario::where('id_u', $id_usuario)->first(); 
+        });
+        $datos = session('datos_pedido'); 
+        $codigo_postal = $user->Codigo_postal_u;
+        $estado = $user->estado_u;
+        $ciudad = $user->ciudad_u;
+        $colonia = $user->colonia_u;
+        $calle = $user->calle_u;
+        $numero = $user->num_exterior_u;
+
+        if($tipo_domicilio==="Nueva"){ //Datos prueba
+            $codigo_postal = "77890";
+            $estado = "Queretaro";
+            $ciudad = "Palenque";
+            $colonia = "Reforma 5";
+            $calle = "Sin nombre";
+            $numero = "1";
+            //$referencia = $request->input('referencia');
+
+            //Si elige volverla su ubicacion predeterminada entonces lo actualizamos en el perfil del usuario
+            if($request->has("Default")){
+                $user->Codigo_postal_u = $codigo_postal;
+                $user->estado_u = $estado;
+                $user->ciudad_u = $ciudad;
+                $user->colonia_u = $colonia;
+                $user->calle_u = $calle;
+                $user->num_exterior_u = $numero;
+                //$user->referencia_u = $referencia;
+                $user->save();
+            }
+
+        }
 
         // Instanciación de Pastelpersonalizado
         $pastel = new Pastelpersonalizado;
@@ -216,7 +261,7 @@ class ControladorCatalogoPersonalizado extends Controller
                 $listarElemento->id_elemento = $elem;
                 $listarElemento->save();
             }
-            return redirect()->route('personalizado.ticket.get', ['folio' => $id_pedido]);  
+        return redirect()->route('personalizado.ticket.get', ['folio' => $id_pedido]);  
     }
 
     public function mostrarTicket(Request $request, $folio = null){
@@ -226,6 +271,7 @@ class ControladorCatalogoPersonalizado extends Controller
 
         if ($folio !== null) {
             // Consulta el pedido con el folio
+            //Cache innecesario, por ser una consulta que se realiza una sola vez, y es improbable que se realice la misma consulta con un mismo folio dos veces seguidas
             $ticket_pedido = Pedido::select('id_ped','id_seleccion_usuario','id_tipopostre', 'porcionespedidas', 'status', 'precio_final')
             ->where('id_ped', $folio)
             ->first();
@@ -237,7 +283,7 @@ class ControladorCatalogoPersonalizado extends Controller
             // Si hay una relación con Pastelpersonalizado
             $id_pastel = $ticket_pedido->id_seleccion_usuario;
             $datos = ["id_pastel" => $id_pastel];
-
+            //Cache innecesario, por ser una consulta que se realiza una sola vez, y es improbable que se realice la misma consulta con un mismo folio dos veces seguidas
             $ticket_pastel = Pastelpersonalizado::select('id_saborpan', 'id_saborrelleno', 'id_cobertura', 'tipo_evento', 'descripciondetallada', 'imagendescriptiva')
             ->where('id_pp', $id_pastel)
             ->first();

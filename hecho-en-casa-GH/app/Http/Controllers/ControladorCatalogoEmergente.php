@@ -20,7 +20,7 @@ class ControladorCatalogoEmergente extends Controller
     //No deberia estar aca pero jeyson no puso un POST para el catalogo
     /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
-        $emergentes = Cache::remember('catalogoemergentes', 600, function () {
+        $emergentes = Cache::remember('catalogoemergentes', 30, function () {
             return [
                 'temporada' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre')
                                     ->where('id_tipo_postre', 'temporada')
@@ -38,6 +38,19 @@ class ControladorCatalogoEmergente extends Controller
             Log::info('Cache is empty or expired.');
             return response()->json([]);
         }
+
+        return view('emergentes-prueba', compact('emergentes'));
+    }
+
+    public function guardarSeleccion(Request $request){
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
+        $idPostre = $request->input('comprar');
+        $postre = Cache::remember('postres', 30, function () use ($idPostre){
+            return Catalogo::where('id_postre', $idPostre)->first();
+        });
         
         return response()->json($emergentes);
     }
@@ -59,7 +72,12 @@ class ControladorCatalogoEmergente extends Controller
         return redirect()->route('emergente.detallesPedido.get');
     }
 
-    public function mostrarDetalles(){
+    public function mostrarDetalles(Request $request){
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
+
         //ESTO DEBERIA JALARSE DE LA VISTA ANTERIOR AQUI SOLO VA UN EJEMP
         session([
             'id_u' => "1", //<----OJITO AQUI DEBERIA DE JALARSE EL ID DE LA SESION
@@ -85,7 +103,7 @@ class ControladorCatalogoEmergente extends Controller
         return view('detallesEmergente');
     }
 
-    public function seleccionarDetalles(Request $request){        
+    public function seleccionarDetalles(Request $request){    
         $validated = $request->validate([
             'cantidad' => 'required|integer',
             'tipo_entrega' => 'required',
@@ -93,14 +111,25 @@ class ControladorCatalogoEmergente extends Controller
 
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         $tipo_entrega = $validated['tipo_entrega'];
-        
         session()->put('opcion_envio', $tipo_entrega);
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
+
+
         session([
             'cantidad_pedida' => $validated['cantidad'],
             'tipo_entrega' => $validated['tipo_entrega'],
+        ]);
+
+        $usuario = Cache::remember('usuario', 30, function () {
+            return usuario::where('id_u', session('id_usuario'))->first();
+        });
+
+        $direccion = $usuario->calle_u . " " . $usuario->num_exterior_u . ", " . $usuario->colonia_u;
+        session([
+            'telefono' => $usuario->telefono,
+            'direccion' => $direccion,
         ]);
 
         if($tipo_entrega === 'Domicilio'){
@@ -150,8 +179,17 @@ class ControladorCatalogoEmergente extends Controller
         return redirect()->route('emergente.ticket.get');   
     }
 
-    public function seleccionarDireccion(Request $request){ 
+    public function mostrarDireccion(Request $request){
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
+
+        //$datos = session('datos_pedido');
+        return view('direccionEmergente');
+    }
+
+    public function seleccionarDireccion(Request $request){ 
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
@@ -159,7 +197,9 @@ class ControladorCatalogoEmergente extends Controller
         $ubicacion = $request->input('ubicacion');
         $id_usuario = $request->input('id_usuario');
         //por defecto cargamos la ubicacion del usuario predeterminado
-        $user = usuario::where('id_u', $id_usuario)->first();
+        $user = Cache::remember('usuario', 30, function () {
+            return usuario::where('id_u', session('id_usuario'))->first();
+        });
         $codigo_postal = $user->Codigo_postal_u;
         $estado = $user->estado_u;
         $ciudad = $user->ciudad_u;
