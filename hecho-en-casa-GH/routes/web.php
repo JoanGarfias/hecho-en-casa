@@ -50,7 +50,7 @@ Route::middleware(EnlazadorRegistro::class)->group(function () {
 Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecuperacion'])->name('recuperacion.get')
 ->middleware(EnlazadorRecuperacion::class);
 Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post')
-->middleware(EnlazadorRecuperacion::class);;
+->middleware(EnlazadorRecuperacion::class);
 
 /* RUTAS DE POSTRES FIJOS */
 Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrarCatalogo'])->name('fijo.catalogo.get');
