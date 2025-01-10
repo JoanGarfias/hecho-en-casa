@@ -180,7 +180,7 @@ class ControladorCatalogo extends Controller
                 ]);
 
                 return redirect()->route('fijo.detallesPedido.get');
-                break;
+                //break;
             case "personalizado":
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
                 session()->put('proceso_compra', 'personalizado.calendario.post');
@@ -202,7 +202,7 @@ class ControladorCatalogo extends Controller
     
                     return redirect()->route('personalizado.detallesPedido.get');
                 }
-                break;
+                //break;
             case "emergente":
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
                 session()->put('proceso_compra', 'emergente.calendario.post');
@@ -215,7 +215,7 @@ class ControladorCatalogo extends Controller
                 ]);
 
                 return redirect()->route('emergente.detallesPedido.get');
-                break;
+                //break;
                 // return ERROR;
         }
         /* return view('fechaSeleccionada', [
