@@ -20,6 +20,7 @@
         <div id="nuevaDireccion" style="display: none; margin-top: 20px;">
             <label for="codigo_postal">Código Postal:</label>
             <input type="number" id="codigo_postal" name="codigo_postal" maxlength="5" pattern="\d{5}" placeholder="Ingresa código postal"><br><br>
+            <a href="https://www.correosdemexico.gob.mx/SSLServicios/ConsultaCP/Descarga.aspx">Buscar mi CP.</a>
             
             <label for="estado">Estado:</label>
             <input type="text" id="estado" name="estado" readonly placeholder="Estado"><br><br>
