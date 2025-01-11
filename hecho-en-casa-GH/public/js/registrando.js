@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Captura el botón presionado
     botones.forEach((boton) => {
-        boton.addEventListener("click", () => {
-            e.preventDefault();
+        boton.addEventListener("click", event => {
+            event.preventDefault();
             valorBoton = boton.value; 
             hiddenAction.value = valorBoton;
             switch (valorBoton) {
