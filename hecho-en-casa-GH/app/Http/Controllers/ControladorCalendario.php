@@ -7,12 +7,28 @@ use App\Models\Pedido;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use InvalidArgumentException;
 
 class ControladorCalendario extends Controller
 {
     public function index($mes = null, $anio = null){
         $fecha = Carbon::now();
         if($mes && $anio){
+            if (!is_numeric($mes) || !is_numeric($anio)) {
+                throw new InvalidArgumentException('El mes y el año deben ser números enteros.');
+            }
+            
+            $mes = (int) $mes;
+            $anio = (int) $anio;
+
+            if ($mes < 1 || $mes > 12) {
+                throw new InvalidArgumentException('El mes debe estar entre 1 y 12.');
+            }
+
+            if ($anio < 2024 || $anio > Carbon::now()->year + 1) {
+                throw new InvalidArgumentException('El año no es válido.');
+            }
+
             $fecha = Carbon::createFromDate($anio, $mes, 1);
         }
         
@@ -31,14 +47,24 @@ class ControladorCalendario extends Controller
         $diaSiguiente = $diaActual->copy()->addDay();
                         
             //obtencion de los dias del calendario
+     
         while ($diaActual->lte($ultimoDiaDelMes)) {
-            $diasDelMes[] = [
-                'fecha' => $diaActual->toDateString(), // Solo la fecha
-                'porciones' => $pedidos->whereBetween('fecha_hora_entrega', [$diaActual, $diaSiguiente])->sum('porcionespedidas'),
-            ];
+            if($pedidos){
+                $diasDelMes[] = [
+                    'fecha' => $diaActual->toDateString(), // Solo la fecha
+                    'porciones' => $pedidos->whereBetween('fecha_hora_entrega', [$diaActual, $diaSiguiente])->sum('porcionespedidas'),
+                ];
+            }else{
+                $diasDelMes[] = [
+                    'fecha' => $diaActual->toDateString(), // Solo la fecha
+                    'porciones' => 0,
+                ];
+            }
+            
             $diaActual->addDay();
             $diaSiguiente->addDay();
         }
+        
 
         $calendarioJson = json_encode([
             'diasDelMes' => $diasDelMes,

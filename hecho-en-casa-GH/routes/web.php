@@ -20,11 +20,11 @@ use App\Http\Middleware\ProtectorPeticiones;
 
 /* VISTAS PRINCIPALES */
 Route::get('/', [ControladorInicio::class, 'index'])->name('inicio.get');
-Route::get('/conocenos', [ControladorCalendario::class, 'index']);
+Route::get('/conocenos', [ControladorInicio::class, 'conocenos'])->name('conocenos.get');
 Route::get('/buscarpedido', [ControladorBuscarPedido::class, 'ObtenerFolio'])->name('buscarpedido.get');
 Route::post('/buscarpedido', [ControladorBuscarPedido::class, 'MostrarPedido'])->name('buscarpedido.post');
 
-Route::get('/calendario', [ControladorCalendario::class, 'index'])->name('calendario.get')
+Route::get('/calendario/{mes?}/{anio?}', [ControladorCalendario::class, 'index'])->name('calendario.get')
 ->middleware(ProtectorPeticiones::class);
 
 Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])->name('perfil.get')

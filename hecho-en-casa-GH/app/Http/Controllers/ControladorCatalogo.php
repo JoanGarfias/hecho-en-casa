@@ -17,6 +17,7 @@ use App\Models\AtributosExtra;
 use App\Models\TipoAtributo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use InvalidArgumentException;
 
 class ControladorCatalogo extends Controller
 {
@@ -95,6 +96,21 @@ class ControladorCatalogo extends Controller
     
         $fecha = Carbon::now();
         if($mes && $anio){
+            if (!is_numeric($mes) || !is_numeric($anio)) {
+                throw new InvalidArgumentException('El mes y el año deben ser números enteros.');
+            }
+            
+            $mes = (int) $mes;
+            $anio = (int) $anio;
+
+            if ($mes < 1 || $mes > 12) {
+                throw new InvalidArgumentException('El mes debe estar entre 1 y 12.');
+            }
+
+            if ($anio < 2024 || $anio > Carbon::now()->year + 1) {
+                throw new InvalidArgumentException('El año no es válido.');
+            }
+            
             $fecha = Carbon::createFromDate($anio, $mes, 1);
         }
 
