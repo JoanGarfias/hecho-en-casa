@@ -21,5 +21,7 @@
 <body>
     <h1>Error del Sistema</h1>
     <p>Ocurrió un error inesperado. Estamos trabajando para solucionarlo.</p>
+    <p>{{$message}}</p>
+    <a href="{{route('inicio.get')}}">Volver al inicio</a>
 </body>
 </html>
