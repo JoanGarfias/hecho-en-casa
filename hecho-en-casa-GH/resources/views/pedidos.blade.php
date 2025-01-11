@@ -90,6 +90,5 @@
 <x-pie/>
 
 <script src="{{ asset('js/pidiendo.js') }}" defer></script>
-
 <!--Para la animación del logo de usuario-->
 <script src="{{ asset('js/icono.js') }}" defer></script>

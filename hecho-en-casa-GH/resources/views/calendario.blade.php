@@ -10,6 +10,9 @@
     <h1>Seleccionar Fecha</h1>
 
     <!-- Formulario para seleccionar mes y año -->
+
+
+    <!-- AQUI SE TIENE QUE COLOCAR LA LÓGICA PARA SABER QUE RUTA USAR. -->
     <form id="calendario-form" method="POST" action="{{ route('fijo.calendario.post') }}">
         <label for="mes">Mes: </label>
         <input type="number" id="mes" name="mes" min="1" max="12" required>
@@ -18,6 +21,8 @@
         @csrf <!-- Token CSRF obligatorio -->
         <button type="submit">Cargar Calendario</button>
     </form>
+
+    <p class="error"></p>>
 
     <div id="calendario"></div>
 
@@ -37,7 +42,14 @@
 
     <script>
         const calendario = @json($calendarioJson);
+        const error = @json($error);
         console.log(calendario);
+        console.log(error);
+
+
+        if(error !== null){
+            document.querySelector('.error').textContent = error;
+        }
     </script>
 </body>
 </html>
