@@ -23,23 +23,45 @@ formulario.addEventListener("submit", (e) => {
 /////////////////
 function validateForm() {
     // Agregar un  evento de clic al enlace
+    console.log("validandoForm")
+    
     enlaceOlvidado.addEventListener('click', function(event) {
-        /* event.preventDefault(); */ // Evita que el enlace navegue
-        /////////////////////
+        console.log("presionando olvidar")
 
-
-        // Si quieres hacer una validación antes de mostrar algo, puedes agregar lógica aquí
+        // Si quieres hacer una validación uantes de mostrar algo, puedes agregar lógica aquí
         const emailInput = document.getElementById('email');
         //Hacer la validación del correo desde la BD para ver si existe
 
+        let validarEmail = document.getElementById("mensajeEmail")
+        
         // Verificar si el campo de email tiene valor
         if (emailInput.value.trim() === "") {
-            document.getElementById('errorEmail').textContent = 'Ingresa tu correo electrónico para continuar.';
+            validarEmail.textContent = ''
+            console.log("Ingresa un correo")
+            validarEmail.textContent = 'Ingresa tu correo electrónico para continuar.';
+            validarEmail.className = "error";
+            
         } else {
-            document.getElementById('errorEmail').textContent = '';
-            document.getElementById('bienEmail').textContent = 'Correo válido.';
+            validarEmail.textContent = ''
+            validarEmail.textContent = 'Correo válido.';
+            validarEmail.className = "bien"; 
+            /*Para el blur*/
+            // Obtener referencias a los elementos
+            const fondoEmergente = document.getElementById('fondoEmergente');
+           // const cerrarPopup = document.getElementById('cerrarEmergente');
+
+            // Mostrar la ventana emergente
+            fondoEmergente.style.display = 'flex';
+          
+
+            // Aquí se oculta, pero, podrías hacer otra cosa
+            cerrarPopup.addEventListener('click', () => {
+                fondoEmergente.style.display = 'none';
+            });
         }
+
     });
 
-    formulario.submit(); // Enviamos el formulario
-}
+    formulario.submit()
+
+} //Se agregó una llave faltante en la línea 60

@@ -5,7 +5,7 @@ const months = [
     { name: "Marzo", days: 31, startDay: 5, bg: "url('img/marzo.png')" },
     { name: "Abril", days: 30, startDay: 1, bg: "url('img/abril.png')" },
     { name: "Mayo", days: 31, startDay: 3, bg: "url('img/mayo.png')" },
-    { name: "Junio", days: 30, startDay: 0, bg: "url('img/junio.png')" },
+    { name: "Junio", days: 30, startDay: 6, bg: "url('img/junio.png')" },
     { name: "Julio", days: 31, startDay: 1, bg: "url('img/julio.png')" },
     { name: "Agosto", days: 31, startDay: 4, bg: "url('img/agosto.png')" },
     { name: "Septiembre", days: 30, startDay: 0, bg: "url('img/septiembre.png')" },

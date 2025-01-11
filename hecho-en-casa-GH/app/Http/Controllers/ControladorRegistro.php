@@ -106,14 +106,12 @@ class ControladorRegistro extends Controller
         $usuario->ciudad_u = $request->input('ciudad');
         $usuario->colonia_u = $request->input('colonia');
         $usuario->calle_u = $request->input('calle');
-        $usuario->num_exterior_u = $request->input('numExt');
-        $usuario->num_interior_u = $request->input('numInt');
-        $usuario->referencia_u = $request->input('referencias');
+        $usuario->num_exterior_u = $request->input('num'); ///<-----------AQUI SE TIENE QUE SEPARAR EN DOS CAMPOS
+        //$usuario->referencia_u = $request->input('referencia');
         $usuario->contraseña = bcrypt(session('contrasena'));
         try{
             $usuario->save();
         }catch(\Exception $e){
-            dd("Error: " . $e->getMessage());
             return redirect()->route('registrar.get')->with('error', 'Error al guardar el usuario');    
         }
         Mail::to($usuario->correo_electronico)->send(new CorreoRegistro($usuario->nombre));

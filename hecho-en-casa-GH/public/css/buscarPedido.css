@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+/* Reset básico */
+* {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    padding-top: 20px;
+}
+.header {
+    display: flex;
+    flex-direction: column; /* Apila el título y el buscador */
+    align-items: center; /* Centra los elementos horizontalmente */
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    position: relative; /* Permite posicionar el buscador */
+}
+
+.titulo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #7E643B;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.search-container {
+    position: absolute; /* Coloca el buscador en la esquina superior derecha */
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    background-color: #EADAC6;
+    border-radius: 25px;
+    padding: 5px 10px;
+    width: 300px;
+}
+
+
+.search-container input {
+    border: none;
+    background: white;
+    outline: none;
+    flex: 1;
+    font-size: 16px;
+    color: #b3a89d;
+    padding: 5px;
+    border-radius: 20px;
+}
+
+.search-container img {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+}
+.container {
+    background-color: #EADAC6;
+    width: 1300px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.folio {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #7E643B;
+    position: relative;
+    padding-bottom: 10px;
+    border-bottom: 4px solid #7E643B;
+}
+
+.folio-number {
+    color: #FF0000;
+}
+
+.form-columns {
+    display: flex;
+    justify-content: space-between;
+    gap: 90px;
+}
+
+.form-column {
+    flex: 1;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    background-color: #FCF5C7;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 50px;
+}
+
+.form-group label {
+    font-size: 17px;
+    color: #7E643B;
+    font-weight: bold;
+    margin-right: 10px;
+    flex: 1;
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px;
+    border: 1px solid #d0bfa0;
+    border-radius: 5px;
+    flex: 2;
+}
+
+.estatus-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 2;
+}
+
+.estatus-options button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.estatus-options .pending {
+    background-color: #f9cc92;
+    color: #7E643B;
+}
+
+.estatus-options .accepted {
+    background-color: #f4b482;
+    color: #7E643B;
+}
+
+.cost {
+    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+    color: #7E643B;
+}
+
+.costo-aprox {
+    font-family: "Poppins", sans-serif;
+    color: #7E643B;
+    font-weight: bold;
+    font-size: 18px;
+}

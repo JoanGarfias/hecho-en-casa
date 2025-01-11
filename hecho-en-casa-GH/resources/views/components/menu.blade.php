@@ -10,9 +10,12 @@
     <div class="menu">
         <nav>
             <ul class="menu-izquierdo">
+
+
                 <li><a href="{{route('inicio.get')}}">Inicio</a></li>
                 <li><a href="{{route('calendario.get') }}">Calendario</a></li>
                 <li><a href="{{route('fijo.catalogo.get')}}">Catálogo</a></li>
+
             </ul>
 
             <!-- Logo directamente en el menú -->
