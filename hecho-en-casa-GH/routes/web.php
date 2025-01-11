@@ -81,14 +81,14 @@ Route::middleware([ProtectorSesion::class])->group(function () {
 
     Route::get('fijo/ticket/{folio}', [ControladorCatalogo::class, 'mostrarTicket'])->name('fijo.ticket.get');
 });
-Route::post('fijo/detalles-direccion/buscar', [App\Http\Controllers\ControladorCP::class, 'buscar'])->name('buscar');
+Route::post('fijo/detalles-direccion/buscar', [App\Http\Controllers\ControladorCP::class, 'buscar'])->name('buscar'); //Ruta nueva fijo
 
 /* RUTAS DE POSTRES PERSONALIZADOS */
 Route::get('/personalizado', [ControladorCatalogoPersonalizado::class, 'mostrarCatalogo'])->name('personalizado.catalogo.get')
 ->middleware([ProtectorPeticiones::class]);
 
-
-Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(function () {
+//ProtectorSesion::class,EnlazadorPedido::class   Es probable que "EnlazadorPedido::class" el bug se deba que no esta en el enlazador la ruta nueva
+Route::middleware([ProtectorSesion::class])->group(function () {
     Route::post('/personalizado', [ControladorCatalogoPersonalizado::class, 'seleccionarCatalogo'])->name('personalizado.catalogo.post');
 
     Route::get('personalizado/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])->name('personalizado.calendario.get');
@@ -102,6 +102,7 @@ Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(funct
 
     Route::get('personalizado/ticket/{folio}', [ControladorCatalogoPersonalizado::class, 'mostrarTicket'])->name('personalizado.ticket.get');
 });
+Route::post('personalizado/detalles-direccion/buscar', [App\Http\Controllers\ControladorCP::class, 'buscar'])->name('buscar'); //Ruta nueva personalizado
 
 /* RUTAS DE POSTRES EMERGENTES */
 Route::get('/emergentes', [ControladorCatalogoEmergente::class, 'mostrar'])->name('emergente.catalogo.get')
