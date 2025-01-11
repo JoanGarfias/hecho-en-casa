@@ -10,7 +10,6 @@ use App\Models\Elemento;
 use App\Models\ListaElementos;
 use App\Models\Pedido;
 use App\Models\Pastelpersonalizado;
-use App\Models\usuario;
 Use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
@@ -184,7 +183,6 @@ class ControladorCatalogoPersonalizado extends Controller
     }
 
     public function guardarDireccion(Request $request){
-
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
@@ -237,14 +235,13 @@ class ControladorCatalogoPersonalizado extends Controller
         $pastel->tipo_evento = $datos['tematica'];
         $pastel->descripciondetallada = $datos['descripcion'];
         $pastel->id_postre_elegido = 37;
-        $pastel->save();    // Guardamos el pastel en la base de datos
-
+        $pastel->save();  // Guardamos el pastel en la base de datos
         
         // Obtenemos el ID del pastel recién creado
         $id_detalles_pastel = $pastel->id_pp;
-        //$id_usuario = 1;
 
-        // Instanciación de Pedido
+        $id_usuario = 1;
+            // Instanciación de Pedido
         $pedido = new Pedido;
         $pedido->id_usuario = $id_usuario;
         $pedido->id_tipopostre = $datos['id_tipopostre'];
@@ -254,12 +251,6 @@ class ControladorCatalogoPersonalizado extends Controller
         $pedido->precio_final = $datos['costo'];
         $pedido->fecha_hora_registro = $datos['fecha_hora_registro'];
         $pedido->fecha_hora_entrega = $datos['fecha_hora_entrega'];
-        $pedido->estado_e = $estado;
-        $pedido->Codigo_postal_e = $codigo_postal;
-        $pedido->ciudad_e = $ciudad;
-        $pedido->colonia_e = $colonia;
-        $pedido->calle_e = $calle;
-        $pedido->num_exterior_e = $numero; 
         $pedido->save();  // Guardamos el pedido en la base de datos
 
             $id_pedido = $pedido->id_ped;
@@ -274,7 +265,6 @@ class ControladorCatalogoPersonalizado extends Controller
     }
 
     public function mostrarTicket(Request $request, $folio = null){
-        
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->forget('proceso_compra');
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */

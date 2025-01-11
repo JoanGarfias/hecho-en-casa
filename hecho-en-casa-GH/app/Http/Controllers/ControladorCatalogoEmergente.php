@@ -12,21 +12,22 @@ use Illuminate\Support\Facades\Log;
 
 class ControladorCatalogoEmergente extends Controller
 {
-    
+
     public function mostrar(Request $request){
     /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
     session()->put('id_tipopostre', 'emergente');
     session()->put('proceso_compra', $request->route()->getName());
+    //No deberia estar aca pero jeyson no puso un POST para el catalogo
     /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $emergentes = Cache::remember('catalogoemergentes', 30, function () {
             return [
-                'temporada' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre', 'nombre', 'precio_emergentes') 
+                'temporada' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre')
                                     ->where('id_tipo_postre', 'temporada')
                                     ->where('disponible', '1')
                                     ->get(),
 
-                'pop-up' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre', 'nombre', 'descripcion', 'stock', 'precio_emergentes')
+                'pop-up' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre', 'nombre', 'descripcion', 'stock')
                                     ->where('id_tipo_postre', 'pop-up')
                                     ->where('stock', '>', 0)
                                     ->get(),
@@ -51,13 +52,7 @@ class ControladorCatalogoEmergente extends Controller
             return Catalogo::where('id_postre', $idPostre)->first();
         });
         
-        session([
-            'id_tipopostre' => 'emergente',
-            'postre' => $idPostre,
-            'nombre_postre' => $postre->nombre,
-        ]);
-
-        return redirect()->route('emergente.calendario.get');
+        return response()->json($emergentes);
     }
 
     public function seleccionar(Request $request){
@@ -85,13 +80,24 @@ class ControladorCatalogoEmergente extends Controller
 
         //ESTO DEBERIA JALARSE DE LA VISTA ANTERIOR AQUI SOLO VA UN EJEMP
         session([
+            'id_u' => "1", //<----OJITO AQUI DEBERIA DE JALARSE EL ID DE LA SESION
             //RECORDARIO DE ACTUALIZAR ESTO CUANDO SE MANEJE LA SESION
             //TALVEZ AQUI GUARDEMOS EL ID DEL USUARIO O ANTES PERO HAY QUE RECUPERARLO CUANDO INICIE SESION
             //O DE LA CACHE CREO PERO CON RECORDATORIO ->>>>>>>>>>>>
-            'id_usuario' => 1,
             'fecha' => "2025-01-03",
             'hora_entrega' => "12:00",
+            'postre' => "30",
             'cantidad_minima' => "4",
+        ]);
+
+        //ESTO ES LA CONSULTA A PARTIR DEL ID QUE ME LLEGO DE LA VISTA ANTERIOR
+        $postre = Cache::remember('postresession', 10, function () {
+            return Catalogo::where('id_postre', session('postre'))
+                            ->first();
+        });
+
+        session([   
+            'nombre_postre' => $postre->nombre,
         ]);
 
         return view('detallesEmergente');
@@ -129,9 +135,8 @@ class ControladorCatalogoEmergente extends Controller
         if($tipo_entrega === 'Domicilio'){
             return redirect()->route('emergente.direccion.get');  //SI SELECCIONO ENTREGA A DOMICILIO ENTONCES NOS VAMOS A DETALLES DIRECCION
         }
-        
+
         $id_postre = session('postre');
-        
         $postre = Cache::remember('postres2', 10, function () use ($id_postre){
             return Catalogo::where('id_postre', $id_postre)
                             ->first();
@@ -146,7 +151,7 @@ class ControladorCatalogoEmergente extends Controller
         }
 
         $pedido = new Pedido;
-        $pedido->id_usuario = session('id_usuario');
+        $pedido->id_usuario = session('id_u');
         $pedido->id_tipopostre = $postre->id_tipo_postre;
         $pedido->id_seleccion_usuario = $emergente->id_pt;//este es el id de la tabla postre emergente que se guardara en pedido
         $pedido->porcionespedidas = session('cantidad_pedida');
@@ -164,11 +169,7 @@ class ControladorCatalogoEmergente extends Controller
         //para reducir su stock en caso de que tenga si es null entonces no maneja stock
         if($postre->stock != null){
             $postre->stock = $postre->stock - session('cantidad_pedida');
-            try{
-                $postre->save();
-            }catch(\Exception $e){
-                dd("Error al actualizar stock: ".$e->getMessage());
-            }
+            $postre->save();
         }
 
         session([
@@ -194,6 +195,7 @@ class ControladorCatalogoEmergente extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $ubicacion = $request->input('ubicacion');
+        $id_usuario = $request->input('id_usuario');
         //por defecto cargamos la ubicacion del usuario predeterminado
         $user = Cache::remember('usuario', 30, function () {
             return usuario::where('id_u', session('id_usuario'))->first();
@@ -207,8 +209,8 @@ class ControladorCatalogoEmergente extends Controller
         //$referencia = $user->referencia_u;
 
         //si elige otra entocnes sobreescribimos los valores
-        if($ubicacion=='Nueva'){
-            $codigo_postal = $request->input('codigo-postal');
+        if($ubicacion=='otra'){
+            $codigo_postal = $request->input('codigo_postal');
             $estado = $request->input('estado');
             $ciudad = $request->input('ciudad');
             $colonia = $request->input('colonia');
@@ -217,7 +219,7 @@ class ControladorCatalogoEmergente extends Controller
             //$referencia = $request->input('referencia');
 
             //si elige volverla su ubicacion predeterminada entonces lo actualizamos en el perfil del usuario
-            if($request->has('cambiar')){
+            if($request->has('predeterminado')){
                 $user->Codigo_postal_u = $codigo_postal;
                 $user->estado_u = $estado;
                 $user->ciudad_u = $ciudad;
@@ -242,11 +244,10 @@ class ControladorCatalogoEmergente extends Controller
             $emergente->save();
         }catch(\Exception $e){
             dd("Error al guardar el postre emergente: ".$e->getMessage());
-            return redirect()->route('inicio.get')->with('error', 'Error al guardar el pedido');
         }
 
         $pedido = new Pedido;
-        $pedido->id_usuario = session('id_usuario');
+        $pedido->id_usuario = session('id_u');
         $pedido->id_tipopostre = $postre->id_tipo_postre;
         $pedido->id_seleccion_usuario = $emergente->id_pt;//este es el id de la tabla postre emergente que se guardara en pedido
         $pedido->estado_e = $estado;
@@ -266,7 +267,6 @@ class ControladorCatalogoEmergente extends Controller
             $pedido->save();
         } catch (\Exception $e) {
             dd("Error al guardar el pedido: " . $e->getMessage());
-            return redirect()->route('inicio.get')->with('error', 'Error al guardar el pedido');
         }
         
         session([

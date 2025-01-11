@@ -13,7 +13,7 @@
             <div class="dosColumnas">
                 <div class="columna">
                     <div class="fila">
-                        <label for="codigoPostal">Codigo postal:</label>
+                        <label for="codigoPostal">Código postal:</label>
                         <input type="text" id="codigoPostal" name="codigoPostal" required>
                     </div>
                     

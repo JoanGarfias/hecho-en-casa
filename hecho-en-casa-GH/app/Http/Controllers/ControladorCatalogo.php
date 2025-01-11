@@ -135,8 +135,7 @@ class ControladorCatalogo extends Controller
 
         $fechaEscogida = "2025-09-05";
         $horaEntrega = "12:00";
-        $postre = session('postre');
-        
+        $postre = session('id_postre');
         $tipopostre = session('id_tipopostre');
 
         session(['fecha_entrega' => $fechaEscogida]);
@@ -341,27 +340,21 @@ class ControladorCatalogo extends Controller
         session(['nombre_unidad'=> $nombreUnidad]);
         $cantidad = intval($request->input('cantidad'));
         session(['porcionespedidas'=> $unidadm * $cantidad]);
-        $valoresSeleccionados = session('atributosSesion');
-        session(['id_um' => $id_um->id_um]);
-
-        if (!empty($valoresSeleccionados)) {
-            foreach (session('atributosSesion', []) as $nombreTipo => $atributos) { //$valoresSeleccionados as $nombreTipo
-                $campo = strtolower($nombreTipo);  // Usamos el mismo nombre dinámico que en la vista
-                $valor = $request->input($campo);  // Capturamos el valor enviado
-                $valoresSeleccionados[$campo] = $valor;
-            }
-
-    
-            $id_tipoatributo = TipoAtributo::where('nombre_atributo', $campo)->first();
-                $id_atributo = AtributosExtra::where('id_tipo_atributo', $id_tipoatributo->idtipo_atributo)
-                ->where('nom_atributo', $valor)
-                ->first(['id_atributo']);
-                session(['id_atributo'=> $id_atributo->id_atributo]);
-        } else {
-            session(['id_atributo' => null]);  
+        $valoresSeleccionados = [];
+        foreach (session('atributosSesion', []) as $nombreTipo => $atributos) {
+            $campo = strtolower($nombreTipo);  // Usamos el mismo nombre dinámico que en la vista
+            $valor = $request->input($campo);  // Capturamos el valor enviado
+            $valoresSeleccionados[$campo] = $valor;
         }
+        $id_tipoatributo = TipoAtributo::where('nombre_atributo', $campo)->first();
+        $id_atributo = AtributosExtra::where('id_tipo_atributo', $id_tipoatributo->idtipo_atributo)
+        ->where('nom_atributo', $valor)
+        ->first(['id_atributo']);
+        session(['id_atributo'=> $id_atributo->id_atributo]);
 
+        // Ahora se puede usar los valores capturados
         session(['valoresSeleccionados' => $valoresSeleccionados]); // Captura como array
+        
 
         if ($tipo_entrega == "Domicilio") {
             $datos = [
@@ -383,8 +376,8 @@ class ControladorCatalogo extends Controller
             // Instanciación de postrefijo  
 
             $fijo = new Postrefijo;
-            $fijo->id_atributo= session("id_atributo");//$id_atributo->id_atributo;
-            $fijo->id_um = session("id_um");  //$id_um->id_um
+            $fijo->id_atributo= $id_atributo->id_atributo;
+            $fijo->id_um = $id_um->id_um;  //1
             $fijo->id_postre_elegido = $id_postre;  //1 NUEVO
             $fijo->save();  
 
@@ -449,6 +442,7 @@ class ControladorCatalogo extends Controller
         //ACÁ SE DEBERÍA JALAR LA UBICACIÓN DEL FORMULARIO
         //dd($tipo_domicilio);
         $id_usuario = session('id_usuario');
+        //por defecto cargamos la ubicacion del usuario predeterminado
         $user = usuario::where('id_u', $id_usuario)->first();
         $datos = session('datos_pedido'); 
         $codigo_postal = $user->Codigo_postal_u;

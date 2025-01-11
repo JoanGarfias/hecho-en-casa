@@ -11,27 +11,29 @@
             <br>
             <label for="password" class = "campos">Contraseña:</label>
             <div class="campo-contrasena">
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" onfocus="borrarParrafo('mensajePass')"  required>
                 <i class="fi fi-rs-crossed-eye visibility" onclick="visibility('password', this)"></i>
             </div>
-            <div class="mensaje">
-                <p id="errorPass" class="error"></p>
-                <p id="bienPass" class="bien"></p>
+            <div class="mensajito">
+                <p id="mensajePass" class="bien"></p>
             </div>
             <br>
 
             <label for="confirmacion" class = "campos">Confirmar contraseña:</label>
             <div class="campo-contrasena">
-                <input type="password" id="confirmacion" name="confirmacion" required>
+                <input type="password" id="confirmacion" name="confirmacion" onfocus="borrarParrafo('mensajeConfirmacion')" required>
                 <i class="fi fi-rs-crossed-eye visibility" onclick="visibility('confirmacion', this)"></i>
             </div>
-            <div class="mensaje">
-                <p id="errorConfirmacion" class="error"></p>
-                <p id="asegurarConfirmacion" class="error"></p>
-                <p id="bienConfirmacion" class="bien"></p>
+
+            <div class="mensajito">
+                <p id="mensajeConfirmacion" class="bien"></p>
             </div>
             <br>
-            <button class="botoncito" type="submit" name="action" value="contrasena" onclick="validateContra()">Continuar</button>
+            <button class="botoncito" type="submit" name="action" value="contrasena" >Continuar</button>
+
+
+            <!--button class="botoncito" type="submit" name="action" value="contrasena">Continuar</button-->
+
         </form>  
     </div>
 </div>
@@ -41,3 +43,7 @@
 <script src="{{ asset('js/validarContrasena.js') }}"></script>
 <!--Para la animación del logo de usuario-->
 <script src="{{ asset('js/icono.js') }}" defer></script>
+<!--Para mostrar la contraseña-->
+<script src="{{ asset('js/mostrarContra.js') }}" defer></script>
+<!--Para borrar el parrafo al hacer click al input-->
+<script src="{{ asset('js/borrandoParrafo.js') }}" defer></script>

@@ -37,9 +37,7 @@ class ControladorLogin extends Controller
             if ($usuario && Hash::check($credentials['contrasena'], $usuario->contraseña)) {
                 // Generar un nuevo token de sesión encriptado
                 $sessionToken = bin2hex(random_bytes(32));
-                session([
-                    'id_usuario' => $usuario->id_u,
-                ]);
+
                 $usuario->update([
                     'token_sesion' => $sessionToken,
                 ]);
