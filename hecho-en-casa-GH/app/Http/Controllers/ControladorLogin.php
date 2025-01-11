@@ -61,7 +61,8 @@ class ControladorLogin extends Controller
                 try{
                     $usuario->save();
                 }catch(\Exception $e){
-                    dd("Error al guardar el postre emergente: ".$e->getMessage());
+                    return redirect()->route('inicio.get')
+                    ->with('error', 'Error al guardar el usuario');    
                 }
                 session([
                     'correo' => $correo,
