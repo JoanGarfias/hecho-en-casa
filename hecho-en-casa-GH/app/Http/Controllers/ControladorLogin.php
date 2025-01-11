@@ -25,13 +25,13 @@ class ControladorLogin extends Controller
         if($action === 'login'){
             
             $credentials = $request->validate([
-                'correo_electronico' => 'required|email',
+                'email' => 'required|email',
                 'password' => 'required',
                 'g-recaptcha-response' => 'required|captcha',
             ]);
     
             $usuario = Usuario::select('id_u', 'contraseña')
-            ->where('correo_electronico', $credentials['correo_electronico'])
+            ->where('correo_electronico', $credentials['email'])
             ->first();
 
             if ($usuario && Hash::check($credentials['password'], $usuario->contraseña)) {

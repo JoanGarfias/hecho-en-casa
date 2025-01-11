@@ -25,11 +25,6 @@
         {!! NoCaptcha::renderJs() !!}
         {!! NoCaptcha::display() !!}
 
-        <div>
-            <button class="botoncito" type="submit" name="action" value="recuperar" id="olvidadizo">Olvide mi contraseña</button>
-            <button class="botoncito" type="submit" name="action" value="register">Registrarme</button>
-            <button class="botoncito" type="submit" name="action" value="login" onclick="validateForm()">Continuar</button>
-        </div>
     <div>
         <button class ="botoncito" id="olvidadizo" type="submit" name="action" value="recuperar">Olvidé mi contraseña</button>
         <br><br>
