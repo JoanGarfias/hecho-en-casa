@@ -33,23 +33,23 @@ Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])->name('perfil.get')
 
 /* PROCESO DE LOGIN */
 Route::middleware([ProtectorPeticiones::class])->group(function(){
-    Route::get('/login', [ControladorLogin::class, 'mostrarLogin'])->name('login.get');
+    Route::get('/login', [ControladorLogin::class, 'mostrarLogin'])->name('login.get')->middleware([ProtectorRouteUserLogin::class]);//C
     //->middleware(ProtectorRouteUserLogin::class);
-    Route::post('/login', [ControladorLogin::class, 'Logear'])->name('login.post');
+    Route::post('/login', [ControladorLogin::class, 'Logear'])->name('login.post')->middleware([ProtectorRouteUserLogin::class]);//C
     //->middleware(ProtectorRouteUserLogin::class); 
 });
 
 Route::middleware([ProtectorSesion::class, ProtectorRouteUserLogin::class])->group(function(){
-    Route::get('/cerrar-sesion', [ControladorLogin::class, 'logout']);
+    Route::get('/cerrar-sesion', [ControladorLogin::class, 'logout'])->name('cerrarsession.get');
 });
 
 /* PROCESO DE REGISTRO */
 
 Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar.get')
-->middleware([ProtectorPeticiones::class]);
+->middleware([ProtectorPeticiones::class])->middleware([ProtectorRouteUserLogin::class]); //C
 
 Route::middleware([EnlazadorRegistro::class])->group(function () {
-    Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.post');
+    Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.post')->middleware([ProtectorRouteUserLogin::class]); //C
     Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena.get');
     Route::post('/contrasena', [ControladorRegistro::class, 'guardarContrasena'])->name('registrar.contrasena.post');
     Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name('registrar.direccion.get');
