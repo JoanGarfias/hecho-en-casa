@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: #fdf8f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .title {
+    font-size: 1.5em;
+    color: #705030;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .main-container {
+    background: #EADAC6;
+    width: 300px;
+    border-radius: 10px;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+  }
+
+  .main-container h2 {
+    font-size: 1.2em;
+    color: #705030;
+    margin: 0;
+    text-transform: uppercase;
+    position: relative;
+  }
+
+  .main-container h2::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #705030;
+    margin: 10px 0;
+  }
+
+  .main-container img {
+    width: 100%;
+    border-radius: 10px;
+    margin: 10px 0;
+  }
+
+  .outer-circle {
+    position: absolute;
+    bottom: -15px; /* Ajusta según sea necesario */
+    right: -15px; /* Ajusta según sea necesario */
+    background: #EADAC6;
+    border-radius: 50%;
+    width: 100px; /* Tamaño del círculo exterior */
+    height: 100px; /* Tamaño del círculo exterior */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .price-circle {
+    background: #DDB97F;
+    color: #fff; /* Texto blanco */
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 80px; /* Tamaño del círculo interior */
+    height: 80px; /* Tamaño del círculo interior */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .description-container {
+    background: #E5C99C;
+    width: 300px;
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 0.9em;
+    color: #705030;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .description-container img {
+    width: 50%;
+    height: 50px;
+    transition: transform 0.3s ease; /* Efecto suave para la animación */
+    cursor: pointer; /* Cambia el cursor al pasar el ratón */
+
+  }
+
+  .description-container img:hover {
+    transform: scale(1.1); /* Aumenta ligeramente el tamaño al pasar el cursor */
+  }   
