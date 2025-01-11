@@ -26,7 +26,7 @@ class ControladorLogin extends Controller
             
             $credentials = $request->validate([
                 'correo_electronico' => 'required|email',
-                'contrasena' => 'required',
+                'password' => 'required',
                 'g-recaptcha-response' => 'required|captcha',
             ]);
     
@@ -34,7 +34,7 @@ class ControladorLogin extends Controller
             ->where('correo_electronico', $credentials['correo_electronico'])
             ->first();
 
-            if ($usuario && Hash::check($credentials['contrasena'], $usuario->contraseña)) {
+            if ($usuario && Hash::check($credentials['password'], $usuario->contraseña)) {
                 // Generar un nuevo token de sesión encriptado
                 $sessionToken = bin2hex(random_bytes(32));
                 session([
