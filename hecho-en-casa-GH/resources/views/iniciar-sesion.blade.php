@@ -23,7 +23,7 @@
         </div>
 
         {!! NoCaptcha::renderJs() !!}
-        {!! NoCaptcha::display(['data-size' => 'invisible']) !!}
+        {!! NoCaptcha::display() !!}
 
         <div>
             <button class="botoncito" type="submit" name="action" value="recuperar" id="olvidadizo">Olvide mi contraseña</button>

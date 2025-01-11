@@ -25,14 +25,11 @@ class ControladorRegistro extends Controller
 
         $credentials = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email',
-            'telefono' => 'required|numeric|digits_between:10,15',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|numeric|digits_between:10,15',
             'apellidoP' => 'required|string|max:255',
             'apellidoM' => 'required|string|max:255',
             'g-recaptcha-response' => 'required|captcha',  // Validación del reCAPTCHA
-        ], [
-            'g-recaptcha-response.required' => 'Por favor, confirma que no eres un robot.',
-            'g-recaptcha-response.captcha' => 'La validación de seguridad falló. Por favor, intenta nuevamente.',  // Mensaje personalizado
         ]);
         
         $nombre = $credentials['name'];
