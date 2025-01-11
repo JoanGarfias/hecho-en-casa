@@ -1,10 +1,18 @@
 <link rel="stylesheet" href="{{ asset('css/pedidos.css') }}">
+<link rel="stylesheet" href="{{ asset('css/pedidosTempPop.css') }}">
  
     <title>Pedidos</title>
     <x-menu />
   
 <div class = "titule">
-    <h2>PEDIDOS</h2>
+
+    
+    @if (false) <!--Recuerda poner este-->
+        <h2>PEDIDOS DE TEMPORADA</h2>   
+    @else
+        <h2>PEDIDOS POP UP</h2>   
+    @endif
+    
 </div>
 <div class="flexi">
     
@@ -19,35 +27,15 @@
                     <div class="fila">
                         <label for="horaEntrega">Hora de entrega:</label>
                         <input type="text" id="horaEntrega" name="horaEntrega" readonly>
-                        <!--<div class="hora-selector">
-                            <input type="time" id="horaEntrega" name="horaEntrega" min="11:00" max="19:00" required>
-                            <div class="boton-wrapper">
-                                <button type="button" id="incrementarHora" class="hora-boton">🔺</button>
-                                <button type="button" id="decrementarHora" class="hora-boton">🔻</button>                                        
-                            </div>
-                        </div>-->
+                        
                     </div>
                     <div class="fila">
                         <label for="tipoPostre">Tipo de postre:</label>
                         <input type="text" id="tipoPostre" name="tipoPostre" readonly>
                     </div>
                     <div class="fila">
-                        <label for="porciones">Porciones:</label>
-                        <div class="opciones">
-                            <label>
-                                <input type="radio" name="porciones" value="seis" required>
-                                <p class="blanca"> 6</p>
-                            </label>
-                            <label>
-                                <input type="radio" name="porciones" value="doce">
-                                <p class="blanca"> 12</p>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="fila">
                         <label for="cantidad">Cantidad:</label>
                         <div class="cantidad-wrapper">
-                            
                             <input type="text" id="cantidad" name="cantidad" value="1" required>
                             <div class="boton-wrapper">
                                 <button type="button" class="incrementar">🔺</button>
@@ -56,10 +44,6 @@
                             
                         </div>
                     </div>
-                    <div class="fila">
-                        <label for="sabor">Sabor:</label>
-                        <input type="text" id="sabor" name="sabor" readonly>
-                    </div>
                 </div>
                 <div class="columna">
                     <div class="fila">
@@ -67,8 +51,8 @@
                         <div class="custom-select">
                             <button id="toggleSelect" class="custom-select-button">🔻</button>
                             <div id="selectOptions" class="custom-select-options" style="display: none;">
-                                <div class="option" data-value="opcion1">Recoger en sucursal</div>
-                                <div class="option" data-value="opcion2">Envío a domicilio</div>
+                                <div class="option" value="Sucursal">Recoger en sucursal</div>
+                                <div class="option" value="Domicilio">Envío a domicilio</div>
                             </div>
                             <input type="hidden" id="tipoEntrega" name="tipoEntrega">
                         </div>
@@ -81,14 +65,23 @@
                 </div>
             </div>
             <div class="arrows">
-                <button id="prev" class="arrow">⬅</button>
+                <button id="prev" class="arrow">⬅</button> <!--Para regresar a la anterior-->
                 <button id="next" class="arrow">➡</button>
+            </div>
+
+            <div class="fondo-emergente" id="fondoEmergente">
+                <div class="emergente">    
+                    <p class="mensajeEmergente">¿Estás seguro de tu elección?</p>
+                    <br>
+                    <button id="editar" class="botoncito">Seguir editando</button>
+                    <button id="continuar" class="botoncito" type="submit">Continuar</button>
+                </div>
             </div>
         </form>  
     </div>
 </div>
 <x-pie/>
 
-<script src="{{ asset('js/pidiendo.js') }}" defer></script>
+<script src="{{ asset('js/pidiendoTemPop.js') }}" defer></script>
 <!--Para la animación del logo de usuario-->
 <script src="{{ asset('js/icono.js') }}" defer></script>
