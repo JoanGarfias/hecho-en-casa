@@ -100,5 +100,13 @@
         <br><br>
         <button type="submit">Continuar</button>
     </form>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const submitButton = this.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+        });
+    </script>
+    
 </body>
 </html>

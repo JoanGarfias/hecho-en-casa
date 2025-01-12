@@ -69,6 +69,7 @@ function validateContra() {
 
     // Si todo es válido, enviar el formulario
     if (confirmando) {
+        let formulario = document.getElementById('validandoContra');
         formulario.submit(); // Enviar el formulario si todas las validaciones son correctas
     }
 }

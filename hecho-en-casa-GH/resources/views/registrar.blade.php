@@ -7,6 +7,7 @@
     <div class = "contenedor"><!-- café-->
         <form id="formularioRegistro" action="{{route('registrar.post')}}" method="POST">
             @csrf
+            <input type="hidden" name="action" id="hiddenAction" value="">
             <h2 class="titule">Regístrate</h2>
             
             <label for="name" id = "campos">Nombre:</label>

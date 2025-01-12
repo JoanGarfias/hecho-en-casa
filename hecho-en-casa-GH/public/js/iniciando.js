@@ -1,67 +1,59 @@
-const enlaceOlvidado = document.getElementById('olvidadizo');
-//////////////////
-const botones = document.querySelectorAll('button[type="submit"]');
-let formulario = document.querySelector('#inicioSesion');
-let valorBoton = "";
+const formulario = document.getElementById('inicioSesion');
+const hiddenAction = document.getElementById('hiddenAction');
 
-botones.forEach((boton) => {
-    boton.addEventListener("click", () => {
-        valorBoton = boton.value; // Gua rda el valor del botón presionado
-    });
-});
+const botones = document.querySelectorAll('.botoncito');
+let action = null; 
 
-formulario.addEventListener("submit", (e) => {
-    
-    e.preventDefault(); // Detenemos el envío del formulario
-    const inputOculto = document.createElement("input");
-    inputOculto.type = "hidden";
-    inputOculto.name = "solicitud";
-    inputOculto.value = valorBoton;
-    formulario.appendChild(inputOculto);
-    validateForm(); // Llamamos a la función de validación
-});
-/////////////////
-function validateForm() {
-    // Agregar un  evento de clic al enlace
-    console.log("validandoForm")
-    
-    enlaceOlvidado.addEventListener('click', function(event) {
-        console.log("presionando olvidar")
-
-        // Si quieres hacer una validación uantes de mostrar algo, puedes agregar lógica aquí
-        const emailInput = document.getElementById('email');
-        //Hacer la validación del correo desde la BD para ver si existe
-
-        let validarEmail = document.getElementById("mensajeEmail")
-        
-        // Verificar si el campo de email tiene valor
-        if (emailInput.value.trim() === "") {
-            validarEmail.textContent = ''
-            console.log("Ingresa un correo")
-            validarEmail.textContent = 'Ingresa tu correo electrónico para continuar.';
-            validarEmail.className = "error";
-            
-        } else {
-            validarEmail.textContent = ''
-            validarEmail.textContent = 'Correo válido.';
-            validarEmail.className = "bien"; 
-            /*Para el blur*/
-            // Obtener referencias a los elementos
-            const fondoEmergente = document.getElementById('fondoEmergente');
-           // const cerrarPopup = document.getElementById('cerrarEmergente');
-
-            // Mostrar la ventana emergente
-            fondoEmergente.style.display = 'flex';
-          
-
-            // Aquí se oculta, pero, podrías hacer otra cosa
-            cerrarPopup.addEventListener('click', () => {
-                fondoEmergente.style.display = 'none';
-            });
+botones.forEach(boton => {
+    boton.addEventListener('click', event => {
+        event.preventDefault(); 
+        action = boton.value; 
+        hiddenAction.value = action;
+        switch (action) {
+            case 'recuperar':
+                if(validarEmail()){
+                    activarBlur();
+                    formulario.submit();
+                };
+                break;        
+            case 'login':
+                if(validarEmail()&&validarContraseña())
+                    formulario.submit();
+                break;
+            case 'register':
+                formulario.submit();
+                break;
         }
-
     });
+});
 
-    formulario.submit()
+function validarEmail() {
+    const emailInput = document.getElementById('email');
+    const validarEmail = document.getElementById('mensajeEmail');
+    if (emailInput.value.trim() === "") {
+        validarEmail.textContent = 'Ingresa tu correo electrónico para continuar.';
+        validarEmail.className = "error";   
+        return false;
+    }
+    return true;
+}   
 
-} //Se agregó una llave faltante en la línea 60
+function validarContraseña(){
+    const claveInput = document.getElementById('password');
+    const validarClave = document.getElementById('mensajePass');
+    if (claveInput.value.trim() === "") {
+        validarClave.textContent = 'Ingresa tu contraseña para continuar.';
+        validarClave.className = "error";   
+        return false;
+    }
+    return true;
+}
+
+function activarBlur(){
+    const fondoEmergente = document.getElementById('fondoEmergente');
+    fondoEmergente.style.display = 'flex';
+    const cerrarPopup = document.getElementById('aceptar')
+    cerrarPopup.addEventListener('click', () => {
+        fondoEmergente.style.display = 'none';
+    });
+}

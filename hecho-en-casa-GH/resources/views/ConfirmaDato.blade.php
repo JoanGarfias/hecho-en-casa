@@ -8,6 +8,7 @@
 <body>
    <h1>CONFIRMA TUS DATOS</h1>
    
+   
    <div class="main-container">
     <div class="container">
        <form>
