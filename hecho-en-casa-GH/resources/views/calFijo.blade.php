@@ -34,16 +34,38 @@
                         <p><span class="current"></span> Fecha actual</p>
                         <p><span class="available"></span> Disponible</p>
                     </div>
-
-                    <div class="arrows">
-                        <button id="prev-month" class="arrow">⬅</button>
-                        <button id="next-month" class="arrow">➡</button>
-                    </div>
+                    <form action="{{route('calendario.post')}}" method="POST" id="cambioFecha">
+                        @csrf
+                        <input type="hidden" name="mes" id="mes" value="">
+                        <input type="hidden" name="anio" id="anio" value="">
+                        <div class="arrows">
+                            <button type="submit" id="prev-month" class="arrow">⬅</button>
+                            <button type="submit" id="next-month" class="arrow">➡</button>
+                        </div>                        
+                    </form>
                 </div>
             </div>           
                 
             <br>
-            
+            <script>
+                const calendario = @json($calendarioJson);
+                const months = [
+                    { bg: "url('{{ asset('img/enero.png') }}')" },
+                    { bg: "url('{{ asset('img/febrero.png') }}')" },
+                    { bg: "url('{{ asset('img/marzo.png') }}')" },
+                    { bg: "url('{{ asset('img/abril.png') }}')" },
+                    { bg: "url('{{ asset('img/mayo.png') }}')" },
+                    { bg: "url('{{ asset('img/junio.png') }}')" },
+                    { bg: "url('{{ asset('img/julio.png') }}')" },
+                    { bg: "url('{{ asset('img/agosto.png') }}')" },
+                    { bg: "url('{{ asset('img/septiembre.png') }}')" },
+                    { bg: "url('{{ asset('img/octubre.png') }}')" },
+                    { bg: "url('{{ asset('img/noviembre.png') }}')" },
+                    { bg: "url('{{ asset('img/diciembre.png') }}')" },
+                ];        
+                
+            </script>
+
             </body>
             <x-pie/>
             <script src="{{ asset('js/meses.js') }}"></script>
