@@ -9,16 +9,16 @@
     <h1>PASTELES</h1>
     <div class="image-gallery">
         <div class="image-card">
-            <img src="{{ asset('img/pastel1.png') }}" alt="Pastel 1">
+            <img src="{{ asset('img/pastel1.jpg') }}" alt="Pastel 1">
         </div>
         <div class="image-card">
-            <img src="{{ asset('img/pastel2.png') }}" alt="Pastel 2">
+            <img src="{{ asset('img/pastel2.jpg') }}" alt="Pastel 2">
         </div>
         <div class="image-card">
-            <img src="{{ asset('img/pastel3.png') }}" alt="Pastel 3">
+            <img src="{{ asset('img/pastel3.jpg') }}" alt="Pastel 3">
         </div>
         <div class="image-card">
-            <img src="{{ asset('img/pastel2.png') }}" alt="Pastel 4">
+            <img src="{{ asset('img/pastel2.jpg') }}" alt="Pastel 4">
         </div>
     </div>
     <div class="description-section">
