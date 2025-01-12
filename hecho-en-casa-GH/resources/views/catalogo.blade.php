@@ -1,54 +1,37 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo</title>
+    <link rel="stylesheet" href="{{ asset('css/menuPay.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/catalogoFijo.css') }}">
+    <title>Pay de Plátano</title>
 </head>
 <body>
-    <h1>Catálogo de Postres</h1>
+    <div class="layout">
+        <!-- Incluir el menú -->
+        <x-menu-catalogo />
 
-    <!-- Dropdown para seleccionar categoría -->
-    <select id="categorias" onchange="cambiarCategoria(this.value)">
-        <option value="">Selecciona una categoría</option> 
-        @foreach($categorias as $categoria)
-            <option value="{{ $categoria->id_cat }}" @if($categoria->id_cat == $categoriaSeleccionada) selected @endif>{{ $categoria->nombre }}</option>
-        @endforeach
-    </select>
+        <!-- Contenido principal -->
+        <main class="contenido-principal">
+            <div class="title">PAYS</div>
 
-    <div id="productos">
-        @foreach($catalogo as $producto)
-            <div class="producto">
-                <form action="{{route('fijo.catalogo.post')}}" method="POST" style="display: inline;">
-                    @csrf <!-- Laravel CSRF -->
-                    <input type="hidden" name="id_postre" value="{{ $producto->id_postre }}">
-                    <input type="hidden" name="nombre_postre" value="{{ $producto->nombre }}">
-                    <button type="submit" style="border: none; background: none; color: red; text-decoration: underline; cursor: pointer;">
-                        {{ $producto->nombre }}
-                    </button>
-                </form>
-                <br>
-                <img src="{{ $producto->imagen }}" alt="{{ $producto->nombre }}">
-                <p>{{ $producto->descripcion }}</p>
+            <div class="main-container">
+                <h2>Plátano</h2>
+                <img src="{{ asset('img/pay.png') }}" alt="Pay de plátano">
+                <div class="outer-circle">
+                    <div class="price-circle">
+                        <span>12 px:</span>
+                        <span>$650</span>
+                    </div>
+                </div>
             </div>
-        @endforeach
+
+            <div class="description-container">
+                <span>Base galleta de vainilla, capas de plátano con dulce de leche, queso crema, nuez y más dulce de leche</span>
+                <img src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
+            </div>
+        </main>
     </div>
-    
-
-    </div>
-    <script>
-        let productos = @json($categorias);
-        let catalogo = @json($catalogo);
-
-        console.log("Productos: ", productos);
-        console.log("Catalogo: ", catalogo);
-
-        // Función para cambiar la URL y recargar la página
-        function cambiarCategoria(categoriaId) {
-            // Cambiar la URL y recargar la página
-            window.location.href = `/fijo/catalogo/${categoriaId}`;
-            //Para mi comodidad lo cambie xd:window.location.href = `/fijo/catalogo/${categoriaId}`;
-        }
-    </script>
 </body>
 </html>
