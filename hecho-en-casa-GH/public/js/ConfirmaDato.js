@@ -12,6 +12,7 @@ function toggleAddressFields() {
 }
  
 // Función para habilitar campos después de confirmar el CP
+
 document.getElementById('confirm-cp').addEventListener('click', function () {
     const cpInput = document.getElementById('codigo-postal');
     const calleInput = document.getElementById('calle');
