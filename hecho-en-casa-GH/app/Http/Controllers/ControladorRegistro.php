@@ -133,7 +133,7 @@ class ControladorRegistro extends Controller
                 'usuario' => $usuario->id_u,
                 'proceso_recuperacion' => $request->route()->getName(),
             ]);
-            return view('cambiar-contrasenaPrueba');
+            return view('recuperacioncontrasena');
         } 
         return view('inicio', [
             'error' => 'Token inválido',
@@ -142,7 +142,7 @@ class ControladorRegistro extends Controller
     }
 
     public function actualizarContrasena(Request $request){
-        $contrasena = $request->input('confirmar_contraseña');
+        $contrasena = $request->input('confirmacion');
         $usuario = usuario::where('id_u', session('usuario'))->first();
         if ($usuario){
             $usuario->contraseña = bcrypt($contrasena);
