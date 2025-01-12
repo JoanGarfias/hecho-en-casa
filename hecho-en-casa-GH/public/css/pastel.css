@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+* {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /**/background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f8f3ea;
+    color: #4f3c2e;
+    display: flex;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+    margin-left: 500px; /* Deja espacio para el menú lateral */
+    max-width: calc(100% - 220px); /* Ajustar el ancho disponible */
+    margin-top: 150px;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.image-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Columnas adaptativas */
+    gap: 20px; /* Espaciado entre los recuadros */
+    margin: 0 auto; /* Centrar la galería horizontalmente */
+    max-width: 800px; /* Ancho máximo de la galería */
+    justify-content: center; /* Centrar los recuadros dentro de la galería */
+}
+
+.image-card {
+    border-width: 12px;
+    border-style: solid;
+    border-color: #d6c3ab;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    width: 100%; /* Ajustar al contenedor */
+    height: auto;
+    margin: 0; /* Quitar márgenes */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Suaviza la animación */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra inicial */
+}
+
+.image-card:hover {
+    transform: scale(1.1); /* Aumenta el tamaño al pasar el cursor */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Incrementa la sombra */
+}
+
+
+.image-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+.description-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centrar horizontalmente */
+    gap: 20px; /* Espaciado entre los recuadros */
+    margin-top: 20px; /* Ajustar margen superior */
+    max-width: 800px; /* Ancho máximo */
+    margin-left: auto;
+    margin-right: auto; /* Centrar completamente */
+}
+
+.description, .customize {
+    background-color: #eddcc4;
+    border-radius: 10px;
+    padding: 15px;
+    flex: 1 1 300px; /* Asegura que ambas ocupen un espacio razonable */
+    max-width: 400px;
+    text-align: center;
+}
+
+
+.description {
+    font-size: 1rem;
+}
+
+/* Efecto hover para "Personaliza tu pastel" */
+.customize {
+    transition: transform 0.3s ease-in-out;
+}
+
+.customize:hover {
+    transform: scale(1.1); /* Agranda el recuadro ligeramente */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Agrega sombra para mayor impacto */
+}
+
+
+.customize .personaliza {
+    display: flex; /* Organiza en fila: imagen + texto */
+    align-items: center; /* Centra verticalmente el texto con la imagen */
+    justify-content: center; /* Centra horizontalmente dentro del botón */
+    background-color: transparent; /* Elimina el fondo del botón */
+    border: none; /* Sin bordes */
+    cursor: pointer; /* Cursor interactivo */
+    font-weight: bold; /* Texto en negritas */
+    font-size: 20px; /* Ajusta el tamaño del texto */
+    color: #5a4a3c; /* Color del texto (opcional) */
+    padding: 10px; /* Ajusta el espacio interno */
+    gap: 10px; /* Espaciado entre la imagen y el texto */
+}
+
+.customize .personaliza img {
+    width: 60px; /* Ajusta el tamaño de la imagen */
+    height: auto; /* Mantén las proporciones */
+}
+
+.customize .personaliza span {
+    font-weight: bold; /* Asegura que el texto esté en negritas */
+}
+
