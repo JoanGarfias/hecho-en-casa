@@ -63,7 +63,7 @@
                     { bg: "url('{{ asset('img/noviembre.png') }}')" },
                     { bg: "url('{{ asset('img/diciembre.png') }}')" },
                 ];        
-
+                
             </script>
 
             </body>
