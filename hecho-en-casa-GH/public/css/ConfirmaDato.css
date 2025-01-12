@@ -102,10 +102,15 @@ input[type="text"]#telefono {
    display: flex;
    align-items: center;
    justify-content: center;
-   margin: 20px 0 0 auto; /* Mueve el botón hacia el lado derecho */
+   text-align: left;
+   /* margin: 20px 0 0 auto; Mueve el botón hacia el lado derecho */
    width: fit-content;
    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
  }
+
+/*.botonCP{
+    margin: 20px 0 0 auto;  Mueve el botón hacia el lado derecho
+} */
  
  button:hover {
    transform: scale(1.1);
@@ -113,6 +118,19 @@ input[type="text"]#telefono {
    cursor: pointer;
  }
  
+ /*********/
+ .botonCP {
+    display: flex;
+    justify-content: flex-start; /* Mueve el contenido hacia la izquierda */
+    margin-top: 10px;
+}
+
+button#confirm-cp {
+    margin: 0; /* Elimina márgenes adicionales */
+}
+
+/*************/
+
  .radio-group {
     margin-top: 10px;
  }
@@ -191,8 +209,3 @@ input[type="text"]#telefono {
    margin-bottom: 10px;     /* Espaciado entre las opciones */
    font-size: 16px;         /* Tamaño de fuente */
 }
-
-
-
-
-
