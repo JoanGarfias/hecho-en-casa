@@ -121,6 +121,7 @@ class ControladorCatalogo extends Controller
         $pedidos = Cache::remember('pedidos', 30, function () use ($primerDiaDelMes, $ultimoDiaDelMes){
             return Pedido:: select('id_ped', 'fecha_hora_entrega', 'porcionespedidas')
                             ->whereBetween('fecha_hora_entrega', [$primerDiaDelMes, $ultimoDiaDelMes])
+                            ->where('status', 'aceptado')
                             ->get();
             });
 
