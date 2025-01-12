@@ -114,6 +114,7 @@ main h2 {
     border-radius: 25px;
 }
 
+<<<<<<< Updated upstream
 .seccion img:hover {
     transform: scale(1.01); /* Aumenta ligeramente el tamaño */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Agrega una sombra */
@@ -176,3 +177,7 @@ main h2 {
         width: 100%;
     }
 }
+=======
+
+
+>>>>>>> Stashed changes
