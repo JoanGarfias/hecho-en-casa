@@ -1,0 +1,69 @@
+/*Para lo emergente*/
+
+/* Fondo emergente */
+.fondo-emergente {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.mensajeEmergente{
+    font-size: medium;
+    font-weight: bold;
+    color: #FBAF35;
+}
+
+/* Contenedor emergente */
+
+.emergente {
+    position: relative;
+    background: #C6B8A2;
+    border-radius: 22px;
+    padding: 28px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    top: 35px;
+    width: 100%;
+    max-width: 360px;
+    overflow: hidden;
+    height: 320px;
+    align-content: center;
+}
+
+.emergente::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    width: 88%;
+    height: 90%;
+    background: white;/* Color secundario */
+    border-radius: 22px;
+    z-index: -1;/* Coloca este fondo detrás del contenido */
+    transform: translate(10px, 10px); /* Desplazamiento para crear el efecto */
+}
+
+/* Botones */
+.botoncito {
+    padding: 10px 20px;
+    margin-top: 10px;
+    background: #F8CFA0;
+    color: #8E4F20;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: medium;
+    width: 70%;
+}
+
+.botoncito:hover {
+    background: #d19959;
+}
