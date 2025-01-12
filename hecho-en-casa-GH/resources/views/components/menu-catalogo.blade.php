@@ -30,7 +30,7 @@
     <!-- Contenido principal -->
     <main class="contenido-principal">
         <h1>Bienvenido</h1>
-        <p>Aquí irá el contenido principal.</p>
+       <!-- <p>Aquí irá el contenido principal.</p>-->
     </main>
 </body>
 </html>
