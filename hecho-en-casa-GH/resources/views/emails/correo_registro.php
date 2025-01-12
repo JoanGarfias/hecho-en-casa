@@ -8,7 +8,7 @@
 <body>
     <p>Gracias por usar nuestra aplicación.</p>
     <p>Entra al siguiente enlace:</p>
-    <a href="#" onclick="document.getElementById('registrar').submit()">/</a>
+    <a href="#" onclick="document.getElementById('registrar').submit()">hechoencasa.com</a>
 
     <form id="registrar" action="{{ route('inicio.get'}}" method="POST" style="display: none;">
         @csrf

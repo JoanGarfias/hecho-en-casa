@@ -1,31 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Capturar el formulario
-let formulario = document.querySelector('#formularioRegistro');
-const botones = document.querySelectorAll('button[type="submit"]');
+    let formulario = document.querySelector('#formularioRegistro');
+    const botones = document.querySelectorAll('button[type="submit"]');
 
-console.log(formulario)
-console.log(botones)
+    let valorBoton = ""; // Variable para almacenar el valor del botón presionado
 
-let valorBoton = ""; // Variable para almacenar el valor del botón presionado
-
-// Captura el botón presionado
-botones.forEach((boton) => {
-    boton.addEventListener("click", () => {
-        valorBoton = boton.value; // Guarda el valor del botón presionado
-        console.log("Botón presionado:", valorBoton);
+    // Captura el botón presionado
+    botones.forEach((boton) => {
+        boton.addEventListener("click", event => {
+            event.preventDefault();
+            valorBoton = boton.value; 
+            hiddenAction.value = valorBoton;
+            switch (valorBoton) {
+                case 'login':
+                    formulario.submit();
+                    break;
+                case 'register':
+                    if(validateForm())
+                        formulario.submit();
+                    break;
+            }
+        });
     });
-});
-
-formulario.addEventListener("submit", (e) => {
-    console.log("en el listener");
-    e.preventDefault(); // Detenemos el envío del formulario
-    const inputOculto = document.createElement("input");
-    inputOculto.type = "hidden";
-    inputOculto.name = "action";
-    inputOculto.value = valorBoton;
-    formulario.appendChild(inputOculto);
-    validateForm(); // Llamamos a la función de validación
-});
 });
 
 function validateForm() {
@@ -110,20 +105,6 @@ function validateForm() {
         isValid = false
     }
 
-    console.log({
-        nombre: nombreReg.test(nombre),
-        apellidoP: apellidoPReg.test(apellidoP),
-        apellidoM: apellidoMReg.test(apellidoM),
-        email: emailReg.test(email),
-        telefono: telefonoReg.test(telefono),
-    });
-
-    // Si todo es válido, mostrar un mensaje
-
-    if (isValid) {
-//        alert("Formulario enviado exitosamente. ¡Gracias!");
-
-        formulario.submit(); // Enviamos el formulario si todo es correcto
-    }
+    return isValid;
 }
 

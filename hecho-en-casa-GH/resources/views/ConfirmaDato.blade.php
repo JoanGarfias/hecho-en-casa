@@ -8,6 +8,7 @@
 <body>
    <h1>CONFIRMA TUS DATOS</h1>
    
+   
    <div class="main-container">
     <div class="container">
        <form>
@@ -25,6 +26,18 @@
            <div id="address-fields" class="address-fields">
                <label for="codigo-postal">Código postal:</label>
                <input type="text" id="codigo-postal" name="codigo-postal">
+               
+               <div id="botonCP" class="botonCP">
+               <button type="button" id="confirm-cp">
+               <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34
+               AAAAAXNSR0IArs4c6QAAAPBJREFUSEvNlIENwjAMBL+bwCYwCpPQTWATYBM2gb6UR6lJSOJQaKSq
+               iqL82Y7fAxZew8L6sIAdgBOAjRN8B3AAcNV9C7hMh4T0LEK2OcAjHHhL93bfCq0KwHfie92mrMeQ
+               +dcykDjfK665C8DozkGIgebEedYMoPgxiO9DGVgWG7maphnAaNm6/LMU/HLirgxUEkG4n/W5MUxz
+               BrqvTLh/mSjhRjdAmTD6T6sLUDM+/g/IDTuWhm2qEsVesJlxkqqlk+OafZ+aqIJQUF6w4sVxnapz
+               qxdmGrVjOYaUvOACxIYrecENqPVCF6DGC78FPAFFD0MZXIF3GgAAAABJRU5ErkJggg=="/>Confirmar CP
+            </button>
+            </div>
+
                <p>
                   <a href="https://www.correosdemexico.gob.mx/sslservicios/consultacp/descarga.aspx" target="_blank">
                      No conozco mi código postal
@@ -32,17 +45,11 @@
                   </a>
                </p>
 
-               <label for="calle">Calle:</label>
-               <input type="text" id="calle" name="calle">
-
                <label for="estado">Estado:</label>
-               <input type="text" id="estado" name="estado">
-
-               <label for="numero">Número:</label>
-               <input type="text" id="numero" name="numero">
+               <input type="text" id="estado" name="estado" disabled>
 
                <label for="ciudad">Ciudad:</label>
-               <input type="text" id="ciudad" name="ciudad">
+               <input type="text" id="ciudad" name="ciudad"disabled>
 
                <div class="form-control">
                 <label>Colonia:</label>
@@ -55,6 +62,15 @@
                 </select>
                     <p></p>
               </div>
+
+               <label for="calle">Calle:</label>
+               <input type="text" id="calle" name="calle">
+
+               <label for="numero">Número int:</label>
+               <input type="text" id="numeroInt" name="numeroI">
+
+               <label for="numero">Número ext:</label>
+               <input type="text" id="numeroExt" name="numeroE">
 
               <div class="checklist">
                <label>

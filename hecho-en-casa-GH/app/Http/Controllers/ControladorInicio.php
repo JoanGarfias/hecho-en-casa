@@ -13,4 +13,9 @@ class ControladorInicio extends Controller
     // Pasar el token a la vista
         return view('inicio', ['sessionToken' => $sessionToken]);
     }
+
+
+    public function conocenos(){
+        return view('conocenos');
+    }
 }
