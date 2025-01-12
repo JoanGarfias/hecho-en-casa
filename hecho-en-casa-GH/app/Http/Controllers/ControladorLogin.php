@@ -20,47 +20,49 @@ class ControladorLogin extends Controller
 
     public function Logear(Request $request)
     {
-        $action = $request->input('solicitud');//esto borrar
-
-
+        $action = $request->input('action');//esto borrar
         if($action === 'login'){
             
             $credentials = $request->validate([
-                'correo_electronico' => 'required|email',
-                'contraseña' => 'required',
+                'email' => 'required|email',
+                'password' => 'required',
                 'g-recaptcha-response' => 'required|captcha',
             ]);
     
-            $usuario = Usuario::where('correo_electronico', $credentials['correo_electronico'])->first();
-            if ($usuario && Hash::check($credentials['contraseña'], $usuario->contraseña)) {
+            $usuario = Usuario::select('id_u', 'contraseña')
+            ->where('correo_electronico', $credentials['email'])
+            ->first();
+
+            if ($usuario && Hash::check($credentials['password'], $usuario->contraseña)) {
                 // Generar un nuevo token de sesión encriptado
                 $sessionToken = bin2hex(random_bytes(32));
 
                 $usuario->update([
                     'token_sesion' => $sessionToken,
                 ]);
-
                 // Crear la galleta con el token de sesión
                 return redirect()->route('inicio.get')->withCookie(cookie('session_token', $sessionToken, 60 * 72)); // 72 horas
             }
-
-            return redirect('login.get')->withErrors(['correo_electronico' => 'Credenciales incorrectas.']);
+            else{
+                return redirect()->route('login.get')->withErrors(['correo_electronico' => 'Credenciales incorrectas.']);
+            }
         }elseif($action === 'recuperar'){
             
             $credentials = $request->validate([
-                'correo_electronico' => 'required|email',
+                'email' => 'required|email',
             ]);
     
-            $usuario = Usuario::where('correo_electronico', $credentials['correo_electronico'])->first();
+            $usuario = Usuario::where('correo_electronico', $credentials['email'])->first();
             if($usuario){
-                $correo = $credentials['correo_electronico'];
+                $correo = $credentials['email'];
                 $token = Str::random(64);
                 Mail::to($correo)->send(new Correo($token));
                 $usuario->token_recuperacion = $token;
                 try{
                     $usuario->save();
                 }catch(\Exception $e){
-                    dd("Error al guardar el postre emergente: ".$e->getMessage());
+                    return redirect()->route('inicio.get')
+                    ->with('error', 'Error al guardar el usuario');    
                 }
                 session([
                     'correo' => $correo,

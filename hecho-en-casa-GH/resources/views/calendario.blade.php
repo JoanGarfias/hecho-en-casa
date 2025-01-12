@@ -12,7 +12,7 @@
     <!-- Formulario para seleccionar mes y año -->
 
 
-    <!-- AQUI SE TIENE QUE COLOCAR LA LÓGICA PARA SABER QUE RUTA USAR. -->
+    <!-- AQUI SE TIENE QUE COLOCAR LA LÓGICA PARA SABER QUE RUTA USAR.-->  <!--Si gustan pobrar personalizados ya agarra-->
     <form id="calendario-form" method="POST" action="{{ route('fijo.calendario.post') }}">
         <label for="mes">Mes: </label>
         <input type="number" id="mes" name="mes" min="1" max="12" required>

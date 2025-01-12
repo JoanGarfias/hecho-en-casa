@@ -12,6 +12,7 @@ use App\Models\Pedido;
 use App\Models\Pastelpersonalizado;
 Use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use App\Models\usuario;
 
 class ControladorCatalogoPersonalizado extends Controller
 {
@@ -205,16 +206,16 @@ class ControladorCatalogoPersonalizado extends Controller
         $numero = $user->num_exterior_u;
 
         if($tipo_domicilio==="Nueva"){ //Datos prueba
-            $codigo_postal = "77890";
-            $estado = "Queretaro";
-            $ciudad = "Palenque";
-            $colonia = "Reforma 5";
-            $calle = "Sin nombre";
-            $numero = "1";
+            $codigo_postal = $request->input('codigo_postal');
+            $estado = $request->input('estado');
+            $ciudad = $request->input('municipio');
+            $colonia = $request->input('asentamiento');
+            $calle = $request->input('calle');
+            $numero = $request->input('numero');
             //$referencia = $request->input('referencia');
 
             //Si elige volverla su ubicacion predeterminada entonces lo actualizamos en el perfil del usuario
-            if($request->has("Default")){
+            if($request->has("aceptar")){
                 $user->Codigo_postal_u = $codigo_postal;
                 $user->estado_u = $estado;
                 $user->ciudad_u = $ciudad;
@@ -251,6 +252,12 @@ class ControladorCatalogoPersonalizado extends Controller
         $pedido->precio_final = $datos['costo'];
         $pedido->fecha_hora_registro = $datos['fecha_hora_registro'];
         $pedido->fecha_hora_entrega = $datos['fecha_hora_entrega'];
+        $pedido->estado_e = $estado;
+        $pedido->Codigo_postal_e = $codigo_postal;
+        $pedido->ciudad_e = $ciudad;
+        $pedido->colonia_e = $colonia;
+        $pedido->calle_e = $calle;
+        $pedido->num_exterior_e = $numero;
         $pedido->save();  // Guardamos el pedido en la base de datos
 
             $id_pedido = $pedido->id_ped;
