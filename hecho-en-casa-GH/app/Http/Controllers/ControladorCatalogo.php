@@ -372,7 +372,7 @@ class ControladorCatalogo extends Controller
 
         $valoresSeleccionados = session('atributosSesion');
         session(['id_um' => $id_um->id_um]);
-
+        //NO QUITAR EL IF ELSE, ES DE SUMA IMPORTANCIA... CUALQUIER DUDA DEL FUNCIONAMIENTO PREGUNTARLE A JEOVANI.....
         if (!empty($valoresSeleccionados)) {
             foreach (session('atributosSesion', []) as $nombreTipo => $atributos) { //$valoresSeleccionados as $nombreTipo
                 $campo = strtolower($nombreTipo);  // Usamos el mismo nombre dinámico que en la vista
