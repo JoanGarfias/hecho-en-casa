@@ -1,5 +1,5 @@
 <title>RESUMEN PERSONALIZADO</title>
-<link rel="stylesheet" href="{{ asset('css/ConfirmaDato.css') }}">
+<link rel="stylesheet" href="{{ asset('css/ResumenPedidoP.css') }}">
 
 <x-menu /> 
 
@@ -84,7 +84,7 @@
             </div>
    </div>
 
-   <script src="{{ asset('js/ConfirmaDato.js') }}"></script>
+   <script src="{{ asset('js/ResumenPedidoP.js') }}"></script>
 
 </body>
 
