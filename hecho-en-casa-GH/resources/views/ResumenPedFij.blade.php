@@ -1,8 +1,8 @@
 <title>RESUMEN PERSONALIZADO</title>
-<link rel="stylesheet" href="{{ asset('css/ResumenPedidoP.css') }}">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<link rel="stylesheet" href="{{ asset('css/ResumenPedFij.css') }}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
-<x-menu /> 
+  <x-menu /> 
 
 </head>
 <body>
@@ -12,12 +12,12 @@
 
    <div class="main-container">
        <!-- Tarjeta de perfil -->
-       <!-- <div class="resumen-card"> -->
+       <!-- <div class="resumen-card"> --> 
        <div class="resumen-card"> 
 
            <div class="FOLIO-info"> <!--user-info -->
                <h2 class="Folio-name">Pedido con folio:</h2>
-               <input type="text" id="folio" name="folio" value="Folio P0520" readonly>
+               <input type="text" id="folio" name="folio" value="Folio F0120" readonly>
              
            </div>
 
@@ -27,23 +27,14 @@
                    <label>Tipo de postre:</label>
                    <input type="text" value="Selección" readonly>
 
+                   <label>Sabor:</label>
+                   <input type="text" value="Selección" readonly>
+
                    <label>Porciones:</label>
                    <input type="text" value="000" readonly>
 
                    <label>Cantidad:</label>
                    <input type="text" value="00" readonly>
-
-                   <label>Sabor de pan:</label>
-                   <input type="text" value="Selección" readonly>
-
-                   <label>Sabor de relleno:</label>
-                   <input type="text" value="Selección" readonly>
-
-                   <label>Cobertura:</label>
-                   <input type="text" value="Selección" readonly>
-
-                   <label>Temática:</label>
-                   <input type="text" value="Selección" readonly>
                </div>
 
                <div class="right-column">
@@ -57,14 +48,11 @@
                    <label>Fecha de entrega:</label>
                    <input type="text" value="DD/MM/YYYY" readonly>
 
+                   <label>Hora de entrega:</label>
+                   <input type="text" value="00:00" readonly>
+
                    <label>Tipo de entrega:</label>
                    <input type="text" value="Selección" readonly>
-
-                   <label>Link de referencia:</label>
-                   <input type="text" value="https..." readonly>
-
-                   <label>Descripción detallada:</label>
-                   <input type="text" value="Descripción..." readonly>
 
                    <label>Costo Apróximado:</label>
                    <input type="text" value="$00000" readonly>
@@ -85,7 +73,7 @@
             </div>
    </div>
 
-   <script src="{{ asset('js/ResumenPedidoP.js') }}"></script>
+   <script src="{{ asset('js/ResumenPedFij.js') }}"></script>
 
 </body>
 

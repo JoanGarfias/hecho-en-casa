@@ -5,81 +5,86 @@ body {
     margin: 0;
     background-color: #fdf8f4;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     min-height: 100vh;
-  }
+}
 
-  .title {
+/* Contenido principal */
+.contenido-principal {
+    margin-left: 200px; /* Deja espacio para el menú lateral */
+    padding: 20px; /* Espaciado interno */
+    width: calc(100% - 200px); /* Ajusta el ancho al espacio restante */
+    box-sizing: border-box; /* Asegura que el padding no afecta el ancho */
+}
+
+.title {
     font-size: 1.5em;
     color: #705030;
     font-weight: bold;
     text-transform: uppercase;
     margin-bottom: 20px;
-  }
+}
 
-  .main-container {
+.main-container {
     background: #EADAC6;
     width: 300px;
     border-radius: 10px;
     text-align: center;
     padding: 20px;
     position: relative;
-  }
+}
 
-  .main-container h2 {
+.main-container h2 {
     font-size: 1.2em;
     color: #705030;
     margin: 0;
     text-transform: uppercase;
     position: relative;
-  }
+}
 
-  .main-container h2::after {
+.main-container h2::after {
     content: '';
     display: block;
     width: 100%;
     height: 2px;
     background: #705030;
     margin: 10px 0;
-  }
+}
 
-  .main-container img {
+.main-container img {
     width: 100%;
     border-radius: 10px;
     margin: 10px 0;
-  }
+}
 
-  .outer-circle {
+.outer-circle {
     position: absolute;
-    bottom: -15px; /* Ajusta según sea necesario */
-    right: -15px; /* Ajusta según sea necesario */
+    bottom: -15px;
+    right: -15px;
     background: #EADAC6;
     border-radius: 50%;
-    width: 100px; /* Tamaño del círculo exterior */
-    height: 100px; /* Tamaño del círculo exterior */
+    width: 100px;
+    height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
+}
 
-  .price-circle {
+.price-circle {
     background: #DDB97F;
-    color: #fff; /* Texto blanco */
+    color: #fff;
     font-size: 1em;
     font-weight: bold;
     border-radius: 50%;
-    width: 80px; /* Tamaño del círculo interior */
-    height: 80px; /* Tamaño del círculo interior */
+    width: 80px;
+    height: 80px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
+}
 
-  .description-container {
+.description-container {
     background: #E5C99C;
     width: 300px;
     margin-top: 20px;
@@ -90,16 +95,15 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
+}
 
-  .description-container img {
+.description-container img {
     width: 50%;
     height: 50px;
-    transition: transform 0.3s ease; /* Efecto suave para la animación */
-    cursor: pointer; /* Cambia el cursor al pasar el ratón */
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
 
-  }
-
-  .description-container img:hover {
-    transform: scale(1.1); /* Aumenta ligeramente el tamaño al pasar el cursor */
-  }   
+.description-container img:hover {
+    transform: scale(1.1);
+}
