@@ -1,5 +1,6 @@
 <title>RESUMEN PERSONALIZADO</title>
 <link rel="stylesheet" href="{{ asset('css/ResumenPedidoP.css') }}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
 <x-menu /> 
 
