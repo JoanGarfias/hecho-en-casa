@@ -26,6 +26,7 @@ Route::post('/buscarpedido', [ControladorBuscarPedido::class, 'MostrarPedido'])-
 
 Route::get('/calendario/{mes?}/{anio?}', [ControladorCalendario::class, 'index'])->name('calendario.get')
 ->middleware(ProtectorPeticiones::class);
+Route::post('/calendario/{mes?}/{anio?}', [ControladorCalendario::class, 'actualizar'])->name('calendario.post');
 
 Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])->name('perfil.get')
 ->middleware([ProtectorSesion::class, ProtectorPeticiones::class]);

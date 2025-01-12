@@ -1,82 +1,92 @@
-const months = [
-    
-    { name: "Enero", days: 31,startDay: 2, bg: "url('img/enero.png')" },
-    { name: "Febrero", days: 28, startDay: 5, bg: "url('img/febrero.png')" },
-    { name: "Marzo", days: 31, startDay: 5, bg: "url('img/marzo.png')" },
-    { name: "Abril", days: 30, startDay: 1, bg: "url('img/abril.png')" },
-    { name: "Mayo", days: 31, startDay: 3, bg: "url('img/mayo.png')" },
-    { name: "Junio", days: 30, startDay: 6, bg: "url('img/junio.png')" },
-    { name: "Julio", days: 31, startDay: 1, bg: "url('img/julio.png')" },
-    { name: "Agosto", days: 31, startDay: 4, bg: "url('img/agosto.png')" },
-    { name: "Septiembre", days: 30, startDay: 0, bg: "url('img/septiembre.png')" },
-    { name: "Octubre", days: 31, startDay: 2, bg: "url('img/octubre.png')" },
-    { name: "Noviembre", days: 30, startDay: 5, bg: "url('img/noviembre.png')" },
-    { name: "Diciembre", days: 31, startDay: 0, bg: "url('img/diciembre.png')" },
-];
+document.addEventListener('DOMContentLoaded', function(){
+    calendarioData = JSON.parse(calendario);
+    const primerDia = calendarioData.diasDelMes[0].fecha;
+    const ultimoDia = calendarioData.diasDelMes[calendarioData.diasDelMes.length - 1].fecha;
+    const numeroUltimoDia = parseInt(ultimoDia.split('-')[2], 10);
+    const primerDiaNumero = calendarioData.diaSemana; //1 para lunes
+    const fecha = new Date(primerDia);
+    const mesNumerico = fecha.getUTCMonth() + 1; // 1 para enero
+    const inputMes = document.getElementById('mes');
+    const formulario = document.getElementById('cambioFecha');
+    const inputAnio = document.getElementById('anio');
+    const hoy = new Date();
+    const hoyanio = hoy.getFullYear(); 
+    const hoymes = hoy.getMonth() + 1; 
+    const hoydia = hoy.getDate(); 
+    const botonPrevio = document.getElementById('prev-month');
+    const botonSig = document.getElementById('next-month');
 
-// Días cerrados para cada mes
-const closedDays = {
-    0: [5, 10, 15], // Enero
-    1: [7, 14],     // Febrero
-    2: [3, 17],     // Marzo
-    // Agrega más meses si es necesario
-};
 
-let currentMonth = 0;
+    function renderCalendar() {
+        
+        const calendar = document.getElementById("calendar");
+        const numbers = document.getElementById("numbers");
+        // Establecer fondo dinámico
+        calendar.style.backgroundImage = `url(${months[mesNumerico-1].bg})`        
 
-function renderCalendar() {
-    const calendar = document.getElementById("calendar");
-    const numbers = document.getElementById("numbers");
+        // Limpiar días previos
+        numbers.innerHTML = "";
 
-    // Establecer fondo dinámico
-    calendar.style.backgroundImage = months[currentMonth].bg;
+        // Agregar días vacíos al inicio según startDay
+        for (let i = 0; i < primerDiaNumero-1; i++) {
+            const emptyDay = document.createElement("li");
+            emptyDay.classList.add("empty-day"); // Clase para los días vacíos
+            numbers.appendChild(emptyDay);
+        }
 
-    // Limpiar días previos
-    numbers.innerHTML = "";
+        // Generar días del mes actual
+        for (let i = 1; i <= numeroUltimoDia ; i++) {
+            const day = document.createElement("li");
+            day.textContent = i;
 
-    // Agregar días vacíos al inicio según startDay
-    for (let i = 0; i < months[currentMonth].startDay; i++) {
-        const emptyDay = document.createElement("li");
-        emptyDay.classList.add("empty-day"); // Clase para los días vacíos
-        numbers.appendChild(emptyDay);
+            // Día actual
+            const today = new Date();
+            if (
+                i === today.getDate() &&
+                mesNumerico-1 === today.getMonth() &&
+                today.getFullYear() === 2025
+            ) {
+                day.classList.add("current");
+            }
+            // Días cerrados
+            else if (calendarioData.diasDelMes[i-1].porciones>=100) {
+                day.classList.add("closed");
+            }
+            // Días disponibles
+            else {
+                day.classList.add("available");
+            }
+
+            numbers.appendChild(day);
+        }
+        
+        //aqui configuren el css porque no pude quien sabe como funciona esa cosa
+        //para que si se esta viendo el mes actual no le deje ir para atras
+        if(mesNumerico===hoymes){
+            botonPrevio.disabled = true;
+        }
     }
 
-    // Generar días del mes actual
-    for (let i = 1; i <= months[currentMonth].days; i++) {
-        const day = document.createElement("li");
-        day.textContent = i;
+    botonPrevio.addEventListener('click', (e) => {
+        e.preventDefault();
+        mesAux = (mesNumerico - 1) % 12;
+        inputMes.value = mesAux;
+        inputAnio.value = hoyanio;
+        if(mesAux===12) 
+            inputAnio.value = hoyanio - 1;
+        formulario.submit();
+    });
 
-        // Día actual
-        const today = new Date();
-        if (
-            i === today.getDate() &&
-            currentMonth === today.getMonth() &&
-            today.getFullYear() === 2025
-        ) {
-            day.classList.add("current");
-        }
-        // Días cerrados
-        else if (closedDays[currentMonth]?.includes(i)) {
-            day.classList.add("closed");
-        }
-        // Días disponibles
-        else {
-            day.classList.add("available");
-        }
+    botonSig.addEventListener('click', (e) => {
+        e.preventDefault();
+        mesAux = (mesNumerico + 1) % 12;
+        inputMes.value = mesAux;
+        inputAnio.value = hoyanio;
+        if(mesAux===1)
+            inputAnio.value = hoyanio + 1;
+        
+        formulario.submit();
+    });
 
-        numbers.appendChild(day);
-    }
-}
-
-document.getElementById("prev-month").addEventListener("click", () => {
-    currentMonth = (currentMonth - 1 + months.length) % months.length;
     renderCalendar();
 });
-
-document.getElementById("next-month").addEventListener("click", () => {
-    currentMonth = (currentMonth + 1) % months.length;
-    renderCalendar();
-});
-
-// Inicializar calendario
-renderCalendar();

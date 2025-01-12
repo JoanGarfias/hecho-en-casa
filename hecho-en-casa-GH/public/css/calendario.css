@@ -193,3 +193,9 @@ ol{
     display: flex;
     gap: 200px;
 }
+
+#prev-month:disabled{
+    background-color: #d3d3d3; /* Gris claro */
+    color: #a9a9a9; /* Gris oscuro para el texto */
+    cursor: not-allowed; /* Cambia el cursor a una mano con barra para indicar que no se puede hacer clic */     
+}

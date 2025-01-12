@@ -33,7 +33,7 @@ class ControladorCalendario extends Controller
         }
         
         $primerDiaDelMes = $fecha->copy()->startOfMonth();
-        $diaSemana = $primerDiaDelMes->dayName;
+        $diaSemana = $primerDiaDelMes->dayOfWeek;
         $ultimoDiaDelMes = $fecha->copy()->endOfMonth();
         
         $pedidos = Cache::remember('pedidos', 30, function () use ($primerDiaDelMes, $ultimoDiaDelMes){
@@ -72,5 +72,11 @@ class ControladorCalendario extends Controller
         ]);
 
         return view('calFijo', compact('calendarioJson'));
+    }
+
+    public function actualizar(Request $request){
+        $mes = $request->input('mes');
+        $anio = $request->input('anio');
+        return redirect()->route('calendario.get',['mes' => $mes, 'anio' => $anio]);
     }
 }
