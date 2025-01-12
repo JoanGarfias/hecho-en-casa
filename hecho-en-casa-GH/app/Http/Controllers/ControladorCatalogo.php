@@ -17,6 +17,7 @@ use App\Models\AtributosExtra;
 use App\Models\TipoAtributo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use InvalidArgumentException;
 
 class ControladorCatalogo extends Controller
 {
@@ -95,6 +96,21 @@ class ControladorCatalogo extends Controller
     
         $fecha = Carbon::now();
         if($mes && $anio){
+            if (!is_numeric($mes) || !is_numeric($anio)) {
+                throw new InvalidArgumentException('El mes y el año deben ser números enteros.');
+            }
+            
+            $mes = (int) $mes;
+            $anio = (int) $anio;
+
+            if ($mes < 1 || $mes > 12) {
+                throw new InvalidArgumentException('El mes debe estar entre 1 y 12.');
+            }
+
+            if ($anio < 2024 || $anio > Carbon::now()->year + 1) {
+                throw new InvalidArgumentException('El año no es válido.');
+            }
+            
             $fecha = Carbon::createFromDate($anio, $mes, 1);
         }
 
@@ -105,6 +121,7 @@ class ControladorCatalogo extends Controller
         $pedidos = Cache::remember('pedidos', 30, function () use ($primerDiaDelMes, $ultimoDiaDelMes){
             return Pedido:: select('id_ped', 'fecha_hora_entrega', 'porcionespedidas')
                             ->whereBetween('fecha_hora_entrega', [$primerDiaDelMes, $ultimoDiaDelMes])
+                            ->where('status', 'aceptado')
                             ->get();
             });
 
@@ -340,17 +357,38 @@ class ControladorCatalogo extends Controller
         session(['nombre_unidad'=> $nombreUnidad]);
         $cantidad = intval($request->input('cantidad'));
         session(['porcionespedidas'=> $unidadm * $cantidad]);
-        $valoresSeleccionados = [];
+        /*$valoresSeleccionados = [];
         foreach (session('atributosSesion', []) as $nombreTipo => $atributos) {
             $campo = strtolower($nombreTipo);  // Usamos el mismo nombre dinámico que en la vista
             $valor = $request->input($campo);  // Capturamos el valor enviado
             $valoresSeleccionados[$campo] = $valor;
         }
+        
         $id_tipoatributo = TipoAtributo::where('nombre_atributo', $campo)->first();
         $id_atributo = AtributosExtra::where('id_tipo_atributo', $id_tipoatributo->idtipo_atributo)
         ->where('nom_atributo', $valor)
         ->first(['id_atributo']);
-        session(['id_atributo'=> $id_atributo->id_atributo]);
+        session(['id_atributo'=> $id_atributo->id_atributo]);*/
+
+        $valoresSeleccionados = session('atributosSesion');
+        session(['id_um' => $id_um->id_um]);
+        //NO QUITAR EL IF ELSE, ES DE SUMA IMPORTANCIA... CUALQUIER DUDA DEL FUNCIONAMIENTO PREGUNTARLE A JEOVANI.....
+        if (!empty($valoresSeleccionados)) {
+            foreach (session('atributosSesion', []) as $nombreTipo => $atributos) { //$valoresSeleccionados as $nombreTipo
+                $campo = strtolower($nombreTipo);  // Usamos el mismo nombre dinámico que en la vista
+                $valor = $request->input($campo);  // Capturamos el valor enviado
+                $valoresSeleccionados[$campo] = $valor;
+            }
+
+    
+            $id_tipoatributo = TipoAtributo::where('nombre_atributo', $campo)->first();
+                $id_atributo = AtributosExtra::where('id_tipo_atributo', $id_tipoatributo->idtipo_atributo)
+                ->where('nom_atributo', $valor)
+                ->first(['id_atributo']);
+                session(['id_atributo'=> $id_atributo->id_atributo]);
+        } else {
+            session(['id_atributo' => null]); 
+        }    
 
         // Ahora se puede usar los valores capturados
         session(['valoresSeleccionados' => $valoresSeleccionados]); // Captura como array
@@ -376,7 +414,7 @@ class ControladorCatalogo extends Controller
             // Instanciación de postrefijo  
 
             $fijo = new Postrefijo;
-            $fijo->id_atributo= $id_atributo->id_atributo;
+            $fijo->id_atributo= session("id_atributo");;
             $fijo->id_um = $id_um->id_um;  //1
             $fijo->id_postre_elegido = $id_postre;  //1 NUEVO
             $fijo->save();  

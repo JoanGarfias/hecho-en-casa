@@ -20,18 +20,17 @@ class ControladorLogin extends Controller
 
     public function Logear(Request $request)
     {
-        $action = $request->input('solicitud');//esto borrar
-
+        $action = $request->input('action');//esto borrar
         if($action === 'login'){
             
             $credentials = $request->validate([
-                'correo_electronico' => 'required|email',
+                'email' => 'required|email',
                 'password' => 'required',
                 'g-recaptcha-response' => 'required|captcha',
             ]);
     
             $usuario = Usuario::select('id_u', 'contraseña')
-            ->where('correo_electronico', $credentials['correo_electronico'])
+            ->where('correo_electronico', $credentials['email'])
             ->first();
 
             if ($usuario && Hash::check($credentials['password'], $usuario->contraseña)) {
@@ -50,19 +49,20 @@ class ControladorLogin extends Controller
         }elseif($action === 'recuperar'){
             
             $credentials = $request->validate([
-                'correo_electronico' => 'required|email',
+                'email' => 'required|email',
             ]);
     
-            $usuario = Usuario::where('correo_electronico', $credentials['correo_electronico'])->first();
+            $usuario = Usuario::where('correo_electronico', $credentials['email'])->first();
             if($usuario){
-                $correo = $credentials['correo_electronico'];
+                $correo = $credentials['email'];
                 $token = Str::random(64);
                 Mail::to($correo)->send(new Correo($token));
                 $usuario->token_recuperacion = $token;
                 try{
                     $usuario->save();
                 }catch(\Exception $e){
-                    dd("Error al guardar el postre emergente: ".$e->getMessage());
+                    return redirect()->route('inicio.get')
+                    ->with('error', 'Error al guardar el usuario');    
                 }
                 session([
                     'correo' => $correo,

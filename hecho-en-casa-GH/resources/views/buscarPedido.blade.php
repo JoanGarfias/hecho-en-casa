@@ -7,74 +7,81 @@
     <title>Buscador de Pedidos</title>
 </head>
 <body>
-    <!-- Encabezado con título y buscador --> <div class="header"> 
+    <center>
         <div class="header">
-            <h1 class="titulo">BUSCADOR DE PEDIDOS</h1>
-            <div class="search-container">
-                <input type="text" placeholder="Buscar pedido">
-                <img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="Buscar">
+            <h1 class="titulo">Buscador de Pedidos</h1>
+            <form method="POST" action="{{ route('buscarpedido.post') }}" class="search-container">
+                @csrf
+                <input type="number" name="folio" id="folio" placeholder="Buscar pedido" required>
+                <button type="submit">
+                    <img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="Buscar">
+                </button>
+            </form>
+        </div>
+
+        <div class="container">
+            <div class="folio">
+                Pedido con folio: <span class="folio-number">{{ isset($pedido) ? $pedido->id_ped : '00000' }}</span>
             </div>
-        </div>
-
-    <div class="container">
-        <div class="folio">
-            Pedido con folio: <span class="folio-number">00025</span>
-        </div>
-
-        <div class="form-columns">
-            <!-- Columna izquierda -->
-            <div class="form-column">
-                <div class="form-group">
-                    <label for="tipo-postre">Tipo de postre:</label>
-                    <select id="tipo-postre">
-                        <option value="">Selección</option>
-                    </select>
+            <div class="form-columns">
+                <div class="form-column">
+                    <div class="form-group">
+                        <label for="tipo-postre">Tipo de postre:</label>
+                        <input type="text" id="tipo-postre" value="{{ isset($tipopostre) ? $tipopostre : 'Selección' }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="porciones">Porciones:</label>
+                        <input type="text" id="porciones" value="{{ isset($pedido) ? (int)$pedido->porcionespedidas : 'XX' }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="estatus">Estatus:</label>
+                        <div class="estatus-options">
+                            <?php if (!isset($pedido)): ?>
+                                <!-- Mostrar ambas opciones al inicio -->
+                                <button class="pending">Pendiente</button>
+                                <span>ó</span>
+                                <button class="accepted">Aceptada</button>
+                            <?php else: ?>
+                                <!-- Mostrar solo la opción correspondiente tras la búsqueda -->
+                                <?php if ($pedido->status == 'pendiente'): ?>
+                                    <button class="pending">Pendiente</button>
+                                <?php else: ?>
+                                    <button class="accepted">Aceptada</button>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    
+                                       
                 </div>
-                <div class="form-group">
-                    <label for="porciones">Porciones:</label>
-                    <input type="text" id="porciones" placeholder="XX">
-                </div>
-                <div class="form-group">
-                    <label for="estatus">Estatus:</label>
-                    <div class="estatus-options">
-                        <button class="pending">Pendiente</button>
-                        <span>ó</span>
-                        <button class="accepted">Aceptada</button>
+                <div class="form-column">
+                    <div class="form-group">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" value="{{ isset($nombre_completo) ? $nombre_completo : 'XXXXX' }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono:</label>
+                        <input type="text" id="telefono" value="{{ isset($telefono) ? $telefono : 'XXXXX' }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha-entrega">Fecha de entrega:</label>
+                        <input type="text" id="fecha-entrega" value="{{ isset($fecha_entrega) ? $fecha_entrega : 'XX/XX/XXXX' }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="hora-entrega">Hora de entrega:</label>
+                        <input type="text" id="hora-entrega" value="{{ isset($hora_entrega) ? $hora_entrega : '00:00' }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipo-entrega">Tipo de entrega:</label>
+                        <input type="text" id="tipo-entrega" value="{{ isset($tipo_entrega) ? $tipo_entrega : 'Selección' }}" readonly>
+                    </div>
+                    <div class="form-group cost">
+                        <label>Costo aprox:</label>
+                        <span class="costo-aprox">{{ isset($precio_final) ? $precio_final : '$0.00' }}</span>
                     </div>
                 </div>
             </div>
-
-            <!-- Columna derecha -->
-            <div class="form-column">
-                <div class="form-group">
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" placeholder="xxxxx">
-                </div>
-                <div class="form-group">
-                    <label for="telefono">Teléfono:</label>
-                    <input type="text" id="telefono" placeholder="xxxxx">
-                </div>
-                <div class="form-group">
-                    <label for="fecha-entrega">Fecha de entrega:</label>
-                    <input type="text" id="fecha-entrega" placeholder="xx/xx/xxxx">
-                </div>
-                <div class="form-group">
-                    <label for="hora-entrega">Hora de entrega:</label>
-                    <input type="time" id="hora-entrega" value="00:00">
-                </div>
-                <div class="form-group">
-                    <label for="tipo-entrega">Tipo de entrega:</label>
-                    <select id="tipo-entrega">
-                        <option value="">Selección</option>
-                    </select>
-                </div>
-
-                <div class="form-group cost">
-                    <label>Costo aprox:</label>
-                    <span class="costo-aprox">$550.00</span>
-                </div>
-            </div>
         </div>
-    </div>
+    </center>
 </body>
 </html>
