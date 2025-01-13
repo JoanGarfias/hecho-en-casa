@@ -321,8 +321,6 @@ header {
     .hamburger-menu {
         display: flex; /* Muestra el ícono en móvil */
         top: 30px;
-        
-        
     }
 }
 
@@ -351,4 +349,13 @@ header {
         width: 100%; /* Asegura que ocupen todo el ancho */
         justify-content: center; /* Centra los elementos */
     }
+}
+
+/* Estilos del menú desplegable */
+.dropdown-menu {
+    display: none; /* Oculto por defecto */
+}
+
+.dropdown-menu.show {
+    display: block; /* Mostrar cuando se active */
 }
