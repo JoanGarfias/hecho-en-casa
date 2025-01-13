@@ -14,7 +14,12 @@ class ControladorPerfil extends Controller
         $usuario = Cache::remember('usuario', 30, function () use ($id){
             return usuario::where('id_u', $id)->first();
         });
-        return view('Perfil');
+        if($id == null){
+            return redirect()->route('inicio.get')->with('error', 'Ocurrio un error,cierra tu sesion e inicia sesion otra vez');
+        }else{
+            return view('Perfil');
+        }
+        
     }
 
     public function datosUsuario(){
