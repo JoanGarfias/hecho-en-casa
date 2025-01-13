@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function(){
     calendarioData = JSON.parse(calendario);
+   
     const primerDia = calendarioData.diasDelMes[0].fecha;
     const ultimoDia = calendarioData.diasDelMes[calendarioData.diasDelMes.length - 1].fecha;
     const numeroUltimoDia = parseInt(ultimoDia.split('-')[2], 10);

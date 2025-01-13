@@ -1,3 +1,38 @@
+document.addEventListener('DOMContentLoaded', function () {
+    const numbers = document.getElementById("numbers");
+    console.log('entro')
+    // Delegación de eventos: Detectar clics solo en elementos con la clase "available"
+    numbers.addEventListener("click", function (e) {
+        const clickedDay = e.target;
+        if (clickedDay.classList.contains("available")) {
+            // Deseleccionar el día anterior
+            const previouslySelected = numbers.querySelector(".selected");
+            if (previouslySelected) {
+                previouslySelected.classList.remove("selected");
+            }
+
+            console.log(clickedDay)
+            // Seleccionar el nuevo día
+            clickedDay.classList.add("selected");
+
+            // Obtener la fecha seleccionada
+            const diaNumero = clickedDay.textContent;
+            const mes = document.getElementById("mes").value || new Date().getMonth() + 1;
+            const anio = document.getElementById("anio").value || new Date().getFullYear();
+
+            const fecha = `${anio}-${String(mes).padStart(2, "0")}-${String(diaNumero).padStart(2, "0")}`;
+            console.log("Fecha seleccionada:", fecha);
+
+            // Guardar en el campo oculto
+            const inputFecha = document.getElementById("fechaSeleccionada");
+            if (inputFecha) {
+                inputFecha.value = fecha;
+            }
+        }
+    });
+});
+
+
 //Para la hora
 document.addEventListener("DOMContentLoaded", () => {
     const horaInput = document.getElementById("horaEntrega");

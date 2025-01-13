@@ -56,12 +56,12 @@
                     </ol>
                     
                 </div>
-                <div class="tre">
+                <div class="cuacro">
                     <div class="legend">
-                            <p><span class="closed"></span> Fechas cerradas</p>
-                            <p><span class="current"></span> Fecha actual</p>
-                            <p><span class="available"></span> Disponible</p>
-                        </div>
+                        <p><span class="closed"></span> Fechas cerradas</p>
+                        <p><span class="current"></span> Fecha actual</p>
+                        <p><span class="available"></span> Disponible</p>
+                    </div>
 
                     <div class="hour">
                         <label for="time" class="seleccionarHora">Seleccionar hora:</label>
@@ -73,11 +73,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="botAceptar">
+                        <button class="aceptandoFecha">Aceptar fecha y hora</button>
+                    </div>
 
                     <form action="{{route('calendario.post')}}" method="POST" id="cambioFecha">
                         @csrf
                         <input type="hidden" name="mes" id="mes" value="">
                         <input type="hidden" name="anio" id="anio" value="">
+                        <input type="hidden" name="fechaSeleccionada" id="fechaSeleccionada" value="">
                         <div class="arrows">
                             <button type="submit" id="prev-month" class="arrow">⬅</button>
                             <button type="submit" id="next-month" class="arrow">➡</button>
@@ -88,6 +92,7 @@
                 <br>
                 <script>
                     const calendario = @json($calendarioJson);
+
                     const months = [
                         { bg: "url('{{ asset('img/enero.png') }}')" },
                         { bg: "url('{{ asset('img/febrero.png') }}')" },
@@ -103,11 +108,13 @@
                         { bg: "url('{{ asset('img/diciembre.png') }}')" },
                     ];        
                     
+                    
                 </script>
             </body>
             <x-pie/>
-
-            <script src="{{ asset('js/calEdit.js') }}"></script>
-            <script src="{{ asset('js/meses.js') }}"></script>
+            <script src="{{ asset('js/calEdit.js') }}" defer></script>
+            <script src="{{ asset('js/meses.js') }}" defer></script>
+           
+            
             <!--Para la animación del logo de usuario-->
 <script src="{{ asset('js/icono.js') }}" defer></script>

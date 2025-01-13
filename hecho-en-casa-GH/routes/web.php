@@ -57,13 +57,6 @@ Route::middleware([EnlazadorRegistro::class])->group(function () {
     Route::post('/direccion', [ControladorRegistro::class, 'guardarDireccion'])->name('registrar.direccion.post');
 });
 
-
- /*Borra*/
- Route::get('error/database', function(){
-    return view('error/database');
-});
-
-
 /* PROCESOS PARA RECUPERACION */
 
 Route::middleware([EnlazadorRecuperacion::class, ProtectorPeticiones::class])->group(function(){
