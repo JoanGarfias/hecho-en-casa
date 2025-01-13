@@ -5,24 +5,38 @@ body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #ffffff;
+    background-color: #fdf8ee;
     display: flex;
 }
 
 /* Menú lateral */
 .menu-lateral {
-    width: 200px; /* Ancho del menú */
-    background-color: #d9b485; /* Color de fondo */
-    color: white; /* Color del texto */
-    padding: 15px; /* Espaciado interno */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
-    height: auto; /* Ajusta la altura al contenido */
-    position: relative; /* Permite moverlo sin ser fijo */
-    margin-left: 25px; /* Espacio a la izquierda */
-    margin-top: 50px; /* Espacio superior */
-    border-radius: 10px; /* Bordes redondeados */
-    top: 100px; /* Ajusta su posición vertical */
+    position: fixed; /* Mantiene el menú fijo en la pantalla */
+    top: 100px; /* Altura desde la parte superior */
+    left: 25px; /* Separación desde la izquierda */
+    width: 200px;
+    background-color: #d9b485;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
+
+.menu-lateral {
+    position: fixed;
+    top: 160px; /* Ahora está 150px desde la parte superior */
+    left: 25px; /* Mantén el espacio desde la izquierda */
+    width: 200px;
+    background-color: #d9b485;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
 
 .menu-lateral h3 {
     font-size: 16px;
@@ -51,8 +65,3 @@ body {
     text-decoration: underline; /* Subrayado al pasar el mouse */
 }
 
-/* Contenido principal */
-.contenido-principal {
-    margin-left: 120px; /* Deja espacio suficiente para el menú */
-    padding: 20px; /* Margen interno */
-}

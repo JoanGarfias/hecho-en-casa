@@ -3,20 +3,13 @@
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
-    background-color: #ffffff;
-    display: flex; /* Permite posicionar el menú y el contenido en línea */
-    min-height: 100vh; /* Ocupa toda la altura de la pantalla */
-}
-
-
-/* Contenido principal */
-.contenido-principal {
-    margin-left: 220px; /* Deja espacio suficiente para el menú */
-    padding: 20px; /* Espaciado interno */
-    flex: 1; /* Ocupa el espacio restante */
-    width: auto; /* Ajusta el ancho automáticamente */
-    box-sizing: border-box; /* Para incluir padding en el ancho total */
-}
+    background-color: #fdf8f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
 
 
 .title {
@@ -25,74 +18,88 @@ body {
     font-weight: bold;
     text-transform: uppercase;
     margin-bottom: 20px;
-
-    /* Centrar el título */
-    text-align: center; /* Centrar el texto horizontalmente */
-    margin: 0 auto; /* Centrar el contenedor en caso de ancho definido */
-    width: 100%; /* Asegurarte de que ocupe todo el ancho del contenedor */
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+    display: block;
+    margin-top: 30px; /* Ajusta según necesites */
+    
+    /* Ajusta estas propiedades para mover el título */
+    margin-left: -60px; /* Mueve el título hacia la derecha */
+    /* o */
+    /* margin-right: 50px; Mueve el título hacia la izquierda */
 }
 
-.main-container {
+
+
+
+
+
+
+
+  .main-container {
     background: #EADAC6;
     width: 300px;
     border-radius: 10px;
     text-align: center;
     padding: 20px;
     position: relative;
-}
+    margin-right: 100px; /* Mueve el contenedor hacia la izquierda */
 
-.main-container h2 {
+  }
+
+  .main-container h2 {
     font-size: 1.2em;
     color: #705030;
     margin: 0;
     text-transform: uppercase;
     position: relative;
-}
+  }
 
-.main-container h2::after {
+  .main-container h2::after {
     content: '';
     display: block;
     width: 100%;
     height: 2px;
     background: #705030;
     margin: 10px 0;
-}
+  }
 
-.main-container img {
+  .main-container img {
     width: 100%;
     border-radius: 10px;
     margin: 10px 0;
-}
+  }
 
-.outer-circle {
+  .outer-circle {
     position: absolute;
-    bottom: -15px;
-    right: -15px;
+    bottom: -15px; /* Ajusta según sea necesario */
+    right: -15px; /* Ajusta según sea necesario */
     background: #EADAC6;
     border-radius: 50%;
-    width: 100px;
-    height: 100px;
+    width: 100px; /* Tamaño del círculo exterior */
+    height: 100px; /* Tamaño del círculo exterior */
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+  }
 
-.price-circle {
+  .price-circle {
     background: #DDB97F;
-    color: #fff;
+    color: #fff; /* Texto blanco */
     font-size: 1em;
     font-weight: bold;
     border-radius: 50%;
-    width: 80px;
-    height: 80px;
+    width: 80px; /* Tamaño del círculo interior */
+    height: 80px; /* Tamaño del círculo interior */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
+  }
 
-.description-container {
+  .description-container {
     background: #E5C99C;
     width: 300px;
     margin-top: 20px;
@@ -103,15 +110,30 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
+    margin-right: 140px; /* Mueve el contenedor hacia la izquierda */
 
-.description-container img {
+  }
+
+  .description-container img {
     width: 50%;
     height: 50px;
-    transition: transform 0.3s ease;
-    cursor: pointer;
+    transition: transform 0.3s ease; /* Efecto suave para la animación */
+    cursor: pointer; /* Cambia el cursor al pasar el ratón */
+
+  }
+
+  .description-container img:hover {
+    transform: scale(1.1); /* Aumenta ligeramente el tamaño al pasar el cursor */
+  }   
+
+
+  .contenido-principal {
+    margin-left: 270px; /* Deja espacio suficiente para el menú */
+    padding: 20px; /* Espaciado interno */
+    flex: 1; /* Ocupa el espacio restante */
+    width: auto; /* Ajusta el ancho automáticamente */
+    box-sizing: border-box; /* Para incluir padding en el ancho total */
+    margin-top: auto;
+    margin-top: 60px; /* Aumenta el margen superior según necesites */
 }
 
-.description-container img:hover {
-    transform: scale(1.1);
-}
