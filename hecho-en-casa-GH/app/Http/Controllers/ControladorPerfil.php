@@ -101,6 +101,7 @@ class ControladorPerfil extends Controller
             }
         }
         
-        return redirect()->route('inicio.get');
+        Cache::forget('usuario');
+        return redirect()->route('perfil.get');
     }
 }

@@ -4,11 +4,11 @@ const editarTelButton = document.querySelector('.editarTel');
 const editarPasButton = document.querySelector('.editarPas');
 const editarDirButton = document.querySelector('.editarDir');
 
-const telefonoInput = document.getElementsByName('telefono');
-const passwordInput = document.getElementByName('contrasena');
-const cpInput = document.getElementsByName('codigopostal');
-const estadoInput = document.getElementsByName('estado');
-const ciudadInput = document.getElementsByName('ciudad');
+const telefonoInput = document.getElementById('telefono');
+const passwordInput = document.getElementById('contrasena');
+const cpInput = document.getElementById('codigopostal');
+const estadoInput = document.getElementById('estado');
+const ciudadInput = document.getElementById('ciudad');
 const calleInput = document.getElementById('calle');
 const numeroIntInput = document.getElementById('numero-int');
 const numeroExtInput = document.getElementById('numero-ext');

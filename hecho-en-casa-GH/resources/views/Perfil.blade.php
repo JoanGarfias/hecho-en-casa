@@ -67,7 +67,7 @@
             </button>
 
           <label>Número de tel.</label>
-          <input type="text" value="<?php echo Cache::get('usuario')->telefono ?>" readonly name="telefono" >
+          <input type="text" value="<?php echo Cache::get('usuario')->telefono ?>" readonly name="telefono" id="telefono" >
 
           <label>Correo:</label>
           <input type="email" value="<?php echo Cache::get('usuario')->correo_electronico ?>" readonly>
@@ -83,7 +83,7 @@
             </button>
 
           <label>Contraseña:</label>
-          <input type="password" value="password" name="contrasena" readonly>
+          <input type="password" value="password" name="contrasena" readonly id="contrasena">
         </div>
 
             <div class="left-columnd">
@@ -100,13 +100,13 @@
               <label>Ubicación de entrega</label>
               
               <label>C.P :</label>
-              <input type="text" value="<?php echo Cache::get('usuario')->Codigo_postal_u ?>" name="codigopostal" readonly>
+              <input type="text" value="<?php echo Cache::get('usuario')->Codigo_postal_u ?>" name="codigopostal" id="codigopostal" readonly>
 
               <label>Estado:</label>
-              <input type="text" value="Oaxaca" name="<?php echo Cache::get('usuario')->estado_u ?>" readonly>
+              <input type="text" value="<?php echo Cache::get('usuario')->estado_u ?>" name="estado" id="estado" readonly>
 
               <label>Ciudad:</label>
-              <input type="text" value="Salina Cruz" name="<?php echo Cache::get('usuario')->ciudad_u ?>"readonly>
+              <input type="text" value="<?php echo Cache::get('usuario')->ciudad_u ?>" name="ciudad" id="ciudad" readonly>
             </div>
 
             <div class="right-columnd">
