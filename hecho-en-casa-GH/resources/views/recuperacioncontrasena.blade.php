@@ -5,7 +5,7 @@
 
 <div class="flexi">
     <div class = "contenedor"><!-- café-->
-        <form id="validandoContra" method="POST" action="{{route('cambiar-clave.post')}}">
+        <form id="validandoContra">
             @csrf
             <h2 class="titule">Restablecer contraseña</h2>
             <br>
@@ -30,7 +30,6 @@
             </div>
             <br>
             <button class="botoncito" type="submit" name="action" value="contrasena" onclick="validateContra()">Continuar</button>
-
 
             <!--button class="botoncito" type="submit" name="action" value="contrasena">Continuar</button-->
 

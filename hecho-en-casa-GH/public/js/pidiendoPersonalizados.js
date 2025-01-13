@@ -1,17 +1,3 @@
-
-//para el movimiento de los botones de incremento y decremento de porciones
-document.querySelector('.incrementar').addEventListener('click', function() {
-    var cantidadInput = document.getElementById('porciones');
-    cantidadInput.value = parseInt(cantidadInput.value) + 1;
-});
-
-document.querySelector('.decrementar').addEventListener('click', function() {
-    var cantidadInput = document.getElementById('porciones');
-    if (parseInt(cantidadInput.value) > 1) { // No permitir que sea menor que 1
-        cantidadInput.value = parseInt(cantidadInput.value) - 1;
-    }
-});
-
 //Para los botones de sabores
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -49,8 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 //Para el boton de tipo entrega
-
-document.getElementById('toggleSelect').addEventListener('click', function() {
+document.getElementById('toggleSelect').addEventListener('click', function(event) {
+    event.preventDefault(); // Evita que el botón envíe el formulario o recargue la página.
     const options = document.getElementById('selectOptions');
     options.style.display = (options.style.display === 'none' || options.style.display === '') ? 'block' : 'none';
 });
@@ -62,4 +48,17 @@ document.querySelectorAll('.custom-select-options .option').forEach(option => {
         document.getElementById('toggleSelect').textContent = this.textContent;
         document.getElementById('selectOptions').style.display = 'none';
     });
+});
+
+//para el movimiento de los botones de incremento y decremento de porciones
+document.querySelector('.incrementar').addEventListener('click', function() {
+    var cantidadInput = document.getElementById('porciones');
+    cantidadInput.value = parseInt(cantidadInput.value) + 1;
+});
+
+document.querySelector('.decrementar').addEventListener('click', function() {
+    var cantidadInput = document.getElementById('porciones');
+    if (parseInt(cantidadInput.value) > 1) { // No permitir que sea menor que 1
+        cantidadInput.value = parseInt(cantidadInput.value) - 1;
+    }
 });
