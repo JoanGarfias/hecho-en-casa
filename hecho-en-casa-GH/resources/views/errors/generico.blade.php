@@ -15,9 +15,7 @@
     <div class="contenedor">
         <h1>❌ Error del Sistema</h1>
         <br>
-        <p>
-            {{$message}}
-        </p>
+        
         <br>
 
         <p>Ocurrió un error inesperado. Estamos trabajando para solucionarlo.</p>
