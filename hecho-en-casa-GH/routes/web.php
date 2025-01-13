@@ -30,7 +30,8 @@ Route::post('/calendario/{mes?}/{anio?}', [ControladorCalendario::class, 'actual
 
 Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])->name('perfil.get')
 ->middleware([ProtectorSesion::class, ProtectorPeticiones::class]);
-Route::post('/perfil', [ControladorPerfil::class, 'editar'])->name('perfil.post');
+Route::post('/perfil', [ControladorPerfil::class, 'editar'])->name('perfil.post')
+->middleware([ProtectorSesion::class, ProtectorPeticiones::class]);
 
 /* PROCESO DE LOGIN */
 Route::middleware([ProtectorPeticiones::class])->group(function(){
