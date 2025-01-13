@@ -69,6 +69,16 @@
         </main>
     </div>
 
+
+    <script>
+        let categorias = @json($categorias);
+        let catalogo = @json($catalogo);
+
+        console.log(categorias);
+        console.log(catalogo);
+
+    </script>
+
     <x-pie />
     <script src="{{asset ('js/despliegue-menu.js')}}" defer> </script>
     <script src="{{ asset('js/icono.js') }}" defer></script>
