@@ -69,6 +69,8 @@
                     G54YN/kil2cDXB0Uma7aNgs8s6W0DCnQEzm0vCZpd1toCEOwNmNvd0hP8ASzRtPa2Gq1AAAAAASUVORK5CYII=" 
                     alt="Guardar"> Descargar resumen
                 </button>
+
+                <button id="next" class="arrow">➡</button>
       <!--  </div>-->
             </div>
    </div>
