@@ -77,5 +77,8 @@
         // Mostrar los productos iniciales al cargar la página
         window.onload = mostrarProductos;
     </script>
+
+    <x-pie />
 </body>
+
 </html>
