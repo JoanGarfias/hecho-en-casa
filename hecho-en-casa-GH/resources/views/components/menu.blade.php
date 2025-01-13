@@ -20,7 +20,7 @@
                 <li><a href="{{route('calendario.get') }}">Calendario</a></li>
                 <li><a href="{{route('fijo.catalogo.get')}}">Catálogo</a></li>
             </ul>
-            <img class="logo" src="{{ asset('img/logo.png') }}" alt="Logo">
+            <img class="logo" src="{{ asset('img/logoO.png') }}" alt="Logo">
             <ul class="menu-derecho">
                 <li><a href="#">Conócenos</a></li>
                 <li><a href="{{route('buscarpedido.get')}}">Buscar pedido</a></li>

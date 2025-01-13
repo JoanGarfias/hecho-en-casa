@@ -9,13 +9,13 @@
                 <div class="calendar" id="calendar">
 
                     <ol class="ol">
-                        <li class='nom-dia'>Lun</li>
-                        <li class='nom-dia'>Mar</li>
-                        <li class='nom-dia'>Mie</li>
-                        <li class='nom-dia'>Jue</li>
-                        <li class='nom-dia'>Vie</li>
-                        <li class='nom-dia'>Sab</li>
-                        <li class='nom-dia'>Dom</li>
+                        <li class='nom-dia'>L</li>
+                        <li class='nom-dia'>M</li>
+                        <li class='nom-dia'>M</li>
+                        <li class='nom-dia'>J</li>
+                        <li class='nom-dia'>V</li>
+                        <li class='nom-dia'>S</li>
+                        <li class='nom-dia'>D</li>
                     </ol>
                             <!-- Lista de días del mes
                             <li class='primer-dia'>1</li>
@@ -74,16 +74,40 @@
                         </div>
                     </div>
 
-                    <div class="arrows">
-                        <button id="prev-month" class="arrow">⬅</button>
-                        <button id="next-month" class="arrow">➡</button>
-                    </div>
+                    <form action="{{route('calendario.post')}}" method="POST" id="cambioFecha">
+                        @csrf
+                        <input type="hidden" name="mes" id="mes" value="">
+                        <input type="hidden" name="anio" id="anio" value="">
+                        <div class="arrows">
+                            <button type="submit" id="prev-month" class="arrow">⬅</button>
+                            <button type="submit" id="next-month" class="arrow">➡</button>
+                        </div>                        
+                    </form>
                 </div>
                 </div>
                 <br>
+                <script>
+                    const calendario = @json($calendarioJson);
+                    const months = [
+                        { bg: "url('{{ asset('img/enero.png') }}')" },
+                        { bg: "url('{{ asset('img/febrero.png') }}')" },
+                        { bg: "url('{{ asset('img/marzo.png') }}')" },
+                        { bg: "url('{{ asset('img/abril.png') }}')" },
+                        { bg: "url('{{ asset('img/mayo.png') }}')" },
+                        { bg: "url('{{ asset('img/junio.png') }}')" },
+                        { bg: "url('{{ asset('img/julio.png') }}')" },
+                        { bg: "url('{{ asset('img/agosto.png') }}')" },
+                        { bg: "url('{{ asset('img/septiembre.png') }}')" },
+                        { bg: "url('{{ asset('img/octubre.png') }}')" },
+                        { bg: "url('{{ asset('img/noviembre.png') }}')" },
+                        { bg: "url('{{ asset('img/diciembre.png') }}')" },
+                    ];        
+                    
+                </script>
             </body>
             <x-pie/>
 
             <script src="{{ asset('js/calEdit.js') }}"></script>
+            <script src="{{ asset('js/meses.js') }}"></script>
             <!--Para la animación del logo de usuario-->
 <script src="{{ asset('js/icono.js') }}" defer></script>

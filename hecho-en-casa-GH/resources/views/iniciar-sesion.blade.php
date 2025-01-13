@@ -32,7 +32,7 @@
         <div>
             <button class="botoncito" type="submit" name="action" value="recuperar" id="olvidadizo">Olvide mi contraseña</button>
             <button class="botoncito" type="submit" name="action" value="register">Registrarme</button>
-            <button class="botoncito" type="submit" name="action" value="login" onclick="validateForm()">Continuar</button>
+            <button class="botoncito" type="submit" name="action" value="login" >Continuar</button>
         </div>
 </form>
 </div>

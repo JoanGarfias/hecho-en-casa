@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&family=Covered+By+Your+Grace&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Red+Hat+Mono:ital,wght@0,300..700;1,300..700&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&family=Share+Tech+Mono&display=swap');
+
+body {
+    background: #ffff;
+    font-family: "Montserrat", serif;
+    font-style: normal;
+    margin: 0;
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;    /* Centra verticalmente */
+    height: 100vh;          /* Ajusta la altura de la pantalla completa */
+    color: #525252;
+    flex-direction: column;
+}
+
+.contenedor {
+    border: none; /* Elimina cualquier borde existente */
+    background: #ffffff;
+    border-radius: 20px;
+    width: 65%; /* Ajusta el ancho a tu preferencia */
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Opcional: centra contenido interno horizontalmente */
+    align-items: center;    /* Opcional: centra contenido interno verticalmente */
+
+    padding: 15px; 
+}
+
+img {
+    width: 164px;
+    height: 149px;
+    position: absolute;
+    top: 64%;
+    left: 24%;
+}
+
+h1 {
+    border-bottom: solid 2px #525252;
+    font-weight: bold;
+    font-size: 40px;
+    padding-bottom: 35px;
+    letter-spacing: 5px;/* Espaciado inicial */
+    transition: letter-spacing 0.5s ease-in-out, color 0.5s ease-in-out; /* Animación suave */
+}
+
+
+a {
+    text-decoration: none;
+    color: #454444;/* Color del enlace */
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+
+a:hover {
+    color: #373636;
+    text-decoration: underline;
+}
