@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
@@ -21,41 +19,32 @@ body {
     margin: 30px auto;
 }
 
-.contenido-principal {
-    margin-top: 100px; /* Ajusta este valor según el espacio deseado */
-}
-
-
 #productos {
     display: flex;
-    flex-wrap: wrap; /* Permite que los elementos pasen a una nueva fila si no hay espacio */
-    gap: 20px; /* Espaciado entre elementos */
-    justify-content: flex-start; /* Alinea los elementos al inicio del contenedor */
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center; /* Centrar los productos */
+    width: 100%;
     padding: 20px;
-    margin-left: 180px; /* Desplaza todo el grid hacia la derecha */
     box-sizing: border-box;
 }
 
-
 .main-container {
     background: #EADAC6;
-    width: 200px; /* Asegura un ancho fijo o usa un porcentaje */
+    width: 200px; /* Asegura un ancho fijo */
     border-radius: 10px;
     text-align: center;
     padding: 15px;
     position: relative;
-    margin: 0 10px; /* Espaciado horizontal entre los contenedores */
-    box-sizing: border-box; /* Incluye padding en el cálculo del ancho total */
+    margin: 10px; /* Espaciado entre los contenedores */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
-
-
 
 .main-container h2 {
     font-size: 1em;
     color: #705030;
     margin: 0;
     text-transform: uppercase;
-    position: relative;
 }
 
 .main-container h2::after {
@@ -68,10 +57,38 @@ body {
 }
 
 .main-container img {
-    width: 100%;
+    width: 100%; /* Ocupa todo el ancho del contenedor */
     border-radius: 10px;
-    margin: 5px 0;
+    margin: 10px 0;
 }
+
+.description-container {
+    background: #E5C99C;
+    width: 100%; /* Se adapta al ancho del padre */
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 0.8em;
+    color: #705030;
+    display: flex;
+    justify-content: space-between; /* Distribuye el texto y la bolsa */
+    align-items: center;
+    box-sizing: border-box; /* Asegura que el padding no altere el tamaño */
+    overflow: hidden; /* Esconde contenido que pueda desbordar */
+}
+
+.description-container .shopping-bag {
+    width: 30px; /* Tamaño de la bolsa */
+    height: auto; /* Mantiene la proporción */
+    margin-left: 10px; /* Espacio entre la descripción y la bolsa */
+    cursor: pointer; /* Cambia el cursor a mano al pasar sobre la bolsa */
+    transition: transform 0.3s ease; /* Animación suave */
+}
+
+.description-container .shopping-bag:hover {
+    transform: scale(1.1); /* Aumenta ligeramente el tamaño al pasar el ratón */
+}
+
 
 .outer-circle {
     position: absolute;
@@ -79,7 +96,7 @@ body {
     right: -8px;
     background: #EADAC6;
     border-radius: 50%;
-    width: 60px; /* Tamaño reducido */
+    width: 60px;
     height: 60px;
     display: flex;
     justify-content: center;
@@ -96,37 +113,6 @@ body {
     width: 50px;
     height: 50px;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-.description-container {
-    background: #E5C99C;
-    width: 100%; /* Se adapta al ancho del padre */
-    margin-top: 10px;
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 0.8em;
-    color: #705030;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-sizing: border-box; /* Asegura que padding no altere el tamaño */
-    overflow: hidden; /* Esconde contenido que pueda desbordar */
-}
-
-
-.description-container img {
-    width: 25%;
-    height: auto;
-    transition: transform 0.3s ease;
-    cursor: pointer;
-}
-
-.description-container img:hover {
-    transform: scale(1.1);
-}
-.contenido-principal {
-    margin-top: 100px; /* Aumenta este valor para bajarlo más */
 }

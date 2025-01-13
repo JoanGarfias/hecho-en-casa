@@ -3,60 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('css/menuCatalogoFijo.css') }}">
     <link rel="stylesheet" href="{{ asset('css/galleta.css') }}">
     <title>Catálogo</title>
 </head>
+<x-menu/>
 <body>
-
-    <x-menu/>
-
-
-<div class="contenido-principal">
     <h1>Catálogo de Postres</h1>
 
+    <!-- Menú lateral -->
+    <aside class="menu-lateral">
+        <h3>Postres</h3>
+        <ul>
+            @foreach($categorias as $categoria)
+                <li>
+                    <a href="#" data-id="{{ $categoria->id_cat }}" onclick="cambiarCategoria(event, this)">
+                        {{ $categoria->nombre }}
+                    </a>
+                </li>
+            @endforeach
+        </ul>
+    </aside>
 
-    <!-- Dropdown para seleccionar categoría -->
-    <select id="categorias" onchange="cambiarCategoria(this.value)">
-        <option value="">Selecciona una categoría</option> 
-        @foreach($categorias as $categoria)
-            <option value="{{ $categoria->id_cat }}" @if($categoria->id_cat == $categoriaSeleccionada) selected @endif>
-                {{ $categoria->nombre }}
-            </option>
-        @endforeach
-    </select>
-    
-    <!-- Contenedor para los productos  -->
-    <div id="productos">
-        @foreach($catalogo as $producto)
-            <div class="main-container" id="producto-{{ $producto->id_postre }}">
+    <!-- Contenedor de productos -->
+    <div class="contenido-principal">
+        <h1 class="title">Catálogo de Postres</h1>
+        <div id="productos">
+            @foreach($catalogo as $producto)
+            <div class="main-container">
                 <h2>{{ $producto->nombre }}</h2>
                 <img src="{{ $producto->imagen }}" alt="{{ $producto->nombre }}">
-                <div class="outer-circle">
-                    <div class="price-circle">
-                        <span>12 pza:</span>
-                        <span>$180</span>
-                    </div>
-                </div>
                 <div class="description-container">
                     <span>{{ $producto->descripcion }}</span>
-                    <img src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
+                    <img class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
                 </div>
             </div>
-        @endforeach
+            @endforeach
+        </div>
     </div>
-</div>
+    
+
     <script>
-        // Función para cambiar la URL y recargar la página
-        function cambiarCategoria(categoriaId) {
+        // Función para cambiar la categoría al hacer clic en un enlace del menú lateral
+        function cambiarCategoria(event, element) {
+            event.preventDefault(); // Evita el comportamiento predeterminado del enlace
+            const categoriaId = element.getAttribute("data-id");
+
             if (categoriaId) {
-                // Cambiar la URL y recargar la página con la categoría seleccionada
+                // Redirige a la URL con la categoría seleccionada
                 window.location.href = `/fijo/catalogo/${categoriaId}`;
-            } else {
-                // Si no se selecciona ninguna categoría, recarga la página principal
-                window.location.href = `/fijo/catalogo`;
             }
         }
     </script>
 </body>
-<x-pie/>
 </html>
