@@ -8,6 +8,7 @@
     <title>Pay de Plátano</title>
 </head>
 <body>
+    <x-menu />
     <div class="layout">
         <!-- Incluir el menú -->
         <x-menu-catalogo />

@@ -26,11 +26,5 @@
         <h3>Pasteles</h3>
         <h3>Temporada y Pop-Up</h3>
     </aside>
-
-    <!-- Contenido principal -->
-    <main class="contenido-principal">
-        <h1>Bienvenido</h1>
-       <!-- <p>Aquí irá el contenido principal.</p>-->
-    </main>
 </body>
 </html>

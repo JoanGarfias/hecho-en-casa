@@ -3,18 +3,21 @@
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
-    background-color: #fdf8f4;
-    display: flex;
-    min-height: 100vh;
+    background-color: #ffffff;
+    display: flex; /* Permite posicionar el menú y el contenido en línea */
+    min-height: 100vh; /* Ocupa toda la altura de la pantalla */
 }
+
 
 /* Contenido principal */
 .contenido-principal {
-    margin-left: 200px; /* Deja espacio para el menú lateral */
+    margin-left: 220px; /* Deja espacio suficiente para el menú */
     padding: 20px; /* Espaciado interno */
-    width: calc(100% - 200px); /* Ajusta el ancho al espacio restante */
-    box-sizing: border-box; /* Asegura que el padding no afecta el ancho */
+    flex: 1; /* Ocupa el espacio restante */
+    width: auto; /* Ajusta el ancho automáticamente */
+    box-sizing: border-box; /* Para incluir padding en el ancho total */
 }
+
 
 .title {
     font-size: 1.5em;
@@ -22,6 +25,11 @@ body {
     font-weight: bold;
     text-transform: uppercase;
     margin-bottom: 20px;
+
+    /* Centrar el título */
+    text-align: center; /* Centrar el texto horizontalmente */
+    margin: 0 auto; /* Centrar el contenedor en caso de ancho definido */
+    width: 100%; /* Asegurarte de que ocupe todo el ancho del contenedor */
 }
 
 .main-container {
