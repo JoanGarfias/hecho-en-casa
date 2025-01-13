@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/menuPay.css') }}">
-    <title>Document</title>
+    <title>Menú Lateral</title>
 </head>
 <body>
     <!-- Menú lateral -->
@@ -30,7 +30,7 @@
     <!-- Contenido principal -->
     <main class="contenido-principal">
         <h1>Bienvenido</h1>
-        <p>Aquí irá el contenido principal.</p>
+       <!-- <p>Aquí irá el contenido principal.</p>-->
     </main>
 </body>
 </html>

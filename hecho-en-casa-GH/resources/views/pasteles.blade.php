@@ -1,10 +1,9 @@
 <link rel="stylesheet" href="{{ asset('css/pastel.css') }}"> <!-- Ruta absoluta -->
 <title>Inicio</title>
+<x-menu-catalogo/>
 <x-menu />
 
-<x-banner />
-<x-menu-catalogo />
-
+<body>
 <div class="container">
     <h1>PASTELES</h1>
     <div class="image-gallery">
@@ -31,7 +30,9 @@
                 <span>Personaliza tu pastel</span>
             </button>
         </div>
-        
     </div>
 </div>
 <x-pie/>
+</body>
+
+

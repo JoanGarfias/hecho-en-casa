@@ -1,31 +1,17 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const hamburgerMenu = document.querySelector('.hamburger-menu');
-    const menuIzquierdo = document.getElementById('menu-izquierdo');
-    const menuDerecho = document.getElementById('menu-derecho');
-    const usuarioIcon = document.getElementById('usuario-icon');
-    const menuUsuario = document.getElementById('menu-usuario');
+document.addEventListener("DOMContentLoaded", () => {
+    const menuIcon = document.getElementById("menu-icon");
+    const dropdownMenu = document.getElementById("dropdown-menu");
 
-    // Mostrar/ocultar menús izquierdo y derecho al hacer clic en el ícono de hamburguesa
-    hamburgerMenu.addEventListener('click', function () {
-        menuIzquierdo.classList.toggle('show');
-        menuDerecho.classList.toggle('show');
+    menuIcon.addEventListener("click", (e) => {
+        e.preventDefault(); // Evita recargar la página al hacer clic
+        dropdownMenu.style.display =
+            dropdownMenu.style.display === "block" ? "none" : "block";
     });
 
-    // Mostrar/ocultar menú usuario
-    usuarioIcon.addEventListener('click', function (event) {
-        event.preventDefault();
-        menuUsuario.classList.toggle('show');
-    });
-
-    // Cerrar menús al hacer clic fuera de ellos
-    document.addEventListener('click', function (event) {
-        if (!hamburgerMenu.contains(event.target) && !menuIzquierdo.contains(event.target) && !menuDerecho.contains(event.target)) {
-            menuIzquierdo.classList.remove('show');
-            menuDerecho.classList.remove('show');
-        }
-
-        if (!usuarioIcon.contains(event.target) && !menuUsuario.contains(event.target)) {
-            menuUsuario.classList.remove('show');
+    // Ocultar el menú al hacer clic fuera de él
+    document.addEventListener("click", (e) => {
+        if (!menuIcon.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.style.display = "none";
         }
     });
 });
