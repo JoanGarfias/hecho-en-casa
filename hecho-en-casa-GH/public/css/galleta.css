@@ -3,7 +3,7 @@
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
-    background-color: #fdf8f4;
+    background-color: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,7 +21,12 @@ body {
     margin: 30px auto;
 }
 
-.grid-container {
+.contenido-principal {
+    margin-top: 100px; /* Ajusta este valor según el espacio deseado */
+}
+
+
+#productos {
     display: flex;
     flex-wrap: wrap; /* Permite que los elementos pasen a una nueva fila si no hay espacio */
     gap: 20px; /* Espaciado entre elementos */
@@ -31,15 +36,18 @@ body {
     box-sizing: border-box;
 }
 
+
 .main-container {
     background: #EADAC6;
-    width: 200px; /* Tamaño más pequeño */
+    width: 200px; /* Asegura un ancho fijo o usa un porcentaje */
     border-radius: 10px;
     text-align: center;
     padding: 15px;
     position: relative;
     margin: 0 10px; /* Espaciado horizontal entre los contenedores */
+    box-sizing: border-box; /* Incluye padding en el cálculo del ancho total */
 }
+
 
 
 .main-container h2 {
@@ -95,7 +103,7 @@ body {
 
 .description-container {
     background: #E5C99C;
-    width: 100%; /* Se adapta al tamaño del contenedor principal */
+    width: 100%; /* Se adapta al ancho del padre */
     margin-top: 10px;
     border-radius: 10px;
     padding: 10px;
@@ -104,7 +112,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-sizing: border-box; /* Asegura que padding no altere el tamaño */
+    overflow: hidden; /* Esconde contenido que pueda desbordar */
 }
+
 
 .description-container img {
     width: 25%;
