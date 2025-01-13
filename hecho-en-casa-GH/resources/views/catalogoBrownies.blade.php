@@ -30,7 +30,7 @@
             </div>
 
             <div class="description-container">
-                <span>Merengue y nueces con capa de queso crema y frutas</span>
+                <span>Rico brownie de chocolate</span>
                 <img src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
             </div>
         </main>
