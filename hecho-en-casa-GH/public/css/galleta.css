@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: #fdf8f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.title {
+    font-size: 1.2em;
+    color: #705030;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    text-align: center;
+    margin: 30px auto;
+}
+
+.grid-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos pasen a una nueva fila si no hay espacio */
+    gap: 20px; /* Espaciado entre elementos */
+    justify-content: flex-start; /* Alinea los elementos al inicio del contenedor */
+    padding: 20px;
+    margin-left: 180px; /* Desplaza todo el grid hacia la derecha */
+    box-sizing: border-box;
+}
+
+.main-container {
+    background: #EADAC6;
+    width: 200px; /* Tamaño más pequeño */
+    border-radius: 10px;
+    text-align: center;
+    padding: 15px;
+    position: relative;
+    margin: 0 10px; /* Espaciado horizontal entre los contenedores */
+}
+
+
+.main-container h2 {
+    font-size: 1em;
+    color: #705030;
+    margin: 0;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.main-container h2::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #705030;
+    margin: 6px 0;
+}
+
+.main-container img {
+    width: 100%;
+    border-radius: 10px;
+    margin: 5px 0;
+}
+
+.outer-circle {
+    position: absolute;
+    bottom: -20px;
+    right: -8px;
+    background: #EADAC6;
+    border-radius: 50%;
+    width: 60px; /* Tamaño reducido */
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.price-circle {
+    background: #DDB97F;
+    color: #fff;
+    font-size: 0.8em;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.description-container {
+    background: #E5C99C;
+    width: 100%; /* Se adapta al tamaño del contenedor principal */
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 0.8em;
+    color: #705030;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.description-container img {
+    width: 25%;
+    height: auto;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.description-container img:hover {
+    transform: scale(1.1);
+}
+.contenido-principal {
+    margin-top: 100px; /* Aumenta este valor para bajarlo más */
+}
