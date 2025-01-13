@@ -1,17 +1,16 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const menuIcon = document.getElementById("menu-icon");
-    const dropdownMenu = document.getElementById("dropdown-menu");
+document.addEventListener("DOMContentLoaded", function () {
+    const usuarioIcon = document.getElementById("usuario-icon");
+    const menuUsuario = document.getElementById("menu-usuario");
 
-    menuIcon.addEventListener("click", (e) => {
-        e.preventDefault(); // Evita recargar la página al hacer clic
-        dropdownMenu.style.display =
-            dropdownMenu.style.display === "block" ? "none" : "block";
+    usuarioIcon.addEventListener("click", function (e) {
+        e.preventDefault();
+        menuUsuario.classList.toggle("show");
     });
 
-    // Ocultar el menú al hacer clic fuera de él
-    document.addEventListener("click", (e) => {
-        if (!menuIcon.contains(e.target) && !dropdownMenu.contains(e.target)) {
-            dropdownMenu.style.display = "none";
+    // Opcional: Cerrar el menú si se hace clic fuera de él
+    document.addEventListener("click", function (e) {
+        if (!menuUsuario.contains(e.target) && !usuarioIcon.contains(e.target)) {
+            menuUsuario.classList.remove("show");
         }
     });
 });
