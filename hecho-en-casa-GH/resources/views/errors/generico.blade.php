@@ -4,24 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error del Sistema</title>
+    <link rel="stylesheet" href="{{ asset('css/errorCalendario.css') }}">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 100px;
-        }
-        h1 {
-            color: #e63946;
-        }
-        p {
-            color: #333;
+        body{
+            background: #fff8e3;
         }
     </style>
 </head>
 <body>
-    <h1>Error del Sistema</h1>
-    <p>Ocurrió un error inesperado. Estamos trabajando para solucionarlo.</p>
-    <p>{{$message}}</p>
-    <a href="{{route('inicio.get')}}">Volver al inicio</a>
+    <div class="contenedor">
+        <h1>❌ Error del Sistema</h1>
+        <br>
+        
+        <br>
+
+        <p>Ocurrió un error inesperado. Estamos trabajando para solucionarlo.</p>
+        <br>
+        <p>Disculpe los inconvenientes.</p>
+        <br>
+        <a href="{{route('inicio.get')}}">Volver al inicio</a>
+        
+        <br>
+
+    </div>
+    <img src="{{ asset('img/errorsistema.png') }}" alt="Sistema">
 </body>
 </html>
