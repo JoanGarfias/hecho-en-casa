@@ -1,3 +1,4 @@
+/* Banner */
 .banner {
     width: 100%;
     text-align: center;
@@ -5,13 +6,13 @@
     z-index: 999;
 }
 
-
 .banner img {
     width: 100%;
     height: auto;
-    /*padding: 60px;  */
+    /* padding: 60px; */
 }
 
+/* Estilo del banner de registro */
 .registro-banner {
     background-color: #FCF5C7;
     text-align: center;
@@ -19,4 +20,38 @@
     font-size: 1em;
     color: #7E643B;
     margin: 0;
+}
+
+/* Consultas de medios para hacerlo responsivo */
+@media screen and (max-width: 768px) {
+    /* Ajustes para pantallas medianas */
+    .banner {
+        margin-top: 30px; /* Reducir el margen superior en pantallas más pequeñas */
+    }
+
+    .banner img {
+        padding: 20px; /* Añadir un poco de padding para separar la imagen del borde */
+    }
+
+    .registro-banner {
+        font-size: 0.9em; /* Reducir el tamaño de la fuente en pantallas pequeñas */
+        padding: 8px 0; /* Reducir el relleno */
+    }
+}
+
+/* Para dispositivos móviles más pequeños */
+@media screen and (max-width: 480px) {
+    /* Ajustes para móviles pequeños */
+    .banner {
+        margin-top: 20px; /* Reducir aún más el margen superior */
+    }
+
+    .banner img {
+        padding: 10px; /* Menos padding para dispositivos móviles */
+    }
+
+    .registro-banner {
+        font-size: 0.8em; /* Font-size aún más pequeño en móviles pequeños */
+        padding: 6px 0; /* Menos relleno */
+    }
 }

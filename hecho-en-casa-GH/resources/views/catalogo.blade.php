@@ -9,6 +9,7 @@
 </head>
 <body>
     <x-menu />
+    <x-banner />
     <div class="layout">
         <!-- Incluir el menú -->
         <x-menu-catalogo />

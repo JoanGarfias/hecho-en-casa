@@ -12,19 +12,7 @@ body {
 /* Menú lateral */
 .menu-lateral {
     position: fixed; /* Mantiene el menú fijo en la pantalla */
-    top: 100px; /* Altura desde la parte superior */
-    left: 25px; /* Separación desde la izquierda */
-    width: 200px;
-    background-color: #d9b485;
-    color: white;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.menu-lateral {
-    position: fixed;
-    top: 160px; /* Ahora está 150px desde la parte superior */
+    top: 160px; /* Ahora está 160px desde la parte superior */
     left: 25px; /* Mantén el espacio desde la izquierda */
     width: 200px;
     background-color: #d9b485;
@@ -34,10 +22,7 @@ body {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-
-
-
-
+/* Títulos del menú lateral */
 .menu-lateral h3 {
     font-size: 16px;
     font-weight: bold;
@@ -45,6 +30,7 @@ body {
     margin-bottom: 10px;
 }
 
+/* Listas del menú lateral */
 .menu-lateral ul {
     list-style: none; /* Quita los puntos de la lista */
     padding: 0;
@@ -65,3 +51,38 @@ body {
     text-decoration: underline; /* Subrayado al pasar el mouse */
 }
 
+/* Consultas de medios para hacerlo responsivo */
+@media screen and (max-width: 768px) {
+    .menu-lateral {
+        top: 120px; /* Ajusta la distancia desde la parte superior en pantallas más pequeñas */
+        left: 10px; /* Disminuye el margen izquierdo en pantallas pequeñas */
+        width: 180px; /* Reducir el tamaño del menú lateral */
+        padding: 10px; /* Ajusta el relleno */
+    }
+
+    .menu-lateral h3 {
+        font-size: 14px; /* Reduce el tamaño de la fuente en pantallas más pequeñas */
+    }
+
+    .menu-lateral ul li a {
+        font-size: 12px; /* Reduce el tamaño de la fuente en las opciones del menú */
+    }
+}
+
+/* Para dispositivos móviles más pequeños */
+@media screen and (max-width: 480px) {
+    .menu-lateral {
+        top: 80px; /* Ajuste adicional para móviles */
+        left: 5px; /* Reduce el margen izquierdo aún más */
+        width: 150px; /* Reduce aún más el tamaño del menú lateral */
+        padding: 8px; /* Reduce el relleno */
+    }
+
+    .menu-lateral h3 {
+        font-size: 12px; /* Aún más pequeño en móviles muy pequeños */
+    }
+
+    .menu-lateral ul li a {
+        font-size: 10px; /* Ajuste del tamaño de la fuente en móviles muy pequeños */
+    }
+}
