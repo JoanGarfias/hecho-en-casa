@@ -148,3 +148,20 @@ input {
         width: 100%;
     }
 }
+
+.arrow {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #c0a061; /* Color de fondo */
+    color:white; /* Color de texto */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    margin: 10px;
+    font-weight: bold;  
+}
+
+.arrow:hover {
+    background-color: #7E643B; /* Color al pasar el cursor */
+}
