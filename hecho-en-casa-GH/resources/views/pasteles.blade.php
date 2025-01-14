@@ -8,8 +8,16 @@
 </head>
 <body>
     <x-menu />
+     
+    <!-- Menú lateral -->
+    <div class="menu-lateral">
+        <h3>Postres</h3>
+        <ul>
+        </ul>
+        <h3>Pasteles</h3>
+        <h3>Temporada y Pop-Up</h3>
+    </div>
 <div class="container">
-    <x-menu-catalogo/>
     <h1>PASTELES</h1>
     <div class="image-gallery">
         <div class="image-card">
@@ -36,11 +44,9 @@
             </button>
         </div>
     </div>
-    <div>
-        <footer class="piePa">
+    <footer class="piePa">
             <img src="{{ asset('img/piePag.png') }}" alt="Pie de página informativo">
-        </footer>
-    </div>
+    </footer>
 </div>
 </body>
 </html>

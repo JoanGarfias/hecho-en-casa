@@ -123,7 +123,5 @@ Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(funct
 });
 
 
-Route::get('/pasteles', function(){
-    return view('pasteles');
-});
+
 

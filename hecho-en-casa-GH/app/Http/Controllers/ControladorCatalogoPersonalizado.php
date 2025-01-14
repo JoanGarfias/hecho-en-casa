@@ -22,7 +22,7 @@ class ControladorCatalogoPersonalizado extends Controller
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
-        return view("personalizados");
+        return view("pasteles");
     }
 
     public function seleccionarCatalogo(Request $request){
