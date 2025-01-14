@@ -54,8 +54,8 @@ class ControladorCatalogoPersonalizado extends Controller
             return Elemento::select('id_e', 'nom_elemento', 'precio_e')
             ->get();
         });
-        
-        return view('detallesPersonalizado', compact('sabores', 'rellenos', 'coberturas', 'elementos'));
+
+        return view('pedidosPersonalizados', compact('sabores', 'rellenos', 'coberturas', 'elementos'));
     }
 
     public function seleccionarDetalles(Request $request){ //POST: Guardar las opciones de personalización
