@@ -24,7 +24,7 @@
     </aside>
 
     <!-- Contenedor de productos -->
-    <div class="contenido-principal">
+    <main class="contenido-principal">
         <h1 class="title">
             {{ $categorias->where('id_cat', $categoriaSeleccionada)->first()->nombre ?? 'Catálogo de Postres' }}
         </h1>
@@ -41,7 +41,7 @@
             </div>
             @endforeach
         </div>
-    </div>
+    </main>
     
 
     <script>

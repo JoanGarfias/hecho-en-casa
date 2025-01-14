@@ -1,3 +1,4 @@
+
 /* General */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
@@ -11,19 +12,24 @@ body {
 }
 
 /* Menú lateral */
+/* Menú lateral */
 .menu-lateral {
     width: 200px; /* Conserva el ancho actual */
     background-color: #d9b485;
     color: white;
     padding: 15px; /* Espaciado interno del contenido */
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para el menú */
-    position: fixed; /* Fija el menú en el lado izquierdo */
-    top: 200px; /* Margen superior */
-    left: 40px; /* Margen izquierdo ajustado */
     border-radius: 0 10px 10px 0; /* Bordes redondeados en la esquina derecha */
-    height: auto; /* Conserva la altura según el contenido */
     margin: 20px; /* Márgenes adicionales alrededor del menú */
+    position: relative; /* Cambia a posición relativa */
+    top: 150px; /* Ajusta la distancia desde la parte superior */
+    right: 600px; /* Ajusta la distancia desde el borde izquierdo */
 }
+
+
+
+
+
 
 
 /* Títulos del menú */
