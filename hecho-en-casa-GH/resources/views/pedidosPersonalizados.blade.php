@@ -104,8 +104,20 @@
                                 <p class="blanca"> Cumpleaños</p>
                             </label>
                             <label>
-                                <input type="radio" name="tematica" value="figura">
+                                <input type="radio" name="tematica" value="figura" >
                                 <p class="blanca"> XV años</p>
+                            </label>
+                            <label>
+                                <input type="radio" name="tematica" value="figura">
+                                <p class="blanca"> Boda</p>
+                            </label>
+                            <label>
+                                <input type="radio" name="tematica" value="figura">
+                                <p class="blanca"> Bautizo</p>
+                            </label>
+                            <label>
+                                <input type="radio" name="tematica" value="figura">
+                                <p class="blanca"> Otro</p>
                             </label>
                         </div>
                     </div>
