@@ -30,7 +30,8 @@ Route::post('/calendario/{mes?}/{anio?}', [ControladorCalendario::class, 'actual
 
 Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])->name('perfil.get')
 ->middleware([ProtectorSesion::class, ProtectorPeticiones::class]);
-//Route::post('/perfil', [ControladorPerfil::class, ''])->name('perfil.post');
+Route::post('/perfil', [ControladorPerfil::class, 'editar'])->name('perfil.post')
+->middleware([ProtectorSesion::class, ProtectorPeticiones::class]);
 
 /* PROCESO DE LOGIN */
 Route::middleware([ProtectorPeticiones::class])->group(function(){
@@ -61,14 +62,14 @@ Route::middleware([EnlazadorRegistro::class])->group(function () {
 
 Route::middleware([EnlazadorRecuperacion::class, ProtectorPeticiones::class])->group(function(){
     Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecuperacion'])->name('recuperacion.get');
-    Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post');
+    Route::post('/recuperacion/{token}', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post');
 });
 
 /* RUTAS DE POSTRES FIJOS */
 Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrarCatalogo'])->name('fijo.catalogo.get')
 ->middleware([ProtectorPeticiones::class]);
 
-Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(function () {
+Route::middleware([ProtectorSesion::class])->group(function () {
     Route::post('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'guardarSeleccionCatalogo'])->name('fijo.catalogo.post');
     Route::get('fijo/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])->name('fijo.calendario.get');
     Route::post('fijo/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'seleccionarFecha'])->name('fijo.calendario.post');
@@ -120,10 +121,6 @@ Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(funct
     Route::post('emergentes/detalles-direccion', [ControladorCatalogoEmergente::class, 'seleccionarDireccion'])->name('emergente.direccion.post');
 
     Route::get('emergentes/ticket/', [ControladorCatalogo::class, 'mostrarTicket'])->name('emergente.ticket.get');
-});
-
-Route::get('/emergentes', function(){
-    return view('emergentes');
 });
 
 

@@ -22,10 +22,19 @@
                     </a>
                 </li>
             @endforeach
-            <h2 id="titulo-pasteles" style="cursor: pointer;">Pasteles</h2>
-            <h2>Temporada y Pop-up</h2>
+            <h3 id="titulo-pasteles" style="cursor: pointer;">Pasteles</h3>
+            <h3 id="titulo-emergentes" style="cursor: pointer;">Temporada y Pop-up</h3>
+
         </ul>
     </aside>
+    
+    <script>
+        document.getElementById('titulo-emergentes').addEventListener('click', function () {
+            // Redirige a la ruta /emergentes
+            window.location.href = "{{ route('emergente.catalogo.get') }}";
+        });
+    </script>
+
     <script>
         // Seleccionar el encabezado y agregar evento de clic
         document.getElementById('titulo-pasteles').addEventListener('click', function () {
@@ -43,12 +52,17 @@
         <div id="productos">
             @foreach($catalogo as $producto)
             <div class="main-container">
-                <h2>{{ $producto->nombre }}</h2>
-                <img src="{{ $producto->imagen }}" alt="{{ $producto->nombre }}">
-                <div class="description-container">
-                    <span>{{ $producto->descripcion }}</span>
-                    <img class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
-                </div>
+                <form id="formulario" method="POST" action="{{route("fijo.catalogo.post")}}">
+                    @csrf
+                    <input type="hidden" name="id_postre" value="{{ $producto->id_postre }}">
+                    <input type="hidden" name="nombre_postre" value="{{ $producto->nombre }}">
+                    <h2>{{ $producto->nombre }}</h2>
+                    <img src="{{ $producto->imagen }}" alt="{{ $producto->nombre }}">
+                    <div class="description-container">
+                        <span>{{ $producto->descripcion }}</span>
+                        <img class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
+                    </div>
+                </form>
             </div>
             @endforeach
         </div>
@@ -66,12 +80,25 @@
                 window.location.href = `/fijo/catalogo/${categoriaId}`;
             }
         }
+
+        document.addEventListener("DOMContentLoaded", (event) => {
+            let botones = document.querySelectorAll(".shopping-bag");
+            botones.forEach(boton => {
+                boton.addEventListener('click', function(){
+                    document.getElementById('formulario').submit();
+                });
+            });
+        });
+
     </script>
       
 
 
 
 <x-pie/>
+<!--Para la animación del logo de usuario-->
+<script src="{{asset ('js/despliegue-menu.js')}}" defer> </script>
+<script src="{{ asset('js/icono.js') }}" defer></script>
 
 </body>
 </html>

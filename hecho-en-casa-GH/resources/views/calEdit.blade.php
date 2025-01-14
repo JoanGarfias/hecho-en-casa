@@ -82,22 +82,8 @@
             <script src="{{ asset('js/calEdit.js') }}"></script>
             <script src="{{ asset('js/meses.js') }}"></script>
            
-            
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-            <!--Para la animación del logo de usuario-->
+<!--Para la animación del logo de usuario-->
+<script src="{{asset ('js/despliegue-menu.js')}}" defer> </script>
 <script src="{{ asset('js/icono.js') }}" defer></script>
-=======
-            
->>>>>>> Stashed changes
-=======
-            
->>>>>>> Stashed changes
-=======
-            
->>>>>>> Stashed changes
-=======
-            
->>>>>>> Stashed changes
+
+
