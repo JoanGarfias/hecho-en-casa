@@ -52,7 +52,7 @@ class ControladorCatalogoEmergente extends Controller
             return Catalogo::where('id_postre', $idPostre)->first();
         });
         
-        return response()->json($emergentes);
+        return redirect()->route('calendario.post');
     }
 
     public function seleccionar(Request $request){
