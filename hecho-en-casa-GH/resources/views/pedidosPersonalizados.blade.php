@@ -87,14 +87,13 @@
                     <div class="fila">
                         <label for="elementos">Elementos:</label>
                         <div class="opciones">
-                            <label>
-                                <input type="checkbox" name="elementos[]" value="figura" required>
-                                <p class="blanca"> Figura de fondant</p>
-                            </label>
-                            <label>
-                                <input type="checkbox" name="elementos[]" value="figura">
-                                <p class="blanca"> Impresion de oblea</p>
-                            </label>
+                            @foreach ($elementos as $elemento)
+                                <label>
+                                    <input type="checkbox" name="elementos[]" value="{{$elemento->id_e}}">
+                                    <p class="blanca">{{$elemento->nom_elemento}} {{ $elemento->precio_e }} MXN</p>
+                                </label>    
+                            @endforeach
+                            
                         </div>
                     </div>
                     <div class="fila">
@@ -152,3 +151,5 @@
 <x-pie/>
 
 <script src="{{ asset('js/pidiendoPersonalizados.js') }}" defer></script>
+<!--Para la animación del logo de usuario-->
+<script src="{{ asset('js/icono.js') }}" defer></script>
