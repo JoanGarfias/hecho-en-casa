@@ -9,6 +9,7 @@
 <body>
     <x-menu />
     <div>  
+        <x-banner-registrado/>
     <!-- Menú lateral -->
     <div class="menu-lateral">
         <h3>Postres</h3>
