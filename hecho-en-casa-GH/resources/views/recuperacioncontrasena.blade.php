@@ -5,7 +5,7 @@
 
 <div class="flexi">
     <div class = "contenedor"><!-- café-->
-        <form id="validandoContra">
+        <form id="validandoContra" action="{{route('cambiar-clave.post')}}" method="POST">
             @csrf
             <h2 class="titule">Restablecer contraseña</h2>
             <br>

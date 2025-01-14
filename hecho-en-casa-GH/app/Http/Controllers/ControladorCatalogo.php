@@ -144,7 +144,7 @@ class ControladorCatalogo extends Controller
             'diaSemana' => $diaSemana,
         ]);
 
-        return view('calendario', compact('calendarioJson', 'error'));
+        return view('calEdit', compact('calendarioJson', 'error'));
     }
 
     public function seleccionarFecha(Request $request)

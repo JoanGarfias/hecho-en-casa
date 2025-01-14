@@ -25,8 +25,9 @@
             <p>Contamos con variedad de pasteles personalizados para diferentes eventos: bodas, XV años, cumpleaños y más.</p>
         </div>
         <form action="{{route('personalizado.catalogo.post')}}" method="POST">
+            @csrf
             <div class="customize">
-                <button class="personaliza">
+                <button type="submit" class="personaliza">
                     <img src="{{ asset('img/varita.png') }}" alt="Personaliza tu pastel">
                     <span>Personaliza tu pastel</span>
                 </button>
