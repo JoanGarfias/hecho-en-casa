@@ -13,12 +13,22 @@
      
     <!-- Menú lateral -->
     <div class="menu-lateral">
-        <h3>Postres</h3>
+        <h3 id="titulo-postres" style="cursor: pointer;">Postres</h3>
         <ul>
         </ul>
         <h3>Pasteles</h3>
         <h3>Temporada y Pop-Up</h3>
     </div>
+
+
+
+    <script>
+        document.getElementById('titulo-postres').addEventListener('click', function () {
+            // Redirige a la ruta base del catálogo
+            window.location.href = "{{ route('fijo.catalogo.get') }}";
+        });
+    </script>
+
     <div class="container">
         <div class="content">
             <div class="section">
@@ -65,5 +75,8 @@
     </div>
     <x-pie/>
     <script src="{{asset ('js/scripte.js')}}"></script>
+    <!--Para la animación del logo de usuario-->
+<script src="{{asset ('js/despliegue-menu.js')}}" defer> </script>
+<script src="{{ asset('js/icono.js') }}" defer></script>
 </body>
 </html>

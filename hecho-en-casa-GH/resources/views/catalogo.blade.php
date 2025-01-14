@@ -26,6 +26,8 @@
             <h2>Temporada y Pop-up</h2>
         </ul>
     </aside>
+
+    
     <script>
         // Seleccionar el encabezado y agregar evento de clic
         document.getElementById('titulo-pasteles').addEventListener('click', function () {
@@ -72,6 +74,9 @@
 
 
 <x-pie/>
+<!--Para la animación del logo de usuario-->
+<script src="{{asset ('js/despliegue-menu.js')}}" defer> </script>
+<script src="{{ asset('js/icono.js') }}" defer></script>
 
 </body>
 </html>
