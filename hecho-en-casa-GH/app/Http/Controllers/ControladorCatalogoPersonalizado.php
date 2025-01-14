@@ -10,6 +10,7 @@ use App\Models\Elemento;
 use App\Models\ListaElementos;
 use App\Models\Pedido;
 use App\Models\Pastelpersonalizado;
+use App\Models\Catalogo;
 Use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use App\Models\usuario;
@@ -69,7 +70,7 @@ class ControladorCatalogoPersonalizado extends Controller
         $tematica = $request->input('tematica');
         $imagen = $request->input('imagen');
         $descripcion = $request->input('descripcion');
-        $costo = intval($request->input('costo'));
+        //$costo = intval($request->input('costo'));
         $tipo_entrega = $request->input('tipo_entrega');
         $id_usuario = 1;
 
@@ -86,6 +87,19 @@ class ControladorCatalogoPersonalizado extends Controller
         $cobertura = intval($request->input('cobertura'));
         $elementos = array_map('intval', $request->input('elementos', []));
         
+        $costoCatalogo = Catalogo::where('id_tipo_postre', "personalizado")->first();; //LO SACARE DE A TABLA CATALOGO PRECIO_EMERGENTES
+        $costoPan = SaborPan::where('nom_pan', $sabor_pan)->first();
+        $costoRelleno = SaborRelleno::where('nom_relleno', $relleno)->first();
+        $costoCobertura = Cobertura::where('nom_cobertura', $cobertura)->first();
+
+        $costo = $costoPan->precio_p + $costoRelleno->precio_sr + $costoCobertura->precio_c + $costoCatalogo->precio_emergentes;
+        foreach ($elementos as $elementoId) {
+            $costoElemento = Elemento::find($elementoId); 
+            $costo += $costoElemento ? $costoElemento->precio : 0; 
+        }
+
+        //session()->put('costo', $costo);
+        //$datos = ['costo', $costo];
         $porciones = intval($request->input('porciones'));
         
 
@@ -268,6 +282,8 @@ class ControladorCatalogoPersonalizado extends Controller
                 $listarElemento->id_elemento = $elem;
                 $listarElemento->save();
             }
+
+        //$costo = session("costo");
         return redirect()->route('personalizado.ticket.get', ['folio' => $id_pedido]);  
     }
 
