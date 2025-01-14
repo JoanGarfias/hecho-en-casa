@@ -165,3 +165,6 @@
 <script src="{{ asset('js/pidiendoPersonalizados.js') }}" defer></script>
 <!--Para la animación del logo de usuario-->
 <script src="{{ asset('js/icono.js') }}" defer></script>
+<!--Para la animación del logo de usuario-->
+<script src="{{asset ('js/despliegue-menu.js')}}" defer> </script>
+<script src="{{ asset('js/icono.js') }}" defer></script>
