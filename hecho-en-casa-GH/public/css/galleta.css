@@ -29,6 +29,11 @@ body {
     box-sizing: border-box;
 }
 
+.contenido-principal {
+    margin-left: 200px; /* Aumenta este valor para moverlo más a la derecha */
+    padding: 20px;
+}
+
 .main-container {
     background: #EADAC6;
     width: 200px; /* Asegura un ancho fijo */

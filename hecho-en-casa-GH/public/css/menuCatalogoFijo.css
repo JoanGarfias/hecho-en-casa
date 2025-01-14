@@ -1,3 +1,4 @@
+/* General */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 body {
@@ -5,22 +6,25 @@ body {
     margin: 0;
     padding: 0;
     background-color: #fdf8ee;
-    display: flex;
+    display: flex; /* Alinea los elementos horizontalmente */
+    flex-direction: row; /* Coloca el menú y contenido principal en fila */
 }
 
 /* Menú lateral */
 .menu-lateral {
-    position: fixed; /* Mantiene el menú fijo en la pantalla */
-    top: 150px; /* Altura desde la parte superior */
-    left: 25px; /* Separación desde la izquierda */
-    width: 200px;
+    width: 200px; /* Conserva el ancho actual */
     background-color: #d9b485;
     color: white;
     padding: 15px;
-    border-radius: 10px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Fija el menú en el lado izquierdo */
+    top: 200px;
+    left: 20px; /* Asegura que esté alineado al lado izquierdo */
+    border-radius: 0 10px 10px 0; /* Mantiene bordes redondeados */
+    height: auto; /* Conserva la altura al contenido */
 }
 
+/* Títulos del menú */
 .menu-lateral h3 {
     font-size: 16px;
     font-weight: bold;
@@ -28,8 +32,9 @@ body {
     margin-bottom: 10px;
 }
 
+/* Lista del menú */
 .menu-lateral ul {
-    list-style: none; /* Quita los puntos de la lista */
+    list-style: none;
     padding: 0;
     margin: 0;
 }
@@ -39,11 +44,11 @@ body {
 }
 
 .menu-lateral ul li a {
-    color: white; /* Color del texto */
-    text-decoration: none; /* Sin subrayado */
+    color: white;
+    text-decoration: none;
     font-size: 14px;
 }
 
 .menu-lateral ul li a:hover {
-    text-decoration: underline; /* Subrayado al pasar el mouse */
+    text-decoration: underline;
 }

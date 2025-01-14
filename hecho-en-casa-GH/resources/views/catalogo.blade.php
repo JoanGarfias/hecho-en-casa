@@ -9,8 +9,6 @@
 </head>
 <x-menu/>
 <body>
-    <h1>Catálogo de Postres</h1>
-
     <!-- Menú lateral -->
     <aside class="menu-lateral">
         <h3>Postres</h3>
