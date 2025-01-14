@@ -11,13 +11,25 @@ body {
     min-height: 100vh;
   }
 
-  .title {
+
+.title {
     font-size: 1.5em;
     color: #705030;
     font-weight: bold;
     text-transform: uppercase;
     margin-bottom: 20px;
-  }
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+    display: block;
+    margin-top: 30px; /* Ajusta según necesites */
+    
+    /* Ajusta estas propiedades para mover el título */
+    margin-left: -60px; /* Mueve el título hacia la derecha */
+    /* o */
+    /* margin-right: 50px; Mueve el título hacia la izquierda */
+}
+
 
   .main-container {
     background: #EADAC6;
@@ -26,6 +38,8 @@ body {
     text-align: center;
     padding: 20px;
     position: relative;
+    margin-right: 100px; /* Mueve el contenedor hacia la izquierda */
+
   }
 
   .main-container h2 {
@@ -90,6 +104,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-right: 140px; /* Mueve el contenedor hacia la izquierda */
+
   }
 
   .description-container img {
@@ -103,3 +119,15 @@ body {
   .description-container img:hover {
     transform: scale(1.1); /* Aumenta ligeramente el tamaño al pasar el cursor */
   }   
+
+
+  .contenido-principal {
+    margin-left: 270px; /* Deja espacio suficiente para el menú */
+    padding: 20px; /* Espaciado interno */
+    flex: 1; /* Ocupa el espacio restante */
+    width: auto; /* Ajusta el ancho automáticamente */
+    box-sizing: border-box; /* Para incluir padding en el ancho total */
+    margin-top: auto;
+    margin-top: 60px; /* Aumenta el margen superior según necesites */
+}
+

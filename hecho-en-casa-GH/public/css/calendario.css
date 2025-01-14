@@ -167,6 +167,14 @@ ol {
     background-color: #a7854e; /* Color al pasar el cursor */
 }
 
+.desabilitado{
+    background: rgb(142, 142, 142);
+}
+
+.desabilitado:hover{
+    background: gray;
+}
+
 /* Días vacíos */
 .empty-day {
     visibility: hidden;

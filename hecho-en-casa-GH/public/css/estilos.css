@@ -25,7 +25,7 @@ header {
     left: 50%; /* Centra horizontalmente */
     transform: translateX(-50%); /* Centrado perfecto */
     width: 100%; /* Ancho relativo al viewport */
-    max-width: 1602px;/* Ancho máximo */
+    max-width: 1602px; /* Ancho máximo */
     overflow: visible;
     display: flex; /* Usamos flexbox */
     justify-content: center; /* Centra horizontalmente el contenido */
@@ -89,11 +89,11 @@ header {
     padding: 0 90px; /* Espacio horizontal para evitar colisión con el logo */
 }
 
-.menu-izquierdo{
+.menu-izquierdo {
     padding-left: 2%;
 }
 
-.menu-derecho{
+.menu-derecho {
     padding-right: 2%;
 }
 
@@ -119,7 +119,7 @@ header {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
     padding: 10px;
     z-index: 1001; /* Asegura que esté sobre otros elementos */
-    left:90%; /* Centra horizontalmente respecto al ícono */
+    left: 90%; /* Centra horizontalmente respecto al ícono */
     transform: translateX(-50%); /* Ajuste para centrar perfectamente */
     width: 230px; /* Cambia este valor para hacerlo más ancho */
     height: 120px; /* Cambia este valor para hacerlo más largo */
@@ -143,6 +143,58 @@ header {
 }
 
 .dropdown-menu button:hover {
+    background-color: #7E643B; /* Color más oscuro al pasar el mouse */
+}
+
+/* Dropdown para el menú de hamburguesa */
+.hamburger-menu {
+    display: none; /* Oculto por defecto */
+    flex-direction: column;
+    cursor: pointer;
+    position: fixed; /* Para que se quede en su sitio */
+    top: 10px; /* Ajusta según el diseño */
+    left: 10px; /* Ajusta según el diseño */
+    z-index: 1002; /* Más alto que el menú */
+}
+
+.hamburger-menu span {
+    height: 3px;
+    width: 25px;
+    background: #7E643B;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.hamburger-dropdown-menu {
+    display: none; /* Ocultar inicialmente */
+    position: absolute;
+    top: 50px; /* Ajusta según el tamaño del ícono */
+    left: 10px; /* Ajusta según el diseño */
+    background-color: #FCF5C7; /* Fondo blanco */
+    border-radius: 5px; /* Esquinas redondeadas */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+    padding: 10px;
+    z-index: 1001; /* Asegura que esté sobre otros elementos */
+    width: 230px; /* Cambia este valor para hacerlo más ancho */
+    overflow: auto; /* Permite desplazamiento si el contenido supera la altura */
+}
+
+.hamburger-dropdown-menu button {
+    display: block; /* Cada botón en una nueva línea */
+    width: 100%; /* Ocupa todo el ancho del menú */
+    background-color: #DDB97F; /* Mismo color que el header */
+    border: none;
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    margin: 5px 0; /* Espaciado entre botones */
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.hamburger-dropdown-menu button:hover {
     background-color: #7E643B; /* Color más oscuro al pasar el mouse */
 }
 
@@ -181,7 +233,12 @@ header {
         width: 100%; /* Asegura que ocupen todo el ancho */
         justify-content: center; /* Centra los elementos */
     }
+
+    .hamburger-menu {
+        display: flex; /* Muestra el ícono en móvil */
+    }
 }
+
 
 @media (max-width: 480px) {
     .menu nav {
@@ -263,6 +320,7 @@ header {
 
     .hamburger-menu {
         display: flex; /* Muestra el ícono en móvil */
+        top: 30px;
     }
 }
 
@@ -271,8 +329,9 @@ header {
         padding: 5px; /* Reduce aún más el padding en pantallas muy pequeñas */
         flex-direction: column; /* Coloca el menú en columna */
         align-items: flex-start; /* Alinea los elementos al inicio */
-        width: 100%; /* Ajuste del ancho del área marrón */
+        width: 102%; /* Ajuste del ancho del área marrón */
         height: 10%;
+        top: -5px;
     }
 
     .menu nav ul {
@@ -282,7 +341,7 @@ header {
 
     .logo {
         height: 60px; /* Ajusta el tamaño del logo */
-        top: 50%;
+        top: 60%;
     }
 
     .menu-izquierdo,
@@ -290,4 +349,13 @@ header {
         width: 100%; /* Asegura que ocupen todo el ancho */
         justify-content: center; /* Centra los elementos */
     }
+}
+
+/* Estilos del menú desplegable */
+.dropdown-menu {
+    display: none; /* Oculto por defecto */
+}
+
+.dropdown-menu.show {
+    display: block; /* Mostrar cuando se active */
 }

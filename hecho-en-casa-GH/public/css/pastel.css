@@ -13,17 +13,22 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #f8f3ea;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: white;
     color: #4f3c2e;
     display: flex;
+    overflow-x: hidden; /* Oculta el desplazamiento horizontal */
 }
 
 .container {
     text-align: center;
     padding: 20px;
-    margin-left: 500px; /* Deja espacio para el menú lateral */
-    max-width: calc(100% - 220px); /* Ajustar el ancho disponible */
+    margin-left: 150px; /* Deja espacio para el menú lateral */
+    max-width: 100%; /* Ajustar el ancho disponible */
     margin-top: 150px;
+    width: 100%;
 }
 
 h1 {
@@ -37,8 +42,8 @@ h1 {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Columnas adaptativas */
     gap: 20px; /* Espaciado entre los recuadros */
     margin: 0 auto; /* Centrar la galería horizontalmente */
-    max-width: 800px; /* Ancho máximo de la galería */
-    justify-content: center; /* Centrar los recuadros dentro de la galería */
+    max-width: 1000px; /* Ancho máximo de la galería */
+    justify-content: start; /* Centrar los recuadros dentro de la galería */
 }
 
 .image-card {
@@ -126,4 +131,24 @@ h1 {
 .customize .personaliza span {
     font-weight: bold; /* Asegura que el texto esté en negritas */
 }
+
+/*pie de pagina*/
+
+/* Estilo base para el pie de página */
+.piePa {
+    width: 100%;
+    background-color: #f4f4f4; /* Fondo opcional */
+    padding: 20px 0;
+    text-align: center;
+}
+
+/* Imagen del pie de página */
+.piePa img {
+    width: 100%; /* Imagen ocupa todo el ancho del contenedor */
+    max-width: 2216px; /* Ancho máximo en pantallas grandes */
+    height: auto; /* Mantiene proporción */
+}
+
+
+
 

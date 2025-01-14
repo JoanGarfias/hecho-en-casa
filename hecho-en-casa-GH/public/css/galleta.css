@@ -1,0 +1,127 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.title {
+    font-size: 2em;
+    color: #705030;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center; /* Centra el texto horizontalmente */
+    margin: 0 auto; /* Centra dentro de su contenedor */
+    padding: 10px;
+}
+
+
+#productos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center; /* Centrar los productos */
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.contenido-principal {
+    max-width: 800px; /* Ajusta el ancho máximo */
+    padding: 20px;
+    margin: 50px auto 0; /* Agrega 50px de margen superior, centra horizontalmente */
+    margin-top: -390px; /* Ajusta este valor según la altura del menú lateral */
+
+}
+
+.main-container {
+    background: #EADAC6;
+    width: 200px; /* Asegura un ancho fijo */
+    border-radius: 10px;
+    text-align: center;
+    padding: 15px;
+    position: relative;
+    margin: 10px; /* Espaciado entre los contenedores */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+.main-container h2 {
+    font-size: 1em;
+    color: #705030;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.main-container h2::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #705030;
+    margin: 6px 0;
+}
+
+.main-container img {
+    width: 100%; /* Ocupa todo el ancho del contenedor */
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+.description-container {
+    background: #E5C99C;
+    width: 100%; /* Se adapta al ancho del padre */
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 0.8em;
+    color: #705030;
+    display: flex;
+    justify-content: space-between; /* Distribuye el texto y la bolsa */
+    align-items: center;
+    box-sizing: border-box; /* Asegura que el padding no altere el tamaño */
+    overflow: hidden; /* Esconde contenido que pueda desbordar */
+}
+
+.description-container .shopping-bag {
+    width: 30px; /* Tamaño de la bolsa */
+    height: auto; /* Mantiene la proporción */
+    margin-left: 10px; /* Espacio entre la descripción y la bolsa */
+    cursor: pointer; /* Cambia el cursor a mano al pasar sobre la bolsa */
+    transition: transform 0.3s ease; /* Animación suave */
+}
+
+.description-container .shopping-bag:hover {
+    transform: scale(1.1); /* Aumenta ligeramente el tamaño al pasar el ratón */
+}
+
+
+.outer-circle {
+    position: absolute;
+    bottom: -20px;
+    right: -8px;
+    background: #EADAC6;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.price-circle {
+    background: #DDB97F;
+    color: #fff;
+    font-size: 0.8em;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

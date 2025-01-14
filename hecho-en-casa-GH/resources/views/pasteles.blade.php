@@ -1,11 +1,15 @@
-<link rel="stylesheet" href="{{ asset('css/pastel.css') }}"> <!-- Ruta absoluta -->
-<title>Inicio</title>
-<x-menu />
-
-<x-banner />
-<x-menu-catalogo />
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('css/pastel.css') }}"> <!-- Ruta absoluta -->
+    <title>Pasteles</title>
+</head>
+<body>
+    <x-menu />
 <div class="container">
+    <x-menu-catalogo/>
     <h1>PASTELES</h1>
     <div class="image-gallery">
         <div class="image-card">
@@ -31,7 +35,14 @@
                 <span>Personaliza tu pastel</span>
             </button>
         </div>
-        
+    </div>
+    <div>
+        <footer class="piePa">
+            <img src="{{ asset('img/piePag.png') }}" alt="Pie de página informativo">
+        </footer>
     </div>
 </div>
-<x-pie/>
+</body>
+</html>
+
+

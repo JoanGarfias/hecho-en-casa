@@ -1,84 +1,36 @@
-const months = [
-    { name: "Enero", days: 31,startDay: 2, bg: "url('img/enero.png')" },
-    { name: "Febrero", days: 28, startDay: 5, bg: "url('img/febrero.png')" },
-    { name: "Marzo", days: 31, startDay: 5, bg: "url('img/marzo.png')" },
-    { name: "Abril", days: 30, startDay: 1, bg: "url('img/abril.png')" },
-    { name: "Mayo", days: 31, startDay: 3, bg: "url('img/mayo.png')" },
-    { name: "Junio", days: 30, startDay: 6, bg: "url('img/junio.png')" },
-    { name: "Julio", days: 31, startDay: 1, bg: "url('img/julio.png')" },
-    { name: "Agosto", days: 31, startDay: 4, bg: "url('img/agosto.png')" },
-    { name: "Septiembre", days: 30, startDay: 0, bg: "url('img/septiembre.png')" },
-    { name: "Octubre", days: 31, startDay: 2, bg: "url('img/octubre.png')" },
-    { name: "Noviembre", days: 30, startDay: 5, bg: "url('img/noviembre.png')" },
-    { name: "Diciembre", days: 31, startDay: 0, bg: "url('img/diciembre.png')" },
-];
-
-// Días cerrados para cada mes
-const closedDays = {
-    0: [5, 10, 15], // Enero
-    1: [7, 14],     // Febrero
-    2: [3, 17],     // Marzo
-    // Agrega más meses si es necesario
-};
-
-let currentMonth = 0;
-
-function renderCalendar() {
-    const calendar = document.getElementById("calendar");
+document.addEventListener('DOMContentLoaded', function () {
     const numbers = document.getElementById("numbers");
+    console.log('entro')
+    // Delegación de eventos: Detectar clics solo en elementos con la clase "available"
+    numbers.addEventListener("click", function (e) {
+        const clickedDay = e.target;
+        if (clickedDay.classList.contains("available")) {
+            // Deseleccionar el día anterior
+            const previouslySelected = numbers.querySelector(".selected");
+            if (previouslySelected) {
+                previouslySelected.classList.remove("selected");
+            }
 
-    // Establecer fondo dinámico
-    calendar.style.backgroundImage = months[currentMonth].bg;
+            console.log(clickedDay)
+            // Seleccionar el nuevo día
+            clickedDay.classList.add("selected");
 
-    // Limpiar días previos
-    numbers.innerHTML = "";
+            // Obtener la fecha seleccionada
+            const diaNumero = clickedDay.textContent;
+            const mes = document.getElementById("mes").value || new Date().getMonth() + 1;
+            const anio = document.getElementById("anio").value || new Date().getFullYear();
 
-    // Agregar días vacíos al inicio según startDay
-    for (let i = 0; i < months[currentMonth].startDay; i++) {
-        const emptyDay = document.createElement("li");
-        emptyDay.classList.add("empty-day"); // Clase para los días vacíos
-        numbers.appendChild(emptyDay);
-    }
+            const fecha = `${anio}-${String(mes).padStart(2, "0")}-${String(diaNumero).padStart(2, "0")}`;
+            console.log("Fecha seleccionada:", fecha);
 
-    // Generar días del mes actual
-    for (let i = 1; i <= months[currentMonth].days; i++) {
-        const day = document.createElement("li");
-        day.textContent = i;
-
-        // Día actual
-        const today = new Date();
-        if (
-            i === today.getDate() &&
-            currentMonth === today.getMonth() &&
-            today.getFullYear() === 2025
-        ) {
-            day.classList.add("current");
+            // Guardar en el campo oculto
+            const inputFecha = document.getElementById("fechaSeleccionada");
+            if (inputFecha) {
+                inputFecha.value = fecha;
+            }
         }
-        // Días cerrados
-        else if (closedDays[currentMonth]?.includes(i)) {
-            day.classList.add("closed");
-        }
-        // Días disponibles
-        else {
-            day.classList.add("available");
-        }
-
-        numbers.appendChild(day);
-    }
-}
-
-document.getElementById("prev-month").addEventListener("click", () => {
-    currentMonth = (currentMonth - 1 + months.length) % months.length;
-    renderCalendar();
+    });
 });
-
-document.getElementById("next-month").addEventListener("click", () => {
-    currentMonth = (currentMonth + 1) % months.length;
-    renderCalendar();
-});
-
-// Inicializar calendario
-renderCalendar();
 
 
 //Para la hora

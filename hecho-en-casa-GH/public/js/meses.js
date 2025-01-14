@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function(){
     calendarioData = JSON.parse(calendario);
+   
     const primerDia = calendarioData.diasDelMes[0].fecha;
     const ultimoDia = calendarioData.diasDelMes[calendarioData.diasDelMes.length - 1].fecha;
     const numeroUltimoDia = parseInt(ultimoDia.split('-')[2], 10);
@@ -52,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 anioNumerico === hoyanio
             ) {
                 day.classList.add("current");
-            }
+            }
             // Días cerrados
             else if (calendarioData.diasDelMes[i-1].porciones>=100 //CERRAR DIAS POR PORCIONES
                 || (i<today.getDate() &&
@@ -81,7 +82,8 @@ document.addEventListener('DOMContentLoaded', function(){
         //para que si se esta viendo el mes actual no le deje ir para atras
         if(mesNumerico===hoymes && anioNumerico === hoyanio){
             botonPrevio.disabled = true;
-        }
+            botonPrevio.classList.add('desabilitado')
+        } 
     }
 
     function calcularBloqueo(diafuturo, diapresente){
@@ -103,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function(){
         if(mesAux===12) 
             inputAnio.value = anioNumerico - 1;
         formulario.submit();
-    });
+    });
 
     botonSig.addEventListener('click', (e) => {
         e.preventDefault();

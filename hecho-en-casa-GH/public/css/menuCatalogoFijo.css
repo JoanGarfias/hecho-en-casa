@@ -1,0 +1,57 @@
+
+/* General */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fdf8ee;
+    display: flex; /* Alinea los elementos horizontalmente */
+    flex-direction: row; /* Coloca el menú y contenido principal en fila */
+}
+
+/* Menú lateral */
+/* Menú lateral */
+.menu-lateral {
+    width: 200px; /* Conserva el ancho actual */
+    background-color: #d9b485;
+    color: white;
+    padding: 15px; /* Espaciado interno del contenido */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para el menú */
+    border-radius: 0 10px 10px 0; /* Bordes redondeados en la esquina derecha */
+    margin: 20px; /* Márgenes adicionales alrededor del menú */
+    position: relative; /* Cambia a posición relativa */
+    top: 100px; /* Ajusta la distancia desde la parte superior */
+    right: 600px; /* Ajusta la distancia desde el borde izquierdo */
+}
+
+
+/* Títulos del menú */
+.menu-lateral h3 {
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+/* Lista del menú */
+.menu-lateral ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-lateral ul li {
+    margin: 8px 0;
+}
+
+.menu-lateral ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.menu-lateral ul li a:hover {
+    text-decoration: underline;
+}
