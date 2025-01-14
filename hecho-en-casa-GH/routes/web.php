@@ -30,7 +30,8 @@ Route::post('/calendario/{mes?}/{anio?}', [ControladorCalendario::class, 'actual
 
 Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])->name('perfil.get')
 ->middleware([ProtectorSesion::class, ProtectorPeticiones::class]);
-//Route::post('/perfil', [ControladorPerfil::class, ''])->name('perfil.post');
+Route::post('/perfil', [ControladorPerfil::class, 'editar'])->name('perfil.post')
+->middleware([ProtectorSesion::class, ProtectorPeticiones::class]);
 
 /* PROCESO DE LOGIN */
 Route::middleware([ProtectorPeticiones::class])->group(function(){
@@ -61,7 +62,7 @@ Route::middleware([EnlazadorRegistro::class])->group(function () {
 
 Route::middleware([EnlazadorRecuperacion::class, ProtectorPeticiones::class])->group(function(){
     Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecuperacion'])->name('recuperacion.get');
-    Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post');
+    Route::post('/recuperacion/{token}', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post');
 });
 
 /* RUTAS DE POSTRES FIJOS */
@@ -123,5 +124,7 @@ Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(funct
 });
 
 
-
+Route::get('/pasteles', function(){
+    return view('pasteles');
+});
 

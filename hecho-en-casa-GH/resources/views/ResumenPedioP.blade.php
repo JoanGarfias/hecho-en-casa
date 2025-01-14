@@ -85,11 +85,23 @@
                 <button id="next" class="arrow">➡</button>
       <!--  </div>-->
             </div>
-
-            scrpit
    </div>
 
    <script src="{{ asset('js/ResumenPedidoP.js') }}"></script>
+   <script>
+        document.addEventListener("DOMContentLoaded", (event) => {
+
+            let datos = @json($datos);
+            let ticket_pastel = @json($ticket_pastel);
+            let ticket_pedido = @json($ticket_pedido);
+            console.log(datos);
+            console.log(ticket_pastel);
+            console.log(ticket_pedido);
+
+        });
+    
+    </script>
+
 
 </body>
 
