@@ -123,8 +123,4 @@ Route::middleware([ProtectorSesion::class])->group(function () {
     Route::get('emergentes/ticket/', [ControladorCatalogo::class, 'mostrarTicket'])->name('emergente.ticket.get');
 });
 
-Route::get('/emergentes', function(){
-    return view('emergentes');
-});
-
 
