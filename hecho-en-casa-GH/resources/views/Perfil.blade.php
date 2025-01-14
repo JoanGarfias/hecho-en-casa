@@ -9,12 +9,13 @@
 
 <!-- Título de la página -->
 <h1>MI PERFIL</h1>
-
+<form id="Form" action="{{route('perfil.post')}}" method="POST">
+@csrf
   <div class="main-container">
     <!-- Tarjeta de perfil -->
     <div class="profile-card">
 
-      <button class="save-button"disabled>
+      <button class="save-button" type="submit" disabled>
         <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0I
         Ars4c6QAAAMJJREFUSEvtldENgkAQRB+dSCdaipVQCqVgJ9qJOoTlY+GyrHIkJu4PAXL7mLsZtqFyNZX7czjgDP
         TAKaHsAVwAXRflFQyAINkqQjzgOXW253ZvQP+8BfRRUrwK+Rag9WpehGQBfutsvYdI2Vh7AdRLkLvvGwGyh+3PM
@@ -49,7 +50,7 @@
         alt="Foto de usuario" class="user-photo"/>
       
       
-        <h2 class="user-name">HÉCTOR PÉREZ LÓPEZ</h2>
+        <h2 class="user-name"><?php echo Cache::get('usuario')->nombre; echo " ";echo Cache::get('usuario')->apellido_paterno; echo " ";echo Cache::get('usuario')->apellido_materno;?></h2>
       </div>
 
       <div class="details">
@@ -66,10 +67,10 @@
             </button>
 
           <label>Número de tel.</label>
-          <input type="text" value="000 000 0000" readonly>
+          <input type="text" value="<?php echo Cache::get('usuario')->telefono ?>" readonly name="telefono" id="telefono" >
 
           <label>Correo:</label>
-          <input type="email" value="Hp190@gmail.com" readonly>
+          <input type="email" value="<?php echo Cache::get('usuario')->correo_electronico ?>" readonly>
 
           <button class="editarPas">
             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AA
@@ -82,7 +83,7 @@
             </button>
 
           <label>Contraseña:</label>
-          <input type="password" value="**********" readonly>
+          <input type="password" value="password" name="contrasena" readonly id="contrasena">
         </div>
 
             <div class="left-columnd">
@@ -99,28 +100,28 @@
               <label>Ubicación de entrega</label>
               
               <label>C.P :</label>
-              <input type="text" value="70610" readonly>
+              <input type="text" value="<?php echo Cache::get('usuario')->Codigo_postal_u ?>" name="codigopostal" id="codigopostal" readonly>
 
               <label>Estado:</label>
-              <input type="text" value="Oaxaca" readonly>
+              <input type="text" value="<?php echo Cache::get('usuario')->estado_u ?>" name="estado" id="estado" readonly>
 
               <label>Ciudad:</label>
-              <input type="text" value="Salina Cruz" readonly>
+              <input type="text" value="<?php echo Cache::get('usuario')->ciudad_u ?>" name="ciudad" id="ciudad" readonly>
             </div>
 
             <div class="right-columnd">
               <label>Calle:</label>
-              <input id="calle" type="text" value="Oleoducto esq. 18 de Marzo" readonly>
+              <input id="calle" type="text" value="<?php echo Cache::get('usuario')->calle_u ?>" name="calle" readonly>
 
               <label>Número int:</label>
-              <input id="numero-int" type="text" value="S/N" readonly>
+              <input id="numero-int" type="text" value="<?php echo Cache::get('usuario')->num_interior_u ?>" name="NumInt"readonly>
 
               <label>Número ext:</label>
-              <input id="numero-ext" type="text" value="S/N" readonly>
+              <input id="numero-ext" type="text" value="<?php echo Cache::get('usuario')->num_exterior_u ?>" name="NumExt"readonly>
 
               <div class="form-control">
                 <label>Colonia:</label>
-                <select name="colonia" id="colonia" disabled>
+                <select name="colonia" id="colonia" name="colonia" disabled>
                     <option value="">Selecciona una Colonia:</option>
                     <option value="Porfirio">Porfirio Díaz</option>
                     <option value="hidalgo oriente">Hidalgo Oriente</option>
@@ -135,6 +136,10 @@
       </div>
     </div>
   </div>
+  <input type="hidden" name="cambiarcontrasena" id="hiddenAction1" value="">
+  <input type="hidden" name="cambiardomicilio" id="hiddenAction2" value="">
+  <input type="hidden" name="cambiartelefono" id="hiddenAction3" value="">
+</form>
 </body>
 
 <script src="{{ asset('js/Perfil.js') }}"></script>
