@@ -10,7 +10,7 @@
 </head>
 <body>
     <x-menu />
-     
+    <x-banner-registrado/>
     <!-- Menú lateral -->
     <div class="menu-lateral">
         <h3>Postres</h3>
