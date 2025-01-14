@@ -83,5 +83,9 @@
             <script src="{{ asset('js/meses.js') }}"></script>
            
             
+<<<<<<< Updated upstream
             <!--Para la animación del logo de usuario-->
 <script src="{{ asset('js/icono.js') }}" defer></script>
+=======
+            
+>>>>>>> Stashed changes
