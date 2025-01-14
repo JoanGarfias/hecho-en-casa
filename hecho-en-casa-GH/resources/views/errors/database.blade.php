@@ -9,6 +9,9 @@
         body{
             background: #92b4f2;
         }
+        h1{
+            font-size:25px;
+        }
     </style>
 </head>
 <body>

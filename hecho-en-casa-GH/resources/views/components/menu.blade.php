@@ -22,7 +22,7 @@
             </ul>
             <img class="logo" src="{{ asset('img/logoO.png') }}" alt="Logo">
             <ul class="menu-derecho">
-                <li><a href="#">Conócenos</a></li>
+                <li><a href="{{route('conocenos.get')}}">Conócenos</a></li>
                 <li><a href="{{route('buscarpedido.get')}}">Buscar pedido</a></li>
                 <li class="dropdown">
                     <a href="#" id="usuario-icon">
