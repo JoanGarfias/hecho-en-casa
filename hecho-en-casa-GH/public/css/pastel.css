@@ -25,9 +25,9 @@ body {
 .container {
     text-align: center;
     padding: 20px;
-    margin-left: 80px; /* Deja espacio para el menú lateral */
+    margin-left: 150px; /* Deja espacio para el menú lateral */
     max-width: 100%; /* Ajustar el ancho disponible */
-    margin-top: 200px;
+    margin-top: 150px;
     width: 100%;
 }
 
@@ -131,4 +131,24 @@ h1 {
 .customize .personaliza span {
     font-weight: bold; /* Asegura que el texto esté en negritas */
 }
+
+/*pie de pagina*/
+
+/* Estilo base para el pie de página */
+.piePa {
+    width: 100%;
+    background-color: #f4f4f4; /* Fondo opcional */
+    padding: 20px 0;
+    text-align: center;
+}
+
+/* Imagen del pie de página */
+.piePa img {
+    width: 100%; /* Imagen ocupa todo el ancho del contenedor */
+    max-width: 2216px; /* Ancho máximo en pantallas grandes */
+    height: auto; /* Mantiene proporción */
+}
+
+
+
 
