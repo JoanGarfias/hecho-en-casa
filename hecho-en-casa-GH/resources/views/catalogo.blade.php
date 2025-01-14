@@ -23,6 +23,7 @@
                 </li>
             @endforeach
             <h2>Pasteles</h2>
+            <h2>Temporada y Pop-up</h2>
         </ul>
     </aside>
 
