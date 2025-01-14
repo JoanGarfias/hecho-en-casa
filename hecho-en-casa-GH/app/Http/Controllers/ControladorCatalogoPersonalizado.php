@@ -294,13 +294,12 @@ class ControladorCatalogoPersonalizado extends Controller
             $ticket_pastel = Pastelpersonalizado::select('id_saborpan', 'id_saborrelleno', 'id_cobertura', 'tipo_evento', 'descripciondetallada', 'imagendescriptiva')
             ->where('id_pp', $id_pastel)
             ->first();
-    
         }
         else {
             return redirect()->back()->with('error', 'El folio no fue especificado.');
         }
     
         // Envía la información a la vista
-        return view('pedidoPersonalizado', compact('ticket_pedido', 'ticket_pastel', 'datos'));
+        return view('ResumenPedidoP', compact('ticket_pedido', 'ticket_pastel', 'datos'));
     }
 }
