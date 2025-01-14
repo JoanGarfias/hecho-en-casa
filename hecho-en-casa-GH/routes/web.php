@@ -88,7 +88,7 @@ Route::post('fijo/detalles-direccion/buscar', [App\Http\Controllers\ControladorC
 Route::get('/personalizado', [ControladorCatalogoPersonalizado::class, 'mostrarCatalogo'])->name('personalizado.catalogo.get')
 ->middleware([ProtectorPeticiones::class]);
 
-Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(function () {
+Route::middleware([ProtectorSesion::class])->group(function () {
     Route::post('/personalizado', [ControladorCatalogoPersonalizado::class, 'seleccionarCatalogo'])->name('personalizado.catalogo.post');
 
     Route::get('personalizado/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])->name('personalizado.calendario.get');
@@ -108,7 +108,7 @@ Route::post('personalizado/detalles-direccion/buscar', [App\Http\Controllers\Con
 Route::get('/emergentes', [ControladorCatalogoEmergente::class, 'mostrar'])->name('emergente.catalogo.get')
 ->middleware([ProtectorPeticiones::class]);
 
-Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(function () {
+Route::middleware([ProtectorSesion::class])->group(function () {
     Route::post('/emergentes', [ControladorCatalogoEmergente::class, 'guardarSeleccion'])->name('emergente.catalogo.post');
 
     Route::get('emergentes/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])->name('emergente.calendario.get');
