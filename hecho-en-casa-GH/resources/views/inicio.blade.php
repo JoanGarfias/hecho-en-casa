@@ -27,9 +27,13 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 <!--Para la animación del logo de usuario y del menu desplegable-->
 <script src="{{ asset ('js/despliegue-menu.js') }}" defer> </script>
 <script src="{{ asset('js/icono.js') }}" defer></script>
+=======
+
+>>>>>>> Stashed changes
 =======
 
 >>>>>>> Stashed changes
