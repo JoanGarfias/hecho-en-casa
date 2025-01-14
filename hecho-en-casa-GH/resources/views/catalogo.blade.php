@@ -22,6 +22,7 @@
                     </a>
                 </li>
             @endforeach
+            <h2>Pasteles</h2>
         </ul>
     </aside>
 
@@ -58,6 +59,10 @@
             }
         }
     </script>
+      
+
+
+
 <x-pie/>
 
 </body>
