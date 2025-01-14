@@ -63,21 +63,22 @@
                         <p><span class="available"></span> Disponible</p>
                     </div>
 
-                    <div class="hour">
-                        <label for="time" class="seleccionarHora">Seleccionar hora:</label>
-                        <div class="hora-selector">
-                            <input type="time" id="horaEntrega" name="horaEntrega" min="11:00" max="19:00" required>
-                            <div class="boton-wrapper">
-                                <button type="button" id="incrementarHora" class="hora-boton">🔺</button>
-                                <button type="button" id="decrementarHora" class="hora-boton">🔻</button>                                        
-                            </div>
-                        </div>
-                    </div>
-                    <div class="botAceptar">
-                        <button class="aceptandoFecha">Aceptar fecha y hora</button>
-                    </div>
+                   
 
                     <form action="{{route('calendario.post')}}" method="POST" id="cambioFecha">
+                        <div class="hour">
+                            <label for="time" class="seleccionarHora">Seleccionar hora:</label>
+                            <div class="hora-selector">
+                                <input type="time" id="horaEntrega" name="horaEntrega" min="11:00" max="19:00" required>
+                                <div class="boton-wrapper">
+                                    <button type="button" id="incrementarHora" class="hora-boton">🔺</button>
+                                    <button type="button" id="decrementarHora" class="hora-boton">🔻</button>                                        
+                                </div>
+                            </div>
+                        </div>
+                        <div class="botAceptar">
+                            <button class="aceptandoFecha">Aceptar fecha y hora</button>
+                        </div>
                         @csrf
                         <input type="hidden" name="mes" id="mes" value="">
                         <input type="hidden" name="anio" id="anio" value="">

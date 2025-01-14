@@ -91,7 +91,7 @@ class ControladorCatalogo extends Controller
     public function mostrarCalendario(Request $request, $mes = null, $anio = null){ //GET: Mostrar calendario
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         $error = session('error'); // Recuperar el mensaje de error
-        session()->put('proceso_compra', $request->route()->getName());
+        session()->put('proceso_compra', $request->route()->getName()); //con esto sabemos el nombre de la ruta de la que viene
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
     
         $fecha = Carbon::now();
