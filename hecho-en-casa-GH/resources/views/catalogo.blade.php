@@ -25,7 +25,10 @@
 
     <!-- Contenedor de productos -->
     <div class="contenido-principal">
-        <h1 class="title">Catálogo de Postres</h1>
+        <h1 class="title">
+            {{ $categorias->where('id_cat', $categoriaSeleccionada)->first()->nombre ?? 'Catálogo de Postres' }}
+        </h1>
+        
         <div id="productos">
             @foreach($catalogo as $producto)
             <div class="main-container">
@@ -53,6 +56,7 @@
             }
         }
     </script>
+<x-pie/>
 
 </body>
 </html>

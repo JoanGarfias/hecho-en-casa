@@ -10,14 +10,15 @@ body {
 }
 
 .title {
-    font-size: 1.2em;
+    font-size: 2em;
     color: #705030;
     font-weight: bold;
     text-transform: uppercase;
-    margin-bottom: 20px;
-    text-align: center;
-    margin: 30px auto;
+    text-align: center; /* Centra el texto horizontalmente */
+    margin: 0 auto; /* Centra dentro de su contenedor */
+    padding: 10px;
 }
+
 
 #productos {
     display: flex;
@@ -30,8 +31,11 @@ body {
 }
 
 .contenido-principal {
-    margin-left: 200px; /* Aumenta este valor para moverlo más a la derecha */
+    max-width: 800px; /* Ajusta el ancho máximo */
     padding: 20px;
+    margin: 50px auto 0; /* Agrega 50px de margen superior, centra horizontalmente */
+    
+
 }
 
 .main-container {

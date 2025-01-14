@@ -15,14 +15,16 @@ body {
     width: 200px; /* Conserva el ancho actual */
     background-color: #d9b485;
     color: white;
-    padding: 15px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px; /* Espaciado interno del contenido */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para el menú */
     position: fixed; /* Fija el menú en el lado izquierdo */
-    top: 200px;
-    left: 20px; /* Asegura que esté alineado al lado izquierdo */
-    border-radius: 0 10px 10px 0; /* Mantiene bordes redondeados */
-    height: auto; /* Conserva la altura al contenido */
+    top: 200px; /* Margen superior */
+    left: 40px; /* Margen izquierdo ajustado */
+    border-radius: 0 10px 10px 0; /* Bordes redondeados en la esquina derecha */
+    height: auto; /* Conserva la altura según el contenido */
+    margin: 20px; /* Márgenes adicionales alrededor del menú */
 }
+
 
 /* Títulos del menú */
 .menu-lateral h3 {
