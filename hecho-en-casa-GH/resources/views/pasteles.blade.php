@@ -8,7 +8,7 @@
 </head>
 <body>
     <x-menu />
-     
+    <div>  
     <!-- Menú lateral -->
     <div class="menu-lateral">
         <h3>Postres</h3>
@@ -21,32 +21,34 @@
     <h1>PASTELES</h1>
     <div class="image-gallery">
         <div class="image-card">
-            <img src="{{ asset('img/pastel1.jpg') }}" alt="Pastel 1">
+            <img src="img/pastel1.jpg" alt="Pastel 1">
         </div>
         <div class="image-card">
-            <img src="{{ asset('img/pastel2.jpg') }}" alt="Pastel 2">
+            <img src="img/pastel2.jpg" alt="Pastel 2">
         </div>
         <div class="image-card">
-            <img src="{{ asset('img/pastel3.jpg') }}" alt="Pastel 3">
+            <img src="img/pastel3.jpg" alt="Pastel 3">
         </div>
         <div class="image-card">
-            <img src="{{ asset('img/pastel2.jpg') }}" alt="Pastel 4">
+            <img src="img/pastel2.jpg" alt="Pastel 4">
         </div>
     </div>
     <div class="description-section">
         <div class="description">
             <p>Contamos con variedad de pasteles personalizados para diferentes eventos: bodas, XV años, cumpleaños y más.</p>
         </div>
-        <div class="customize">
-            <button class="personaliza">
-                <img src="{{ asset('img/varita.png') }}" alt="Personaliza tu pastel">
-                <span>Personaliza tu pastel</span>
-            </button>
-        </div>
+        <form action="{{route('personalizado.catalogo.post')}}" method="POST">
+            @csrf
+            <div class="customize">
+                <button type="submit" class="personaliza">
+                    <img src="{{ asset('img/varita.png') }}" alt="Personaliza tu pastel">
+                    <span>Personaliza tu pastel</span>
+                </button>
+            </div>
+        </form>
     </div>
-    <footer class="piePa">
-            <img src="{{ asset('img/piePag.png') }}" alt="Pie de página informativo">
-    </footer>
+</div>
+<x-pie/>
 </div>
 </body>
 </html>

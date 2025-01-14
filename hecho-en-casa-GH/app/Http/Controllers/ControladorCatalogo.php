@@ -91,8 +91,18 @@ class ControladorCatalogo extends Controller
     public function mostrarCalendario(Request $request, $mes = null, $anio = null){ //GET: Mostrar calendario
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         $error = session('error'); // Recuperar el mensaje de error
-        session()->put('proceso_compra', $request->route()->getName());
+        session()->put('proceso_compra', $request->route()->getName()); //con esto sabemos el nombre de la ruta de la que viene
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
+        $ruta = $request->route()->getName();
+        $metodo = null;
+        if($ruta == "personalizado.calendario.get"){
+            $metodo = "personalizado.calendario.post";
+        }elseif($ruta == "emergente.calendario.get"){
+            $metodo = "emergente.calendario.post";
+        }elseif($ruta == "fijo.calendario.get"){
+            $metodo = "fijo.calendario.post";
+        }
     
         $fecha = Carbon::now();
         if($mes && $anio){
@@ -115,7 +125,7 @@ class ControladorCatalogo extends Controller
         }
 
         $primerDiaDelMes = $fecha->copy()->startOfMonth();
-        $diaSemana = $primerDiaDelMes->dayName;
+        $diaSemana = $primerDiaDelMes->dayOfWeek;
         $ultimoDiaDelMes = $fecha->copy()->endOfMonth();
         
         $pedidos = Cache::remember('pedidos', 30, function () use ($primerDiaDelMes, $ultimoDiaDelMes){
@@ -144,14 +154,14 @@ class ControladorCatalogo extends Controller
             'diaSemana' => $diaSemana,
         ]);
 
-        return view('calendario', compact('calendarioJson', 'error'));
+        return view('calEdit', compact('calendarioJson', 'error', 'metodo'));
     }
 
     public function seleccionarFecha(Request $request)
     {
 
-        $fechaEscogida = "2025-09-05";
-        $horaEntrega = "12:00";
+        $fechaEscogida = $request->input('fechaSeleccionada');
+        $horaEntrega = $request->input('horaEntrega');
         $postre = session('id_postre');
         $tipopostre = session('id_tipopostre');
 
@@ -214,6 +224,7 @@ class ControladorCatalogo extends Controller
                         'fecha' => $fechaEscogida,
                         'postre' => $postre,
                         'porciones_dia' => $porciones_dia,
+                        'hora' => $horaEntrega,
                     ]);
     
                     return redirect()->route('personalizado.detallesPedido.get');

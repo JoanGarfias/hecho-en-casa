@@ -1,27 +1,67 @@
 //Para los botones de sabores
 
 document.addEventListener("DOMContentLoaded", () => {
-    const toggleSelect = document.getElementById("seleccionar");
-    const selectOptions = document.getElementById("seleccionadoOpcion");
-    const selectedValue = document.getElementById("agarrarValor");
+    const toggleSelectPan = document.getElementById("seleccionarPan");
+    const toggleSelectRelleno = document.getElementById("seleccionarRelleno");
+    const toggleSelectCobertura = document.getElementById("seleccionarCobertura");
+    const selectOptionsPan = document.getElementById("seleccionadoOpcionPan");
+    const selectOptionsRelleno = document.getElementById("seleccionadoOpcionRelleno");
+    const selectOptionsCobertura = document.getElementById("seleccionadoOpcionCobertura");
+    const selectedValuePan = document.getElementById("agarrarValorPan");
+    const selectedValueRelleno = document.getElementById("agarrarValorRelleno");
+    const selectedValueCobertura = document.getElementById("agarrarValorCobertura");
     const hiddenInput = document.getElementById("tipoEntrega");
 
     // Mostrar/Ocultar el menú desplegable
-    toggleSelect.addEventListener("click", (event) => {
-        event.preventDefault();
-        selectOptions.style.display =
-            selectOptions.style.display === "none" ? "block" : "none";
+    toggleSelectPan.addEventListener("click", (event) => {
+        //event.preventDefault();
+        selectOptionsPan.style.display =
+            selectOptionsPan.style.display === "none" ? "block" : "none";
+    });
+
+    toggleSelectRelleno.addEventListener("click", (event) => {
+        //event.preventDefault();
+        selectOptionsRelleno.style.display =
+            selectOptionsRelleno.style.display === "none" ? "block" : "none";
+    });
+
+    toggleSelectCobertura.addEventListener("click", (event) => {
+        //event.preventDefault();
+        selectOptionsCobertura.style.display =
+            selectOptionsCobertura.style.display === "none" ? "block" : "none";
     });
 
     // Actualizar el valor seleccionado
-    selectOptions.addEventListener("click", (event) => {
+    selectOptionsPan.addEventListener("click", (event) => {
         const target = event.target;
         if (target.classList.contains("darOpciones")) {
             const value = target.getAttribute("data-value");
             const text = target.textContent;
-            selectedValue.value = text; // Muestra el texto en el input
+            selectedValuePan.value = text; // Muestra el texto en el input
             hiddenInput.value = value; // Almacena el valor en el input oculto
-            selectOptions.style.display = "none"; // Oculta el menú desplegable
+            selectOptionsPan.style.display = "none"; // Oculta el menú desplegable
+        }
+    });
+
+    selectOptionsRelleno.addEventListener("click", (event) => {
+        const target = event.target;
+        if (target.classList.contains("darOpciones")) {
+            const value = target.getAttribute("data-value");
+            const text = target.textContent;
+            selectedValueRelleno.value = text; // Muestra el texto en el input
+            hiddenInput.value = value; // Almacena el valor en el input oculto
+            selectOptionsRelleno.style.display = "none"; // Oculta el menú desplegable
+        }
+    });
+
+    selectOptionsCobertura.addEventListener("click", (event) => {
+        const target = event.target;
+        if (target.classList.contains("darOpciones")) {
+            const value = target.getAttribute("data-value");
+            const text = target.textContent;
+            selectedValueCobertura.value = text; // Muestra el texto en el input
+            hiddenInput.value = value; // Almacena el valor en el input oculto
+            selectOptionsCobertura.style.display = "none"; // Oculta el menú desplegable
         }
     });
 
