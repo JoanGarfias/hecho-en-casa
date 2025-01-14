@@ -13,7 +13,7 @@
 <body>
     <!-- Menú lateral -->
     <aside class="menu-lateral">
-        <h3>Postres</h3>
+        <h3>Postres:</h3>
         <ul>
             @foreach($categorias as $categoria)
                 <li>
