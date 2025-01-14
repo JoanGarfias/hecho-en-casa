@@ -22,12 +22,19 @@
                     </a>
                 </li>
             @endforeach
-            <h2 id="titulo-pasteles" style="cursor: pointer;">Pasteles</h2>
-            <h2>Temporada y Pop-up</h2>
+            <h3 id="titulo-pasteles" style="cursor: pointer;">Pasteles</h3>
+            <h3 id="titulo-emergentes" style="cursor: pointer;">Temporada y Pop-up</h3>
+
         </ul>
     </aside>
-
     
+    <script>
+        document.getElementById('titulo-emergentes').addEventListener('click', function () {
+            // Redirige a la ruta /emergentes
+            window.location.href = "{{ route('emergente.catalogo.get') }}";
+        });
+    </script>
+
     <script>
         // Seleccionar el encabezado y agregar evento de clic
         document.getElementById('titulo-pasteles').addEventListener('click', function () {

@@ -16,9 +16,16 @@
         <ul>
         </ul>
         <h3>Pasteles</h3>
-        <h3>Temporada y Pop-Up</h3>
+        <h3 id="titulo-emergentes" style="cursor: pointer;">Temporada y Pop-up</h3>
+        <ul></ul>
     </div>
 
+    <script>
+        document.getElementById('titulo-emergentes').addEventListener('click', function () {
+            // Redirige a la ruta /emergentes
+            window.location.href = "{{ route('emergente.catalogo.get') }}";
+        });
+    </script>
 
     <script>
         document.getElementById('titulo-postres').addEventListener('click', function () {
@@ -26,7 +33,7 @@
             window.location.href = "{{ route('fijo.catalogo.get') }}";
         });
     </script>
-    
+
 <div class="container">
     <h1>PASTELES</h1>
     <div class="image-gallery">
