@@ -65,7 +65,7 @@
 
                    
 
-                    <form action="{{route('calendario.post')}}" method="POST" id="cambioFecha">
+                    <form action="{{route('personalizado.calendario.post')}}" method="POST" id="cambioFecha">
                         <div class="hour">
                             <label for="time" class="seleccionarHora">Seleccionar hora:</label>
                             <div class="hora-selector">
@@ -113,10 +113,9 @@
                 </script>
             </body>
             <x-pie/>
-            <script src="{{ asset('js/calEdit.js') }}" defer></script>
-            <script src="{{ asset('js/meses.js') }}" defer></script>
+            <script src="{{ asset('js/calEdit.js') }}"></script>
+            <script src="{{ asset('js/meses.js') }}"></script>
            
             
             <!--Para la animación del logo de usuario-->
-<script src="{{asset ('js/despliegue-menu.js')}}" defer> </script>
 <script src="{{ asset('js/icono.js') }}" defer></script>

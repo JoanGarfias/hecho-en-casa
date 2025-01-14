@@ -115,7 +115,7 @@ class ControladorCatalogo extends Controller
         }
 
         $primerDiaDelMes = $fecha->copy()->startOfMonth();
-        $diaSemana = $primerDiaDelMes->dayName;
+        $diaSemana = $primerDiaDelMes->dayOfWeek;
         $ultimoDiaDelMes = $fecha->copy()->endOfMonth();
         
         $pedidos = Cache::remember('pedidos', 30, function () use ($primerDiaDelMes, $ultimoDiaDelMes){
