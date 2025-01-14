@@ -224,6 +224,7 @@ class ControladorCatalogo extends Controller
                         'fecha' => $fechaEscogida,
                         'postre' => $postre,
                         'porciones_dia' => $porciones_dia,
+                        'hora' => $horaEntrega,
                     ]);
     
                     return redirect()->route('personalizado.detallesPedido.get');
