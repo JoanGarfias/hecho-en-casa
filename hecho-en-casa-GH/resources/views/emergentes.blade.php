@@ -18,6 +18,7 @@
         </ul>
         <h3 id="titulo-pasteles" style="cursor: pointer;">Pasteles</h3>
         <h3>Temporada y Pop-up</h3>
+        
     </div>
     <script>
         // Seleccionar el encabezado y agregar evento de clic
@@ -81,5 +82,10 @@
     </div>
     <x-pie/>
     <script src="{{asset ('js/scripte.js')}}"></scri>
+
+    <script src="{{asset ('js/scripte.js')}}"></script>
+    <!--Para la animación del logo de usuario-->
+<script src="{{asset ('js/despliegue-menu.js')}}" defer> </script>
+<script src="{{ asset('js/icono.js') }}" defer></script>
 </body>
 </html>
