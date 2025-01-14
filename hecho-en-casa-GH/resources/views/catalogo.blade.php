@@ -26,6 +26,8 @@
             <h2>Temporada y Pop-up</h2>
         </ul>
     </aside>
+
+    
     <script>
         // Seleccionar el encabezado y agregar evento de clic
         document.getElementById('titulo-pasteles').addEventListener('click', function () {
