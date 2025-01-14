@@ -40,8 +40,11 @@
                 <p id="mensajeEmail" class="bien"></p><br>
             </div>
 
-            {!! NoCaptcha::renderJs() !!}
-            {!! NoCaptcha::display() !!}
+            <div class="captcha"> 
+                {!! NoCaptcha::renderJs() !!}
+                {!! NoCaptcha::display() !!} 
+            </div>
+           
 
             <button class="botoncito" type="submit" name="botones" value="login">Iniciar sesión</button>
             <button class="botoncito" type="submit" name="botones" value="register">Continuar</button>
