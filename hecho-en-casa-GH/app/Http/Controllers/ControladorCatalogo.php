@@ -36,7 +36,8 @@ class ControladorCatalogo extends Controller
             if ($categoria === null) {
                 $categoriaPorDefecto = $categorias->first()->id_cat;
                 $catalogo = Cache::remember('catalogofijoCatNula', 30, function () use ($categoriaPorDefecto) {
-                    return Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
+                    return Catalogo::join('postre_fijo_unidad_medidas', 'postre_fijo_unidad_medidas.id_pf', '=', 'catalogo.id_postre' )
+                        ->select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion', 'precio_um')
                         ->where('id_tipo_postre', 'fijo')
                         ->where('id_categoria', $categoriaPorDefecto)
                         ->get();
@@ -44,7 +45,8 @@ class ControladorCatalogo extends Controller
             } else {
                 $cacheKey = "catalogofijoCat{$categoria}";
                 $catalogo = Cache::remember($cacheKey, 30, function () use ($categoria) {
-                    return Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
+                    return Catalogo::join('postre_fijo_unidad_medidas', 'postre_fijo_unidad_medidas.id_pf', '=', 'catalogo.id_postre' )
+                        ->select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion', 'precio_um')
                         ->where('id_tipo_postre', 'fijo')
                         ->where('id_categoria', $categoria)
                         ->get();

@@ -4,15 +4,18 @@ const editarTelButton = document.querySelector('.editarTel');
 const editarPasButton = document.querySelector('.editarPas');
 const editarDirButton = document.querySelector('.editarDir');
 
-const telefonoInput = document.querySelector('input[type="text"][value="000 000 0000"]');
-const passwordInput = document.querySelector('input[type="password"]');
-const cpInput = document.querySelector('input[type="text"][value="70610"]');
-const estadoInput = document.querySelector('input[type="text"][value="Oaxaca"]');
-const ciudadInput = document.querySelector('input[type="text"][value="Salina Cruz"]');
+const telefonoInput = document.getElementById('telefono');
+const passwordInput = document.getElementById('contrasena');
+const cpInput = document.getElementById('codigopostal');
+const estadoInput = document.getElementById('estado');
+const ciudadInput = document.getElementById('ciudad');
 const calleInput = document.getElementById('calle');
 const numeroIntInput = document.getElementById('numero-int');
 const numeroExtInput = document.getElementById('numero-ext');
 const coloniaSelect = document.getElementById('colonia');
+const cambiarContrasena = document.getElementById('hiddenAction1');
+const cambiarDomicilio = document.getElementById('hiddenAction2');
+const cambiarTelefono = document.getElementById('hiddenAction3');
 
 // Función para habilitar edición de uno o más campos
 function habilitarEdicion(button, inputs) {
@@ -55,8 +58,30 @@ editarDirButton.addEventListener('click', () => {
 
 // Guardar los cambios
 saveButton.addEventListener('click', () => {
-    const editingFields = document.querySelectorAll('.editing');
-    editingFields.forEach(field => {
+    //console.log("abc")
+    const form = document.getElementById('Form');
+    if(editarTelButton.disabled == true){
+        const telefonoReg = /^\d{2,3}[-.\s]?\d{2,3}[-.\s]?\d{4}$/
+        if(telefonoReg.test(telefonoInput.value.trim())){
+            cambiarTelefono.value = true;
+        }
+    }
+
+    if(editarPasButton.disabled == true){
+        if (/[A-Z]/.test(passwordInput.value) && /[a-z]/.test(passwordInput.value) && /\d/.test(passwordInput.value) ) {
+        cambiarContrasena.value = true;
+        }
+    }
+
+    if(editarDirButton.disabled == true){
+        cambiarDomicilio.value = true;
+    }
+
+    if(cambiarTelefono.value || cambiarContrasena.value || cambiarDomicilio.value){
+        form.submit();
+    }else{
+        const editingFields = document.querySelectorAll('.editing');
+        editingFields.forEach(field => {
         if (field.tagName === 'SELECT') {
             field.setAttribute('disabled', true);
         } else {
@@ -71,6 +96,5 @@ saveButton.addEventListener('click', () => {
     editarTelButton.disabled = false;
     editarPasButton.disabled = false;
     editarDirButton.disabled = false;
-
-    console.log('Cambios guardados');
+    }
 });

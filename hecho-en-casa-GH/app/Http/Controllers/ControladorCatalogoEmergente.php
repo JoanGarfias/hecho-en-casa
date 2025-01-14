@@ -39,7 +39,7 @@ class ControladorCatalogoEmergente extends Controller
             return response()->json([]);
         }
 
-        return view('emergentes-prueba', compact('emergentes'));
+        return view('emergentes', compact('emergentes'));
     }
 
     public function guardarSeleccion(Request $request){

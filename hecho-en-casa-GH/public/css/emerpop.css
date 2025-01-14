@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+* {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /**/background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+/* Archivo CSS */
+/* styles.css */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #4f3c2e;
+}
+
+/* Layout */
+.container {
+    display: flex;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #f2e0c6;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar button {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    margin: 10px 0;
+    padding: 10px;
+    text-align: left;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.sidebar button:hover {
+    background-color: #dec4a8;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    margin-top: -10%;
+}
+
+.section {
+    margin-bottom: 40px;
+    margin-left: 100px; /* Opcional: Espacio extra desde el borde derecho */
+}
+
+.section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center; /* Alinear el texto a la derecha */
+}
+
+/* Carrusel */
+.carousel {
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    background-color: #ebd1ad; /* Fondo del recuadro del carrusel */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    margin-left: 150px;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+    width: 100%;
+}
+
+.carousel-item {
+    min-width: calc(110% / 3);
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.carousel-item img {
+    width: 70%;
+    height: 90%;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #efe4d7; /* Fondo de las flechas */
+    border: none;
+    border-radius: 50%;
+    padding: 15px;
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-button:hover {
+    transform: scale(1.1); /* Efecto hover en las flechas */
+}
+
+.carousel-button.left {
+    left: 2px; /* Ajuste de posición */
+}
+
+.carousel-button.right {
+    right: 2px; /* Ajuste de posición */
+}
+
+.carousel-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Cuadro de descripción */
+.carousel-description {
+    margin-top: 100px;
+    text-align: center;
+    background-color: #372715; /* Fondo del cuadro de descripción */
+    color: #4a3622; /* Color del texto */
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: inline-block;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+}
+
+/* Menú lateral */
+.menu-lateral {
+    width: 200px; /* Mismo ancho */
+    background-color: #d9b485;
+    color: white;
+    padding: 15px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    height: 150px; /* Ajusta la altura al contenido */
+    position: relative; /* Permite moverlo sin ser fijo */
+    margin-left: 25px; /* Mueve el menú hacia la izquierda */
+    margin-top: 50px; /* Espacio superior */
+    border-radius: 10px; /* Bordes redondeados */
+    top: 420px;
+}
+
+.menu-lateral h3 {
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.menu-lateral ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-lateral ul li {
+    margin: 8px 0;
+}
+
+.menu-lateral ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.menu-lateral ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Contenido principal */
+.contenido-principal {
+    margin-left: 120px; /* Deja espacio suficiente para el menú */
+    padding: 20px; /* Margen interno */
+}
+
+

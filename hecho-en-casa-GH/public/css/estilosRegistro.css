@@ -151,8 +151,10 @@ form {
     }
 
     .captcha {
-        right: 40px;
-        text-align: auto;
-        width: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px 0; /* Ajusta el margen según tus necesidades */
     }
+    
 }

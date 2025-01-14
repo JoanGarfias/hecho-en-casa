@@ -19,19 +19,19 @@ body {
     background-color: white;
     color: #4f3c2e;
     display: flex;
-    overflow-x: hidden; /* Oculta el desplazamiento horizontal */
+
 }
 
 .container {
     text-align: center;
     padding: 20px;
-    margin-left: 5px; /* Deja espacio para el menú lateral */
+    margin-left: auto; /* Deja espacio para el menú lateral */
     max-width: 100%; /* Ajustar el ancho disponible */
-    margin-top: 100px;
+    margin-top: 20px;
     width: 100%;
 }
 
-h1 {
+.container h1 {
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 20px;
@@ -40,10 +40,11 @@ h1 {
 .image-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Columnas adaptativas */
-    gap: 20px; /* Espaciado entre los recuadros */
+    gap: 30px; /* Espaciado entre los recuadros */
     margin: 0 auto; /* Centrar la galería horizontalmente */
     max-width: 1000px; /* Ancho máximo de la galería */
     justify-content: start; /* Centrar los recuadros dentro de la galería */
+    margin-right: 120px;
 }
 
 .image-card {
@@ -76,7 +77,7 @@ h1 {
     margin-top: 20px; /* Ajustar margen superior */
     max-width: 800px; /* Ancho máximo */
     margin-left: auto;
-    margin-right: auto; /* Centrar completamente */
+    margin-right: 175px;
 }
 
 .description, .customize {
@@ -127,39 +128,6 @@ h1 {
     font-weight: bold; /* Asegura que el texto esté en negritas */
 }
 
-/* Estilo base para el pie de página */
-.piePa {
-    width: 100%;
-    background-color: #f4f4f4; /* Fondo opcional */
-    text-align: center;
-}
-
-/* Imagen del pie de página */
-.piePa img {
-    width: 100%; /* Imagen ocupa todo el ancho del contenedor */
-    max-width: 2216px; /* Ancho máximo en pantallas grandes */
-    height: auto; /* Mantiene proporción */
-}
-
-/* Ajustes responsivos */
-@media (max-width: 1200px) {
-    .piePa img {
-        max-width: 1800px; /* Ajusta el tamaño en pantallas medianas */
-    }
-}
-
-@media (max-width: 768px) {
-    .piePa img {
-        max-width: 100%; /* Asegura que la imagen ocupe todo el ancho disponible */
-    }
-}
-
-@media (max-width: 480px) {
-    .piePa img {
-        max-width: 100%;
-        height: auto; /* Mantiene proporción en móviles */
-    }
-}
 
 /* Menú lateral */
 .menu-lateral {
@@ -170,10 +138,10 @@ h1 {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
     height: 150px; /* Ajusta la altura al contenido */
     position: relative; /* Permite moverlo sin ser fijo */
-    margin-left: 25px; /* Mueve el menú hacia la izquierda */
+    margin-left:50px; /* Mueve el menú hacia la izquierda */
     margin-top: 50px; /* Espacio superior */
     border-radius: 10px; /* Bordes redondeados */
-    top: 100px;
+    top: 250px;
 }
 
 .menu-lateral h3 {

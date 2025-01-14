@@ -8,29 +8,39 @@
 </head>
 <body>
     <x-menu />
-     
+    <div>  
     <!-- Menú lateral -->
     <div class="menu-lateral">
-        <h3>Postres</h3>
+        <h3 id="titulo-postres" style="cursor: pointer;">Postres</h3>
+
         <ul>
         </ul>
         <h3>Pasteles</h3>
         <h3>Temporada y Pop-Up</h3>
     </div>
+
+
+    <script>
+        document.getElementById('titulo-postres').addEventListener('click', function () {
+            // Redirige a la ruta base del catálogo
+            window.location.href = "{{ route('fijo.catalogo.get') }}";
+        });
+    </script>
+    
 <div class="container">
     <h1>PASTELES</h1>
     <div class="image-gallery">
         <div class="image-card">
-            <img src="{{ asset('img/pastel1.jpg') }}" alt="Pastel 1">
+            <img src="img/pastel1.jpg" alt="Pastel 1">
         </div>
         <div class="image-card">
-            <img src="{{ asset('img/pastel2.jpg') }}" alt="Pastel 2">
+            <img src="img/pastel2.jpg" alt="Pastel 2">
         </div>
         <div class="image-card">
-            <img src="{{ asset('img/pastel3.jpg') }}" alt="Pastel 3">
+            <img src="img/pastel3.jpg" alt="Pastel 3">
         </div>
         <div class="image-card">
-            <img src="{{ asset('img/pastel2.jpg') }}" alt="Pastel 4">
+            <img src="img/pastel2.jpg" alt="Pastel 4">
         </div>
     </div>
     <div class="description-section">
@@ -47,11 +57,14 @@
             </div>
         </form>
     </div>
-    <footer class="piePa">
-            <img src="{{ asset('img/piePag.png') }}" alt="Pie de página informativo">
-    </footer>
+</div>
+<x-pie/>
+
 </div>
 </body>
+<!--Para la animación del logo de usuario-->
+<script src="{{asset ('js/despliegue-menu.js')}}" defer> </script>
+<script src="{{ asset('js/icono.js') }}" defer></script>
 </html>
 
 
