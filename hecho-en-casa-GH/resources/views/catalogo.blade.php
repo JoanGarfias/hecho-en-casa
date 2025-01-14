@@ -13,7 +13,7 @@
 <body>
     <!-- Menú lateral -->
     <aside class="menu-lateral">
-        <h3>Postres</h3>
+        <h3>Postres:</h3>
         <ul>
             @foreach($categorias as $categoria)
                 <li>
@@ -22,10 +22,17 @@
                     </a>
                 </li>
             @endforeach
-            <h2>Pasteles</h2>
+            <h2 id="titulo-pasteles" style="cursor: pointer;">Pasteles</h2>
             <h2>Temporada y Pop-up</h2>
         </ul>
     </aside>
+    <script>
+        // Seleccionar el encabezado y agregar evento de clic
+        document.getElementById('titulo-pasteles').addEventListener('click', function () {
+            // Redirige a la ruta /personalizado
+            window.location.href = "{{ route('personalizado.catalogo.get') }}";
+        });
+    </script>
 
     <!-- Contenedor de productos -->
     <main class="contenido-principal">
