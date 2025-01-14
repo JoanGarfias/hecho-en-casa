@@ -7,7 +7,6 @@
 
 body {  
     background: white; /* Fondo del sitio */
-    
 }
 
 .flexi{
@@ -17,7 +16,6 @@ body {
     align-items: center;
     min-height: 100vh; /* Hace que el diseño esté centrado en pantalla */
     margin-bottom: 10%;
-
 }
 
 .contenedor {
@@ -56,7 +54,6 @@ a{
     color: #955128;
 }
 
-
 label {
     color: #A09179;
     display: block;
@@ -68,9 +65,8 @@ input {
     background: #E8D9C2;
     border: 1px solid #E8D9C2;
     border-radius: 4px;
-    width: 70%;
+    width: 100%;
     padding: 5px;
-    
 }
 
 .mensajito{
@@ -98,7 +94,6 @@ input {
     border-radius: 8px;
     padding: 10px 15px;
     cursor: pointer;
-   
     margin: 10px;
 }
 
@@ -108,4 +103,56 @@ input {
 
 form {
     text-align: center;
+}
+
+/* Media Queries para hacer el diseño responsive */
+@media (max-width: 1200px) {
+    .contenedor {
+        max-width: 600px;
+    }
+}
+
+@media (max-width: 992px) {
+    .contenedor {
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 768px) {
+    .contenedor {
+        max-width: 400px;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .contenedor {
+        max-width: 300px;
+        padding: 5px;
+    }
+
+    input {
+        width: 90%;
+    }
+
+    .flexi {
+        margin-bottom: 20%;
+    }
+}
+
+@media (max-width: 400px) {
+    .contenedor {
+        max-width: 350px;
+        padding: 10px;
+    }
+
+    .botoncito {
+        padding: 5px 10px; 
+    }
+
+    .captcha {
+        right: 40px;
+        text-align: auto;
+        width: 100px;
+    }
 }

@@ -1,16 +1,20 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const usuarioIcon = document.getElementById("usuario-icon");
-    const menuUsuario = document.getElementById("menu-usuario");
 
-    usuarioIcon.addEventListener("click", function (e) {
-        e.preventDefault();
-        menuUsuario.classList.toggle("show");
+document.addEventListener('DOMContentLoaded', function () {
+    const hamburgerMenu = document.querySelector('.hamburger-menu');
+    const menuIzquierdo = document.querySelector('.menu-izquierdo');
+    const menuDerecho = document.querySelector('.menu-derecho');
+    
+
+    // Mostrar/ocultar menú desplegable al hacer clic en el ícono
+    hamburgerMenu.addEventListener('click', function () {
+        menuIzquierdo.classList.add('show');
+        
     });
 
-    // Opcional: Cerrar el menú si se hace clic fuera de él
-    document.addEventListener("click", function (e) {
-        if (!menuUsuario.contains(e.target) && !usuarioIcon.contains(e.target)) {
-            menuUsuario.classList.remove("show");
+    // Cerrar el menú desplegable al hacer clic fuera de él
+    document.addEventListener('click', function (event) {
+        if (!hamburgerMenu.contains(event.target) && !menuIzquierdo.contains(event.target)) {
+            menuIzquierdo.classList.remove('show');
         }
     });
 });

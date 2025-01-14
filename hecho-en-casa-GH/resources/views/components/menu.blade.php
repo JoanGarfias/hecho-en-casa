@@ -38,4 +38,5 @@
     </div>
 </header>
 </body>
+<script src="{{ asset ('js/despliegue-menu.js') }}" defer> </script>
 </html>
