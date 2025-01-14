@@ -15,7 +15,7 @@
                 <div class="columna">
                     <div class="fila">
                         <label for="fechaEntrega">Fecha de entrega:</label>
-                        <input type="text" id="fechaEntrega" name="fechaEntrega" readonly>
+                        <input type="text" id="fechaEntrega" name="fechaEntrega" placeholder="{{session('fecha')}}" readonly>
                     </div>
                     <div class="fila">
                         <label for="horaEntrega">Hora de entrega: </label>
@@ -47,7 +47,6 @@
                             <button id="seleccionar" class="diseñandobutton">🔻</button>
                             <div id="seleccionadoOpcion" class="customizandoOpciones" style="display: none;">
                                 <div class="darOpciones" data-value="opcion1">Opción 1</div>
-                                <div class="darOpciones" data-value="opcion2">Opción 2</div>
                             </div>                       
                         </div>
                     </div>
@@ -60,8 +59,6 @@
                             </div> 
                             <button id="seleccionar" class="diseñandobutton">🔻</button>
                             <div id="seleccionadoOpcion" class="customizandoOpciones" style="display: none;">
-                                <div class="darOpciones" data-value="opcion1">Opción 1</div>
-                                <div class="darOpciones" data-value="opcion2">Opción 2</div>
                             </div>                       
                         </div>
                     </div>
