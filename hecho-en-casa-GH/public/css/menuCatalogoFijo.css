@@ -22,7 +22,7 @@ body {
     border-radius: 0 10px 10px 0; /* Bordes redondeados en la esquina derecha */
     margin: 20px; /* Márgenes adicionales alrededor del menú */
     position: relative; /* Cambia a posición relativa */
-    top: 150px; /* Ajusta la distancia desde la parte superior */
+    top: 100px; /* Ajusta la distancia desde la parte superior */
     right: 600px; /* Ajusta la distancia desde el borde izquierdo */
 }
 

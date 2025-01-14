@@ -8,6 +8,8 @@
     <title>Catálogo</title>
 </head>
 <x-menu/>
+<x-banner-registrado/>
+
 <body>
     <!-- Menú lateral -->
     <aside class="menu-lateral">
