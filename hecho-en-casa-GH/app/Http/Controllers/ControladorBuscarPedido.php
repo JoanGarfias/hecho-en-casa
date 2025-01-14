@@ -17,7 +17,7 @@ use Illuminate\Support\Carbon;
 class ControladorBuscarPedido extends Controller{
     public function ObtenerFolio()
     {
-        return view('buscarPedido');
+        return view('buscadorpedido');
     }
 
     public function MostrarPedido(Request $request)
