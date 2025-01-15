@@ -24,13 +24,13 @@
             <ul class="menu-derecho">
                 <li><a href="{{route('conocenos.get')}}">Conócenos</a></li>
                 <li><a href="{{route('buscarpedido.get')}}">Buscar pedido</a></li>
-                <li class="dropdown">
+                <li class="dropdown" >
                     <a href="#" id="usuario-icon">
                         <img src="{{ asset('img/usuario.png') }}" alt="Usuario">
                     </a>
-                    <div class="dropdown-menu" id="menu-usuario">
-                        <button onclick="window.location.href='{{route('login.get')}}'">Iniciar sesión</button>
-                        <button onclick="window.location.href='{{route('registrar.get')}}'">Registrarme</button>
+                    <div class="dropdown-menu" id="menu-usuario" style="display: none;">
+                        <button onclick="console.log('Redirigieno'); window.location.href='{{route('login.get')}}'">Iniciar sesión</button>
+                        <button onclick="console.log('Redirigieno ptw'); window.location.href='{{route('registrar.get')}}'">Registrarme</button>
                     </div>
                 </li>
             </ul>
@@ -38,10 +38,8 @@
     </div>
 </header>
 <!--Para la animación del logo de usuario-->
-<script src="{{asset ('js/despliegue-menu.js')}}" defer> </script>
+
 <script src="{{ asset('js/icono.js') }}" defer></script>
 
 </body> 
-   
-
 </html>
