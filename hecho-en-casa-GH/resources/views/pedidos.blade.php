@@ -96,7 +96,7 @@
                     </div>
                     <div class="fila">
                         <label for="costo">Costo:</label>
-                        <input type="text" id="costo" name="costo" readonly><br>
+                        <input type="number" id="costo" name="costo" readonly><br>
                         <p class="nota">NOTA: El costo es aproximado, el precio final puede variar según su ubicación.</p>
                     </div>
                 </div>
@@ -115,6 +115,32 @@
                 </div>
             </div>
         </form>  
+
+        <script>
+            function sumarSeleccionado() {
+                let total = 0;
+        
+                let opcionesSeleccionadas = document.getElementById("unidadm").selectedOptions;
+                for (let i = 0; i < opcionesSeleccionadas.length; i++) {
+                    let opcion = opcionesSeleccionadas[i].value.split('|'); 
+                    let precioUnidad = parseFloat(opcion[2]); 
+                    total += isNaN(precioUnidad) ? 0 : precioUnidad;
+                }
+        
+    
+                let selectsAtributos = document.querySelectorAll("select[id^='atributo']");
+                selectsAtributos.forEach(select => {
+                    let opcionAtributoSeleccionada = select.selectedOptions[0]; 
+                    if (opcionAtributoSeleccionada) {
+                        let precioAtributo = parseFloat(opcionAtributoSeleccionada.value.split('|')[1]); 
+                        total += isNaN(precioAtributo) ? 0 : precioAtributo;
+                    }
+                });
+        
+                document.getElementById("costo").value = total.toFixed(2); 
+            }
+        </script>    
+        
     </div>
 </div>
 <x-pie/>
