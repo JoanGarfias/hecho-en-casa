@@ -13,6 +13,7 @@ use App\Models\Pastelpersonalizado;
 Use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use App\Models\usuario;
+use Illuminate\Support\Facades\Cookie;
 
 class ControladorCatalogoPersonalizado extends Controller
 {
@@ -61,7 +62,7 @@ class ControladorCatalogoPersonalizado extends Controller
     public function seleccionarDetalles(Request $request){ //POST: Guardar las opciones de personalización
 
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-        $tipo_entrega = $request->input('tipo_entrega');
+        $tipo_entrega = $request->input('tipoEntrega');
         session()->put('proceso_compra', $request->route()->getName());
         session()->put('opcion_envio', $tipo_entrega);
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
@@ -70,13 +71,12 @@ class ControladorCatalogoPersonalizado extends Controller
         $imagen = $request->input('imagen');
         $descripcion = $request->input('descripcion');
         $costo = intval($request->input('costo'));
-        $tipo_entrega = $request->input('tipo_entrega');
-        $id_usuario = 1;
+        $id_usuario = Cookie::get('user_id');
 
         session()->put('opcion_envio', $tipo_entrega);
 
-        $fechaEscogida = session('fecha_entrega');
-        $horaEntrega = session('hora_entrega');
+        $fechaEscogida = session('fecha');
+        $horaEntrega = session('hora');
         $fecha_hora_entrega = Carbon::parse($fechaEscogida . ' ' . $horaEntrega); 
         $fecha_hora_registro = now();
         $id_tipopostre = 'personalizado';
@@ -86,8 +86,7 @@ class ControladorCatalogoPersonalizado extends Controller
         $cobertura = intval($request->input('cobertura'));
         $elementos = array_map('intval', $request->input('elementos', []));
         
-        $porciones = intval($request->input('porciones'));
-        
+        $porciones = intval($request->input('porciones'));        
 
         if ($tipo_entrega == "Domicilio") {
             $datos = [
