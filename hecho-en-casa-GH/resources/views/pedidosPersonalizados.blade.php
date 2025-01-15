@@ -170,6 +170,25 @@
     </div>
 </div>
 
+<script>
+    // Variables desde el controlador
+    let sabores = @json($sabores);
+    let rellenos = @json($rellenos);
+    let coberturas = @json($coberturas);
+    let elementos = @json($elementos);
+
+    // Mostrar en la consola
+    console.log('Sabores:', sabores);
+    console.log('Rellenos:', rellenos);
+    console.log('Coberturas:', coberturas);
+    console.log('Elementos:', elementos);
+</script>
+
+
+
 <x-pie/>
 
 <script src="{{ asset('js/pidiendoPersonalizados.js') }}" defer></script>
+
+<script src="{{ asset('js/costoPersonalizado.js') }}" defer></script>
+
