@@ -7,4 +7,9 @@ selencionMenu.addEventListener("click", (event) => {
     seleccionadoDelMenu.style.display === "none" ? "block" : "none";
 });
 
-z
+//Cerrar el menú si haces clic fuera
+document.addEventListener("click", (event) => {
+    if (!selencionMenu.contains(event.target) && !seleccionadoDelMenu.contains(event.target)) {
+        seleccionadoDelMenu.style.display = "none";
+    }
+});

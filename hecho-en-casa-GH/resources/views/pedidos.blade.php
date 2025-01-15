@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="{{ asset('css/pedidos.css') }}">
+<link rel="stylesheet" href="{{ asset('css/pedidosTempPop.css') }}">
  
     <title>Pedidos</title>
     <x-menu />
@@ -83,6 +84,15 @@
             <div class="arrows">
                 <button id="prev" class="arrow">⬅</button>
                 <button id="next" class="arrow">➡</button>
+            </div>
+
+            <div class="fondo-emergente" id="fondoEmergente">
+                <div class="emergente">    
+                    <p class="mensajeEmergente">¿Estás seguro de tu elección?</p>
+                    <br>
+                    <button id="editar" class="botoncito">Seguir editando</button>
+                    <button id="continuar" class="botoncito" type="submit">Continuar</button>
+                </div>
             </div>
         </form>  
     </div>

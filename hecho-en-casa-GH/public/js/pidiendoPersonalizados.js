@@ -102,3 +102,33 @@ document.querySelector('.decrementar').addEventListener('click', function() {
         cantidadInput.value = parseInt(cantidadInput.value) - 1;
     }
 });
+
+const formulario = document.getElementById('formularioPedidos')
+
+formulario.addEventListener("submit", (e) => {
+   // console.log("en el listener");
+    e.preventDefault(); // Detenemos el envío del formulario
+    enviandoForm(); // Llamamos a la función de validación
+});
+
+
+function enviandoForm () {
+    //Para enviar el formulario
+
+    const fondoEmergente = document.getElementById('fondoEmergente');
+    document.getElementById('next').addEventListener('click', function(event) {
+        fondoEmergente.style.display = 'flex';
+       // console.log(fondoEmergente)
+    });
+
+    document.getElementById('editar').addEventListener('click', function() {   
+        fondoEmergente.style.display = 'none';
+        //console.log(fondoEmergente)
+    });
+
+    document.getElementById('continuar').addEventListener('click', function() {
+        document.getElementById('formularioPedidos').submit();
+       // console.log('enviando')
+    });
+}
+

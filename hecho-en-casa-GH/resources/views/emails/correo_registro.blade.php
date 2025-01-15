@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="{{ asset('css/registro.css') }}">
 </head>
 <body>
-    <img class="logo" src="loguito.png" alt="Hecho en casa">
+    <img class="logo" src="{{ asset('img/loguito.png') }}" alt="Hecho en casa">
     <div class="contenedor">
-        <img src="coraCorreo.png" alt="Hecho en casa">
+        <img src="{{ asset('img/coraCorreo.png') }}" alt="Hecho en casa">
         <h1 class="texto">¡Gracias por registrarte!</h1>
         <div class="parrafo">
             <p>Gracias por usar nuestra aplicación.</p>
