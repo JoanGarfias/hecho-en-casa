@@ -260,7 +260,7 @@ class ControladorCatalogo extends Controller
         //if (!session('postre') || !session('fecha')) {
         //    return redirect()->route('seleccionarFecha')->with('error', 'No se ha seleccionado un postre o fecha.');
         //}
-        
+                                                                //session('postre')
         $postre = Catalogo::where('id_postre', session('postre'))->first();
         if ($postre) {
             session([
@@ -276,7 +276,7 @@ class ControladorCatalogo extends Controller
             }
 
             //$listaunidad = PostreFijoUnidad::where('id_pf', $postre->id_postre)->get();
-            $listaunidad = PostreFijoUnidad::where('id_pf', $postre->id_postre)->pluck('id_um'); // Obtener solo la columna 'id_um'
+            /*$listaunidad = PostreFijoUnidad::where('id_pf', $postre->id_postre)->pluck('id_um'); // Obtener solo la columna 'id_um'
             if ($listaunidad->isNotEmpty()) {
                 $unidades = []; 
                 foreach ($listaunidad as $id_um) {  // Ahora recorro la lista de 'id_um'
@@ -285,11 +285,30 @@ class ControladorCatalogo extends Controller
                     if ($nombreunidad) {
                         $unidades[] = [
                             'nombreunidad' => $nombreunidad->nombre_unidad,  // 'nombre_unidad' de la tabla 'UnidadMedida'
-                            'cantidadporciones' => $nombreunidad->cantidad,  // 'cantidad' está en 'UnidadMedida'
+                            'cantidadporciones' => $nombreunidad->cantidad, 
                         ];
                     }
-                }
+                }*/
+            $listaunidad = PostreFijoUnidad::where('id_pf', $postre->id_postre)->pluck('id_um'); // Obtener solo la columna 'id_um'
 
+            if ($listaunidad->isNotEmpty()) {
+                    $unidades = []; 
+                    foreach ($listaunidad as $id_um) {  // Ahora recorro la lista de 'id_um'
+                        $nombreunidad = UnidadMedida::where('id_um', $id_um)->first();  //'UnidadMedida' usando 'id_um'
+                        
+                        if ($nombreunidad) {
+                            // Obtener el precio directamente de PostreFijoUnidad utilizando el id_um
+                            $precio = PostreFijoUnidad::where('id_um', $id_um)->where('id_pf', $postre->id_postre)->first(); 
+                            
+                            if ($precio) {
+                                $unidades[] = [
+                                    'nombreunidad' => $nombreunidad->nombre_unidad,  // 'nombre_unidad' de la tabla 'UnidadMedida'
+                                    'cantidadporciones' => $nombreunidad->cantidad,  // 'cantidad' de 'UnidadMedida'
+                                    'precio' => $precio->precio_um,  // 'precio_um' de 'PostreFijoUnidad'
+                                ];
+                            }
+                        }
+                    }
                 session(['lista_unidad' => $unidades]);  
             } else {
                 session(['lista_unidad' => 'No encontrado']); 
@@ -300,14 +319,22 @@ class ControladorCatalogo extends Controller
             $atributosSesion = [];
 
             foreach ($tiposAtributo as $tipo) {
-                $atributos = $personalizaciones->where('id_tipo_atributo', $tipo->idtipo_atributo)->pluck('nom_atributo')->toArray();
+                //$atributos = $personalizaciones->where('id_tipo_atributo', $tipo->idtipo_atributo)->pluck('nom_atributo')->toArray();
+                $atributos = $personalizaciones
+                ->where('id_tipo_atributo', $tipo->idtipo_atributo)
+                ->map(function ($item) {
+                    return [
+                        'nom_atributo' => $item->nom_atributo,
+                        'precio_a' => $item->precio_a,
+                    ];
+                })->toArray();
+
                 if (!empty($atributos)) {
                     $atributosSesion[$tipo->nombre_atributo] = $atributos;
                 }
             }
 
             session(['atributosSesion' => $atributosSesion]);
-            
         } else {
             return redirect()->route('seleccionarFecha')->with('error', 'Postre no encontrado.');
         }
