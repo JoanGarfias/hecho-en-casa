@@ -22,16 +22,16 @@
                 <div class="columna">
                     <div class="fila">
                         <label for="fechaEntrega">Fecha de entrega:</label>
-                        <input type="text" id="fechaEntrega" name="fechaEntrega" readonly>
+                        <input type="text" id="fechaEntrega" name="fechaEntrega" placeholder="{{session('fecha')}}" readonly>
                     </div>
                     <div class="fila">
                         <label for="horaEntrega">Hora de entrega:</label>
-                        <input type="text" id="horaEntrega" name="horaEntrega" readonly>
+                        <input type="text" id="horaEntrega" name="horaEntrega" placeholder="{{session('hora')}}" readonly>
                         
                     </div>
                     <div class="fila">
                         <label for="tipoPostre">Tipo de postre:</label>
-                        <input type="text" id="tipoPostre" name="tipoPostre" readonly>
+                        <input type="text" id="tipoPostre" name="tipoPostre" placeholder="{{$tipo_postre}}" readonly>
                     </div>
                     <div class="fila">
                         <label for="cantidad">Cantidad:</label>
@@ -59,7 +59,7 @@
                     </div>
                     <div class="fila">
                         <label for="costo">Costo:</label>
-                        <input type="text" id="costo" name="costo" readonly><br>
+                        <input type="text" id="costo" name="costo" placeholder="{{$precio}}"  readonly><br>
                         <p class="nota">NOTA: El costo es aproximado, el precio final puede variar según su ubicación.</p>
                     </div>
                 </div>
