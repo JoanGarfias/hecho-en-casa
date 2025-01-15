@@ -27,8 +27,9 @@ body {
     padding: 20px;
     margin-left: auto; /* Deja espacio para el menú lateral */
     max-width: 100%; /* Ajustar el ancho disponible */
-    margin-top: 20px;
+    margin-top: -150px;
     width: 100%;
+    margin-bottom: 50px;
 }
 
 .container h1 {
@@ -139,9 +140,9 @@ body {
     height: 150px; /* Ajusta la altura al contenido */
     position: relative; /* Permite moverlo sin ser fijo */
     margin-left:50px; /* Mueve el menú hacia la izquierda */
-    margin-top: 50px; /* Espacio superior */
+    margin-top: 40px; /* Espacio superior */
     border-radius: 10px; /* Bordes redondeados */
-    top: 250px;
+    top: 150px;
 }
 
 .menu-lateral h3 {
