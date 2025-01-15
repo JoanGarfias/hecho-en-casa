@@ -49,9 +49,7 @@
 <x-pie/>
 
 <script src="{{ asset('js/iniciando.js') }}"></script>
-<!--Para la animación del logo de usuario-->
-<script src="{{asset ('js/despliegue-menu.js')}}" defer> </script>
-<script src="{{ asset('js/icono.js') }}" defer></script>
+
 <!--Para mostrar la contraseña-->
 <script src="{{ asset('js/mostrarContra.js') }}" defer></script>
 <!--Para borrar el parrafo al hacer click al input-->

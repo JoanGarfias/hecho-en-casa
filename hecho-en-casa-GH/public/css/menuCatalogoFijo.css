@@ -1,3 +1,4 @@
+
 /* General */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
@@ -11,6 +12,7 @@ body {
 }
 
 /* Menú lateral */
+/* Menú lateral */
 .menu-lateral {
     width: 200px; /* Conserva el ancho actual */
     background-color: #d9b485;
@@ -23,6 +25,7 @@ body {
     top: 100px; /* Ajusta la distancia desde la parte superior */
     right: 600px; /* Ajusta la distancia desde el borde izquierdo */
 }
+
 
 /* Títulos del menú */
 .menu-lateral h3 {
@@ -51,56 +54,4 @@ body {
 
 .menu-lateral ul li a:hover {
     text-decoration: underline;
-}
-
-/* Media Queries para hacerlo responsivo */
-@media (max-width: 1024px) {
-    body {
-        flex-direction: column; /* Coloca el menú y contenido en columna en pantallas más pequeñas */
-    }
-
-    .menu-lateral {
-        position: static; /* El menú pierde la posición relativa */
-        width: 100%; /* El menú ocupa todo el ancho */
-        top: 0; /* Resetea el desplazamiento desde arriba */
-        right: 0; /* Resetea el desplazamiento desde la derecha */
-        margin: 10px 0; /* Ajusta márgenes */
-        border-radius: 10px 10px 0 0; /* Bordes redondeados en la parte superior */
-    }
-
-    .menu-lateral h3 {
-        font-size: 14px; /* Reduce el tamaño del texto en pantallas pequeñas */
-    }
-
-    .menu-lateral ul li a {
-        font-size: 12px; /* Reduce el tamaño de los enlaces */
-    }
-}
-
-@media (max-width: 768px) {
-    .menu-lateral {
-        padding: 10px; /* Reduce el padding */
-    }
-
-    .menu-lateral h3 {
-        font-size: 12px; /* Reduce aún más el tamaño del título */
-    }
-
-    .menu-lateral ul li a {
-        font-size: 10px; /* Ajusta el tamaño de los enlaces */
-    }
-}
-
-@media (max-width: 480px) {
-    .menu-lateral {
-        padding: 5px; /* Reduce el padding */
-    }
-
-    .menu-lateral h3 {
-        font-size: 10px; /* Ajusta el tamaño del título */
-    }
-
-    .menu-lateral ul li a {
-        font-size: 8px; /* Ajusta el tamaño de los enlaces */
-    }
 }

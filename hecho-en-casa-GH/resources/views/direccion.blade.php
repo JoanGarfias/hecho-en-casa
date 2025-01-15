@@ -57,6 +57,4 @@
     </div>
 </div>
 <x-pie/>
-<!--Para la animación del logo de usuario-->
-<script src="{{asset ('js/despliegue-menu.js')}}" defer> </script>
-<script src="{{ asset('js/icono.js') }}" defer></script>
+
