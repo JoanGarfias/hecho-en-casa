@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectedValueRelleno = document.getElementById("agarrarValorRelleno");
     const selectedValueCobertura = document.getElementById("agarrarValorCobertura");
     
+    
     // Mostrar/Ocultar el menú desplegable
     toggleSelectPan.addEventListener("click", () => {
         selectOptionsPan.style.display = selectOptionsPan.style.display === "none" ? "block" : "none";
