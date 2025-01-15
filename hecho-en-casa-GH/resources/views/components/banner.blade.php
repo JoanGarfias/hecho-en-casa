@@ -6,5 +6,6 @@
         <img src="{{ asset('img/banner.png') }}" alt="Banner de pasteles">
     </section>
     <div class="registro-banner">
-        ¿No tienes una cuenta? ¡Regístrate y gana increíbles premios!
+        <span>¿No tienes una cuenta?</span>
+        <span>¡Regístrate y gana increíbles premios!</span>
     </div>
