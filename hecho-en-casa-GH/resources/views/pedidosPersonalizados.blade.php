@@ -41,7 +41,7 @@
                         <label for="saborPan">Sabor de pan:</label>
                         <div class="custom-select">
                             <div>                               
-                                <input type="text" id="agarrarValorPan" readonly placeholder="Seleccione una opción">
+                                <input type="text" id="agarrarValorPan" name="sabor_pan" readonly placeholder="Seleccione una opción">
                                 <input type="hidden" id="tipoEntrega" name="tipoEntrega">
                             </div> 
                             <button id="seleccionarPan" class="diseñandobutton" type="button">🔻</button>
@@ -56,7 +56,7 @@
                         <label for="saborRelleno">Sabor de relleno:</label>
                         <div class="custom-select">
                             <div>                               
-                                <input type="text" id="agarrarValorRelleno" readonly placeholder="Seleccione una opción">
+                                <input type="text" id="agarrarValorRelleno" name="sabor_relleno" readonly placeholder="Seleccione una opción">
                                 <input type="hidden" id="tipoEntrega" name="tipoEntrega">
                             </div> 
                             <button id="seleccionarRelleno" class="diseñandobutton" type="button">🔻</button>
@@ -71,7 +71,7 @@
                         <label for="cobertura">Cobertura:</label>
                         <div class="custom-select">
                             <div>                               
-                                <input type="text" id="agarrarValorCobertura" readonly placeholder="Seleccione una opción">
+                                <input type="text" id="agarrarValorCobertura" name="cobertura" readonly placeholder="Seleccione una opción">
                                 <input type="hidden" id="tipoEntrega" name="tipoEntrega">
                             </div> 
                             <button id="seleccionarCobertura" class="diseñandobutton" type="button">🔻</button>
