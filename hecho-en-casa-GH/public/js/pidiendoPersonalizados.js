@@ -10,68 +10,57 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectedValuePan = document.getElementById("agarrarValorPan");
     const selectedValueRelleno = document.getElementById("agarrarValorRelleno");
     const selectedValueCobertura = document.getElementById("agarrarValorCobertura");
-    const hiddenInput = document.getElementById("tipoEntrega");
-
+    
     // Mostrar/Ocultar el menú desplegable
-    toggleSelectPan.addEventListener("click", (event) => {
-        //event.preventDefault();
-        selectOptionsPan.style.display =
-            selectOptionsPan.style.display === "none" ? "block" : "none";
+    toggleSelectPan.addEventListener("click", () => {
+        selectOptionsPan.style.display = selectOptionsPan.style.display === "none" ? "block" : "none";
     });
 
-    toggleSelectRelleno.addEventListener("click", (event) => {
-        //event.preventDefault();
-        selectOptionsRelleno.style.display =
-            selectOptionsRelleno.style.display === "none" ? "block" : "none";
+    toggleSelectRelleno.addEventListener("click", () => {
+        selectOptionsRelleno.style.display = selectOptionsRelleno.style.display === "none" ? "block" : "none";
     });
 
-    toggleSelectCobertura.addEventListener("click", (event) => {
-        //event.preventDefault();
-        selectOptionsCobertura.style.display =
-            selectOptionsCobertura.style.display === "none" ? "block" : "none";
+    toggleSelectCobertura.addEventListener("click", () => {
+        selectOptionsCobertura.style.display = selectOptionsCobertura.style.display === "none" ? "block" : "none";
     });
 
     // Actualizar el valor seleccionado
-    selectOptionsPan.addEventListener("click", (event) => {
+    const updateSelectedValue = (event, input, menu) => {
         const target = event.target;
         if (target.classList.contains("darOpciones")) {
             const value = target.getAttribute("data-value");
             const text = target.textContent;
-            selectedValuePan.value = text; // Muestra el texto en el input
-            hiddenInput.value = value; // Almacena el valor en el input oculto
-            selectOptionsPan.style.display = "none"; // Oculta el menú desplegable
+            input.value = text; // Muestra el texto en el input
+            menu.style.display = "none"; // Oculta el menú desplegable
         }
+    };
+
+    selectOptionsPan.addEventListener("click", (event) => {
+        updateSelectedValue(event, selectedValuePan, selectOptionsPan);
     });
 
     selectOptionsRelleno.addEventListener("click", (event) => {
-        const target = event.target;
-        if (target.classList.contains("darOpciones")) {
-            const value = target.getAttribute("data-value");
-            const text = target.textContent;
-            selectedValueRelleno.value = text; // Muestra el texto en el input
-            hiddenInput.value = value; // Almacena el valor en el input oculto
-            selectOptionsRelleno.style.display = "none"; // Oculta el menú desplegable
-        }
+        updateSelectedValue(event, selectedValueRelleno, selectOptionsRelleno);
     });
 
     selectOptionsCobertura.addEventListener("click", (event) => {
-        const target = event.target;
-        if (target.classList.contains("darOpciones")) {
-            const value = target.getAttribute("data-value");
-            const text = target.textContent;
-            selectedValueCobertura.value = text; // Muestra el texto en el input
-            hiddenInput.value = value; // Almacena el valor en el input oculto
-            selectOptionsCobertura.style.display = "none"; // Oculta el menú desplegable
-        }
+        updateSelectedValue(event, selectedValueCobertura, selectOptionsCobertura);
     });
 
     // Cerrar el menú si se hace clic fuera
     document.addEventListener("click", (event) => {
-        if (!selectOptions.contains(event.target) && event.target !== toggleSelect) {
-            selectOptions.style.display = "none";
+        if (!selectOptionsPan.contains(event.target) && event.target !== toggleSelectPan) {
+            selectOptionsPan.style.display = "none";
+        }
+        if (!selectOptionsRelleno.contains(event.target) && event.target !== toggleSelectRelleno) {
+            selectOptionsRelleno.style.display = "none";
+        }
+        if (!selectOptionsCobertura.contains(event.target) && event.target !== toggleSelectCobertura) {
+            selectOptionsCobertura.style.display = "none";
         }
     });
 });
+
 
 
 //Para el boton de tipo entrega
@@ -132,3 +121,4 @@ function enviandoForm () {
     });
 }
 
+//cuando le doy clik al icono de 

@@ -1,57 +1,118 @@
-/* Banner */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
 .banner {
-    width: 100%;
-    text-align: center;
-    margin-top: 50px;
-    z-index: 999;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
 .banner img {
-    width: 100%;
-    height: auto;
-    /* padding: 60px; */
+  width: 100%;
+  height: auto;
 }
 
-/* Estilo del banner de registro */
 .registro-banner {
-    background-color: #FCF5C7;
-    text-align: center;
-    padding: 10px 0;
-    font-size: 1em;
-    color: #7E643B;
-    margin: 0;
+  background-color: #FCF5C7;
+  color: #7E643B;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 1.2em;
+  font-weight: 300;
+  overflow: hidden;
+  position: relative;
+  height: 50px;
+  margin: 0;
 }
 
-/* Consultas de medios para hacerlo responsivo */
-@media screen and (max-width: 768px) {
-    /* Ajustes para pantallas medianas */
-    .banner {
-        margin-top: 30px; /* Reducir el margen superior en pantallas más pequeñas */
-    }
 
-    .banner img {
-        padding: 20px; /* Añadir un poco de padding para separar la imagen del borde */
-    }
-
-    .registro-banner {
-        font-size: 0.9em; /* Reducir el tamaño de la fuente en pantallas pequeñas */
-        padding: 8px 0; /* Reducir el relleno */
-    }
+/* Animación de opacidad (aparición y desaparición) */
+@keyframes showup {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
-/* Para dispositivos móviles más pequeños */
-@media screen and (max-width: 480px) {
-    /* Ajustes para móviles pequeños */
-    .banner {
-        margin-top: 20px; /* Reducir aún más el margen superior */
-    }
-
-    .banner img {
-        padding: 10px; /* Menos padding para dispositivos móviles */
-    }
-
-    .registro-banner {
-        font-size: 0.8em; /* Font-size aún más pequeño en móviles pequeños */
-        padding: 6px 0; /* Menos relleno */
-    }
+/* Animación de desplazamiento */
+@keyframes slidein {
+  0% { margin-left: -100%; }
+  20% { margin-left: -100%; }
+  35% { margin-left: 0%; }
+  80% { margin-left: 0%; }
+  100% { margin-left: -100%; }
 }
+
+@keyframes slidein2 {
+  
+}
+
+/* Añadir breakpoints para hacerlo responsive */
+@media only screen and (max-width: 768px) {
+  .registro-banner {
+      font-size: 1em;
+      height: auto;
+  }
+  
+  .registro-banner span {
+      display: block; /* Cambia a bloque para dispositivos móviles */
+      white-space: normal; /* Permite el texto en múltiples líneas */
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .registro-banner {
+      font-size: 0.9em;
+      padding: 5px 0;
+  }
+}
+
+.registro-banner span {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.registro-banner span:first-of-type {
+  margin-right: -100%;
+  animation: slidein2 7s infinite;
+}
+
+.registro-banner span:last-of-type {
+  margin-left: -100%;
+  animation: slidein 7s infinite;
+}
+
+@keyframes slidein2 {
+
+
+  from {
+      margin-right: 100%;
+  }
+  to {
+      margin-right: 0;
+  }
+}
+
+@keyframes slidein {
+  from {
+      margin-left: 100%;
+  }
+  to {
+      margin-left: 0;
+  }
+}
+
+
