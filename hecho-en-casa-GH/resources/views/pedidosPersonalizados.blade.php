@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="{{ asset('css/pedidos.css') }}">
+<link rel="stylesheet" href="{{ asset('css/pedidosTempPop.css') }}">
 <link rel="stylesheet" href="{{ asset('css/pedidosPersonalizados.css') }}">
- 
+
     <title>Pedidos</title>
     <x-menu />
   
@@ -126,8 +127,8 @@
                         <div class="custom-select">
                             <button id="toggleSelect" class="custom-select-button" type="button">🔻</button>
                             <div id="selectOptions" class="custom-select-options" style="display: none;">
-                                <div class="option" data-value="opcion1">Recoger en sucursal</div>
-                                <div class="option" data-value="opcion2">Envío a domicilio</div>
+                                <div class="option" data-value="Sucursal">Recoger en sucursal</div>
+                                <div class="option" data-value="Domicilio">Envío a domicilio</div>
                             </div>
                             <input type="hidden" id="tipoEntrega" name="tipoEntrega">
                         </div>
@@ -156,15 +157,38 @@
                 <button id="prev" class="arrow">⬅</button>
                 <button id="next" class="arrow">➡</button>
             </div>
+
+            <div class="fondo-emergente" id="fondoEmergente">
+                <div class="emergente">    
+                    <p class="mensajeEmergente">¿Estás seguro de tu elección?</p>
+                    <br>
+                    <button id="editar" class="botoncito">Seguir editando</button>
+                    <button id="continuar" class="botoncito" type="submit">Continuar</button>
+                </div>
+            </div>
         </form>  
     </div>
 </div>
 
+<script>
+    // Variables desde el controlador
+    let sabores = @json($sabores);
+    let rellenos = @json($rellenos);
+    let coberturas = @json($coberturas);
+    let elementos = @json($elementos);
+
+    // Mostrar en la consola
+    console.log('Sabores:', sabores);
+    console.log('Rellenos:', rellenos);
+    console.log('Coberturas:', coberturas);
+    console.log('Elementos:', elementos);
+</script>
+
+
+
 <x-pie/>
 
 <script src="{{ asset('js/pidiendoPersonalizados.js') }}" defer></script>
-<!--Para la animación del logo de usuario-->
-<script src="{{ asset('js/icono.js') }}" defer></script>
-<!--Para la animación del logo de usuario-->
-<script src="{{asset ('js/despliegue-menu.js')}}" defer> </script>
-<script src="{{ asset('js/icono.js') }}" defer></script>
+
+<script src="{{ asset('js/costoPersonalizado.js') }}" defer></script>
+

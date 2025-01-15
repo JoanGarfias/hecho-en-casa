@@ -19,7 +19,6 @@ body {
     padding: 10px;
 }
 
-
 #productos {
     display: flex;
     flex-wrap: wrap;
@@ -35,7 +34,6 @@ body {
     padding: 20px;
     margin: 50px auto 0; /* Agrega 50px de margen superior, centra horizontalmente */
     margin-top: -500px; /* Ajusta este valor según la altura del menú lateral */
-
 }
 
 .main-container {
@@ -98,7 +96,6 @@ body {
     transform: scale(1.1); /* Aumenta ligeramente el tamaño al pasar el ratón */
 }
 
-
 .outer-circle {
     position: absolute;
     bottom: -20px;
@@ -124,4 +121,60 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* Media Queries para hacerlo responsivo */
+@media (max-width: 768px) {
+    .title {
+        font-size: 1.5em;
+    }
+
+    #productos {
+        flex-direction: column; /* Cambia los productos a una columna en pantallas pequeñas */
+        align-items: center;
+    }
+
+    .main-container {
+        width: 90%; /* Aumenta el tamaño del contenedor en pantallas más pequeñas */
+    }
+
+    .contenido-principal {
+        margin-top: 20px; /* Reduce el margen superior en pantallas pequeñas */
+    }
+
+    .description-container {
+        font-size: 0.9em; /* Aumenta el tamaño de la fuente en pantallas pequeñas */
+    }
+
+    .outer-circle {
+        width: 50px;
+        height: 50px;
+    }
+
+    .price-circle {
+        width: 40px;
+        height: 40px;
+        font-size: 0.7em; /* Ajusta el tamaño de la fuente en pantallas pequeñas */
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.2em;
+    }
+
+    .main-container {
+        width: 100%; /* Deja que los contenedores ocupen todo el ancho disponible */
+        padding: 10px;
+    }
+
+    .description-container {
+        font-size: 0.8em;
+    }
+
+    .price-circle {
+        width: 35px;
+        height: 35px;
+        font-size: 0.6em;
+    }
 }
