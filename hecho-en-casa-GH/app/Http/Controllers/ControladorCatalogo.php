@@ -335,9 +335,11 @@ class ControladorCatalogo extends Controller
         $id_postre = session('postre');
         $postre = Catalogo::where('id_postre', $id_postre)
                             ->first();
-        $costo = intval($request->input('costo'));
+        //$costo = intval($request->input('costo'));
+        $costoUM = PostreFijoUnidad::where('id_pf', $id_postre)->first();
+        $costo = $costoUM->precio_um;
         $id_usuario = 1;
-        session(['tipo_entrega'=> $tipo_entrega, 'costo'=> $costo]);
+        session(['tipo_entrega'=> $tipo_entrega]);
 
         $fechaEscogida = session('fecha');
         $horaEntrega = session('hora_entrega');
@@ -359,18 +361,6 @@ class ControladorCatalogo extends Controller
         session(['nombre_unidad'=> $nombreUnidad]);
         $cantidad = intval($request->input('cantidad'));
         session(['porcionespedidas'=> $unidadm * $cantidad]);
-        /*$valoresSeleccionados = [];
-        foreach (session('atributosSesion', []) as $nombreTipo => $atributos) {
-            $campo = strtolower($nombreTipo);  // Usamos el mismo nombre dinámico que en la vista
-            $valor = $request->input($campo);  // Capturamos el valor enviado
-            $valoresSeleccionados[$campo] = $valor;
-        }
-        
-        $id_tipoatributo = TipoAtributo::where('nombre_atributo', $campo)->first();
-        $id_atributo = AtributosExtra::where('id_tipo_atributo', $id_tipoatributo->idtipo_atributo)
-        ->where('nom_atributo', $valor)
-        ->first(['id_atributo']);
-        session(['id_atributo'=> $id_atributo->id_atributo]);*/
 
         $valoresSeleccionados = session('atributosSesion');
         session(['id_um' => $id_um->id_um]);
@@ -388,12 +378,14 @@ class ControladorCatalogo extends Controller
                 ->where('nom_atributo', $valor)
                 ->first(['id_atributo']);
                 session(['id_atributo'=> $id_atributo->id_atributo]);
+
+                $costo = $costo + $id_atributo->precio_a;
         } else {
             session(['id_atributo' => null]); 
         }    
 
         // Ahora se puede usar los valores capturados
-        session(['valoresSeleccionados' => $valoresSeleccionados]); // Captura como array
+        session(['valoresSeleccionados' => $valoresSeleccionados, 'costo' => $costo]); 
         
 
         if ($tipo_entrega == "Domicilio") {
