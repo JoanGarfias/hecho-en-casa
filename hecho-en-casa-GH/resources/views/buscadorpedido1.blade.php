@@ -79,7 +79,6 @@
         </div>
     </div>
     <x-pie/>
-    <!--Para la animación del logo de usuario-->
     
 </body>
 </html>
