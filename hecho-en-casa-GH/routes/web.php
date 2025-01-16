@@ -20,7 +20,11 @@ use App\Http\Middleware\ProtectorPeticiones;
 
 /* VISTAS PRINCIPALES */
 Route::get('/', [ControladorInicio::class, 'index'])->name('inicio.get');
+
 Route::get('/conocenos', [ControladorInicio::class, 'conocenos'])->name('conocenos.get');
+
+
+//Controlador de buscar 
 Route::get('/buscarpedido', [ControladorBuscarPedido::class, 'ObtenerFolio'])->name('buscarpedido.get');
 Route::post('/buscarpedido', [ControladorBuscarPedido::class, 'MostrarPedido'])->name('buscarpedido.post');
 
