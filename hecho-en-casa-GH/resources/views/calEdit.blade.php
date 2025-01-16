@@ -31,7 +31,7 @@
                         <p><span class="available"></span> Disponible</p>
                     </div>
                    
-                    <form action="{{route($metodo)}}" method="POST" id="cambioFecha">
+                    <form class="ajustando" action="{{route($metodo)}}" method="POST" id="cambioFecha">
                         <div class="hour">
                             <label for="time" class="seleccionarHora">Seleccionar hora:</label>
                             <div class="hora-selector">
@@ -82,8 +82,3 @@
             <script src="{{ asset('js/calEdit.js') }}"></script>
             <script src="{{ asset('js/meses.js') }}"></script>
            
-<!--Para la animación del logo de usuario-->
-
-<script src="{{ asset('js/icono.js') }}" defer></script>
-
-
