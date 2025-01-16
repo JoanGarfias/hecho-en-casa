@@ -25,9 +25,10 @@
         <div class="mensajito">
             <p id="mensajePass" class="bien"></p>
         </div>
-
-        {!! NoCaptcha::renderJs() !!}
-        {!! NoCaptcha::display() !!}
+        <div class="captcha">
+            {!! NoCaptcha::renderJs() !!}    
+            {!! NoCaptcha::display() !!}
+        </div>
 
         <div>
             <button class="botoncito" type="submit" name="action" value="recuperar" id="olvidadizo">Olvide mi contraseña</button>
