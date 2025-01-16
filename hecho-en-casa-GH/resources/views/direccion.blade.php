@@ -56,5 +56,11 @@
         </form>  
     </div>
 </div>
+
+<div class="pagination">
+    <span class="dot "></span>
+    <span class="dot "></span>
+    <span class="dot active"></span>
+  </div>
 <x-pie/>
 
