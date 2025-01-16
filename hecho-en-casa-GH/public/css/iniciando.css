@@ -188,3 +188,12 @@ form {
 .aceptando:hover {
     background: #555;
 }
+
+/*Para el captcha*/
+
+.captcha {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;    /* Centra verticalmente si es necesario */
+    margin: 20px 0;         /* Agrega un margen opcional para separación */
+}

@@ -9,6 +9,13 @@
         body{
             background: lightslategray;
         }
+        img{
+            width: 120px;
+            height: 149px;
+            position: absolute;
+            top: 64%;
+            left: 24%;
+        }
     </style>
 </head>
 <body>
