@@ -32,8 +32,9 @@ body {
 .contenido-principal {
     max-width: 800px; /* Ajusta el ancho máximo */
     padding: 20px;
-    margin: 50px auto 0; /* Agrega 50px de margen superior, centra horizontalmente */
+    margin: 50px ; /* Agrega 50px de margen superior, centra horizontalmente */
     margin-top: -500px; /* Ajusta este valor según la altura del menú lateral */
+    margin-left: 250px;
 }
 
 .main-container {
