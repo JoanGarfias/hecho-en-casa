@@ -261,7 +261,7 @@ class ControladorCatalogo extends Controller
         //    return redirect()->route('seleccionarFecha')->with('error', 'No se ha seleccionado un postre o fecha.');
         //}
                                                                 //session('postre')
-        $postre = Catalogo::where('id_postre', session('postre'))->first();
+        $postre = Catalogo::where('id_postre', 27)->first();
         if ($postre) {
             session([
                 'sabor_postre' => $postre->nombre,
@@ -421,7 +421,7 @@ class ControladorCatalogo extends Controller
                 'id_tipopostre' => $id_tipopostre,
                 'unidadm' => $unidadm,
                 'valoresSeleccionados' => $valoresSeleccionados,  
-                'costo' => $costo,
+                'costo' => $costo * $cantidad,
                 'tipo_entrega' => $tipo_entrega,
                 'fecha_hora_registro' => $fecha_hora_registro,
                 'fecha_hora_entrega' => $fecha_hora_entrega
@@ -450,7 +450,7 @@ class ControladorCatalogo extends Controller
             $pedido->id_seleccion_usuario = $id_nuevo_postre; 
             $pedido->porcionespedidas = $unidadm * $cantidad; 
             $pedido->status = 'pendiente';
-            $pedido->precio_final = $costo;
+            $pedido->precio_final = $costo * $cantidad;
             $pedido->fecha_hora_registro = $fecha_hora_registro;
             $pedido->fecha_hora_entrega = $fecha_hora_entrega;
             $pedido->save();  // Guardamos el pedido
