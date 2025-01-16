@@ -71,11 +71,43 @@
                 </button>
 
                 <button id="next" class="arrow">➡</button>
+
+                        <!------------Mensaje emergente------------>
+                        <div class="fondo-emergente" id="fondoEmergente">
+                        <div class="emergente">    
+                            <p class="mensajeEmergente">¡¡Gracias por confiar en nosotros!!</p>
+                            <br>
+
+                            <div class="FOLIO-info"> <!--user-info -->
+                                <h2 class="Folio-name">Pedido con folio:</h2>
+                                <input type="text" id="folio" name="folio" value="Folio F0120" readonly>
+                            </div>       
+
+                            <div class="details">
+
+                                <div class="left-column">
+                                    <label>Notas:</label>
+                                    <p>En breve se pondrán en contacto con usted.</p> <br><br>
+                                    <p>Dispone del buscador de folios para cualquier consulta de su pedido.</p>
+                                </div>
+
+                                <div class="right-column">
+                                    <label>Indicaciones</label>
+                                    <p>Guarde su folio para cualquier aclaración.</p> <br><br>
+                                </div>
+                            </div>
+
+                            <button id="continuar" class="arrow" type="submit">volver al inicio</button>
+                        
+                            </div>
+                        </div>
+                        <!------------------------------------------>
       <!--  </div>-->
             </div>
    </div>
 
    <script src="{{ asset('js/ResumenPedFij.js') }}"></script>
+   <script src="{{ asset('js/Gracias.js') }}"></script>
 
 </body>
 
