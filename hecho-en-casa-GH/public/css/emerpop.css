@@ -191,3 +191,33 @@ body {
 }
 
 
+/* Contenedor de la imagen y bolsa */
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Imagen principal */
+.image-container img {
+    display: block;
+    width: 100%; /* Asegura que la imagen ocupe todo el espacio */
+    height: auto;
+}
+
+/* Bolsa de compras */
+.image-container .shopping-bag {
+    position: absolute;
+    bottom: 10px; /* Ajusta según el margen deseado */
+    right: 10px; /* Ajusta según el margen deseado */
+    width: 40px; /* Tamaño de la bolsa */
+    height: auto;
+    cursor: pointer;
+    z-index: 5; /* Asegura que esté sobre la imagen */
+    opacity: 0.8; /* Añade un efecto translúcido */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Efecto al pasar el ratón */
+}
+
+.image-container .shopping-bag:hover {
+    opacity: 1; /* Aumenta opacidad al pasar el ratón */
+    transform: scale(1.1); /* Agranda ligeramente la bolsa */
+}
