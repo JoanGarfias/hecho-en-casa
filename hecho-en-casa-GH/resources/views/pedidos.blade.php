@@ -57,10 +57,10 @@
                         <label for="cantidad">Cantidad:</label>
                         <div class="cantidad-wrapper">
                             
-                            <input type="text" id="cantidad" name="cantidad" value="1" min="{{session('cantidad_minima')}}" placeholder="{{session('cantidad_minima')}}" required>
+                            <input type="text" id="cantidad" name="cantidad" min="{{session('cantidad_minima')}}" value="{{session('cantidad_minima')}}">
                             <div class="boton-wrapper">
-                                <button type="button" class="incrementar">🔺</button>
-                                <button type="button" class="decrementar">🔻</button>
+                                <button type="button" class="flechitas incrementar">🔺</button>
+                                <button type="button" class="flechitas decrementar">🔻</button>
                             </div>
                             
                         </div>
@@ -88,8 +88,8 @@
                         <div class="custom-select">
                             <button id="toggleSelect" class="custom-select-button">🔻</button>
                             <div id="selectOptions" class="custom-select-options" style="display: none;">
-                                <div class="option" data-value="opcion1">Recoger en sucursal</div>
-                                <div class="option" data-value="opcion2">Envío a domicilio</div>
+                                <div class="option" data-value="Sucursal">Recoger en sucursal</div>
+                                <div class="option" data-value="Domicilio">Envío a domicilio</div>
                             </div>
                             <input type="hidden" id="tipoEntrega" name="tipoEntrega" value="">
                         </div>
@@ -115,35 +115,53 @@
                 </div>
             </div>
         </form>  
-
         <script>
             function sumarSeleccionado() {
                 let total = 0;
-
+            
                 // Obtener el radio seleccionado dentro de #unidadm
                 let radioSeleccionado = document.querySelector("#unidadm input[type='radio']:checked");
+                let cantidad = parseFloat(document.getElementById("cantidad").value) || 0;
+            
                 if (radioSeleccionado) {
                     let opcion = radioSeleccionado.value.split('|'); 
                     let precioUnidad = parseFloat(opcion[2]); // El precio está en la tercera parte del valor
                     total += isNaN(precioUnidad) ? 0 : precioUnidad;
                 }
-
+            
                 // Procesar selects con id que empieza por 'atributo'
                 let selectsAtributos = document.querySelectorAll("select[id^='atributo']");
                 
                 selectsAtributos.forEach(select => {
-                    let opcionAtributoSeleccionada = select.selectedOptions[0]; 
+                    let opcionAtributoSeleccionada = select.selectedOptions[0];
                     if (opcionAtributoSeleccionada) {
-                        let precioAtributo = parseFloat(opcionAtributoSeleccionada.value.split('|')[1]); 
+                        let precioAtributo = parseFloat(opcionAtributoSeleccionada.value.split('|')[1]);
                         total += isNaN(precioAtributo) ? 0 : precioAtributo;
                     }
                 });
-
+            
+                // Multiplicar por la cantidad ingresada
+                total *= cantidad;
+            
                 // Actualizar el valor del costo
-                document.getElementById("costo").value = total.toFixed(2); 
+                document.getElementById("costo").value = total.toFixed(2);
             }
-
-        </script>    
+            
+            // Recalcular el total cuando el usuario cambie la cantidad
+            const btn = document.querySelectorAll('.flechitas');
+            btn.forEach(b=>{
+                b.addEventListener('click',()=>{
+                    sumarSeleccionado();
+                });
+            });
+            
+            
+            // Ejecutar la función al cargar la página
+            window.onload = function() {
+                sumarSeleccionado();
+            };
+        
+        </script>  
         
     </div>
 </div>
