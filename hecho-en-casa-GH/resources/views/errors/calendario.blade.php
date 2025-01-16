@@ -6,6 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Error en el calendario</title>
     <link rel="stylesheet" href="{{ asset('css/errorCalendario.css') }}">
+    <style>
+        body{
+            background: #ffaeae;
+        }
+    </style>
 </head>
 <body>
     

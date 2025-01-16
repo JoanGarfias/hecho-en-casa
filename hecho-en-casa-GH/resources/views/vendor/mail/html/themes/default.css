@@ -11,12 +11,20 @@ body *:not(html):not(style):not(br):not(tr):not(code) {
 body {
     -webkit-text-size-adjust: none;
     background-color: #ffffff;
-    color: #ffffff;
+    color: rgb(81, 37, 0);
     height: 100%;
     line-height: 1.4;
     margin: 0;
     padding: 0;
     width: 100% !important;
+    align-items: center;
+}
+
+.centrando{
+    display: flex;
+    align-items: center;
+    align-content: center;
+    flex-direction: row;
 }
 
 p,
@@ -27,8 +35,17 @@ blockquote {
     text-align: left;
 }
 
+.linkito{
+    
+    border-radius: 10px;
+    padding: 1%;
+    background-color: #ecdf90;
+    
+}
+
+
 a {
-    color: #3869d4;
+    color: black;
 }
 
 a img {
@@ -38,7 +55,7 @@ a img {
 /* Typography */
 
 h1 {
-    color: #3d4852;
+    color: #9f7c28;
     font-size: 18px;
     font-weight: bold;
     margin-top: 0;
