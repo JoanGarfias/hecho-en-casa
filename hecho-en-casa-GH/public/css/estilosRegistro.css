@@ -105,6 +105,13 @@ form {
     text-align: center;
 }
 
+.captcha {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0; /* Ajusta el margen según tus necesidades */
+}
+
 /* Media Queries para hacer el diseño responsive */
 @media (max-width: 1200px) {
     .contenedor {
