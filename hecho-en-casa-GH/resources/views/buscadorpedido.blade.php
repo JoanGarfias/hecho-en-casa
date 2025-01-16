@@ -3,42 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscador de Pedido</title>
+    <link rel="stylesheet" href="{{ asset('css/buscarPedido.css') }}">
+    <title>Buscador de Pedidos</title>
 </head>
 <body>
+    <x-menu />
 
-    <!--Funcionamiento de buscar pedido del equipo de -->
-    <center>
-        <h1>Buscador de pedidos</h1>
-        <form method="POST" action="{{ route('buscarpedido.post') }}">
-            @csrf
-            <label for="folio">Ingrese su folio:</label>
-            <input type="number" name="folio" id="folio" required>
-            <br><br>
-            <button type="submit">Buscar</button>
-        </form>
-        <br>
+    <div class="header">
+        <h1 class="titulo">BUSCADOR DE PEDIDOS</h1>
+        <div class="search-container">
+            <!-- Aquí se integra el formulario para buscar el pedido -->
+            <form method="POST" action="{{ route('buscarpedido.post') }}">
+                @csrf
+                <input type="number" name="folio" id="folio" placeholder="Ingrese su folio" required>
+                <button type="submit">
+                    <img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="Buscar">
+                </button>
+            </form>
+        </div>
+    </div>
 
-        <!-- Muestra el mensaje de error -->
-        @if (isset($error))
+    @if (isset($pedido))
+    <div class="container">
+        <!-- Muestra el folio ingresado -->
+        <div class="folio">
+            Pedido con folio: <span class="folio-number">{{ $pedido->id_ped }}</span>
+        </div>
+
+        <div class="form-columns">
+            <!-- Columna izquierda -->
+            <div class="form-column">
+                <div class="form-group">
+                    <label for="tipo-postre">Tipo de postre:</label>
+                    <input type="text" id="tipo-postre" value="{{ $tipopostre }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="porciones">Porciones:</label>
+                    <input type="text" id="porciones" value="{{ (int)$pedido->porcionespedidas }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="estatus">Estatus:</label>
+                    <button class="{{ strtolower($pedido->status) }}">{{ $pedido->status }}</button>
+                </div>
+            </div>
+
+            <!-- Columna derecha -->
+            <div class="form-column">
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" value="{{ $nombre_completo }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="telefono" value="{{ $telefono }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="fecha-entrega">Fecha de entrega:</label>
+                    <input type="text" id="fecha-entrega" value="{{ $fecha_entrega }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="hora-entrega">Hora de entrega:</label>
+                    <input type="time" id="hora-entrega" value="{{ $hora_entrega }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="tipo-entrega">Tipo de entrega:</label>
+                    <input type="text" id="tipo-entrega" value="{{ $tipo_entrega }}" readonly>
+                </div>
+
+                <div class="form-group cost">
+                    <label>Costo aprox:</label>
+                    <span class="costo-aprox">${{ $precio_final }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    @elseif (isset($error))
+    <!-- Mensaje de error si el pedido no existe -->
+    <div class="container">
         <p style="color: red;">{{ $error }}</p>
-        @endif
-
-        <!-- Muestra la información del pedido si existe -->
-        @if (isset($pedido))
-            <h2>Detalles del pedido:</h2>
-            <p>Folio: {{ $pedido->id_ped }}</p>
-            <p>Tipo postre: {{ $tipopostre }}</p>
-            <p>{{ $nombre_unidad }}: {{ (int)$pedido->porcionespedidas }}</p>
-            <p>Estatus: {{ $pedido->status }}</p>
-            <hr>
-            <p>Nombre: {{ $nombre_completo }}</p>
-            <p>Telefono: {{ $telefono }}</p>
-            <p>Fecha de entrega: {{ $fecha_entrega }}</p>
-            <p>Hora de entrega: {{ $hora_entrega }}</p>
-            <p>Tipo de entrega: {{ $tipo_entrega }}</p>
-            <p>Costo aprox: {{ $precio_final }}</p>
-        @endif
-    </center>
+    </div>
+    @endif
 </body>
+
 </html>
