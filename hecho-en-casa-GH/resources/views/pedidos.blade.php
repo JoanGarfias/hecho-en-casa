@@ -10,7 +10,7 @@
 <div class="flexi">
     
     <div class = "contenedor"><!-- café-->
-        <form id="formularioPedidos" action="" method="">
+        <form id="formularioPedidos" action="{{route('fijo.detallesPedido.post')}}" method="POST">
             <div class="dosColumnas">
                 <div class="columna">
                     <div class="fila">
@@ -39,11 +39,11 @@
                                (session('lista_unidad')[0]['nombreunidad'] == 'Piezas Mini' ? 'piezas mini:' : 'Cantidad:')) }}
                         </label>  
 
-                        <div class="opciones">
+                        <div class="opciones" id="unidadm" name="unidadm" onchange="sumarSeleccionado()">
                             @if (session('lista_unidad') && count(session('lista_unidad')) > 0)
                                 @foreach (session('lista_unidad') as $unidad)
                                 <label>
-                                    <input type="radio" name="porciones" value="{{ $unidad['cantidadporciones'] }}|{{ $unidad['nombreunidad'] }}" required>
+                                    <input type="radio" name="porciones" value="{{ $unidad['cantidadporciones'] }}|{{ $unidad['nombreunidad'] }}|{{ $unidad['precio'] }}" required>
                                     <span class="blanca">{{ $unidad['cantidadporciones'] }}</span>
                                 </label>
                                 @endforeach
@@ -119,16 +119,18 @@
         <script>
             function sumarSeleccionado() {
                 let total = 0;
-        
-                let opcionesSeleccionadas = document.getElementById("unidadm").selectedOptions;
-                for (let i = 0; i < opcionesSeleccionadas.length; i++) {
-                    let opcion = opcionesSeleccionadas[i].value.split('|'); 
-                    let precioUnidad = parseFloat(opcion[2]); 
+
+                // Obtener el radio seleccionado dentro de #unidadm
+                let radioSeleccionado = document.querySelector("#unidadm input[type='radio']:checked");
+                if (radioSeleccionado) {
+                    let opcion = radioSeleccionado.value.split('|'); 
+                    let precioUnidad = parseFloat(opcion[2]); // El precio está en la tercera parte del valor
                     total += isNaN(precioUnidad) ? 0 : precioUnidad;
                 }
-        
-    
+
+                // Procesar selects con id que empieza por 'atributo'
                 let selectsAtributos = document.querySelectorAll("select[id^='atributo']");
+                
                 selectsAtributos.forEach(select => {
                     let opcionAtributoSeleccionada = select.selectedOptions[0]; 
                     if (opcionAtributoSeleccionada) {
@@ -136,9 +138,11 @@
                         total += isNaN(precioAtributo) ? 0 : precioAtributo;
                     }
                 });
-        
+
+                // Actualizar el valor del costo
                 document.getElementById("costo").value = total.toFixed(2); 
             }
+
         </script>    
         
     </div>

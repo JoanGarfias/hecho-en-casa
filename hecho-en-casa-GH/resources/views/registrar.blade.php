@@ -53,6 +53,13 @@
     </div>
 </div>
 
+<div class="pagination">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+  
+ 
 <x-pie/>
 
 
