@@ -103,26 +103,37 @@
     <script>
         function sumarSeleccionado() {
             let total = 0;
-    
+            
             let opcionesSeleccionadas = document.getElementById("unidadm").selectedOptions;
+            let cantidad = parseFloat(document.getElementById("cantidad").value);
             for (let i = 0; i < opcionesSeleccionadas.length; i++) {
-                let opcion = opcionesSeleccionadas[i].value.split('|'); 
-                let precioUnidad = parseFloat(opcion[2]); 
+                let opcion = opcionesSeleccionadas[i].value.split('|');
+                let precioUnidad = parseFloat(opcion[2]);
+    
                 total += isNaN(precioUnidad) ? 0 : precioUnidad;
             }
-    
 
             let selectsAtributos = document.querySelectorAll("select[id^='atributo']");
             selectsAtributos.forEach(select => {
-                let opcionAtributoSeleccionada = select.selectedOptions[0]; 
+                let opcionAtributoSeleccionada = select.selectedOptions[0];
                 if (opcionAtributoSeleccionada) {
-                    let precioAtributo = parseFloat(opcionAtributoSeleccionada.value.split('|')[1]); 
+                    let precioAtributo = parseFloat(opcionAtributoSeleccionada.value.split('|')[1]);
                     total += isNaN(precioAtributo) ? 0 : precioAtributo;
                 }
             });
-    
-            document.getElementById("costo").value = total.toFixed(2); 
+            //Falto esto xd
+            total *= cantidad;
+            document.getElementById("costo").value = total.toFixed(2);
         }
-    </script>    
+    
+        document.getElementById("cantidad").addEventListener('input', function() {
+            sumarSeleccionado();  
+        });
+
+        window.onload = function() {
+            sumarSeleccionado();
+        };
+    </script>
+       
 </body>
 </html>
