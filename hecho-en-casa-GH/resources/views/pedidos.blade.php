@@ -15,11 +15,11 @@
                 <div class="columna">
                     <div class="fila">
                         <label for="fechaEntrega">Fecha de entrega:</label>
-                        <input type="text" id="fechaEntrega" name="fechaEntrega" readonly>
+                        <input type="text" id="fechaEntrega" name="fechaEntrega" placeholder="{{session('fecha_entrega')}}" readonly>
                     </div>
                     <div class="fila">
                         <label for="horaEntrega">Hora de entrega:</label>
-                        <input type="text" id="horaEntrega" name="horaEntrega" readonly>
+                        <input type="text" id="horaEntrega" name="horaEntrega" placeholder="{{session('hora_entrega')}}" readonly>
                         <!--<div class="hora-selector">
                             <input type="time" id="horaEntrega" name="horaEntrega" min="11:00" max="19:00" required>
                             <div class="boton-wrapper">
@@ -30,26 +30,34 @@
                     </div>
                     <div class="fila">
                         <label for="tipoPostre">Tipo de postre:</label>
-                        <input type="text" id="tipoPostre" name="tipoPostre" readonly>
+                        <input type="text" id="tipoPostre" name="tipoPostre" placeholder="{{session('nombre_categoria')}}" readonly>
                     </div>
                     <div class="fila">
-                        <label for="porciones">Porciones:</label>
+                        <label for="unidad_m"> 
+                            {{ session('lista_unidad')[0]['nombreunidad'] == 'Porciones' ? 'porciones:' : 
+                               (session('lista_unidad')[0]['nombreunidad'] == 'Piezas' ? 'piezas:' : 
+                               (session('lista_unidad')[0]['nombreunidad'] == 'Piezas Mini' ? 'piezas mini:' : 'Cantidad:')) }}
+                        </label>  
+
                         <div class="opciones">
-                            <label>
-                                <input type="radio" name="porciones" value="seis" required>
-                                <p class="blanca"> 6</p>
-                            </label>
-                            <label>
-                                <input type="radio" name="porciones" value="doce">
-                                <p class="blanca"> 12</p>
-                            </label>
+                            @if (session('lista_unidad') && count(session('lista_unidad')) > 0)
+                                @foreach (session('lista_unidad') as $unidad)
+                                <label>
+                                    <input type="radio" name="porciones" value="{{ $unidad['cantidadporciones'] }}|{{ $unidad['nombreunidad'] }}" required>
+                                    <span class="blanca">{{ $unidad['cantidadporciones'] }}</span>
+                                </label>
+                                @endforeach
+                            @else
+                                <p class="blanca">No hay opciones disponibles</p>
+                            @endif
                         </div>
+                
                     </div>
                     <div class="fila">
                         <label for="cantidad">Cantidad:</label>
                         <div class="cantidad-wrapper">
                             
-                            <input type="text" id="cantidad" name="cantidad" value="1" required>
+                            <input type="text" id="cantidad" name="cantidad" value="1" min="{{session('cantidad_minima')}}" placeholder="{{session('cantidad_minima')}}" required>
                             <div class="boton-wrapper">
                                 <button type="button" class="incrementar">🔺</button>
                                 <button type="button" class="decrementar">🔻</button>
@@ -59,9 +67,21 @@
                     </div>
                     <div class="fila">
                         <label for="sabor">Sabor:</label>
-                        <input type="text" id="sabor" name="sabor" readonly>
+                        <input type="text" id="sabor" name="sabor" placeholder="{{session('sabor_postre')}}" readonly>
                     </div>
                 </div>
+
+                @if (!empty($atributosSesion))
+                    @foreach ($atributosSesion as $nombreTipo => $atributos)
+                        <label for="{{ strtolower($nombreTipo) }}">{{ ucfirst($nombreTipo) }}:</label>
+                        <select id="{{ strtolower($nombreTipo) }}" name="{{ strtolower($nombreTipo) }}">
+                            @foreach ($atributos as $atributo)
+                                <option value="{{ $atributo }}">{{ ucfirst($atributo) }}</option>
+                            @endforeach
+                        </select>
+                    @endforeach
+                @endif
+
                 <div class="columna">
                     <div class="fila">
                         <label for="tipoEntrega">Tipo de entrega:</label>
@@ -71,12 +91,12 @@
                                 <div class="option" data-value="opcion1">Recoger en sucursal</div>
                                 <div class="option" data-value="opcion2">Envío a domicilio</div>
                             </div>
-                            <input type="hidden" id="tipoEntrega" name="tipoEntrega">
+                            <input type="hidden" id="tipoEntrega" name="tipoEntrega" value="">
                         </div>
                     </div>
                     <div class="fila">
                         <label for="costo">Costo:</label>
-                        <input type="text" id="costo" name="costo" readonly><br>
+                        <input type="number" id="costo" name="costo" readonly><br>
                         <p class="nota">NOTA: El costo es aproximado, el precio final puede variar según su ubicación.</p>
                     </div>
                 </div>
@@ -95,6 +115,32 @@
                 </div>
             </div>
         </form>  
+
+        <script>
+            function sumarSeleccionado() {
+                let total = 0;
+        
+                let opcionesSeleccionadas = document.getElementById("unidadm").selectedOptions;
+                for (let i = 0; i < opcionesSeleccionadas.length; i++) {
+                    let opcion = opcionesSeleccionadas[i].value.split('|'); 
+                    let precioUnidad = parseFloat(opcion[2]); 
+                    total += isNaN(precioUnidad) ? 0 : precioUnidad;
+                }
+        
+    
+                let selectsAtributos = document.querySelectorAll("select[id^='atributo']");
+                selectsAtributos.forEach(select => {
+                    let opcionAtributoSeleccionada = select.selectedOptions[0]; 
+                    if (opcionAtributoSeleccionada) {
+                        let precioAtributo = parseFloat(opcionAtributoSeleccionada.value.split('|')[1]); 
+                        total += isNaN(precioAtributo) ? 0 : precioAtributo;
+                    }
+                });
+        
+                document.getElementById("costo").value = total.toFixed(2); 
+            }
+        </script>    
+        
     </div>
 </div>
 <x-pie/>

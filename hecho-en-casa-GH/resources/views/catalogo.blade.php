@@ -74,10 +74,11 @@
         function cambiarCategoria(event, element) {
             event.preventDefault(); // Evita el comportamiento predeterminado del enlace
             const categoriaId = element.getAttribute("data-id");
-
+            
             if (categoriaId) {
                 // Redirige a la URL con la categoría seleccionada
-                window.location.href = `/fijo/catalogo/${categoriaId}`;
+                let url = "{{ route('fijo.catalogo.get', ':categoria') }}".replace(':categoria', categoriaId);
+                window.location.href = url;
             }
         }
 
@@ -91,9 +92,6 @@
         });
 
     </script>
-      
-
-
 
 <x-pie/>
 

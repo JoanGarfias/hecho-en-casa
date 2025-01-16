@@ -17,6 +17,7 @@ use App\Models\AtributosExtra;
 use App\Models\TipoAtributo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Cookie;
 use InvalidArgumentException;
 
 class ControladorCatalogo extends Controller
@@ -71,19 +72,13 @@ class ControladorCatalogo extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $id_postre = $request->input('id_postre');
-        $nombre_postre = $request->input('nombre_postre');
         $id_tipopostre = "fijo";
-
-        $datos = $request->validate([
-            'id_postre' => 'required|integer',
-            'nombre_postre' => 'required|string|min:3|max:255',
-        ]);
-
+        $nombre_postre = $request->input('nombre_postre');
+        
         session([
-            'postre'=> $id_postre,
-            'id_postre' => $datos['id_postre'],
+            'id_postre' => $id_postre,
             'id_tipopostre' => $id_tipopostre,
-            'nombre_postre' => $datos['nombre_postre'],
+            'nombre_postre' => $nombre_postre,
         ]);
 
         return redirect()->route('fijo.calendario.get');
@@ -166,7 +161,7 @@ class ControladorCatalogo extends Controller
         $horaEntrega = $request->input('horaEntrega');
         $postre = session('id_postre');
         $tipopostre = session('id_tipopostre');
-
+        session(['id_usuario' => Cookie::get('user_id')]);
         session(['fecha_entrega' => $fechaEscogida]);
         session(['hora_entrega' => $horaEntrega]);
 
@@ -202,7 +197,7 @@ class ControladorCatalogo extends Controller
                 }
 
                 session([
-                    'postre' => $postre,
+                    'id_postre' => $postre,
                     'porciones_dia' => $porciones_dia,
                     'cantidad_minima' => $cantidad_minima,
                 ]);
@@ -261,10 +256,8 @@ class ControladorCatalogo extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         session([
-            'id_usuario' => "1",
             'fecha' => session("fecha_entrega"),
             'hora_entrega' => session("hora_entrega"),
-            'cantidad_minima' => "3",
         ]);
 
         //COMO SON DATOS DIRECTOS NO ES NECESARIO ESTO
@@ -272,7 +265,7 @@ class ControladorCatalogo extends Controller
         //    return redirect()->route('seleccionarFecha')->with('error', 'No se ha seleccionado un postre o fecha.');
         //}
         
-        $postre = Catalogo::where('id_postre', session('postre'))->first();
+        $postre = Catalogo::where('id_postre', session('id_postre'))->first();
         if ($postre) {
             session([
                 'sabor_postre' => $postre->nombre,
@@ -320,7 +313,7 @@ class ControladorCatalogo extends Controller
             session(['atributosSesion' => $atributosSesion]);
             
         } else {
-            return redirect()->route('seleccionarFecha')->with('error', 'Postre no encontrado.');
+            return redirect()->route('fijo.catalogo.get')->with('error', 'Postre no encontrado.');
         }
 
         $fecha = session('fecha');
@@ -330,7 +323,7 @@ class ControladorCatalogo extends Controller
         $lista_unidad = session('lista_unidad'); 
         $atributosSesion = session('atributosSesion');
 
-        return view('detallesFijo', compact('fecha', 'sabor_postre', 'hora_entrega', 'nombre_categoria', 'lista_unidad', 'atributosSesion'));
+        return view('pedidos', compact('fecha', 'sabor_postre', 'hora_entrega', 'nombre_categoria', 'lista_unidad', 'atributosSesion'));
     }
 
 

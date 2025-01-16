@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 * {
-    font-family: "Poppins", sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -32,25 +32,12 @@ body {
   padding: 10px 0;
   font-size: 1.2em;
   font-weight: 300;
-  overflow: hidden; /* Oculta el texto desbordado */
+  overflow: hidden;
   position: relative;
   height: 50px;
   margin: 0;
 }
 
-.registro-banner span {
-  display: inline-block;
-  white-space: nowrap; /* Mantiene el texto en una sola línea */
-}
-
-.registro-banner span:first-of-type {
-  animation: showup 7s infinite; /* Texto inicial con efecto de aparición */
-}
-
-.registro-banner span:last-of-type {
-  margin-left: -100%;
-  animation: slidein 7s infinite; /* Texto deslizándose desde la izquierda */
-}
 
 /* Animación de opacidad (aparición y desaparición) */
 @keyframes showup {
@@ -68,3 +55,64 @@ body {
   80% { margin-left: 0%; }
   100% { margin-left: -100%; }
 }
+
+@keyframes slidein2 {
+  
+}
+
+/* Añadir breakpoints para hacerlo responsive */
+@media only screen and (max-width: 768px) {
+  .registro-banner {
+      font-size: 1em;
+      height: auto;
+  }
+  
+  .registro-banner span {
+      display: block; /* Cambia a bloque para dispositivos móviles */
+      white-space: normal; /* Permite el texto en múltiples líneas */
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .registro-banner {
+      font-size: 0.9em;
+      padding: 5px 0;
+  }
+}
+
+.registro-banner span {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.registro-banner span:first-of-type {
+  margin-right: -100%;
+  animation: slidein2 7s infinite;
+}
+
+.registro-banner span:last-of-type {
+  margin-left: -100%;
+  animation: slidein 7s infinite;
+}
+
+@keyframes slidein2 {
+
+
+  from {
+      margin-right: 100%;
+  }
+  to {
+      margin-right: 0;
+  }
+}
+
+@keyframes slidein {
+  from {
+      margin-left: 100%;
+  }
+  to {
+      margin-left: 0;
+  }
+}
+
+
