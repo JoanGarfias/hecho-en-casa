@@ -29,8 +29,15 @@
                         <img src="{{ asset('img/usuario.png') }}" alt="Usuario">
                     </a>
                     <div class="dropdown-menu" id="menu-usuario" style="display: none;">
-                        <button onclick="console.log('Redirigieno'); window.location.href='{{route('login.get')}}'">Iniciar sesión</button>
-                        <button onclick="console.log('Redirigieno ptw'); window.location.href='{{route('registrar.get')}}'">Registrarme</button>
+                        @if(session()->has('user_id'))
+                            <!-- Usuario logueado -->
+                            <button onclick="window.location.href='{{ route('perfil.get') }}'">Perfil</button>
+                            <button onclick="window.location.href='{{ route('cerrarsesion.get') }}'">Cerrar sesión</button>
+                        @else
+                            <!-- Usuario no logueado -->
+                            <button onclick="window.location.href='{{ route('login.get') }}'">Iniciar sesión</button>
+                            <button onclick="window.location.href='{{ route('registrar.get') }}'">Registrarme</button>
+                        @endif
                     </div>
                 </li>
             </ul>

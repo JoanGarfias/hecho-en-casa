@@ -39,14 +39,15 @@ Route::post('/perfil', [ControladorPerfil::class, 'editar'])->name('perfil.post'
 
 /* PROCESO DE LOGIN */
 Route::middleware([ProtectorPeticiones::class])->group(function(){
-    Route::get('/login', [ControladorLogin::class, 'mostrarLogin'])->name('login.get')->middleware([ProtectorRouteUserLogin::class]);//C
-    //->middleware(ProtectorRouteUserLogin::class);
-    Route::post('/login', [ControladorLogin::class, 'Logear'])->name('login.post')->middleware([ProtectorRouteUserLogin::class]);//C
-    //->middleware(ProtectorRouteUserLogin::class); 
+    Route::get('/login', [ControladorLogin::class, 'mostrarLogin'])->name('login.get')
+    ->middleware([ProtectorRouteUserLogin::class]);
+
+    Route::post('/login', [ControladorLogin::class, 'Logear'])->name('login.post')
+    ->middleware([ProtectorRouteUserLogin::class]); 
 });
 
 Route::middleware([ProtectorSesion::class])->group(function(){
-    Route::get('/cerrar-sesion', [ControladorLogin::class, 'logout'])->name('cerrarsession.get');
+    Route::get('/cerrar-sesion', [ControladorLogin::class, 'logout'])->name('cerrarsesion.get');
 });
 
 /* PROCESO DE REGISTRO */

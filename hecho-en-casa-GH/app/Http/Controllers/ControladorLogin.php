@@ -42,6 +42,9 @@ class ControladorLogin extends Controller
                 ]);
                 // Crear la galleta con el token de sesión y el id
                 $userId = $usuario ? $usuario->id_u : null; // Devuelve el id si existe, o si no devuelve null
+                    // Guardar estado del usuario en la sesión
+                $request->session()->put('user_id', $usuario->id_u);
+                
                 Cookie::queue('user_id', $userId, 60 * 72);
                 return redirect()->route('inicio.get')->withCookie(cookie('session_token', $sessionToken, 60 * 72)); // 72 horas
             }
