@@ -349,13 +349,34 @@ header {
         width: 100%; /* Asegura que ocupen todo el ancho */
         justify-content: center; /* Centra los elementos */
     }
-}
+
 
 /* Estilos del menú desplegable */
+
 .dropdown-menu {
-    display: none; /* Oculto por defecto */
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 0; /* Despliega el menú del otro lado */
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    list-style-type: none;
+    padding: 10px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    transform: translateX(-100%); /* Despliega de manera suave */
+    width: 80%; /* Ajusta el ancho */ 
+    height: 200px; /* Ajusta la altura */
+
 }
 
 .dropdown-menu.show {
-    display: block; /* Mostrar cuando se active */
+    display: block;
+    opacity: 1;
+    transform: translateX(0);
 }
+
+}
+
+

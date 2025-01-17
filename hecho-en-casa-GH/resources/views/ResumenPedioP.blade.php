@@ -25,49 +25,49 @@
 
                <div class="left-column">
                    <label>Tipo de postre:</label>
-                   <input type="text" value="Selección" readonly>
+                   <input type="text" id="tipo_postre" value="Selección" readonly>
 
                    <label>Porciones:</label>
-                   <input type="text" value="000" readonly>
+                   <input type="text" id="porciones" value="000" readonly>
 
                    <label>Cantidad:</label>
-                   <input type="text" value="00" readonly>
+                   <input type="text" id="cantidad" value="00" readonly>
 
                    <label>Sabor de pan:</label>
-                   <input type="text" value="Selección" readonly>
+                   <input type="text" id="sabor" value="Selección" readonly>
 
                    <label>Sabor de relleno:</label>
-                   <input type="text" value="Selección" readonly>
+                   <input type="text" id="sabor_relleno" value="Selección" readonly>
 
                    <label>Cobertura:</label>
-                   <input type="text" value="Selección" readonly>
+                   <input type="text" id="cobertura" value="Selección" readonly>
 
                    <label>Temática:</label>
-                   <input type="text" value="Selección" readonly>
+                   <input type="text" id="tematica" value="Selección" readonly>
                </div>
 
                <div class="right-column">
 
                     <label>Nombre:</label>
-                   <input type="text" value="Fulanito1" readonly>
+                   <input type="text" id="nombre" value="Fulanito1" readonly>
                    
                    <label>Teléfono:</label>
-                   <input type="text" value="000 0000 000" readonly>
+                   <input type="text" id="telefono" value="000 0000 000" readonly>
 
                    <label>Fecha de entrega:</label>
-                   <input type="text" value="DD/MM/YYYY" readonly>
+                   <input type="text" id="fecha_entrega" value="DD/MM/YYYY" readonly>
 
                    <label>Tipo de entrega:</label>
-                   <input type="text" value="Selección" readonly>
+                   <input type="text" id="tipo_entrega" value="Selección" readonly>
 
                    <label>Link de referencia:</label>
-                   <input type="text" value="https..." readonly>
+                   <input type="text" id="link" value="https..." readonly>
 
                    <label>Descripción detallada:</label>
-                   <input type="text" value="Descripción..." readonly>
+                   <input type="text" id="descripcion" value="Descripción..." readonly>
 
                    <label>Costo Apróximado:</label>
-                   <input type="text" value="$00000" readonly>
+                   <input type="text" id="costo" value="$00000" readonly>
                </div>
            </div>
            <button class="descargarPDF-button"> 
@@ -83,11 +83,44 @@
                 </button>
 
                 <button id="next" class="arrow">➡</button>
+
+                        <!------------Mensaje emergente------------>
+                        <div class="fondo-emergente" id="fondoEmergente">
+                        <div class="emergente">    
+                            <p class="mensajeEmergente">¡¡Gracias por confiar en nosotros!!</p>
+                            <br>
+
+                            <div class="FOLIO-info"> <!--user-info -->
+                                <h2 class="Folio-name">Pedido con folio:</h2>
+                                <input type="text" id="folio" name="folio" value="Folio F0120" readonly>
+                            </div>       
+
+                            <div class="details">
+
+                                <div class="left-column">
+                                    <label>Notas:</label>
+                                    <p>En breve se pondrán en contacto con usted.</p> <br><br>
+                                    <p>Dispone del buscador de folios para cualquier consulta de su pedido.</p>
+                                </div>
+
+                                <div class="right-column">
+                                    <label>Indicaciones</label>
+                                    <p>Guarde su folio para cualquier aclaración.</p> <br><br>
+                                </div>
+                            </div>
+
+                            <button id="continuar" class="arrow" type="submit">volver al inicio</button>
+                        
+                            </div>
+                        </div>
+                        <!------------------------------------------>
       <!--  </div>-->
             </div>
+
    </div>
 
    <script src="{{ asset('js/ResumenPedidoP.js') }}"></script>
+   <script src="{{ asset('js/Gracias.js') }}"></script>
 
 </body>
 

@@ -7,20 +7,27 @@
     <title>Buscador de Pedidos</title>
 </head>
 <body>
-<x-menu />
-    <!-- Encabezado con título y buscador --> 
-     <div class="header"> 
-        <div class="header">
-            <h1 class="titulo">BUSCADOR DE PEDIDOS</h1>
-            <div class="search-container">
-                <input type="text" placeholder="Buscar pedido">
-                <img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="Buscar">
-            </div>
-        </div>
+    <x-menu />
 
+    <div class="header">
+        <h1 class="titulo">BUSCADOR DE PEDIDOS</h1>
+        <div class="search-container">
+            <!-- Aquí se integra el formulario para buscar el pedido -->
+            <form method="POST" action="{{ route('buscarpedido.post') }}">
+                @csrf
+                <input type="number" name="folio" id="folio" placeholder="Ingrese su folio" required>
+                <button type="submit">
+                    <img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="Buscar">
+                </button>
+            </form>
+        </div>
+    </div>
+
+    @if (isset($pedido))
     <div class="container">
+        <!-- Muestra el folio ingresado -->
         <div class="folio">
-            Pedido con folio: <span class="folio-number">00025</span>
+            Pedido con folio: <span class="folio-number">{{ $pedido->id_ped }}</span>
         </div>
 
         <div class="form-columns">
@@ -28,21 +35,15 @@
             <div class="form-column">
                 <div class="form-group">
                     <label for="tipo-postre">Tipo de postre:</label>
-                    <select id="tipo-postre">
-                        <option value="">Selección</option>
-                    </select>
+                    <input type="text" id="tipo-postre" value="{{ $tipopostre }}" readonly>
                 </div>
                 <div class="form-group">
                     <label for="porciones">Porciones:</label>
-                    <input type="text" id="porciones" placeholder="XX">
+                    <input type="text" id="porciones" value="{{ (int)$pedido->porcionespedidas }}" readonly>
                 </div>
                 <div class="form-group">
                     <label for="estatus">Estatus:</label>
-                    <div class="estatus-options">
-                        <button class="pending">Pendiente</button>
-                        <span>ó</span>
-                        <button class="accepted">Aceptada</button>
-                    </div>
+                    <button class="{{ strtolower($pedido->status) }}">{{ $pedido->status }}</button>
                 </div>
             </div>
 
@@ -50,35 +51,38 @@
             <div class="form-column">
                 <div class="form-group">
                     <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" placeholder="xxxxx">
+                    <input type="text" id="nombre" value="{{ $nombre_completo }}" readonly>
                 </div>
                 <div class="form-group">
                     <label for="telefono">Teléfono:</label>
-                    <input type="text" id="telefono" placeholder="xxxxx">
+                    <input type="text" id="telefono" value="{{ $telefono }}" readonly>
                 </div>
                 <div class="form-group">
                     <label for="fecha-entrega">Fecha de entrega:</label>
-                    <input type="text" id="fecha-entrega" placeholder="xx/xx/xxxx">
+                    <input type="text" id="fecha-entrega" value="{{ $fecha_entrega }}" readonly>
                 </div>
                 <div class="form-group">
                     <label for="hora-entrega">Hora de entrega:</label>
-                    <input type="time" id="hora-entrega" value="00:00">
+                    <input type="time" id="hora-entrega" value="{{ $hora_entrega }}" readonly>
                 </div>
                 <div class="form-group">
                     <label for="tipo-entrega">Tipo de entrega:</label>
-                    <select id="tipo-entrega">
-                        <option value="">Selección</option>
-                    </select>
+                    <input type="text" id="tipo-entrega" value="{{ $tipo_entrega }}" readonly>
                 </div>
 
                 <div class="form-group cost">
                     <label>Costo aprox:</label>
-                    <span class="costo-aprox">$550.00</span>
+                    <span class="costo-aprox">${{ $precio_final }}</span>
                 </div>
             </div>
         </div>
     </div>
-    <x-pie/>
-    
+    @elseif (isset($error))
+    <!-- Mensaje de error si el pedido no existe -->
+    <div class="container">
+        <p style="color: red;">{{ $error }}</p>
+    </div>
+    @endif
 </body>
+
 </html>

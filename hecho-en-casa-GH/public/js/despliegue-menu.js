@@ -1,16 +1,25 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const usuarioIcon = document.getElementById("usuario-icon");
-    const menuUsuario = document.getElementById("menu-usuario");
+document.addEventListener('DOMContentLoaded', function () {
+    const hamburgerMenu = document.querySelector('.hamburger-menu');
+    const menuIzquierdo = document.querySelector('.menu-izquierdo');
+    const menuDerecho = document.querySelector('.menu-derecho');
 
-    usuarioIcon.addEventListener("click", function (e) {
-        e.preventDefault();
-        menuUsuario.classList.toggle("show");
+    
+    console.log('En despliegue ')
+    // Mostrar/ocultar menús desplegables al hacer clic en el ícono
+    hamburgerMenu.addEventListener('click', function (e) {
+        e.preventDefault(); // Evita recargar la página al hacer clic
+        menuIzquierdo.classList.add('show');
+       // menuDerecho.classList.add('show');
+       console.log('En despliegue: se seleciono señor ')
     });
 
-    // Opcional: Cerrar el menú si se hace clic fuera de él
-    document.addEventListener("click", function (e) {
-        if (!menuUsuario.contains(e.target) && !usuarioIcon.contains(e.target)) {
-            menuUsuario.classList.remove("show");
+    // Cerrar los menús desplegables al hacer clic fuera de ellos
+    document.addEventListener('click', function (event) {
+        if (!hamburgerMenu.contains(event.target) && 
+            !menuIzquierdo.contains(event.target) && 
+            !menuDerecho.contains(event.target)) {
+            menuIzquierdo.classList.remove('show');
+            menuDerecho.classList.remove('show');
         }
     });
 });

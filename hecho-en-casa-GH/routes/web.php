@@ -20,7 +20,11 @@ use App\Http\Middleware\ProtectorPeticiones;
 
 /* VISTAS PRINCIPALES */
 Route::get('/', [ControladorInicio::class, 'index'])->name('inicio.get');
+
 Route::get('/conocenos', [ControladorInicio::class, 'conocenos'])->name('conocenos.get');
+
+
+//Controlador de buscar 
 Route::get('/buscarpedido', [ControladorBuscarPedido::class, 'ObtenerFolio'])->name('buscarpedido.get');
 Route::post('/buscarpedido', [ControladorBuscarPedido::class, 'MostrarPedido'])->name('buscarpedido.post');
 
@@ -35,15 +39,16 @@ Route::post('/perfil', [ControladorPerfil::class, 'editar'])->name('perfil.post'
 
 /* PROCESO DE LOGIN */
 Route::middleware([ProtectorPeticiones::class])->group(function(){
-    Route::get('/login', [ControladorLogin::class, 'mostrarLogin'])->name('login.get')->middleware([ProtectorRouteUserLogin::class]);//C
-    //->middleware(ProtectorRouteUserLogin::class);
-    Route::post('/login', [ControladorLogin::class, 'Logear'])->name('login.post')->middleware([ProtectorRouteUserLogin::class]);//C
-    //->middleware(ProtectorRouteUserLogin::class); 
+    Route::get('/login', [ControladorLogin::class, 'mostrarLogin'])->name('login.get')
+    ->middleware([ProtectorRouteUserLogin::class]);
+
+    Route::post('/login', [ControladorLogin::class, 'Logear'])->name('login.post')
+    ->middleware([ProtectorRouteUserLogin::class]); 
 });
 
-Route::middleware([ProtectorSesion::class])->group(function(){
-    Route::get('/cerrar-sesion', [ControladorLogin::class, 'logout'])->name('cerrarsession.get');
-});
+//Route::middleware([ProtectorSesion::class])->group(function(){
+    Route::get('/cerrar-sesion', [ControladorLogin::class, 'logout'])->name('cerrarsesion.get');
+//});
 
 /* PROCESO DE REGISTRO */
 
@@ -69,7 +74,7 @@ Route::middleware([EnlazadorRecuperacion::class, ProtectorPeticiones::class])->g
 Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrarCatalogo'])->name('fijo.catalogo.get')
 ->middleware([ProtectorPeticiones::class]);
 
-Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(function () {
+Route::middleware([ProtectorSesion::class])->group(function () {
     Route::post('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'guardarSeleccionCatalogo'])->name('fijo.catalogo.post');
     Route::get('fijo/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])->name('fijo.calendario.get');
     Route::post('fijo/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'seleccionarFecha'])->name('fijo.calendario.post');
@@ -88,7 +93,7 @@ Route::post('fijo/detalles-direccion/buscar', [App\Http\Controllers\ControladorC
 Route::get('/personalizado', [ControladorCatalogoPersonalizado::class, 'mostrarCatalogo'])->name('personalizado.catalogo.get')
 ->middleware([ProtectorPeticiones::class]);
 
-Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(function () {
+Route::middleware([ProtectorSesion::class])->group(function () {
     Route::post('/personalizado', [ControladorCatalogoPersonalizado::class, 'seleccionarCatalogo'])->name('personalizado.catalogo.post');
 
     Route::get('personalizado/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])->name('personalizado.calendario.get');
@@ -108,7 +113,7 @@ Route::post('personalizado/detalles-direccion/buscar', [App\Http\Controllers\Con
 Route::get('/emergentes', [ControladorCatalogoEmergente::class, 'mostrar'])->name('emergente.catalogo.get')
 ->middleware([ProtectorPeticiones::class]);
 
-Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(function () {
+Route::middleware([ProtectorSesion::class])->group(function () {
     Route::post('/emergentes', [ControladorCatalogoEmergente::class, 'guardarSeleccion'])->name('emergente.catalogo.post');
 
     Route::get('emergentes/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])->name('emergente.calendario.get');
@@ -123,8 +128,4 @@ Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(funct
     Route::get('emergentes/ticket/', [ControladorCatalogo::class, 'mostrarTicket'])->name('emergente.ticket.get');
 });
 
-
-Route::get('/pasteles', function(){
-    return view('pasteles');
-});
 

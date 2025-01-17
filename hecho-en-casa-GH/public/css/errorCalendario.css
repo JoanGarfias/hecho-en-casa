@@ -39,7 +39,7 @@ h1 {
     border-bottom: solid 2px #525252;
     font-weight: bold;
     font-size: 40px;
-    padding-bottom: 35px;
+    padding-bottom: 20px;
     letter-spacing: 5px;/* Espaciado inicial */
     transition: letter-spacing 0.5s ease-in-out, color 0.5s ease-in-out; /* Animación suave */
 }
@@ -50,6 +50,7 @@ a {
     color: #454444;/* Color del enlace */
     font-weight: bold;
     transition: color 0.3s ease-in-out;
+    padding-bottom: 10px;
 }
 
 a:hover {

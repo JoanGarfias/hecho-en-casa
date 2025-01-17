@@ -25,9 +25,10 @@
         <div class="mensajito">
             <p id="mensajePass" class="bien"></p>
         </div>
-
-        {!! NoCaptcha::renderJs() !!}
-        {!! NoCaptcha::display() !!}
+        <div class="captcha">
+            {!! NoCaptcha::renderJs() !!}    
+            {!! NoCaptcha::display() !!}
+        </div>
 
         <div>
             <button class="botoncito" type="submit" name="action" value="recuperar" id="olvidadizo">Olvide mi contraseña</button>
@@ -49,8 +50,7 @@
 <x-pie/>
 
 <script src="{{ asset('js/iniciando.js') }}"></script>
-<!--Para la animación del logo de usuario-->
-<script src="{{ asset('js/icono.js') }}" defer></script>
+
 <!--Para mostrar la contraseña-->
 <script src="{{ asset('js/mostrarContra.js') }}" defer></script>
 <!--Para borrar el parrafo al hacer click al input-->

@@ -56,6 +56,11 @@
         </form>  
     </div>
 </div>
+
+<div class="pagination">
+    <span class="dot "></span>
+    <span class="dot "></span>
+    <span class="dot active"></span>
+  </div>
 <x-pie/>
-<!--Para la animación del logo de usuario-->
-<script src="{{ asset('js/icono.js') }}" defer></script>
+

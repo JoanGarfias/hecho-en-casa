@@ -6,6 +6,8 @@
     <title>Buscador de Pedido</title>
 </head>
 <body>
+
+    <!--Funcionamiento de buscar pedido del equipo de -->
     <center>
         <h1>Buscador de pedidos</h1>
         <form method="POST" action="{{ route('buscarpedido.post') }}">

@@ -26,7 +26,7 @@ class ControladorRegistro extends Controller
         $credentials = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'required|numeric|digits_between:10,15',
+            'phone' => 'required|string',
             'apellidoP' => 'required|string|max:255',
             'apellidoM' => 'required|string|max:255',
             'g-recaptcha-response' => 'required|captcha',  // Validación del reCAPTCHA

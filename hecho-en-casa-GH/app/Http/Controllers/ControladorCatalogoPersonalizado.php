@@ -14,6 +14,7 @@ use App\Models\Catalogo;
 Use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use App\Models\usuario;
+use Illuminate\Support\Facades\Cookie;
 
 class ControladorCatalogoPersonalizado extends Controller
 {
@@ -23,7 +24,7 @@ class ControladorCatalogoPersonalizado extends Controller
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
-        return view("personalizados");
+        return view("pasteles");
     }
 
     public function seleccionarCatalogo(Request $request){
@@ -55,14 +56,14 @@ class ControladorCatalogoPersonalizado extends Controller
             return Elemento::select('id_e', 'nom_elemento', 'precio_e')
             ->get();
         });
-        
-        return view('detallesPersonalizado', compact('sabores', 'rellenos', 'coberturas', 'elementos'));
+
+        return view('pedidosPersonalizados', compact('sabores', 'rellenos', 'coberturas', 'elementos'));
     }
 
     public function seleccionarDetalles(Request $request){ //POST: Guardar las opciones de personalización
 
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-        $tipo_entrega = $request->input('tipo_entrega');
+        $tipo_entrega = $request->input('tipoEntrega');
         session()->put('proceso_compra', $request->route()->getName());
         session()->put('opcion_envio', $tipo_entrega);
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
@@ -70,14 +71,14 @@ class ControladorCatalogoPersonalizado extends Controller
         $tematica = $request->input('tematica');
         $imagen = $request->input('imagen');
         $descripcion = $request->input('descripcion');
-        //$costo = intval($request->input('costo'));
-        $tipo_entrega = $request->input('tipo_entrega');
-        $id_usuario = 1;
+      
+        $costo = intval($request->input('costo'));
+        $id_usuario = Cookie::get('user_id');
 
         session()->put('opcion_envio', $tipo_entrega);
 
-        $fechaEscogida = session('fecha_entrega');
-        $horaEntrega = session('hora_entrega');
+        $fechaEscogida = session('fecha');
+        $horaEntrega = session('hora');
         $fecha_hora_entrega = Carbon::parse($fechaEscogida . ' ' . $horaEntrega); 
         $fecha_hora_registro = now();
         $id_tipopostre = 'personalizado';
@@ -86,7 +87,7 @@ class ControladorCatalogoPersonalizado extends Controller
         $relleno = intval($request->input('sabor_relleno'));
         $cobertura = intval($request->input('cobertura'));
         $elementos = array_map('intval', $request->input('elementos', []));
-        
+      
         $costoCatalogo = Catalogo::where('id_tipo_postre', "personalizado")->first();; //LO SACARE DE A TABLA CATALOGO PRECIO_EMERGENTES
         $costoPan = SaborPan::where('nom_pan', $sabor_pan)->first();
         $costoRelleno = SaborRelleno::where('nom_relleno', $relleno)->first();
@@ -101,7 +102,6 @@ class ControladorCatalogoPersonalizado extends Controller
         //session()->put('costo', $costo);
         //$datos = ['costo', $costo];
         $porciones = intval($request->input('porciones'));
-        
 
         if ($tipo_entrega == "Domicilio") {
             $datos = [
@@ -310,13 +310,12 @@ class ControladorCatalogoPersonalizado extends Controller
             $ticket_pastel = Pastelpersonalizado::select('id_saborpan', 'id_saborrelleno', 'id_cobertura', 'tipo_evento', 'descripciondetallada', 'imagendescriptiva')
             ->where('id_pp', $id_pastel)
             ->first();
-    
         }
         else {
             return redirect()->back()->with('error', 'El folio no fue especificado.');
         }
     
         // Envía la información a la vista
-        return view('pedidoPersonalizado', compact('ticket_pedido', 'ticket_pastel', 'datos'));
+        return view('ResumenPedidoP', compact('ticket_pedido', 'ticket_pastel', 'datos'));
     }
 }

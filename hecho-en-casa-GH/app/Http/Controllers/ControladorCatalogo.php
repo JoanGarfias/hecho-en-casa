@@ -17,6 +17,7 @@ use App\Models\AtributosExtra;
 use App\Models\TipoAtributo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Cookie;
 use InvalidArgumentException;
 
 class ControladorCatalogo extends Controller
@@ -97,19 +98,13 @@ class ControladorCatalogo extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $id_postre = $request->input('id_postre');
-        $nombre_postre = $request->input('nombre_postre');
         $id_tipopostre = "fijo";
-
-        $datos = $request->validate([
-            'id_postre' => 'required|integer',
-            'nombre_postre' => 'required|string|min:3|max:255',
-        ]);
-
+        $nombre_postre = $request->input('nombre_postre');
+        
         session([
-            'postre'=> $id_postre,
-            'id_postre' => $datos['id_postre'],
+            'id_postre' => $id_postre,
             'id_tipopostre' => $id_tipopostre,
-            'nombre_postre' => $datos['nombre_postre'],
+            'nombre_postre' => $nombre_postre,
         ]);
 
         return redirect()->route('fijo.calendario.get');
@@ -119,8 +114,18 @@ class ControladorCatalogo extends Controller
     public function mostrarCalendario(Request $request, $mes = null, $anio = null){ //GET: Mostrar calendario
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         $error = session('error'); // Recuperar el mensaje de error
-        session()->put('proceso_compra', $request->route()->getName());
+        session()->put('proceso_compra', $request->route()->getName()); //con esto sabemos el nombre de la ruta de la que viene
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
+        $ruta = $request->route()->getName();
+        $metodo = null;
+        if($ruta == "personalizado.calendario.get"){
+            $metodo = "personalizado.calendario.post";
+        }elseif($ruta == "emergente.calendario.get"){
+            $metodo = "emergente.calendario.post";
+        }elseif($ruta == "fijo.calendario.get"){
+            $metodo = "fijo.calendario.post";
+        }
     
         $fecha = Carbon::now();
         if($mes && $anio){
@@ -143,7 +148,7 @@ class ControladorCatalogo extends Controller
         }
 
         $primerDiaDelMes = $fecha->copy()->startOfMonth();
-        $diaSemana = $primerDiaDelMes->dayName;
+        $diaSemana = $primerDiaDelMes->dayOfWeek;
         $ultimoDiaDelMes = $fecha->copy()->endOfMonth();
         
         $pedidos = Cache::remember('pedidos', 30, function () use ($primerDiaDelMes, $ultimoDiaDelMes){
@@ -172,17 +177,17 @@ class ControladorCatalogo extends Controller
             'diaSemana' => $diaSemana,
         ]);
 
-        return view('calendario', compact('calendarioJson', 'error'));
+        return view('calEdit', compact('calendarioJson', 'error', 'metodo'));
     }
 
     public function seleccionarFecha(Request $request)
     {
 
-        $fechaEscogida = "2025-09-05";
-        $horaEntrega = "12:00";
+        $fechaEscogida = $request->input('fechaSeleccionada');
+        $horaEntrega = $request->input('horaEntrega');
         $postre = session('id_postre');
         $tipopostre = session('id_tipopostre');
-
+        session(['id_usuario' => Cookie::get('user_id')]);
         session(['fecha_entrega' => $fechaEscogida]);
         session(['hora_entrega' => $horaEntrega]);
 
@@ -218,7 +223,6 @@ class ControladorCatalogo extends Controller
                 }
 
                 session([
-                    'postre' => $postre,
                     'porciones_dia' => $porciones_dia,
                     'cantidad_minima' => $cantidad_minima,
                 ]);
@@ -242,6 +246,7 @@ class ControladorCatalogo extends Controller
                         'fecha' => $fechaEscogida,
                         'postre' => $postre,
                         'porciones_dia' => $porciones_dia,
+                        'hora' => $horaEntrega,
                     ]);
     
                     return redirect()->route('personalizado.detallesPedido.get');
@@ -275,19 +280,12 @@ class ControladorCatalogo extends Controller
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
-        session([
-            'id_usuario' => "1",
-            'fecha' => session("fecha_entrega"),
-            'hora_entrega' => session("hora_entrega"),
-            'cantidad_minima' => "3",
-        ]);
-
         //COMO SON DATOS DIRECTOS NO ES NECESARIO ESTO
         //if (!session('postre') || !session('fecha')) {
         //    return redirect()->route('seleccionarFecha')->with('error', 'No se ha seleccionado un postre o fecha.');
         //}
                                                                 //session('postre')
-        $postre = Catalogo::where('id_postre', 27)->first();
+        $postre = Catalogo::where('id_postre', session('id_postre'))->first();
         if ($postre) {
             session([
                 'sabor_postre' => $postre->nombre,
@@ -372,29 +370,29 @@ class ControladorCatalogo extends Controller
         $lista_unidad = session('lista_unidad'); 
         $atributosSesion = session('atributosSesion');
 
-        return view('detallesFijo', compact('fecha', 'sabor_postre', 'hora_entrega', 'nombre_categoria', 'lista_unidad', 'atributosSesion'));
+        return view('pedidos', compact('fecha', 'sabor_postre', 'hora_entrega', 'nombre_categoria', 'lista_unidad', 'atributosSesion'));
     }
 
 
     public function seleccionarDetalles(Request $request){
         
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-        $tipo_entrega = $request->input('tipo_entrega');
+        $tipo_entrega = $request->input('tipoEntrega');
         session()->put('proceso_compra', $request->route()->getName());
         session()->put('opcion_envio', $tipo_entrega);
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
 
-        $id_postre = session('postre');
+        $id_postre = session('id_postre');
         $postre = Catalogo::where('id_postre', $id_postre)
                             ->first();
         //$costo = intval($request->input('costo'));
         $costoUM = PostreFijoUnidad::where('id_pf', $id_postre)->first();
         $costo = $costoUM->precio_um;
-        $id_usuario = 1;
+        $id_usuario = session('id_usuario');
         session(['tipo_entrega'=> $tipo_entrega]);
 
-        $fechaEscogida = session('fecha');
+        $fechaEscogida = session('fecha_entrega');
         $horaEntrega = session('hora_entrega');
         $fecha_hora_entrega = Carbon::parse($fechaEscogida . ' ' . $horaEntrega);
         $fecha_hora_registro = now();
@@ -515,7 +513,7 @@ class ControladorCatalogo extends Controller
         //ANEXAR LÓGICA PARA OBTENER LA DIRECCIÓN DEL USUARIO
 
         $datos = session('datos_pedido');
-        return view('direccionFijo', compact('datos'));
+        return view('ConfirmaDato', compact('datos'));
     }
 
     public function guardarDireccion(Request $request){ //POST: Mandamos a la ruta del ticket

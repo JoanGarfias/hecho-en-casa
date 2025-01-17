@@ -39,7 +39,7 @@ class ControladorCatalogoEmergente extends Controller
             return response()->json([]);
         }
 
-        return view('emergentes-prueba', compact('emergentes'));
+        return view('emergentes', compact('emergentes'));
     }
 
     public function guardarSeleccion(Request $request){
@@ -48,11 +48,15 @@ class ControladorCatalogoEmergente extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $idPostre = $request->input('comprar');
+        
         $postre = Cache::remember('postres', 30, function () use ($idPostre){
             return Catalogo::where('id_postre', $idPostre)->first();
         });
+
+        $precio = $postre->precio_emergentes;
+        $tipo_postre = $postre->id_tipopostre;
         
-        return response()->json($emergentes);
+        return redirect()->route('calendario.post', compact('idPostre', 'precio', 'tipo_postre'));
     }
 
     public function seleccionar(Request $request){
