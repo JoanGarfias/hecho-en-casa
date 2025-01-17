@@ -100,8 +100,8 @@
                         <label for="" id="costo" name="costo" class="paraMostrar"></label>
                         <br>
                         <p class="nota">NOTA: El costo es aproximado, el precio final puede variar según su ubicación.</p>
-                        <p>Porciones restantes del dia:  {{session('porciones')}}</p>
-                        <p>Porciones a pedir:  </p>
+                        <p>Porciones restantes del día: <span id="porcionesRestantes">{{session('porciones')}}</span></p> <br>
+                        <p class="porciones-a-pedir">Porciones a pedir: </p>
                     </div>
                 </div>
             </div>
@@ -118,57 +118,77 @@
                     <button id="continuar" class="botoncito" type="submit">Continuar</button>
                 </div>
             </div>
-        </form>  
+        </form>    
         <script>
-            function sumarSeleccionado() {
-                let total = 0;
-                //Para mostrar en el label del costo
-                const lebel = document.getElementById("costo")
-                // Obtener el radio seleccionado dentro de #unidadm
-                let radioSeleccionado = document.querySelector("#unidadm input[type='radio']:checked");
-                let cantidad = parseFloat(document.getElementById("cantidad").value) || 0;
+        let porcionesDisponibles = parseInt(document.getElementById("porcionesRestantes").textContent) || 0;
+
+        function sumarSeleccionado() {
+            let total = 0;
+            const labelCosto = document.getElementById("costo");
+            const labelPorciones = document.querySelector('.porciones-a-pedir');
+            const porcionesRestantesLabel = document.getElementById("porcionesRestantes"); 
+            const formulario = document.getElementById("formularioPedidos"); 
+
+            let radioSeleccionado = document.querySelector("#unidadm input[type='radio']:checked");
+            let cantidad = parseFloat(document.getElementById("cantidad").value) || 0;
             
-                if (radioSeleccionado) {
-                    let opcion = radioSeleccionado.value.split('|'); 
-                    let precioUnidad = parseFloat(opcion[2]); // El precio está en la tercera parte del valor
-                    total += isNaN(precioUnidad) ? 0 : precioUnidad;
-                }
-            
-                // Procesar selects con id que empieza por 'atributo'
-                let selectsAtributos = document.querySelectorAll("select[id^='atributo']");
-                
-                selectsAtributos.forEach(select => {
-                    let opcionAtributoSeleccionada = select.selectedOptions[0];
-                    if (opcionAtributoSeleccionada) {
-                        let precioAtributo = parseFloat(opcionAtributoSeleccionada.value.split('|')[1]);
-                        total += isNaN(precioAtributo) ? 0 : precioAtributo;
-                    }
-                });
-            
-                // Multiplicar por la cantidad ingresada
-                total *= cantidad;
-            
-                // Actualizar el valor del costo y mostrarlo en el label
-               
-                lebel.textContent = total.toFixed(2);
+            let cantidadPorciones = 0; 
+
+            if (radioSeleccionado) {
+                let opcion = radioSeleccionado.value.split('|'); 
+                let precioUnidad = parseFloat(opcion[2]);
+                cantidadPorciones = parseFloat(opcion[0]); 
+                total += isNaN(precioUnidad) ? 0 : precioUnidad;
             }
-            
-            // Recalcular el total cuando el usuario cambie la cantidad
-            const btn = document.querySelectorAll('.flechitas');
-            btn.forEach(b=>{
-                b.addEventListener('click',()=>{
-                    sumarSeleccionado();
-                });
+
+            let selectsAtributos = document.querySelectorAll("select[id^='atributo']");
+            selectsAtributos.forEach(select => {
+                let opcionAtributoSeleccionada = select.selectedOptions[0];
+                if (opcionAtributoSeleccionada) {
+                    let precioAtributo = parseFloat(opcionAtributoSeleccionada.value.split('|')[1]);
+                    total += isNaN(precioAtributo) ? 0 : precioAtributo;
+                }
             });
+
+            total *= cantidad;
             
-            
-            // Ejecutar la función al cargar la página
-            window.onload = function() {
+            labelCosto.textContent = total.toFixed(2);
+
+            let porcionesTotales = cantidadPorciones * cantidad;
+            labelPorciones.textContent = `Porciones a pedir: ${porcionesTotales}`;
+
+            let porcionesRestantes = porcionesDisponibles - porcionesTotales;
+
+            if (porcionesRestantes < 0) {
+                porcionesRestantesLabel.textContent = "SIN RESERVA"; 
+                porcionesRestantesLabel.style.color = 'red'; 
+                formulario.querySelector('button[type="submit"]').disabled = true;
+            } else {
+                porcionesRestantesLabel.textContent = porcionesRestantes; 
+                porcionesRestantesLabel.style.color = ''; 
+                formulario.querySelector('button[type="submit"]').disabled = false; 
+            }
+
+            if (porcionesRestantes <= 0) {
+                document.querySelector(".flechitas.incrementar").disabled = true;
+                document.getElementById("cantidad").disabled = true;
+            } else {
+                document.querySelector(".flechitas.incrementar").disabled = false;
+                document.getElementById("cantidad").disabled = false;
+            }
+        }
+
+        const btn = document.querySelectorAll('.flechitas');
+        btn.forEach(b => {
+            b.addEventListener('click', () => {
                 sumarSeleccionado();
-            };
-        
-        </script>  
-        
+            });
+        });
+
+        window.onload = function () {
+            sumarSeleccionado();
+        };
+        </script>
     </div>
 </div>
 <x-pie/>
