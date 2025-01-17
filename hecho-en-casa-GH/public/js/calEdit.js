@@ -1,8 +1,6 @@
-let validoEnviar = true
-
 document.addEventListener('DOMContentLoaded', function () {
     const numbers = document.getElementById("numbers");
-    validoEnviar = false
+    console.log('entro')
     // Delegación de eventos: Detectar clics solo en elementos con la clase "available"
     numbers.addEventListener("click", function (e) {
         const clickedDay = e.target;
@@ -12,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (previouslySelected) {
                 previouslySelected.classList.remove("selected");
             }
-            console.log('adentro')
+
             console.log(clickedDay)
             // Seleccionar el nuevo día
             clickedDay.classList.add("selected");
@@ -21,25 +19,18 @@ document.addEventListener('DOMContentLoaded', function () {
             const diaNumero = clickedDay.textContent;
             const mes = document.getElementById("mes").value || new Date().getMonth() + 1;
             const anio = document.getElementById("anio").value || new Date().getFullYear();
+
             const fecha = `${anio}-${String(mes).padStart(2, "0")}-${String(diaNumero).padStart(2, "0")}`;
             console.log("Fecha seleccionada:", fecha);
-
-            console.log (fecha)
 
             // Guardar en el campo oculto
             const inputFecha = document.getElementById("fechaSeleccionada");
             if (inputFecha) {
                 inputFecha.value = fecha;
             }
-
-            validoEnviar = true
-
-            console.log('1' + validoEnviar)
         }
     });
 });
-
-
 
 
 //Para la hora
@@ -116,34 +107,5 @@ document.addEventListener("DOMContentLoaded", () => {
     decrementarBtn.addEventListener("click", decrementarHora);
     horaInput.addEventListener("blur", validarHoraIngresada);
 
-    if (horaInput.value.trim() === "") {
-        validoEnviar = false
-    }  
-
-    console.log('2' + validoEnviar)
+    console.log(horaInput);
 });
-
-document.addEventListener("DOMContentLoaded", () => {
-    // Seleccionar el formulario y el botón de envío
-    const formulario = document.getElementById("cambioFecha");
-    const enviarFormulario = document.getElementById("enviarFormulario");
-
-    console.log('3' + validoEnviar)
-
-    if (validoEnviar){
-         // Enviar el formulario solo cuando se hace clic en el botón con id 'enviarFormulario'
-         enviarFormulario.addEventListener("click", function() {
-            formulario.submit(); // Enviar el formulario cuando se hace clic en el botón específico
-        });
-        console.log('5' + validoEnviar)
-    } else {
-       // Detener el envío del formulario cuando se presiona cualquier botón
-        formulario.addEventListener("submit", function(event) {
-            event.preventDefault(); // Detiene el envío del formulario por defecto
-
-            alert('Por favor, seleccione una fecha o una hora')
-        });
-        console.log('4' + validoEnviar)
-    }
-});
-
