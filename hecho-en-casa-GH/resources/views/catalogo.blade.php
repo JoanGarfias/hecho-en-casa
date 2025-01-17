@@ -52,12 +52,27 @@
         <div id="productos">
             @foreach($catalogo as $producto)
             <div class="main-container">
-                <form id="formulario" method="POST" action="{{route("fijo.catalogo.post")}}">
+                <form id="formulario" method="POST" action="{{ route('fijo.catalogo.post') }}">
                     @csrf
                     <input type="hidden" name="id_postre" value="{{ $producto->id_postre }}">
                     <input type="hidden" name="nombre_postre" value="{{ $producto->nombre }}">
                     <h2>{{ $producto->nombre }}</h2>
                     <img src="{{ $producto->imagen }}" alt="{{ $producto->nombre }}">
+                    <div class="outer-circle">
+                        @if(isset($producto->Presentaciones) && $producto->Presentaciones->isNotEmpty())
+                            @foreach($producto->Presentaciones as $presentacion)
+                            <div class="price-circle">
+                                <span>{{ $presentacion->cantidad }} {{ $presentacion->nombre_unidad }}:</span>
+                                <span>${{ number_format($presentacion->precio_um, 2) }}</span>
+                            </div>
+                            @endforeach
+                        @else
+                            <div class="price-circle">
+                                <span>No disponible:</span>
+                                <span>$0.00</span>
+                            </div>
+                        @endif
+                    </div>
                     <div class="description-container">
                         <span>{{ $producto->descripcion }}</span>
                         <img class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
@@ -67,6 +82,9 @@
             @endforeach
         </div>
     </main>
+    
+    
+    
     
 
     <script>
@@ -98,6 +116,31 @@
         });
 
     </script>
+
+
+<script>
+    // Esto es para ver el contenido que retorna las categorías y el catálogo
+    let categorias = @json($categorias);
+    let catalogo = @json($catalogo);
+
+    console.log("Categorías:", categorias);
+    console.log("Catálogo completo:", catalogo);
+
+    // Iterar sobre el catálogo para extraer precios
+    catalogo.forEach(postre => {
+        console.log(`Postre: ${postre.nombre}`);
+        if (postre.Presentaciones && postre.Presentaciones.length > 0) {
+            postre.Presentaciones.forEach(presentacion => {
+                console.log(`- Precio: ${presentacion.precio_um}`);
+                console.log(`  Cantidad: ${presentacion.cantidad}`);
+                console.log(`  Unidad: ${presentacion.nombre_unidad}`);
+            });
+        } else {
+            console.log("- No hay presentaciones para este postre.");
+        }
+    });
+</script>
+
 
 <x-pie/>
 

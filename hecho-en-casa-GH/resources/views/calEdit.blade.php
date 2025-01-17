@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="botAceptar">
-                            <button class="botonPr aceptandoFecha" type="submit" value="Enviar">Aceptar fecha y hora</button>
+                            <button class="botonPr aceptandoFecha" type="submit" value="Enviar" id="enviarFormulario">Aceptar fecha y hora</button>
                         </div>
                         @csrf
                         <input type="hidden" name="mes" id="mes" value="">

@@ -16,15 +16,15 @@
                 <div class="columna">
                     <div class="fila">
                         <label for="fechaEntrega">Fecha de entrega:</label>
-                        <input type="text" id="fechaEntrega" name="fechaEntrega" placeholder="{{session('fecha')}}" readonly>
+                        <label for="" id="fechaEntrega" name="fechaEntrega" class="paraMostrar">{{session('fecha')}}</label>
                     </div>
                     <div class="fila">
                         <label for="horaEntrega">Hora de entrega: </label>
-                        <input type="text" id="horaEntrega" name="horaEntrega" placeholder="{{session('hora')}}" readonly>
+                        <label for="" id="horaEntrega" name="horaEntrega" class="paraMostrar">{{session('hora')}}</label>
                     </div>
                     <div class="fila">
                         <label for="tipoPostre">Tipo de postre:</label>
-                        <input type="text" id="tipoPostre" name="tipoPostre" placeholder="Pastel" readonly>
+                        <label for="" id="tipoPostre" name="tipoPostre" class="paraMostrar">Pastel</label>                       
                     </div>
                     <div class="fila">
                         <label for="porciones">Porciones:</label>
@@ -147,7 +147,9 @@
 
                     <div class="fila"> 
                         <label for="costo">Costo:</label>
-                        <input type="text" id="costo" name="costo" readonly>
+                        <label for="" id="costo" name="costo" class="paraMostrar"></label>
+                       <!--Si ocupas mostrar el costo acá necesitas: const lebel = document.getElementById("costo")
+                        lebel.textContent = total.toFixed(2); o puedes ver como ejemplo el archivo "pedidos.blade.php"-->
                         <br>
                         <p class="nota">NOTA: El costo es aproximado, el precio final puede variar según su ubicación.</p>
                     </div>
