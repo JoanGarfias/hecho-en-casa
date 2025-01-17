@@ -16,11 +16,11 @@
                 <div class="columna">
                     <div class="fila">
                         <label for="fechaEntrega">Fecha de entrega:</label>
-                        <input type="text" id="fechaEntrega" name="fechaEntrega" placeholder="{{session('fecha_entrega')}}" readonly>
+                        <label for="" class="paraMostrar" id="fechaEntrega" name="fechaEntrega">{{session('fecha_entrega')}}</label>
                     </div>
                     <div class="fila">
                         <label for="horaEntrega">Hora de entrega:</label>
-                        <input type="text" id="horaEntrega" name="horaEntrega" placeholder="{{session('hora_entrega')}}" readonly>
+                        <label for=""  class="paraMostrar" id="horaEntrega" name="horaEntrega">{{session('hora_entrega')}}</label>
                         <!--<div class="hora-selector">
                             <input type="time" id="horaEntrega" name="horaEntrega" min="11:00" max="19:00" required>
                             <div class="boton-wrapper">
@@ -31,7 +31,7 @@
                     </div>
                     <div class="fila">
                         <label for="tipoPostre">Tipo de postre:</label>
-                        <input type="text" id="tipoPostre" name="tipoPostre" placeholder="{{session('nombre_categoria')}}" readonly>
+                        <label for="" id="tipoPostre" name="tipoPostre" class="paraMostrar" >{{session('nombre_categoria')}}</label>
                     </div>
                     <div class="fila">
                         <label for="unidad_m"> 
@@ -68,7 +68,7 @@
                     </div>
                     <div class="fila">
                         <label for="sabor">Sabor:</label>
-                        <input type="text" id="sabor" name="sabor" placeholder="{{session('sabor_postre')}}" readonly>
+                        <label for="" id="sabor" name="sabor" class="paraMostrar">{{session('sabor_postre')}}</label>
                     </div>
                 </div>
 
@@ -97,7 +97,8 @@
                     </div>
                     <div class="fila">
                         <label for="costo">Costo:</label>
-                        <input type="number" id="costo" name="costo" readonly><br>
+                        <label for="" id="costo" name="costo" class="paraMostrar"></label>
+                        <br>
                         <p class="nota">NOTA: El costo es aproximado, el precio final puede variar según su ubicación.</p>
                     </div>
                 </div>
@@ -119,7 +120,8 @@
         <script>
             function sumarSeleccionado() {
                 let total = 0;
-            
+                //Para mostrar en el label del costo
+                const lebel = document.getElementById("costo")
                 // Obtener el radio seleccionado dentro de #unidadm
                 let radioSeleccionado = document.querySelector("#unidadm input[type='radio']:checked");
                 let cantidad = parseFloat(document.getElementById("cantidad").value) || 0;
@@ -144,8 +146,9 @@
                 // Multiplicar por la cantidad ingresada
                 total *= cantidad;
             
-                // Actualizar el valor del costo
-                document.getElementById("costo").value = total.toFixed(2);
+                // Actualizar el valor del costo y mostrarlo en el label
+               
+                lebel.textContent = total.toFixed(2);
             }
             
             // Recalcular el total cuando el usuario cambie la cantidad
