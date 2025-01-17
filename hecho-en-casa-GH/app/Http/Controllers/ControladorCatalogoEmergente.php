@@ -37,7 +37,6 @@ class ControladorCatalogoEmergente extends Controller
             Log::info('Cache is empty or expired.');
             return response()->json([]);
         }
-
         return view('emergentes', compact('emergentes'));
     }
 
@@ -47,19 +46,20 @@ class ControladorCatalogoEmergente extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $idPostre = $request->input('id_postre');
-        $tipo_postre = $request->input('tipo_postre');
-        
+
         $postre = Cache::remember('postres', 30, function () use ($idPostre){
             return Catalogo::where('id_postre', $idPostre)->first();
         });
 
+        
         $precio = $postre->precio_emergentes;
 
         session([
             'id_postre' => $idPostre,
             'precio' => $precio,
-            'tipo_postre' => $tipo_postre,
+            'tipo_postre_e' => $postre->id_tipo_postre,
         ]);
+
         
         return redirect()->route('emergente.calendario.get');
     }
