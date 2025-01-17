@@ -14,10 +14,10 @@ class ControladorCatalogoEmergente extends Controller
 {
 
     public function mostrar(Request $request){
-    /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-    session()->put('id_tipopostre', 'emergente');
-    session()->put('proceso_compra', $request->route()->getName());
-    /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('id_tipopostre', 'emergente');
+        session()->put('proceso_compra', $request->route()->getName());
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $emergentes = Cache::remember('catalogoemergentes', 30, function () {
             return [
@@ -46,16 +46,22 @@ class ControladorCatalogoEmergente extends Controller
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
-        $idPostre = $request->input('comprar');
+        $idPostre = $request->input('id_postre');
+        $tipo_postre = $request->input('tipo_postre');
         
         $postre = Cache::remember('postres', 30, function () use ($idPostre){
             return Catalogo::where('id_postre', $idPostre)->first();
         });
 
         $precio = $postre->precio_emergentes;
-        $tipo_postre = $postre->id_tipopostre;
+
+        session([
+            'id_postre' => $idPostre,
+            'precio' => $precio,
+            'tipo_postre' => $tipo_postre,
+        ]);
         
-        return redirect()->route('calendario.post', compact('idPostre', 'precio', 'tipo_postre'));
+        return redirect()->route('emergente.calendario.get');
     }
 
     public function seleccionar(Request $request){
@@ -80,19 +86,6 @@ class ControladorCatalogoEmergente extends Controller
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
-
-        //ESTO DEBERIA JALARSE DE LA VISTA ANTERIOR AQUI SOLO VA UN EJEMP
-        session([
-            'id_u' => "1", //<----OJITO AQUI DEBERIA DE JALARSE EL ID DE LA SESION
-            //RECORDARIO DE ACTUALIZAR ESTO CUANDO SE MANEJE LA SESION
-            //TALVEZ AQUI GUARDEMOS EL ID DEL USUARIO O ANTES PERO HAY QUE RECUPERARLO CUANDO INICIE SESION
-            //O DE LA CACHE CREO PERO CON RECORDATORIO ->>>>>>>>>>>>
-            'fecha' => "2025-01-03",
-            'hora_entrega' => "12:00",
-            'postre' => "30",
-            'cantidad_minima' => "4",
-        ]);
-
         //ESTO ES LA CONSULTA A PARTIR DEL ID QUE ME LLEGO DE LA VISTA ANTERIOR
         $postre = Cache::remember('postresession', 10, function () {
             return Catalogo::where('id_postre', session('postre'))
@@ -103,7 +96,7 @@ class ControladorCatalogoEmergente extends Controller
             'nombre_postre' => $postre->nombre,
         ]);
 
-        return view('detallesEmergente');
+        return view('pedidosTempPop');
     }
 
     public function seleccionarDetalles(Request $request){    

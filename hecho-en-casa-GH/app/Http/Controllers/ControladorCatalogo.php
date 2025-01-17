@@ -160,7 +160,7 @@ class ControladorCatalogo extends Controller
         $fechaEscogida = $request->input('fechaSeleccionada');
         $horaEntrega = $request->input('horaEntrega');
         $postre = session('id_postre');
-        $tipopostre = session('id_tipopostre');
+        $tipopostre = session('tipo_postre');
         session(['id_usuario' => Cookie::get('user_id')]);
         session(['fecha_entrega' => $fechaEscogida]);
         session(['hora_entrega' => $horaEntrega]);
@@ -232,8 +232,6 @@ class ControladorCatalogo extends Controller
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
                 session([
-                    'fecha' => $fechaEscogida,
-                    'postre' => $postre,
                     'porciones_dia' => $porciones_dia,
                 ]);
 
