@@ -395,7 +395,16 @@ class ControladorCatalogo extends Controller
         //$costo = intval($request->input('costo'));
         $costoUM = PostreFijoUnidad::where('id_pf', $id_postre)->first();
         $costo = $costoUM->precio_um;
-        $id_usuario = session('id_usuario');
+        $usuario = Cache::remember('usuario', 30, function () {
+            return usuario::where('id_u', session('id_usuario'))->first();
+        });
+
+        $direccion = $usuario->calle_u . " " . $usuario->num_exterior_u . ", " . $usuario->colonia_u . ", " .
+                    $usuario->ciudad_u . ", " . $usuario->estado_u;
+        session([
+            'telefono' => $usuario->telefono,
+            'direccion' => $direccion,
+        ]);
         session(['tipo_entrega'=> $tipo_entrega]);
 
         $fechaEscogida = session('fecha_entrega');
@@ -475,7 +484,7 @@ class ControladorCatalogo extends Controller
 
             // Instanciación de Pedido
             $pedido = new Pedido;
-            $pedido->id_usuario = $id_usuario;
+            $pedido->id_usuario = session('id_usuario');
             $pedido->id_tipopostre = $id_tipopostre;
             $pedido->id_seleccion_usuario = $id_nuevo_postre; 
             $pedido->porcionespedidas = $unidadm * $cantidad; 
