@@ -156,7 +156,7 @@ class ControladorCatalogo extends Controller
 
     public function seleccionarFecha(Request $request)
     {
-
+        
         $fechaEscogida = $request->input('fechaSeleccionada');
         $horaEntrega = $request->input('horaEntrega');
         $postre = session('id_postre');
@@ -227,6 +227,7 @@ class ControladorCatalogo extends Controller
                 }
                 //break;
             case "emergente":
+                dd("emergente");
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
                 session()->put('proceso_compra', 'emergente.calendario.post');
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
