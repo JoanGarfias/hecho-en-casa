@@ -487,7 +487,7 @@ class ControladorCatalogo extends Controller
         //ANEXAR LÓGICA PARA OBTENER LA DIRECCIÓN DEL USUARIO
 
         $datos = session('datos_pedido');
-        return view('direccionFijo', compact('datos'));
+        return view('ConfirmaDato', compact('datos'));
     }
 
     public function guardarDireccion(Request $request){ //POST: Mandamos a la ruta del ticket
