@@ -43,15 +43,16 @@
                             </div>
                         </div>
                         <div class="botAceptar">
-                            <button class="aceptandoFecha">Aceptar fecha y hora</button>
+                            <button class="botonPr aceptandoFecha" type="submit" value="Enviar">Aceptar fecha y hora</button>
                         </div>
                         @csrf
                         <input type="hidden" name="mes" id="mes" value="">
                         <input type="hidden" name="anio" id="anio" value="">
                         <input type="hidden" name="fechaSeleccionada" id="fechaSeleccionada" value="">
+                        <input type="hidden" name="botonPress" id="botonPress" value="">
                         <div class="arrows">
-                            <button type="submit" id="prev-month" class="arrow">⬅</button>
-                            <button type="submit" id="next-month" class="arrow">➡</button>
+                            <button type="submit" id="prev-month" class="arrow botonPr" value="Mover">⬅</button>
+                            <button type="submit" id="next-month" class="arrow botonPr" value="Mover">➡</button>
                         </div>                        
                     </form>
                 </div>
@@ -80,4 +81,5 @@
             </body>
             <x-pie/>
             <script src="{{ asset('js/meses.js') }}"></script>
+            <script src="{{asset('js/rutaCalEdit.js')}}"></script>
            

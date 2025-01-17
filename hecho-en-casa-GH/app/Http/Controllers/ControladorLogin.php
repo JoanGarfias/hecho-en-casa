@@ -54,7 +54,7 @@ class ControladorLogin extends Controller
                     case "personalizado":
                         return redirect()->route('personalizado.catalogo.get');
                         break;
-                    case "temporada": case "pop-up":
+                    case "emergente":
                         return redirect()->route('emergente.catalogo.get');
                         break;
                     default:
@@ -90,7 +90,7 @@ class ControladorLogin extends Controller
                 return redirect()->back()
                 ->with('success', 'Se ha enviado un enlace de recuperación a tu correo.');
             }
-            return redirect()->route('login.get')
+            return redirect()->back()
                 ->with('error', 'Correo no registrado.');
         }elseif($action == 'register'){
             return redirect()->route('registrar.get');

@@ -56,6 +56,7 @@ class ControladorCatalogoEmergente extends Controller
 
         session([
             'id_postre' => $idPostre,
+            'id_tipopostre' => 'emergentes',
             'precio' => $precio,
             'tipo_postre_e' => $postre->id_tipo_postre,
         ]);
