@@ -68,6 +68,9 @@
                <label for="numero">Número ext:</label>
                <input type="text" id="numeroExt" name="numeroE">
 
+               <label for="referencias">Referencias:</label>
+               <input type="text" id="referencias" name="referencia">
+
               <div class="checklist">
                <label>
                   <input type="checkbox" name="opciones" value="opcion1"> Establecer como predeterminada
