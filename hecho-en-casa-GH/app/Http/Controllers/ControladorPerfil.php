@@ -51,7 +51,7 @@ class ControladorPerfil extends Controller
         if($cambiartelefono == true){//Si el boton de editar telefono esta activo
             $telefono = $request->input('telefono');
             try{
-                $updateTelefonotry = Usuario::select('telefono')
+                $updateTelefonotry = usuario::select('telefono')
                 ->where('id_u', Cache::get('usuario')->id_u)->update([
                     'telefono' => $telefono,
                 ]);
@@ -69,7 +69,7 @@ class ControladorPerfil extends Controller
             $num_interior_u = $request->input('NumInt');
             $referencia_u = $request->input('referencia');
             try{
-                $updateTelefonotry = Usuario::select('Codigo_postal_u','estado_u','ciudad_u','colonia_u','calle_u','num_exterior_u','num_interior_u','referencia_u',)
+                $updateTelefonotry = usuario::select('Codigo_postal_u','estado_u','ciudad_u','colonia_u','calle_u','num_exterior_u','num_interior_u','referencia_u',)
                 ->where('id_u', Cache::get('usuario')->id_u)->update([
                     'Codigo_postal_u' => $Codigo_postal_u,
                     'estado_u' => $estado_u,

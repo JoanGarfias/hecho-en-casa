@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\Correo;
-use App\Models\Usuario;
+use App\Models\usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cookie;
@@ -29,7 +29,7 @@ class ControladorLogin extends Controller
                 'g-recaptcha-response' => 'required|captcha',
             ]);
     
-            $usuario = Usuario::select('id_u', 'contraseña')
+            $usuario = usuario::select('id_u', 'contraseña')
             ->where('correo_electronico', $credentials['email'])
             ->first();
 
@@ -71,7 +71,7 @@ class ControladorLogin extends Controller
                 'email' => 'required|email',
             ]);
     
-            $usuario = Usuario::where('correo_electronico', $credentials['email'])->first();
+            $usuario = usuario::where('correo_electronico', $credentials['email'])->first();
             if($usuario){
                 $correo = $credentials['email'];
                 $token = Str::random(64);
@@ -104,7 +104,7 @@ class ControladorLogin extends Controller
 
         if ($sessionToken) {
             // Buscar al usuario con ese token de sesión
-            $usuario = Usuario::where('token_sesion', $sessionToken)->first();
+            $usuario = usuario::where('token_sesion', $sessionToken)->first();
     
             if ($usuario) {
                 //Se elimina el token de la bd
