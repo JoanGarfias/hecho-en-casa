@@ -127,7 +127,7 @@ Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(funct
     Route::get('emergentes/detalles-direccion', [ControladorCatalogoEmergente::class, 'mostrarDireccion'])->name('emergente.direccion.get');
     Route::post('emergentes/detalles-direccion', [ControladorCatalogoEmergente::class, 'seleccionarDireccion'])->name('emergente.direccion.post');
 
-    Route::get('emergentes/ticket/', [ControladorCatalogo::class, 'mostrarTicket'])->name('emergente.ticket.get');
+    Route::get('emergentes/ticket/', [ControladorCatalogoEmergente::class, 'mostrarTicket'])->name('emergente.ticket.get');
 });
 
 
