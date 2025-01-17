@@ -156,6 +156,12 @@ class ControladorCatalogo extends Controller
 
     public function seleccionarFecha(Request $request)
     {
+        $botonPresionado = $request->input('botonPress');
+        if($botonPresionado=="Mover"){
+            $mes = $request->input('mes');
+            $anio = $request->input('anio');
+            return redirect()->route('fijo.calendario.get',['mes' => $mes, 'anio' => $anio]);
+        }
 
         $fechaEscogida = $request->input('fechaSeleccionada');
         $horaEntrega = $request->input('horaEntrega');
