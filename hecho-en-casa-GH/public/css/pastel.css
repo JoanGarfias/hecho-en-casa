@@ -25,11 +25,12 @@ body {
 .container {
     text-align: center;
     padding: 20px;
-    margin-left: auto; /* Deja espacio para el menú lateral */
+    margin-left: 80px; /* Deja espacio para el menú lateral */
     max-width: 100%; /* Ajustar el ancho disponible */
     margin-top: -150px;
     width: 100%;
     margin-bottom: 50px;
+    margin-right: auto;
 }
 
 .container h1 {
