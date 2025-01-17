@@ -32,10 +32,12 @@ Route::get('/calendario/{mes?}/{anio?}', [ControladorCalendario::class, 'index']
 ->middleware(ProtectorPeticiones::class);
 Route::post('/calendario/{mes?}/{anio?}', [ControladorCalendario::class, 'actualizar'])->name('calendario.post');
 
-Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])->name('perfil.get')
-->middleware([ProtectorSesion::class, ProtectorPeticiones::class]);
-Route::post('/perfil', [ControladorPerfil::class, 'editar'])->name('perfil.post')
-->middleware([ProtectorSesion::class, ProtectorPeticiones::class]);
+/*PERFIL*/
+
+Route::middleware([ProtectorSesion::class, ProtectorPeticiones::class])->group(function(){
+    Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])->name('perfil.get');
+    Route::post('/perfil', [ControladorPerfil::class, 'editar'])->name('perfil.post');
+});
 
 /* PROCESO DE LOGIN */
 Route::middleware([ProtectorPeticiones::class])->group(function(){
