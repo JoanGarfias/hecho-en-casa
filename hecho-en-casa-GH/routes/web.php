@@ -46,9 +46,9 @@ Route::middleware([ProtectorPeticiones::class])->group(function(){
     ->middleware([ProtectorRouteUserLogin::class]); 
 });
 
-Route::middleware([ProtectorSesion::class])->group(function(){
+//Route::middleware([ProtectorSesion::class])->group(function(){
     Route::get('/cerrar-sesion', [ControladorLogin::class, 'logout'])->name('cerrarsesion.get');
-});
+//});
 
 /* PROCESO DE REGISTRO */
 

@@ -29,15 +29,8 @@
                         <img src="{{ asset('img/usuario.png') }}" alt="Usuario">
                     </a>
                     <div class="dropdown-menu" id="menu-usuario" style="display: none;">
-                        @if(session()->has('user_id'))
-                            <!-- Usuario logueado -->
-                            <button onclick="window.location.href='{{ route('perfil.get') }}'">Perfil</button>
-                            <button onclick="window.location.href='{{ route('cerrarsesion.get') }}'">Cerrar sesión</button>
-                        @else
-                            <!-- Usuario no logueado -->
-                            <button onclick="window.location.href='{{ route('login.get') }}'">Iniciar sesión</button>
-                            <button onclick="window.location.href='{{ route('registrar.get') }}'">Registrarme</button>
-                        @endif
+                        <button id="primer_boton_perfil"></button>
+                        <button id="segundo_boton_perfil"></button>
                     </div>
                 </li>
             </ul>
@@ -47,6 +40,52 @@
 <!--Para la animación del logo de usuario-->
 
 <script src="{{ asset('js/icono.js') }}" defer></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    function getCookieByName(name) {
+    const cookieString = document.cookie;
+    const cookies = cookieString.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + '=')) {
+            return cookie.substring(name.length + 1);
+        }
+    }
+    return null;
+    }
+
+    // Referencia a los botones
+    const boton1 = document.getElementById('primer_boton_perfil');
+    const boton2 = document.getElementById('segundo_boton_perfil');
+
+    let sesion = getCookieByName('user_id');
+    console.log(sesion);
+    if (sesion) {
+        // Usuario autenticado: Mostrar "Perfil" y "Cerrar sesión"
+        boton1.textContent = 'Perfil';
+        boton1.onclick = () => {
+            window.location.href = '{{ route("perfil.get") }}';
+        };
+
+        boton2.textContent = 'Cerrar sesión';
+        boton2.onclick = () => {
+            window.location.href = '{{ route("cerrarsesion.get") }}';
+        };
+    } else {
+        // Usuario no autenticado: Mostrar "Iniciar sesión" y "Registrarme"
+        boton1.textContent = 'Iniciar sesión';
+        boton1.onclick = () => {
+            window.location.href = '{{ route("login.get") }}';
+        };
+
+        boton2.textContent = 'Registrarme';
+        boton2.onclick = () => {
+            window.location.href = '{{ route("registrar.get") }}';
+        };
+    }
+});
+</script>
 
 </body> 
 </html>
