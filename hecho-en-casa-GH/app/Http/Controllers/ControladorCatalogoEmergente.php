@@ -14,11 +14,11 @@ class ControladorCatalogoEmergente extends Controller
 {
 
     public function mostrar(Request $request){
-        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-        session()->put('id_tipopostre', 'emergente');
-        session()->put('proceso_compra', $request->route()->getName());
-        //No deberia estar aca pero jeyson no puso un POST para el catalogo
-        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+    /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+    session()->put('id_tipopostre', 'emergente');
+    session()->put('proceso_compra', $request->route()->getName());
+    //No deberia estar aca pero jeyson no puso un POST para el catalogo
+    /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $emergentes = Cache::remember('catalogoemergentes', 30, function () {
             return [
@@ -38,8 +38,7 @@ class ControladorCatalogoEmergente extends Controller
             Log::info('Cache is empty or expired.');
             return response()->json([]);
         }
-        
-        
+
         return view('emergentes', compact('emergentes'));
     }
 
@@ -47,22 +46,17 @@ class ControladorCatalogoEmergente extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-        $idPostre = $request->input('id_postre');
+
+        $idPostre = $request->input('comprar');
         
         $postre = Cache::remember('postres', 30, function () use ($idPostre){
             return Catalogo::where('id_postre', $idPostre)->first();
         });
 
         $precio = $postre->precio_emergentes;
-        $tipo_postre = $postre->id_tipo_postre;
+        $tipo_postre = $postre->id_tipopostre;
         
-        session([
-            'id_postre' => $idPostre,
-            'precio' => $precio,
-            'tipo_postre' => $tipo_postre,
-        ]);
-
-        return redirect()->route('emergente.calendario.get');
+        return redirect()->route('calendario.post', compact('idPostre', 'precio', 'tipo_postre'));
     }
 
     public function seleccionar(Request $request){
@@ -88,6 +82,18 @@ class ControladorCatalogoEmergente extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
 
+        //ESTO DEBERIA JALARSE DE LA VISTA ANTERIOR AQUI SOLO VA UN EJEMP
+        session([
+            'id_u' => "1", //<----OJITO AQUI DEBERIA DE JALARSE EL ID DE LA SESION
+            //RECORDARIO DE ACTUALIZAR ESTO CUANDO SE MANEJE LA SESION
+            //TALVEZ AQUI GUARDEMOS EL ID DEL USUARIO O ANTES PERO HAY QUE RECUPERARLO CUANDO INICIE SESION
+            //O DE LA CACHE CREO PERO CON RECORDATORIO ->>>>>>>>>>>>
+            'fecha' => "2025-01-03",
+            'hora_entrega' => "12:00",
+            'postre' => "30",
+            'cantidad_minima' => "4",
+        ]);
+
         //ESTO ES LA CONSULTA A PARTIR DEL ID QUE ME LLEGO DE LA VISTA ANTERIOR
         $postre = Cache::remember('postresession', 10, function () {
             return Catalogo::where('id_postre', session('postre'))
@@ -97,8 +103,8 @@ class ControladorCatalogoEmergente extends Controller
         session([   
             'nombre_postre' => $postre->nombre,
         ]);
-        
-        return view('pedidosTempPop');
+
+        return view('detallesEmergente');
     }
 
     public function seleccionarDetalles(Request $request){    
@@ -112,6 +118,8 @@ class ControladorCatalogoEmergente extends Controller
         session()->put('opcion_envio', $tipo_entrega);
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
+
 
         session([
             'cantidad_pedida' => $validated['cantidad'],
@@ -271,22 +279,5 @@ class ControladorCatalogoEmergente extends Controller
 
         return redirect()->route('emergente.ticket.get');   
 
-    }
-
-    public function mostrarTicket(){
-
-        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-        session()->forget('proceso_compra');
-        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-
-        $pedido = Pedido::find(session("folio"));
-        $fechaHoraEntrega = $pedido->fecha_hora_entrega;
-
-        list($fecha, $hora) = explode(' ', $fechaHoraEntrega);
-
-        $usuario = Usuario::find($pedido->id_usuario); 
-        $tipo_entrega = session('tipo_entrega');
-
-        return view('ResumenPedFijo', compact('pedido', 'usuario', 'fecha', 'hora', 'tipo_entrega'));
     }
 }

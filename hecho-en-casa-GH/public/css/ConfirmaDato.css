@@ -71,9 +71,9 @@ label {
 input[type="text"]#telefono {
    width: 50%; /* Asegura que el campo ocupe el ancho completo del contenedor */
    padding: 10px; /* Espaciado interno */
-   font-size: 1rem; /* Tamaño de fuente */
-   border: 10px solid #FCF5C7; /* Borde */
-   border-radius: 5px; /* Bordes redondeados */
+   font-size: 14px; /* Tamaño de fuente */
+   border: 1px solid #ccc; /* Borde */
+   border-radius: 4px; /* Bordes redondeados */
    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
    outline: none; /* Quita el contorno azul predeterminado al enfocar */
    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
@@ -83,16 +83,16 @@ input[type="text"]#telefono {
  input[type="text"], input[type="radio"] {
     margin-top: 5px;
     padding: 8px;
-    border: 10px solid #FCF5C7; /* Borde */
+    border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 1rem;
+    font-size: 14px;
     display: block; /* Coloca cada elemento en una nueva línea */
     margin: 5px 0; /* Espacio entre cada campo */
     text-align: left; /* Alinea el texto del contenido a la izquierda */
  }
  
  button {
-   background-color: #FBAF35;
+   background-color: #D9B87B;
    color: #FFF;
    padding: 10px 20px;
    border: none;
@@ -114,7 +114,7 @@ input[type="text"]#telefono {
  
  button:hover {
    transform: scale(1.1);
-   box-shadow: 0 4px 10px #ffca56;
+   box-shadow: 0 4px 10px #7E643B;
    cursor: pointer;
  }
  

@@ -11,16 +11,15 @@
     
     <div class = "contenedor"><!-- café-->
         <form id="formularioPedidos" action="{{route('fijo.detallesPedido.post')}}" method="POST">
-            @csrf
             <div class="dosColumnas">
                 <div class="columna">
                     <div class="fila">
                         <label for="fechaEntrega">Fecha de entrega:</label>
-                        <label for="" class="paraMostrar" id="fechaEntrega" name="fechaEntrega">{{session('fecha_entrega')}}</label>
+                        <input type="text" id="fechaEntrega" name="fechaEntrega" placeholder="{{session('fecha_entrega')}}" readonly>
                     </div>
                     <div class="fila">
                         <label for="horaEntrega">Hora de entrega:</label>
-                        <label for=""  class="paraMostrar" id="horaEntrega" name="horaEntrega">{{session('hora_entrega')}}</label>
+                        <input type="text" id="horaEntrega" name="horaEntrega" placeholder="{{session('hora_entrega')}}" readonly>
                         <!--<div class="hora-selector">
                             <input type="time" id="horaEntrega" name="horaEntrega" min="11:00" max="19:00" required>
                             <div class="boton-wrapper">
@@ -31,7 +30,7 @@
                     </div>
                     <div class="fila">
                         <label for="tipoPostre">Tipo de postre:</label>
-                        <label for="" id="tipoPostre" name="tipoPostre" class="paraMostrar" >{{session('nombre_categoria')}}</label>
+                        <input type="text" id="tipoPostre" name="tipoPostre" placeholder="{{session('nombre_categoria')}}" readonly>
                     </div>
                     <div class="fila">
                         <label for="unidad_m"> 
@@ -58,7 +57,7 @@
                         <label for="cantidad">Cantidad:</label>
                         <div class="cantidad-wrapper">
                             
-                            <input type="text" id="cantidad" name="cantidad" min="1" value="1">
+                            <input type="text" id="cantidad" name="cantidad" min="{{session('cantidad_minima')}}" value="{{session('cantidad_minima')}}">
                             <div class="boton-wrapper">
                                 <button type="button" class="flechitas incrementar">🔺</button>
                                 <button type="button" class="flechitas decrementar">🔻</button>
@@ -68,7 +67,7 @@
                     </div>
                     <div class="fila">
                         <label for="sabor">Sabor:</label>
-                        <label for="" id="sabor" name="sabor" class="paraMostrar">{{session('sabor_postre')}}</label>
+                        <input type="text" id="sabor" name="sabor" placeholder="{{session('sabor_postre')}}" readonly>
                     </div>
                 </div>
 
@@ -97,11 +96,8 @@
                     </div>
                     <div class="fila">
                         <label for="costo">Costo:</label>
-                        <label for="" id="costo" name="costo" class="paraMostrar"></label>
-                        <br>
+                        <input type="number" id="costo" name="costo" readonly><br>
                         <p class="nota">NOTA: El costo es aproximado, el precio final puede variar según su ubicación.</p>
-                        <p>Porciones restantes del día: <span id="porcionesRestantes">{{session('porciones')}}</span></p> <br>
-                        <p class="porciones-a-pedir">Porciones a pedir: </p>
                     </div>
                 </div>
             </div>
@@ -118,77 +114,55 @@
                     <button id="continuar" class="botoncito" type="submit">Continuar</button>
                 </div>
             </div>
-        </form>    
+        </form>  
         <script>
-        let porcionesDisponibles = parseInt(document.getElementById("porcionesRestantes").textContent) || 0;
-
-        function sumarSeleccionado() {
-            let total = 0;
-            const labelCosto = document.getElementById("costo");
-            const labelPorciones = document.querySelector('.porciones-a-pedir');
-            const porcionesRestantesLabel = document.getElementById("porcionesRestantes"); 
-            const formulario = document.getElementById("formularioPedidos"); 
-
-            let radioSeleccionado = document.querySelector("#unidadm input[type='radio']:checked");
-            let cantidad = parseFloat(document.getElementById("cantidad").value) || 0;
+            function sumarSeleccionado() {
+                let total = 0;
             
-            let cantidadPorciones = 0; 
-
-            if (radioSeleccionado) {
-                let opcion = radioSeleccionado.value.split('|'); 
-                let precioUnidad = parseFloat(opcion[2]);
-                cantidadPorciones = parseFloat(opcion[0]); 
-                total += isNaN(precioUnidad) ? 0 : precioUnidad;
-            }
-
-            let selectsAtributos = document.querySelectorAll("select[id^='atributo']");
-            selectsAtributos.forEach(select => {
-                let opcionAtributoSeleccionada = select.selectedOptions[0];
-                if (opcionAtributoSeleccionada) {
-                    let precioAtributo = parseFloat(opcionAtributoSeleccionada.value.split('|')[1]);
-                    total += isNaN(precioAtributo) ? 0 : precioAtributo;
+                // Obtener el radio seleccionado dentro de #unidadm
+                let radioSeleccionado = document.querySelector("#unidadm input[type='radio']:checked");
+                let cantidad = parseFloat(document.getElementById("cantidad").value) || 0;
+            
+                if (radioSeleccionado) {
+                    let opcion = radioSeleccionado.value.split('|'); 
+                    let precioUnidad = parseFloat(opcion[2]); // El precio está en la tercera parte del valor
+                    total += isNaN(precioUnidad) ? 0 : precioUnidad;
                 }
-            });
-
-            total *= cantidad;
             
-            labelCosto.textContent = total.toFixed(2);
-
-            let porcionesTotales = cantidadPorciones * cantidad;
-            labelPorciones.textContent = `Porciones a pedir: ${porcionesTotales}`;
-
-            let porcionesRestantes = porcionesDisponibles - porcionesTotales;
-
-            if (porcionesRestantes < 0) {
-                porcionesRestantesLabel.textContent = "SIN RESERVA"; 
-                porcionesRestantesLabel.style.color = 'red'; 
-                formulario.querySelector('button[type="submit"]').disabled = true;
-            } else {
-                porcionesRestantesLabel.textContent = porcionesRestantes; 
-                porcionesRestantesLabel.style.color = ''; 
-                formulario.querySelector('button[type="submit"]').disabled = false; 
+                // Procesar selects con id que empieza por 'atributo'
+                let selectsAtributos = document.querySelectorAll("select[id^='atributo']");
+                
+                selectsAtributos.forEach(select => {
+                    let opcionAtributoSeleccionada = select.selectedOptions[0];
+                    if (opcionAtributoSeleccionada) {
+                        let precioAtributo = parseFloat(opcionAtributoSeleccionada.value.split('|')[1]);
+                        total += isNaN(precioAtributo) ? 0 : precioAtributo;
+                    }
+                });
+            
+                // Multiplicar por la cantidad ingresada
+                total *= cantidad;
+            
+                // Actualizar el valor del costo
+                document.getElementById("costo").value = total.toFixed(2);
             }
-
-            if (porcionesRestantes <= 0) {
-                document.querySelector(".flechitas.incrementar").disabled = true;
-                document.getElementById("cantidad").disabled = true;
-            } else {
-                document.querySelector(".flechitas.incrementar").disabled = false;
-                document.getElementById("cantidad").disabled = false;
-            }
-        }
-
-        const btn = document.querySelectorAll('.flechitas');
-        btn.forEach(b => {
-            b.addEventListener('click', () => {
-                sumarSeleccionado();
+            
+            // Recalcular el total cuando el usuario cambie la cantidad
+            const btn = document.querySelectorAll('.flechitas');
+            btn.forEach(b=>{
+                b.addEventListener('click',()=>{
+                    sumarSeleccionado();
+                });
             });
-        });
-
-        window.onload = function () {
-            sumarSeleccionado();
-        };
-        </script>
+            
+            
+            // Ejecutar la función al cargar la página
+            window.onload = function() {
+                sumarSeleccionado();
+            };
+        
+        </script>  
+        
     </div>
 </div>
 <x-pie/>
