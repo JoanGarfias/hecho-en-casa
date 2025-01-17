@@ -70,12 +70,6 @@
     
 
     <script>
-
-        /*Datos de prueba
-        let datos = @json($catalogo);
-        console.log(datos);
-        */
-
         // Función para cambiar la categoría al hacer clic en un enlace del menú lateral
         function cambiarCategoria(event, element) {
             event.preventDefault(); // Evita el comportamiento predeterminado del enlace
