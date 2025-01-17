@@ -11,10 +11,11 @@
    
    <div class="main-container">
     <div class="container">
-       <form id="direccion">
+       <form id="direccion" action="{{route($rutaPost)}}" method="POST">
+            @csrf
            <!-- Teléfono -->
            <label for="telefono">Teléfono:</label>
-           <input type="text" id="telefono" name="telefono" placeholder="{{session('telefono')}}" required>
+           <input type="text" id="telefono" name="telefono" value="{{session('telefono')}}" placeholder="{{session('telefono')}}">
 
            <!-- Ubicación del pedido -->
            <div class="radio-group">

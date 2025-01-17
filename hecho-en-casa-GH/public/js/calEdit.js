@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
     const numbers = document.getElementById("numbers");
-    console.log('entro')
     // Delegación de eventos: Detectar clics solo en elementos con la clase "available"
     numbers.addEventListener("click", function (e) {
         const clickedDay = e.target;
@@ -106,8 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
     incrementarBtn.addEventListener("click", incrementarHora);
     decrementarBtn.addEventListener("click", decrementarHora);
     horaInput.addEventListener("blur", validarHoraIngresada);
-
-    console.log(horaInput);
 });
 
 
