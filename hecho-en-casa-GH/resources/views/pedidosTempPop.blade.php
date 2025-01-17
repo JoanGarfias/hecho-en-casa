@@ -30,7 +30,7 @@
                     </div>
                     <div class="fila">
                         <label for="tipoPostre">Tipo de postre:</label>
-                        <label for="" id="tipoPostre" name="tipoPostre" class="paraMostrar">{{$tipo_postre}}</label>                        
+                        <label for="" id="tipoPostre" name="tipoPostre" class="paraMostrar"></label>                        
                     </div>
                     <div class="fila">
                         <label for="cantidad">Cantidad:</label>
@@ -58,7 +58,7 @@
                     </div>
                     <div class="fila">
                         <label for="costo">Costo:</label>
-                        <label for="" id="costo" name="costo" class="paraMostrar"><{{$precio}}/label>
+                        <label for="" id="costo" name="costo" class="paraMostrar"></label>
                         <br>
                         <p class="nota">NOTA: El costo es aproximado, el precio final puede variar según su ubicación.</p>
                     </div>
