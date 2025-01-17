@@ -24,20 +24,26 @@ Route::get('/', [ControladorInicio::class, 'index'])->name('inicio.get');
 Route::get('/conocenos', [ControladorInicio::class, 'conocenos'])->name('conocenos.get');
 
 
-//Controlador de buscar 
+/*BUSCADOR DE PEDIDOS*/
+
 Route::get('/buscarpedido', [ControladorBuscarPedido::class, 'ObtenerFolio'])->name('buscarpedido.get');
 Route::post('/buscarpedido', [ControladorBuscarPedido::class, 'MostrarPedido'])->name('buscarpedido.post');
+
+/*CALENDARIO NO EDITABLE*/
 
 Route::get('/calendario/{mes?}/{anio?}', [ControladorCalendario::class, 'index'])->name('calendario.get')
 ->middleware(ProtectorPeticiones::class);
 Route::post('/calendario/{mes?}/{anio?}', [ControladorCalendario::class, 'actualizar'])->name('calendario.post');
 
-Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])->name('perfil.get')
-->middleware([ProtectorSesion::class, ProtectorPeticiones::class]);
-Route::post('/perfil', [ControladorPerfil::class, 'editar'])->name('perfil.post')
-->middleware([ProtectorSesion::class, ProtectorPeticiones::class]);
+/*PERFIL*/
+
+Route::middleware([ProtectorSesion::class, ProtectorPeticiones::class])->group(function(){
+    Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])->name('perfil.get');
+    Route::post('/perfil', [ControladorPerfil::class, 'editar'])->name('perfil.post');
+});
 
 /* PROCESO DE LOGIN */
+
 Route::middleware([ProtectorPeticiones::class])->group(function(){
     Route::get('/login', [ControladorLogin::class, 'mostrarLogin'])->name('login.get')
     ->middleware([ProtectorRouteUserLogin::class]);
@@ -45,10 +51,7 @@ Route::middleware([ProtectorPeticiones::class])->group(function(){
     Route::post('/login', [ControladorLogin::class, 'Logear'])->name('login.post')
     ->middleware([ProtectorRouteUserLogin::class]); 
 });
-
-//Route::middleware([ProtectorSesion::class])->group(function(){
-    Route::get('/cerrar-sesion', [ControladorLogin::class, 'logout'])->name('cerrarsesion.get');
-//});
+Route::get('/cerrar-sesion', [ControladorLogin::class, 'logout'])->name('cerrarsesion.get');
 
 /* PROCESO DE REGISTRO */
 
@@ -56,7 +59,8 @@ Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar
 ->middleware([ProtectorPeticiones::class])->middleware([ProtectorRouteUserLogin::class]); //C
 
 Route::middleware([EnlazadorRegistro::class])->group(function () {
-    Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.post')->middleware([ProtectorRouteUserLogin::class]); //C
+    Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.post')
+    ->middleware([ProtectorRouteUserLogin::class]);
     Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena.get');
     Route::post('/contrasena', [ControladorRegistro::class, 'guardarContrasena'])->name('registrar.contrasena.post');
     Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name('registrar.direccion.get');
