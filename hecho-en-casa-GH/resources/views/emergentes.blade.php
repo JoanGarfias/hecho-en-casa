@@ -95,7 +95,16 @@
             </div>
         </div>
     </div>
-    
+    <script>
+        document.addEventListener("DOMContentLoaded", (event) => {
+            let botones = document.querySelectorAll(".shopping-bag");
+            botones.forEach(boton => {
+                boton.addEventListener('click', function(){
+                    document.getElementById('formulario').submit();
+                });
+            });
+        });
+    </script>
     <x-pie/>
     <script src="{{ asset('js/scripte.js') }}"></script>
 </body>
