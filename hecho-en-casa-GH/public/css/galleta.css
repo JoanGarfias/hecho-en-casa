@@ -30,10 +30,13 @@ body {
 }
 
 .contenido-principal {
-    max-width: 800px; /* Ajusta el ancho máximo */
+
     padding: 20px;
-    margin: 50px auto 0; /* Agrega 50px de margen superior, centra horizontalmente */
-    margin-top: -500px; /* Ajusta este valor según la altura del menú lateral */
+    /*margin: 10px ; /* Agrega 50px de margen superior, centra horizontalmente */
+    margin-top: -500px; /* Un margen positivo, consistente */
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 800px; /* Define un límite */
 }
 
 .main-container {

@@ -197,7 +197,6 @@ class ControladorCatalogo extends Controller
                 }
 
                 session([
-                    'id_postre' => $postre,
                     'porciones_dia' => $porciones_dia,
                     'cantidad_minima' => $cantidad_minima,
                 ]);
@@ -255,16 +254,11 @@ class ControladorCatalogo extends Controller
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
-        session([
-            'fecha' => session("fecha_entrega"),
-            'hora_entrega' => session("hora_entrega"),
-        ]);
-
         //COMO SON DATOS DIRECTOS NO ES NECESARIO ESTO
         //if (!session('postre') || !session('fecha')) {
         //    return redirect()->route('seleccionarFecha')->with('error', 'No se ha seleccionado un postre o fecha.');
         //}
-        
+                                                                //session('postre')
         $postre = Catalogo::where('id_postre', session('id_postre'))->first();
         if ($postre) {
             session([
@@ -280,7 +274,7 @@ class ControladorCatalogo extends Controller
             }
 
             //$listaunidad = PostreFijoUnidad::where('id_pf', $postre->id_postre)->get();
-            $listaunidad = PostreFijoUnidad::where('id_pf', $postre->id_postre)->pluck('id_um'); // Obtener solo la columna 'id_um'
+            /*$listaunidad = PostreFijoUnidad::where('id_pf', $postre->id_postre)->pluck('id_um'); // Obtener solo la columna 'id_um'
             if ($listaunidad->isNotEmpty()) {
                 $unidades = []; 
                 foreach ($listaunidad as $id_um) {  // Ahora recorro la lista de 'id_um'
@@ -289,11 +283,30 @@ class ControladorCatalogo extends Controller
                     if ($nombreunidad) {
                         $unidades[] = [
                             'nombreunidad' => $nombreunidad->nombre_unidad,  // 'nombre_unidad' de la tabla 'UnidadMedida'
-                            'cantidadporciones' => $nombreunidad->cantidad,  // 'cantidad' está en 'UnidadMedida'
+                            'cantidadporciones' => $nombreunidad->cantidad, 
                         ];
                     }
-                }
+                }*/
+            $listaunidad = PostreFijoUnidad::where('id_pf', $postre->id_postre)->pluck('id_um'); // Obtener solo la columna 'id_um'
 
+            if ($listaunidad->isNotEmpty()) {
+                    $unidades = []; 
+                    foreach ($listaunidad as $id_um) {  // Ahora recorro la lista de 'id_um'
+                        $nombreunidad = UnidadMedida::where('id_um', $id_um)->first();  //'UnidadMedida' usando 'id_um'
+                        
+                        if ($nombreunidad) {
+                            // Obtener el precio directamente de PostreFijoUnidad utilizando el id_um
+                            $precio = PostreFijoUnidad::where('id_um', $id_um)->where('id_pf', $postre->id_postre)->first(); 
+                            
+                            if ($precio) {
+                                $unidades[] = [
+                                    'nombreunidad' => $nombreunidad->nombre_unidad,  // 'nombre_unidad' de la tabla 'UnidadMedida'
+                                    'cantidadporciones' => $nombreunidad->cantidad,  // 'cantidad' de 'UnidadMedida'
+                                    'precio' => $precio->precio_um,  // 'precio_um' de 'PostreFijoUnidad'
+                                ];
+                            }
+                        }
+                    }
                 session(['lista_unidad' => $unidades]);  
             } else {
                 session(['lista_unidad' => 'No encontrado']); 
@@ -304,16 +317,24 @@ class ControladorCatalogo extends Controller
             $atributosSesion = [];
 
             foreach ($tiposAtributo as $tipo) {
-                $atributos = $personalizaciones->where('id_tipo_atributo', $tipo->idtipo_atributo)->pluck('nom_atributo')->toArray();
+                //$atributos = $personalizaciones->where('id_tipo_atributo', $tipo->idtipo_atributo)->pluck('nom_atributo')->toArray();
+                $atributos = $personalizaciones
+                ->where('id_tipo_atributo', $tipo->idtipo_atributo)
+                ->map(function ($item) {
+                    return [
+                        'nom_atributo' => $item->nom_atributo,
+                        'precio_a' => $item->precio_a,
+                    ];
+                })->toArray();
+
                 if (!empty($atributos)) {
                     $atributosSesion[$tipo->nombre_atributo] = $atributos;
                 }
             }
 
             session(['atributosSesion' => $atributosSesion]);
-            
         } else {
-            return redirect()->route('fijo.catalogo.get')->with('error', 'Postre no encontrado.');
+            return redirect()->route('seleccionarFecha')->with('error', 'Postre no encontrado.');
         }
 
         $fecha = session('fecha');
@@ -330,20 +351,22 @@ class ControladorCatalogo extends Controller
     public function seleccionarDetalles(Request $request){
         
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-        $tipo_entrega = $request->input('tipo_entrega');
+        $tipo_entrega = $request->input('tipoEntrega');
         session()->put('proceso_compra', $request->route()->getName());
         session()->put('opcion_envio', $tipo_entrega);
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
 
-        $id_postre = session('postre');
+        $id_postre = session('id_postre');
         $postre = Catalogo::where('id_postre', $id_postre)
                             ->first();
-        $costo = intval($request->input('costo'));
-        $id_usuario = 1;
-        session(['tipo_entrega'=> $tipo_entrega, 'costo'=> $costo]);
+        //$costo = intval($request->input('costo'));
+        $costoUM = PostreFijoUnidad::where('id_pf', $id_postre)->first();
+        $costo = $costoUM->precio_um;
+        $id_usuario = session('id_usuario');
+        session(['tipo_entrega'=> $tipo_entrega]);
 
-        $fechaEscogida = session('fecha');
+        $fechaEscogida = session('fecha_entrega');
         $horaEntrega = session('hora_entrega');
         $fecha_hora_entrega = Carbon::parse($fechaEscogida . ' ' . $horaEntrega);
         $fecha_hora_registro = now();
@@ -363,18 +386,6 @@ class ControladorCatalogo extends Controller
         session(['nombre_unidad'=> $nombreUnidad]);
         $cantidad = intval($request->input('cantidad'));
         session(['porcionespedidas'=> $unidadm * $cantidad]);
-        /*$valoresSeleccionados = [];
-        foreach (session('atributosSesion', []) as $nombreTipo => $atributos) {
-            $campo = strtolower($nombreTipo);  // Usamos el mismo nombre dinámico que en la vista
-            $valor = $request->input($campo);  // Capturamos el valor enviado
-            $valoresSeleccionados[$campo] = $valor;
-        }
-        
-        $id_tipoatributo = TipoAtributo::where('nombre_atributo', $campo)->first();
-        $id_atributo = AtributosExtra::where('id_tipo_atributo', $id_tipoatributo->idtipo_atributo)
-        ->where('nom_atributo', $valor)
-        ->first(['id_atributo']);
-        session(['id_atributo'=> $id_atributo->id_atributo]);*/
 
         $valoresSeleccionados = session('atributosSesion');
         session(['id_um' => $id_um->id_um]);
@@ -392,12 +403,14 @@ class ControladorCatalogo extends Controller
                 ->where('nom_atributo', $valor)
                 ->first(['id_atributo']);
                 session(['id_atributo'=> $id_atributo->id_atributo]);
+
+                $costo = $costo + $id_atributo->precio_a;
         } else {
             session(['id_atributo' => null]); 
         }    
 
         // Ahora se puede usar los valores capturados
-        session(['valoresSeleccionados' => $valoresSeleccionados]); // Captura como array
+        session(['valoresSeleccionados' => $valoresSeleccionados, 'costo' => $costo]); 
         
 
         if ($tipo_entrega == "Domicilio") {
@@ -406,7 +419,7 @@ class ControladorCatalogo extends Controller
                 'id_tipopostre' => $id_tipopostre,
                 'unidadm' => $unidadm,
                 'valoresSeleccionados' => $valoresSeleccionados,  
-                'costo' => $costo,
+                'costo' => $costo * $cantidad,
                 'tipo_entrega' => $tipo_entrega,
                 'fecha_hora_registro' => $fecha_hora_registro,
                 'fecha_hora_entrega' => $fecha_hora_entrega
@@ -435,7 +448,7 @@ class ControladorCatalogo extends Controller
             $pedido->id_seleccion_usuario = $id_nuevo_postre; 
             $pedido->porcionespedidas = $unidadm * $cantidad; 
             $pedido->status = 'pendiente';
-            $pedido->precio_final = $costo;
+            $pedido->precio_final = $costo * $cantidad;
             $pedido->fecha_hora_registro = $fecha_hora_registro;
             $pedido->fecha_hora_entrega = $fecha_hora_entrega;
             $pedido->save();  // Guardamos el pedido
