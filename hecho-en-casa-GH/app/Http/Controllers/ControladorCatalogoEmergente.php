@@ -88,7 +88,7 @@ class ControladorCatalogoEmergente extends Controller
 
         //ESTO ES LA CONSULTA A PARTIR DEL ID QUE ME LLEGO DE LA VISTA ANTERIOR
         $postre = Cache::remember('postresession', 10, function () {
-            return Catalogo::where('id_postre', session('postre'))
+            return Catalogo::where('id_postre', session('id_postre'))
                             ->first();
         });
 

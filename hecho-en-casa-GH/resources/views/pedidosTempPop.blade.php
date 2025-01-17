@@ -7,7 +7,7 @@
 <div class = "titule">
 
     
-    @if (false) <!--Recuerda poner este-->
+    @if (session('tipo_postre_e')) <!--Recuerda poner este-->
         <h2>PEDIDOS DE TEMPORADA</h2>   
     @else
         <h2>PEDIDOS POP UP</h2>   
@@ -22,11 +22,11 @@
                 <div class="columna">
                     <div class="fila">
                         <label for="fechaEntrega">Fecha de entrega:</label>
-                        <input type="text" id="fechaEntrega" name="fechaEntrega" placeholder="{{session('fecha')}}" readonly>
+                        <input type="text" id="fechaEntrega" name="fechaEntrega" placeholder="{{session('fecha_entrega')}}" readonly>
                     </div>
                     <div class="fila">
                         <label for="horaEntrega">Hora de entrega:</label>
-                        <input type="text" id="horaEntrega" name="horaEntrega" placeholder="{{session('hora')}}" readonly>
+                        <input type="text" id="horaEntrega" name="horaEntrega" placeholder="{{session('hora_entrega')}}" readonly>
                         
                     </div>
                     <div class="fila">

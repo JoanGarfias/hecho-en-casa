@@ -90,7 +90,7 @@ class ControladorCatalogo extends Controller
         $error = session('error'); // Recuperar el mensaje de error
         session()->put('proceso_compra', $request->route()->getName()); //con esto sabemos el nombre de la ruta de la que viene
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-
+        
         $ruta = $request->route()->getName();
         $metodo = null;
         if($ruta == "personalizado.calendario.get"){
@@ -160,11 +160,10 @@ class ControladorCatalogo extends Controller
         $fechaEscogida = $request->input('fechaSeleccionada');
         $horaEntrega = $request->input('horaEntrega');
         $postre = session('id_postre');
-        $tipopostre = session('tipo_postre');
+        $tipopostre = session('tipo_postre_e');
         session(['id_usuario' => Cookie::get('user_id')]);
         session(['fecha_entrega' => $fechaEscogida]);
         session(['hora_entrega' => $horaEntrega]);
-
 
         $pedidos_dia = Cache::remember('pedidosdia', 30, function () use ($fechaEscogida) {
             return Pedido::select('fecha_hora_entrega', 'porcionespedidas')
@@ -184,7 +183,7 @@ class ControladorCatalogo extends Controller
         });
 
         $cantidad_minima = $porciones_unidad_minima ? $porciones_unidad_minima->cantidad : 0;
-
+        
         switch($tipopostre){
             case "fijo":
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
@@ -226,8 +225,7 @@ class ControladorCatalogo extends Controller
                     return redirect()->route('personalizado.detallesPedido.get');
                 }
                 //break;
-            case "emergente":
-                dd("emergente");
+            case "temporada": case "pop-up":                
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
                 session()->put('proceso_compra', 'emergente.calendario.post');
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
