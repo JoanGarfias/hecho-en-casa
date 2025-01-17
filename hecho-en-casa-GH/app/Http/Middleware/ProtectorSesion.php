@@ -15,11 +15,13 @@ class ProtectorSesion
         //Obtengo el token desde la galleta
         $sessionToken = $request->cookie('session_token');
         if (!$sessionToken) { 
+            dd("No hay token de sesión");
             return redirect()->route('login.get')->with('error', 'Debes iniciar sesión.');
         }
 
         $usuario = usuario::where('token_sesion', $sessionToken)->first();
         if (!$usuario) {
+            dd("No se encontro el usuario");
             return redirect()->route('login.get')->with('error', 'Sesión inválida.');
         }
 
