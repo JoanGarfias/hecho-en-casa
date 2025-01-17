@@ -96,7 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function validarHoraIngresada() {
         let [hora, minutos] = horaInput.value.split(":").map(Number);
         if (isNaN(hora) || isNaN(minutos)) {
-            alert("La hora ingresada no es válida.");
             actualizarHora(horaMinima.hora, horaMinima.minutos);
         } else {
             verificarRangoYActualizar(hora, minutos);
@@ -107,6 +106,8 @@ document.addEventListener("DOMContentLoaded", () => {
     incrementarBtn.addEventListener("click", incrementarHora);
     decrementarBtn.addEventListener("click", decrementarHora);
     horaInput.addEventListener("blur", validarHoraIngresada);
+
+    console.log(horaInput);
 });
 
 
