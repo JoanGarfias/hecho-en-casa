@@ -7,9 +7,9 @@
 <div class = "titule">
 
     
-    @if (false) <!--Recuerda poner este-->
+    @if (session('tipo_postre') == 'temporada') <!--Recuerda poner este-->
         <h2>PEDIDOS DE TEMPORADA</h2>   
-    @else
+    @elseif(session('tipo_postre') == 'pop-up')
         <h2>PEDIDOS POP UP</h2>   
     @endif
     

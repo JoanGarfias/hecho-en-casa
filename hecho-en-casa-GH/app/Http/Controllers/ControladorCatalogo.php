@@ -263,11 +263,12 @@ class ControladorCatalogo extends Controller
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
                 session([
-                    'fecha' => $fechaEscogida,
+                    'fecha_entrega' => $fechaEscogida,
+                    'hora_entrega' => $horaEntrega,
                     'postre' => $postre,
                     'porciones_dia' => $porciones_dia,
                 ]);
-
+                
                 return redirect()->route('emergente.detallesPedido.get');
                 //break;
                 // return ERROR;
