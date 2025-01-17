@@ -71,7 +71,7 @@ Route::middleware([EnlazadorRegistro::class])->group(function () {
 
 Route::middleware([EnlazadorRecuperacion::class, ProtectorPeticiones::class])->group(function(){
     Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecuperacion'])->name('recuperacion.get');
-    Route::post('/recuperacion/{token}', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post');
+    Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post');
 });
 
 /* RUTAS DE POSTRES FIJOS */

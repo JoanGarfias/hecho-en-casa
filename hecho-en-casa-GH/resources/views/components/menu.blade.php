@@ -59,8 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const boton1 = document.getElementById('primer_boton_perfil');
     const boton2 = document.getElementById('segundo_boton_perfil');
 
-    let sesion = getCookieByName('user_id');
-    console.log(sesion);
+    let sesion = getCookieByName('user_id');    
     if (sesion) {
         // Usuario autenticado: Mostrar "Perfil" y "Cerrar sesión"
         boton1.textContent = 'Perfil';
