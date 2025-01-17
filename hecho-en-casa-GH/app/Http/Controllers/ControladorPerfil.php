@@ -38,7 +38,6 @@ class ControladorPerfil extends Controller
 
         if(Cache::get('usuario') == null){
             return redirect()->route('inicio.get')->with('error', 'Error: No existe sesion del usuario');
-            //return "Error: No existe sesion del usuario";
         }
 
         $cambiarcontrasena = $request->input('cambiarcontrasena');
@@ -52,14 +51,12 @@ class ControladorPerfil extends Controller
         if($cambiartelefono == true){//Si el boton de editar telefono esta activo
             $telefono = $request->input('telefono');
             try{
-                //return $cambiartelefono;
                 $updateTelefonotry = Usuario::select('telefono')
                 ->where('id_u', Cache::get('usuario')->id_u)->update([
                     'telefono' => $telefono,
                 ]);
             }catch(\Exception $e){
                 return redirect()->route('inicio.get')->with('error', 'Error al actualizar el telefono');
-                //return $e;
             }
         }
         if($cambiardomicilio == true){//Si el boton de editar ubicacion esta activo
@@ -85,7 +82,6 @@ class ControladorPerfil extends Controller
                 ]);
             }catch(\Exception $e){
                 return redirect()->route('inicio.get')->with('error', 'Error al actualizar el domicilio');
-                //return $e;
             }
         }
         if($cambiarcontrasena == true){//Si el boton de editar contraseña esta activo
@@ -97,7 +93,6 @@ class ControladorPerfil extends Controller
                 ]);
             }catch(\Exception $e){
                 return redirect()->route('inicio.get')->with('error', 'Error al actualizar la contraseña');
-                //return $e;
             }
         }
         
