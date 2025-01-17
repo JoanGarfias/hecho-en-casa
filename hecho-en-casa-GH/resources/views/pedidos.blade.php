@@ -100,6 +100,8 @@
                         <label for="" id="costo" name="costo" class="paraMostrar"></label>
                         <br>
                         <p class="nota">NOTA: El costo es aproximado, el precio final puede variar según su ubicación.</p>
+                        <p>Porciones restantes del dia:  {{session('porciones')}}</p>
+                        <p>Porciones a pedir:  </p>
                     </div>
                 </div>
             </div>
