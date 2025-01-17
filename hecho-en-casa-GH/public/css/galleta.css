@@ -102,11 +102,12 @@ body {
 .outer-circle {
     position: absolute;
     bottom: -20px;
-    right: -8px;
+    left: 150px;
+    top: 200px;
     background: #EADAC6;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: 90px;
+    height: 90px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -119,9 +120,10 @@ body {
     font-size: 0.8em;
     font-weight: bold;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 75px;
+    height: 75px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
