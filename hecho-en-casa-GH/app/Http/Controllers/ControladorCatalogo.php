@@ -356,8 +356,8 @@ class ControladorCatalogo extends Controller
 
 
         $sabor = session('sabor_postre');
-        $unidadm = intval($request->input('unidadm'));
-        $unidadSeleccionada = $request->input('unidadm');  // "5|kilogramo"
+        $unidadm = intval($request->input('porciones'));
+        $unidadSeleccionada = $request->input('porciones'); 
         list($cantidadPorciones, $nombreUnidad) = explode('|', $unidadSeleccionada);
         //Obtener id_um 
         $id_um = UnidadMedida::where('cantidad', $cantidadPorciones)
@@ -411,7 +411,7 @@ class ControladorCatalogo extends Controller
 
             return redirect()->route('fijo.direccion.get');      
         }
-        else{
+        elseif($tipo_entrega == "Sucursal"){
             // Instanciación de postrefijo  
 
             $fijo = new Postrefijo;
@@ -425,7 +425,7 @@ class ControladorCatalogo extends Controller
 
             // Instanciación de Pedido
             $pedido = new Pedido;
-            $pedido->id_usuario = $id_usuario;
+            $pedido->id_usuario = session('id_usuario');
             $pedido->id_tipopostre = $id_tipopostre;
             $pedido->id_seleccion_usuario = $id_nuevo_postre; 
             $pedido->porcionespedidas = $unidadm * $cantidad; 
@@ -562,19 +562,14 @@ class ControladorCatalogo extends Controller
     }
     
     public function mostrarTicket(){
-
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->forget('proceso_compra');
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-
         $pedido = Pedido::find(session("folio"));
         $fechaHoraEntrega = $pedido->fecha_hora_entrega;
-
         list($fecha, $hora) = explode(' ', $fechaHoraEntrega);
-
         $usuario = Usuario::find($pedido->id_usuario); 
         $tipo_entrega = session('tipo_entrega');
-
-        return view('pedido', compact('pedido', 'usuario', 'fecha', 'hora', 'tipo_entrega'));
+        return view('ResumenPedFijo', compact('pedido', 'usuario', 'fecha', 'hora', 'tipo_entrega'));
     }
 }
