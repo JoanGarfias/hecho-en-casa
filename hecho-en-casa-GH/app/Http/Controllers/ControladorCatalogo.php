@@ -162,7 +162,7 @@ class ControladorCatalogo extends Controller
         $diaActual = $primerDiaDelMes->copy();
         $diaSiguiente = $diaActual->copy()->addDay();
                     
-        //obtencion de los dias del calendario
+        //Obtencion de los dias del calendario
         while ($diaActual->lte($ultimoDiaDelMes)) {
             $diasDelMes[] = [
                 'fecha' => $diaActual->toDateString(), // Solo la fecha
@@ -270,15 +270,7 @@ class ControladorCatalogo extends Controller
                 ]);
 
                 return redirect()->route('emergente.detallesPedido.get');
-                //break;
-                // return ERROR;
         }
-        /* return view('fechaSeleccionada', [
-            'fecha' => $fechaEscogida,
-            'postre' => $postre,
-            'porciones_dia' => $porciones_dia,
-            'cantidad_minima' => $cantidad_minima,
-        ]); */
     }
 
     public function mostrarDetalles(Request $request){
@@ -305,20 +297,6 @@ class ControladorCatalogo extends Controller
                 session(['nombre_categoria' => 'Categoría no encontrada']);
             }
 
-            //$listaunidad = PostreFijoUnidad::where('id_pf', $postre->id_postre)->get();
-            /*$listaunidad = PostreFijoUnidad::where('id_pf', $postre->id_postre)->pluck('id_um'); // Obtener solo la columna 'id_um'
-            if ($listaunidad->isNotEmpty()) {
-                $unidades = []; 
-                foreach ($listaunidad as $id_um) {  // Ahora recorro la lista de 'id_um'
-                    $nombreunidad = UnidadMedida::where('id_um', $id_um)->first();  //'UnidadMedida' usando 'id_um'
-                    
-                    if ($nombreunidad) {
-                        $unidades[] = [
-                            'nombreunidad' => $nombreunidad->nombre_unidad,  // 'nombre_unidad' de la tabla 'UnidadMedida'
-                            'cantidadporciones' => $nombreunidad->cantidad, 
-                        ];
-                    }
-                }*/
             $listaunidad = PostreFijoUnidad::where('id_pf', $postre->id_postre)->pluck('id_um'); // Obtener solo la columna 'id_um'
 
             if ($listaunidad->isNotEmpty()) {
@@ -406,8 +384,8 @@ class ControladorCatalogo extends Controller
 
 
         $sabor = session('sabor_postre');
-        $unidadm = intval($request->input('unidadm'));
-        $unidadSeleccionada = $request->input('unidadm');  // "5|kilogramo"
+        $unidadm = intval($request->input('porciones'));
+        $unidadSeleccionada = $request->input('porciones');  // "5|kilogramo"
         list($cantidadPorciones, $nombreUnidad) = explode('|', $unidadSeleccionada);
         //Obtener id_um 
         $id_um = UnidadMedida::where('cantidad', $cantidadPorciones)
@@ -461,7 +439,7 @@ class ControladorCatalogo extends Controller
 
             return redirect()->route('fijo.direccion.get');      
         }
-        else{
+        else if ($tipo_entrega == "Sucursal"){
             // Instanciación de postrefijo  
 
             $fijo = new Postrefijo;
@@ -489,24 +467,7 @@ class ControladorCatalogo extends Controller
             session([
                 'folio' => $id_pedido,
             ]);
-
-            $datos = [
-                'costo' => $costo,
-                'tipo_entrega' => $tipo_entrega,
-                'id_usuario' => $id_usuario,
-                'fecha_hora_entrega' => $fecha_hora_entrega,
-                'fecha_hora_registro' => $fecha_hora_registro,
-                'id_tipopostre' => $id_tipopostre,
-                'id_pf' =>  $id_nuevo_postre,
-                'pedido' => [
-                    'id_pedido' => $pedido->id_ped,
-                    'porcionespedidas' => $pedido->porcionespedidas,
-                    'status' => $pedido->status,
-                    'precio_final' => $pedido->precio_final,
-                    'fecha_hora_registro' => $pedido->fecha_hora_registro,
-                    'fecha_hora_entrega' => $pedido->fecha_hora_entrega,
-                ],
-            ];
+            
             return redirect()->route('fijo.ticket.get', ['folio' => $id_pedido]);            
         }
     }
@@ -619,12 +580,17 @@ class ControladorCatalogo extends Controller
 
         $pedido = Pedido::find(session("folio"));
         $fechaHoraEntrega = $pedido->fecha_hora_entrega;
+        $costo = $pedido->precio_final;
 
         list($fecha, $hora) = explode(' ', $fechaHoraEntrega);
 
         $usuario = Usuario::find($pedido->id_usuario); 
+        
+        $nombre = $usuario->nombre;
+        $telefono = $usuario->telefono;
+        
         $tipo_entrega = session('tipo_entrega');
 
-        return view('pedido', compact('pedido', 'usuario', 'fecha', 'hora', 'tipo_entrega'));
+        return view('ResumenPedFij', compact('costo', 'nombre', 'telefono', 'fecha', 'hora', 'tipo_entrega'));
     }
 }

@@ -17,7 +17,6 @@ class ControladorCatalogoEmergente extends Controller
     /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
     session()->put('id_tipopostre', 'emergente');
     session()->put('proceso_compra', $request->route()->getName());
-    //No deberia estar aca pero jeyson no puso un POST para el catalogo
     /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $emergentes = Cache::remember('catalogoemergentes', 30, function () {
@@ -170,7 +169,7 @@ class ControladorCatalogoEmergente extends Controller
             dd("Error al guardar el pedido: " . $e->getMessage());
         }
         
-        //para reducir su stock en caso de que tenga si es null entonces no maneja stock
+        //Para reducir su stock en caso de que tenga si es null entonces no maneja stock
         if($postre->stock != null){
             $postre->stock = $postre->stock - session('cantidad_pedida');
             $postre->save();
@@ -279,5 +278,22 @@ class ControladorCatalogoEmergente extends Controller
 
         return redirect()->route('emergente.ticket.get');   
 
+    }
+
+    public function mostrarTicket(){
+
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->forget('proceso_compra');
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
+        $pedido = Pedido::find(session("folio"));
+        $fechaHoraEntrega = $pedido->fecha_hora_entrega;
+
+        list($fecha, $hora) = explode(' ', $fechaHoraEntrega);
+
+        $usuario = Usuario::find($pedido->id_usuario); 
+        $tipo_entrega = session('tipo_entrega');
+
+        return view('ResumenPedFijo', compact('pedido', 'usuario', 'fecha', 'hora', 'tipo_entrega'));
     }
 }
