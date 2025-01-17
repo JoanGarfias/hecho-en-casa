@@ -17,7 +17,7 @@ class ControladorLogin extends Controller
     {   
         return view('iniciar-sesion');
     }
-
+    
     public function Logear(Request $request)
     {
         $action = $request->input('action');//esto borrar
