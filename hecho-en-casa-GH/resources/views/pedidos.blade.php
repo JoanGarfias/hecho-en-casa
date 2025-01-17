@@ -11,7 +11,6 @@
     
     <div class = "contenedor"><!-- café-->
         <form id="formularioPedidos" action="{{route('fijo.detallesPedido.post')}}" method="POST">
-            @csrf
             <div class="dosColumnas">
                 <div class="columna">
                     <div class="fila">
@@ -58,7 +57,7 @@
                         <label for="cantidad">Cantidad:</label>
                         <div class="cantidad-wrapper">
                             
-                            <input type="text" id="cantidad" name="cantidad" min="1" value="1">
+                            <input type="text" id="cantidad" name="cantidad" min="{{session('cantidad_minima')}}" value="{{session('cantidad_minima')}}">
                             <div class="boton-wrapper">
                                 <button type="button" class="flechitas incrementar">🔺</button>
                                 <button type="button" class="flechitas decrementar">🔻</button>

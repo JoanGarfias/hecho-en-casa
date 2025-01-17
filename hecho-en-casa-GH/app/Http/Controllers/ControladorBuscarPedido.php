@@ -74,9 +74,9 @@ class ControladorBuscarPedido extends Controller{
             $precio_final = $pedido->precio_final;
 
 
-            return view('buscadorpedido', ['pedido' => $pedido, 'tipopostre' => $resultado, 'nombre_completo' => $nombre_completo, 'telefono' => $telefono, 'fecha_entrega' => $fecha_entrega, 'hora_entrega' => $hora_entrega, 'precio_final' => $precio_final, 'tipo_entrega' => $tipo_entrega, 'nombre_unidad' => $nombre_unidad]);
+            return view('buscarPedido', ['pedido' => $pedido, 'tipopostre' => $resultado, 'nombre_completo' => $nombre_completo, 'telefono' => $telefono, 'fecha_entrega' => $fecha_entrega, 'hora_entrega' => $hora_entrega, 'precio_final' => $precio_final, 'tipo_entrega' => $tipo_entrega, 'nombre_unidad' => $nombre_unidad]);
         } else {
-            return view('buscadorpedido', ['error' => 'Folio no encontrado']);
+            return view('buscarPedido', ['error' => 'Folio no encontrado']);
         }
     }
 }

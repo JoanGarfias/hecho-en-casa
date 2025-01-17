@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
-@media (max-width: 2080px) {
-
-
 * {
     font-family: "Poppins", sans-serif;
     margin: 0;
@@ -28,12 +25,11 @@ body {
 .container {
     text-align: center;
     padding: 20px;
-    margin-left: 80px; /* Deja espacio para el menú lateral */
+    margin-left: auto; /* Deja espacio para el menú lateral */
     max-width: 100%; /* Ajustar el ancho disponible */
     margin-top: -150px;
     width: 100%;
     margin-bottom: 50px;
-    margin-right: auto;
 }
 
 .container h1 {
@@ -183,4 +179,3 @@ body {
 }
 
 
-}
