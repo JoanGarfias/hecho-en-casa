@@ -93,6 +93,7 @@ class ControladorCatalogo extends Controller
         
         $ruta = $request->route()->getName();
         $metodo = null;
+        
         if($ruta == "personalizado.calendario.get"){
             $metodo = "personalizado.calendario.post";
         }elseif($ruta == "emergente.calendario.get"){
@@ -166,7 +167,7 @@ class ControladorCatalogo extends Controller
         $fechaEscogida = $request->input('fechaSeleccionada');
         $horaEntrega = $request->input('horaEntrega');
         $postre = session('id_postre');
-        $tipopostre = session('tipo_postre_e');
+        $tipopostre = session('id_tipopostre');
         session(['id_usuario' => Cookie::get('user_id')]);
         session(['fecha_entrega' => $fechaEscogida]);
         session(['hora_entrega' => $horaEntrega]);

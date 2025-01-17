@@ -96,7 +96,7 @@ class ControladorCatalogoEmergente extends Controller
         session([   
             'nombre_postre' => $postre->nombre,
         ]);
-
+        dd(session('tipo_postre_e'));
         return view('pedidosTempPop');
     }
 

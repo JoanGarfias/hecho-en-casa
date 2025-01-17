@@ -32,6 +32,7 @@
                     </div>
                    
                     <form class="ajustando" action="{{route($metodo)}}" method="POST" id="cambioFecha">
+                        
                         <div class="hour">
                             <label for="time" class="seleccionarHora">Seleccionar hora:</label>
                             <div class="hora-selector">
@@ -60,7 +61,7 @@
                 <br>
                 <script>
                     const calendario = @json($calendarioJson);
-
+                    
                     const months = [
                         { bg: "url('{{ asset('img/enero.png') }}')" },
                         { bg: "url('{{ asset('img/febrero.png') }}')" },
