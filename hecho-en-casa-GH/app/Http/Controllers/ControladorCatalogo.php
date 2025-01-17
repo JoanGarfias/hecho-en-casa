@@ -406,8 +406,8 @@ class ControladorCatalogo extends Controller
 
 
         $sabor = session('sabor_postre');
-        $unidadm = intval($request->input('unidadm'));
-        $unidadSeleccionada = $request->input('unidadm');  // "5|kilogramo"
+        $unidadm = intval($request->input('porciones'));
+        $unidadSeleccionada = $request->input('porciones');  // "5|kilogramo"
         list($cantidadPorciones, $nombreUnidad) = explode('|', $unidadSeleccionada);
         //Obtener id_um 
         $id_um = UnidadMedida::where('cantidad', $cantidadPorciones)
@@ -461,7 +461,7 @@ class ControladorCatalogo extends Controller
 
             return redirect()->route('fijo.direccion.get');      
         }
-        else{
+        else if ($tipo_entrega == "Sucursal"){
             // Instanciación de postrefijo  
 
             $fijo = new Postrefijo;
@@ -489,24 +489,7 @@ class ControladorCatalogo extends Controller
             session([
                 'folio' => $id_pedido,
             ]);
-
-            $datos = [
-                'costo' => $costo,
-                'tipo_entrega' => $tipo_entrega,
-                'id_usuario' => $id_usuario,
-                'fecha_hora_entrega' => $fecha_hora_entrega,
-                'fecha_hora_registro' => $fecha_hora_registro,
-                'id_tipopostre' => $id_tipopostre,
-                'id_pf' =>  $id_nuevo_postre,
-                'pedido' => [
-                    'id_pedido' => $pedido->id_ped,
-                    'porcionespedidas' => $pedido->porcionespedidas,
-                    'status' => $pedido->status,
-                    'precio_final' => $pedido->precio_final,
-                    'fecha_hora_registro' => $pedido->fecha_hora_registro,
-                    'fecha_hora_entrega' => $pedido->fecha_hora_entrega,
-                ],
-            ];
+            
             return redirect()->route('fijo.ticket.get', ['folio' => $id_pedido]);            
         }
     }
@@ -619,12 +602,17 @@ class ControladorCatalogo extends Controller
 
         $pedido = Pedido::find(session("folio"));
         $fechaHoraEntrega = $pedido->fecha_hora_entrega;
+        $costo = $pedido->precio_final;
 
         list($fecha, $hora) = explode(' ', $fechaHoraEntrega);
 
         $usuario = Usuario::find($pedido->id_usuario); 
+        
+        $nombre = $usuario->nombre;
+        $telefono = $usuario->telefono;
+        
         $tipo_entrega = session('tipo_entrega');
 
-        return view('pedido', compact('pedido', 'usuario', 'fecha', 'hora', 'tipo_entrega'));
+        return view('ResumenPedFij', compact('costo', 'nombre', 'telefono', 'fecha', 'hora', 'tipo_entrega'));
     }
 }
