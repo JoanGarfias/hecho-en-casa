@@ -42,8 +42,25 @@ class ControladorLogin extends Controller
                 ]);
                 // Crear la galleta con el token de sesión y el id
                 $userId = $usuario ? $usuario->id_u : null; // Devuelve el id si existe, o si no devuelve null
-                Cookie::queue('user_id', $userId, 60 * 72);
-                return redirect()->route('inicio.get')->withCookie(cookie('session_token', $sessionToken, 60 * 72)); // 72 horas
+                
+                //false para http only y que se pueda ver en JS
+                Cookie::queue(cookie('session_token', $userId, 60 * 72, null, null, false, false));
+                Cookie::queue(cookie('user_id', $sessionToken, 60 * 72, null, null, false, false));
+
+                switch(session('id_tipopostre')){
+                    case "fijo":
+                        return redirect()->route('fijo.catalogo.get');
+                        break;
+                    case "personalizado":
+                        return redirect()->route('personalizado.catalogo.get');
+                        break;
+                    case "emergente":
+                        return redirect()->route('emergente.catalogo.get');
+                        break;
+                    default:
+                    return redirect()->route('inicio.get'); // 72 horas
+                        break;
+                }
             }
             else{
                 return redirect()->route('login.get')->withErrors(['correo_electronico' => 'Credenciales incorrectas.']);
@@ -84,7 +101,7 @@ class ControladorLogin extends Controller
     {
         //conseguir galleta
         $sessionToken = $request->cookie('session_token');
-    
+
         if ($sessionToken) {
             // Buscar al usuario con ese token de sesión
             $usuario = Usuario::where('token_sesion', $sessionToken)->first();
@@ -94,10 +111,15 @@ class ControladorLogin extends Controller
                 $usuario->update(['token_sesion' => null]);
             }
         }
-    
-        // Eliminar la galleta porque cerró sesión
-        Cookie::queue('user_id', $usuario->id_u, -600);
-        return redirect('/')->withCookie(cookie()->forget('session_token'));
+        
+        session()->forget('id_tipopostre');
+
+        // Eliminar cookies
+        Cookie::queue(cookie('session_token', 0, -1, null, null, false, false));
+        Cookie::queue(cookie('user_id', 0, -1, null, null, false, false));        
+
+        // Opcional: Invalida la sesión en el servidor (si estás usando sesiones)
+        return redirect()->route('login.get');
     }
     
 }
