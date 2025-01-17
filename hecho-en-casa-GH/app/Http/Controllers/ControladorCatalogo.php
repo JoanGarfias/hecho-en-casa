@@ -36,22 +36,48 @@ class ControladorCatalogo extends Controller
         if ($categorias->isNotEmpty()) {
             if ($categoria === null) {
                 $categoriaPorDefecto = $categorias->first()->id_cat;
-                $catalogo = Cache::remember('catalogofijoCatNula', 30, function () use ($categoriaPorDefecto) {
-                    return Catalogo::join('postre_fijo_unidad_medidas', 'postre_fijo_unidad_medidas.id_pf', '=', 'catalogo.id_postre' )
-                        ->select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion', 'precio_um')
+                $catalogo = Cache::remember('catalogofijoCatNulaFull', 30, function () use ($categoriaPorDefecto) {
+                    return Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
                         ->where('id_tipo_postre', 'fijo')
                         ->where('id_categoria', $categoriaPorDefecto)
                         ->get();
-                });
+                        });
+                
+                foreach ($catalogo as $object) {
+                    $newObjectsArray =  Catalogo::join('postre_fijo_unidad_medidas', 'postre_fijo_unidad_medidas.id_pf', '=', 'catalogo.id_postre' )
+                        ->join('unidad_medida', 'unidad_medida.id_um', '=', 'postre_fijo_unidad_medidas.id_um' )
+                        ->select('precio_um', 'cantidad', 'nombre_unidad')
+                        ->where('id_tipo_postre', 'fijo')
+                        ->where('id_postre', $object->id_postre)
+                        ->where('id_categoria', $categoriaPorDefecto)
+                        ->get();
+                    
+                    $object->Presentaciones  = $newObjectsArray;
+                    
+                }
+                
             } else {
                 $cacheKey = "catalogofijoCat{$categoria}";
                 $catalogo = Cache::remember($cacheKey, 30, function () use ($categoria) {
-                    return Catalogo::join('postre_fijo_unidad_medidas', 'postre_fijo_unidad_medidas.id_pf', '=', 'catalogo.id_postre' )
-                        ->select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion', 'precio_um')
+                    return Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
                         ->where('id_tipo_postre', 'fijo')
                         ->where('id_categoria', $categoria)
                         ->get();
                 });
+
+                foreach ($catalogo as $object) {
+                    $newObjectsArray =  Catalogo::join('postre_fijo_unidad_medidas', 'postre_fijo_unidad_medidas.id_pf', '=', 'catalogo.id_postre' )
+                        ->join('unidad_medida', 'unidad_medida.id_um', '=', 'postre_fijo_unidad_medidas.id_um' )
+                        ->select('precio_um', 'cantidad', 'nombre_unidad')
+                        ->where('id_tipo_postre', 'fijo')
+                        ->where('id_postre', $object->id_postre)
+                        ->where('id_categoria', $categoria)
+                        ->get();
+                    
+                    $object->Presentaciones  = $newObjectsArray;
+                    
+                }
+
             }
 
             if ($catalogo->isEmpty()) {
@@ -156,6 +182,13 @@ class ControladorCatalogo extends Controller
 
     public function seleccionarFecha(Request $request)
     {
+        
+        $botonPresionado = $request->input('botonPress');
+        if($botonPresionado=="Mover"){
+            $mes = $request->input('mes');
+            $anio = $request->input('anio');
+            return redirect()->route('fijo.calendario.get',['mes' => $mes, 'anio' => $anio]);
+        }
 
         $fechaEscogida = $request->input('fechaSeleccionada');
         $horaEntrega = $request->input('horaEntrega');
@@ -190,7 +223,6 @@ class ControladorCatalogo extends Controller
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
                 session()->put('proceso_compra', 'fijo.calendario.post');
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-
                 if($porciones_dia + $cantidad_minima >= 1000000){
                     //dd($porciones_dia + $cantidad_minima);
                     return redirect()->route('fijo.calendario.get'); //Aqui se le tiene que mandar un mensaje de error
@@ -207,7 +239,6 @@ class ControladorCatalogo extends Controller
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
                 session()->put('proceso_compra', 'personalizado.calendario.post');
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-
                 if($porciones_dia + $cantidad_minima >= 10000000){
                     /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
                     session()->put('proceso_compra', 'personalizado.catalogo.post');
@@ -232,11 +263,12 @@ class ControladorCatalogo extends Controller
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
                 session([
-                    'fecha' => $fechaEscogida,
+                    'fecha_entrega' => $fechaEscogida,
+                    'hora_entrega' => $horaEntrega,
                     'postre' => $postre,
                     'porciones_dia' => $porciones_dia,
                 ]);
-
+                
                 return redirect()->route('emergente.detallesPedido.get');
                 //break;
                 // return ERROR;
@@ -343,6 +375,8 @@ class ControladorCatalogo extends Controller
         $nombre_categoria = session('nombre_categoria');
         $lista_unidad = session('lista_unidad'); 
         $atributosSesion = session('atributosSesion');
+        $porciones_dia = session('porciones_dia');
+        session()->put('porciones', 100 - $porciones_dia); 
 
         return view('pedidos', compact('fecha', 'sabor_postre', 'hora_entrega', 'nombre_categoria', 'lista_unidad', 'atributosSesion'));
     }
@@ -363,7 +397,16 @@ class ControladorCatalogo extends Controller
         //$costo = intval($request->input('costo'));
         $costoUM = PostreFijoUnidad::where('id_pf', $id_postre)->first();
         $costo = $costoUM->precio_um;
-        $id_usuario = session('id_usuario');
+        $usuario = Cache::remember('usuario', 30, function () {
+            return usuario::where('id_u', session('id_usuario'))->first();
+        });
+
+        $direccion = $usuario->calle_u . " " . $usuario->num_exterior_u . ", " . $usuario->colonia_u . ", " .
+                    $usuario->ciudad_u . ", " . $usuario->estado_u;
+        session([
+            'telefono' => $usuario->telefono,
+            'direccion' => $direccion,
+        ]);
         session(['tipo_entrega'=> $tipo_entrega]);
 
         $fechaEscogida = session('fecha_entrega');
@@ -374,8 +417,8 @@ class ControladorCatalogo extends Controller
 
 
         $sabor = session('sabor_postre');
-        $unidadm = intval($request->input('unidadm'));
-        $unidadSeleccionada = $request->input('unidadm');  // "5|kilogramo"
+        $unidadm = intval($request->input('porciones'));
+        $unidadSeleccionada = $request->input('porciones');  // "5|kilogramo"
         list($cantidadPorciones, $nombreUnidad) = explode('|', $unidadSeleccionada);
         //Obtener id_um 
         $id_um = UnidadMedida::where('cantidad', $cantidadPorciones)
@@ -429,7 +472,7 @@ class ControladorCatalogo extends Controller
 
             return redirect()->route('fijo.direccion.get');      
         }
-        else{
+        else if ($tipo_entrega == "Sucursal"){
             // Instanciación de postrefijo  
 
             $fijo = new Postrefijo;
@@ -443,7 +486,7 @@ class ControladorCatalogo extends Controller
 
             // Instanciación de Pedido
             $pedido = new Pedido;
-            $pedido->id_usuario = $id_usuario;
+            $pedido->id_usuario = session('id_usuario');
             $pedido->id_tipopostre = $id_tipopostre;
             $pedido->id_seleccion_usuario = $id_nuevo_postre; 
             $pedido->porcionespedidas = $unidadm * $cantidad; 
@@ -457,24 +500,7 @@ class ControladorCatalogo extends Controller
             session([
                 'folio' => $id_pedido,
             ]);
-
-            $datos = [
-                'costo' => $costo,
-                'tipo_entrega' => $tipo_entrega,
-                'id_usuario' => $id_usuario,
-                'fecha_hora_entrega' => $fecha_hora_entrega,
-                'fecha_hora_registro' => $fecha_hora_registro,
-                'id_tipopostre' => $id_tipopostre,
-                'id_pf' =>  $id_nuevo_postre,
-                'pedido' => [
-                    'id_pedido' => $pedido->id_ped,
-                    'porcionespedidas' => $pedido->porcionespedidas,
-                    'status' => $pedido->status,
-                    'precio_final' => $pedido->precio_final,
-                    'fecha_hora_registro' => $pedido->fecha_hora_registro,
-                    'fecha_hora_entrega' => $pedido->fecha_hora_entrega,
-                ],
-            ];
+            
             return redirect()->route('fijo.ticket.get', ['folio' => $id_pedido]);            
         }
     }
@@ -484,10 +510,17 @@ class ControladorCatalogo extends Controller
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
-        //ANEXAR LÓGICA PARA OBTENER LA DIRECCIÓN DEL USUARIO
-
+        $ruta = $request->route()->getName();
+        $rutaPost = null;
+        if($ruta == "fijo.direccion.get"){
+            $rutaPost = "fijo.direccion.post";
+        }elseif($ruta == "personalizado.direccion.get"){
+            $rutaPost = "personalizado.direccion.post";
+        }elseif($ruta == "emergente.direccion.get"){
+            $rutaPost = "emergente.direccion.post";
+        }
         $datos = session('datos_pedido');
-        return view('ConfirmaDato', compact('datos'));
+        return view('ConfirmaDato', compact('datos', 'rutaPost'));
     }
 
     public function guardarDireccion(Request $request){ //POST: Mandamos a la ruta del ticket
@@ -495,7 +528,7 @@ class ControladorCatalogo extends Controller
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
-        $tipo_domicilio = $request->input('tipo_domicilio'); 
+        $tipo_domicilio = $request->input('ubicacion'); 
         //ACÁ SE DEBERÍA JALAR LA UBICACIÓN DEL FORMULARIO
         //dd($tipo_domicilio);
         $id_usuario = session('id_usuario');
@@ -507,36 +540,38 @@ class ControladorCatalogo extends Controller
         $ciudad = $user->ciudad_u;
         $colonia = $user->colonia_u;
         $calle = $user->calle_u;
-        $numero = $user->num_exterior_u;
+        $numeroInterior = $user->num_interior_u;
+        $numeroExterior = $user->num_exterior_u;
+        $referencia = $user->referencia_u;
 
-        if($tipo_domicilio==='Nueva'){ 
+        if($tipo_domicilio==='otra'){ 
             $codigo_postal = $request->input('codigo_postal');
             $estado = $request->input('estado');
-            $ciudad = $request->input('municipio');
+            $ciudad = $request->input('ciudad');
             $colonia = $request->input('asentamiento');
             $calle = $request->input('calle');
-            $numero = $request->input('numero');
-            //$referencia = $request->input('referencia');
+            $numeroInterior = $request->input('numeroI');
+            $numeroExterior = $request->input('numeroE');
+            $referencia = $request->input('referencia');
 
             //Si elige volverla su ubicacion predeterminada entonces lo actualizamos en el perfil del usuario
-            if($request->has('aceptar')){
+            if($request->has('opciones')){
                 $user->Codigo_postal_u = $codigo_postal;
                 $user->estado_u = $estado;
                 $user->ciudad_u = $ciudad;
                 $user->colonia_u = $colonia;
                 $user->calle_u = $calle;
-                $user->num_exterior_u = $numero;
-                //$user->referencia_u = $referencia;
+                $user->num_exterior_u = $numeroExterior;
+                $user->num_interior_u = $numeroInterior;
+                $user->referencia_u = $referencia;
                 $user->save();
             }
-
         }
-
 
         $fijo = new Postrefijo;
         $fijo->id_atributo = session('id_atributo');
         $fijo->id_um = session('id_um'); //$unidadm;
-        $fijo->id_postre_elegido = session("postre");//1;
+        $fijo->id_postre_elegido = session("id_postre");//1;
         $fijo->save();  
 
         // Obtenemos el ID del postre creado
@@ -545,17 +580,18 @@ class ControladorCatalogo extends Controller
         // Instanciación de Pedido
         $pedido = new Pedido;
         $pedido->id_usuario = session('id_usuario');
-        $pedido->id_tipopostre = $datos['id_tipopostre'];
+        $pedido->id_tipopostre = session('id_tipopostre');
         $pedido->id_seleccion_usuario = $id_nuevo_postre;
         $pedido->estado_e = $estado;
         $pedido->Codigo_postal_e = $codigo_postal;
         $pedido->ciudad_e = $ciudad;
         $pedido->colonia_e = $colonia;
         $pedido->calle_e = $calle;
-        $pedido->num_exterior_e = $numero; 
-        //$pedido->referencia_e = $referencia;
+        $pedido->num_exterior_e = $numeroExterior; 
+        $pedido->num_interior_e = $numeroInterior; 
+        $pedido->referencia_e = $referencia;
         $pedido->porcionespedidas = session("porcionespedidas");
-        $pedido->fecha_hora_entrega =  session('fecha') . " " . session('hora_entrega'); 
+        $pedido->fecha_hora_entrega =  session('fecha_entrega') . " " . session('hora_entrega'); 
         $pedido->fecha_hora_registro = now();
         $pedido->status = "pendiente";
         $pedido->precio_final = session("costo");
@@ -564,15 +600,6 @@ class ControladorCatalogo extends Controller
         $id_pedido = $pedido->id_ped;
         session([
             'folio' => $id_pedido,
-        ]);
-
-        session([
-            'codigo_postal' => $codigo_postal,
-            'estado' => $estado,
-            'ciudad' => $ciudad,
-            'colonia' => $colonia,
-            'calle' => $calle,
-            'numero' => $numero,
         ]);
 
         return redirect()->route('fijo.ticket.get',['folio' => $id_pedido]);
@@ -587,12 +614,17 @@ class ControladorCatalogo extends Controller
 
         $pedido = Pedido::find(session("folio"));
         $fechaHoraEntrega = $pedido->fecha_hora_entrega;
+        $costo = $pedido->precio_final;
 
         list($fecha, $hora) = explode(' ', $fechaHoraEntrega);
 
         $usuario = Usuario::find($pedido->id_usuario); 
+        
+        $nombre = $usuario->nombre;
+        $telefono = $usuario->telefono;
+        
         $tipo_entrega = session('tipo_entrega');
 
-        return view('pedido', compact('pedido', 'usuario', 'fecha', 'hora', 'tipo_entrega'));
+        return view('ResumenPedFij', compact('costo', 'nombre', 'telefono', 'fecha', 'hora', 'tipo_entrega'));
     }
 }

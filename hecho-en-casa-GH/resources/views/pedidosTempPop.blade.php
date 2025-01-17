@@ -7,9 +7,9 @@
 <div class = "titule">
 
     
-    @if (false) <!--Recuerda poner este-->
+    @if (session('tipo_postre') == 'temporada') <!--Recuerda poner este-->
         <h2>PEDIDOS DE TEMPORADA</h2>   
-    @else
+    @elseif(session('tipo_postre') == 'pop-up')
         <h2>PEDIDOS POP UP</h2>   
     @endif
     
@@ -22,16 +22,15 @@
                 <div class="columna">
                     <div class="fila">
                         <label for="fechaEntrega">Fecha de entrega:</label>
-                        <input type="text" id="fechaEntrega" name="fechaEntrega" placeholder="{{session('fecha')}}" readonly>
+                        <label for="" id="fechaEntrega" name="fechaEntrega" class="paraMostrar">{{session('fecha')}}</label>
                     </div>
                     <div class="fila">
                         <label for="horaEntrega">Hora de entrega:</label>
-                        <input type="text" id="horaEntrega" name="horaEntrega" placeholder="{{session('hora')}}" readonly>
-                        
+                        <label for="" id="horaEntrega" name="horaEntrega" class="paraMostrar">{{session('hora')}}</label>                     
                     </div>
                     <div class="fila">
                         <label for="tipoPostre">Tipo de postre:</label>
-                        <input type="text" id="tipoPostre" name="tipoPostre" placeholder="{{$tipo_postre}}" readonly>
+                        <label for="" id="tipoPostre" name="tipoPostre" class="paraMostrar">{{$tipo_postre}}</label>                        
                     </div>
                     <div class="fila">
                         <label for="cantidad">Cantidad:</label>
@@ -59,7 +58,8 @@
                     </div>
                     <div class="fila">
                         <label for="costo">Costo:</label>
-                        <input type="text" id="costo" name="costo" placeholder="{{$precio}}"  readonly><br>
+                        <label for="" id="costo" name="costo" class="paraMostrar"><{{$precio}}/label>
+                        <br>
                         <p class="nota">NOTA: El costo es aproximado, el precio final puede variar según su ubicación.</p>
                     </div>
                 </div>
