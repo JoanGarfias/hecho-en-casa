@@ -280,4 +280,21 @@ class ControladorCatalogoEmergente extends Controller
         return redirect()->route('emergente.ticket.get');   
 
     }
+
+    public function mostrarTicket(){
+
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->forget('proceso_compra');
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+
+        $pedido = Pedido::find(session("folio"));
+        $fechaHoraEntrega = $pedido->fecha_hora_entrega;
+
+        list($fecha, $hora) = explode(' ', $fechaHoraEntrega);
+
+        $usuario = Usuario::find($pedido->id_usuario); 
+        $tipo_entrega = session('tipo_entrega');
+
+        return view('ResumenPedFijo', compact('pedido', 'usuario', 'fecha', 'hora', 'tipo_entrega'));
+    }
 }
