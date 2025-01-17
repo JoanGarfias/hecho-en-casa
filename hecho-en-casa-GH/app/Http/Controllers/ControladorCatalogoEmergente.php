@@ -14,11 +14,11 @@ class ControladorCatalogoEmergente extends Controller
 {
 
     public function mostrar(Request $request){
-    /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-    session()->put('id_tipopostre', 'emergente');
-    session()->put('proceso_compra', $request->route()->getName());
-    //No deberia estar aca pero jeyson no puso un POST para el catalogo
-    /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+        session()->put('id_tipopostre', 'emergente');
+        session()->put('proceso_compra', $request->route()->getName());
+        //No deberia estar aca pero jeyson no puso un POST para el catalogo
+        /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $emergentes = Cache::remember('catalogoemergentes', 30, function () {
             return [
@@ -38,7 +38,8 @@ class ControladorCatalogoEmergente extends Controller
             Log::info('Cache is empty or expired.');
             return response()->json([]);
         }
-
+        
+        
         return view('emergentes', compact('emergentes'));
     }
 
@@ -46,8 +47,7 @@ class ControladorCatalogoEmergente extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-
-        $idPostre = $request->input('comprar');
+        $idPostre = $request->input('id_postre');
         
         $postre = Cache::remember('postres', 30, function () use ($idPostre){
             return Catalogo::where('id_postre', $idPostre)->first();
@@ -55,8 +55,13 @@ class ControladorCatalogoEmergente extends Controller
 
         $precio = $postre->precio_emergentes;
         $tipo_postre = $postre->id_tipopostre;
-        
-        return redirect()->route('calendario.post', compact('idPostre', 'precio', 'tipo_postre'));
+        session([
+            'id_postre' => $idPostre,
+            'precio' => $precio,
+            'tipo_postre' => $tipo_postre,
+        ]);
+
+        return redirect()->route('emergente.calendario.get');
     }
 
     public function seleccionar(Request $request){
