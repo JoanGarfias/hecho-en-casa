@@ -79,6 +79,5 @@
                 </script>
             </body>
             <x-pie/>
-            <script src="{{ asset('js/calEdit.js') }}"></script>
             <script src="{{ asset('js/meses.js') }}"></script>
            
