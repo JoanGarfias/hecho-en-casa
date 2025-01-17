@@ -36,22 +36,48 @@ class ControladorCatalogo extends Controller
         if ($categorias->isNotEmpty()) {
             if ($categoria === null) {
                 $categoriaPorDefecto = $categorias->first()->id_cat;
-                $catalogo = Cache::remember('catalogofijoCatNula', 30, function () use ($categoriaPorDefecto) {
-                    return Catalogo::join('postre_fijo_unidad_medidas', 'postre_fijo_unidad_medidas.id_pf', '=', 'catalogo.id_postre' )
-                        ->select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion', 'precio_um')
+                $catalogo = Cache::remember('catalogofijoCatNulaFull', 30, function () use ($categoriaPorDefecto) {
+                    return Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
                         ->where('id_tipo_postre', 'fijo')
                         ->where('id_categoria', $categoriaPorDefecto)
                         ->get();
-                });
+                        });
+                
+                foreach ($catalogo as $object) {
+                    $newObjectsArray =  Catalogo::join('postre_fijo_unidad_medidas', 'postre_fijo_unidad_medidas.id_pf', '=', 'catalogo.id_postre' )
+                        ->join('unidad_medida', 'unidad_medida.id_um', '=', 'postre_fijo_unidad_medidas.id_um' )
+                        ->select('precio_um', 'cantidad', 'nombre_unidad')
+                        ->where('id_tipo_postre', 'fijo')
+                        ->where('id_postre', $object->id_postre)
+                        ->where('id_categoria', $categoriaPorDefecto)
+                        ->get();
+                    
+                    $object->Presentaciones  = $newObjectsArray;
+                    
+                }
+                
             } else {
                 $cacheKey = "catalogofijoCat{$categoria}";
                 $catalogo = Cache::remember($cacheKey, 30, function () use ($categoria) {
-                    return Catalogo::join('postre_fijo_unidad_medidas', 'postre_fijo_unidad_medidas.id_pf', '=', 'catalogo.id_postre' )
-                        ->select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion', 'precio_um')
+                    return Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
                         ->where('id_tipo_postre', 'fijo')
                         ->where('id_categoria', $categoria)
                         ->get();
                 });
+
+                foreach ($catalogo as $object) {
+                    $newObjectsArray =  Catalogo::join('postre_fijo_unidad_medidas', 'postre_fijo_unidad_medidas.id_pf', '=', 'catalogo.id_postre' )
+                        ->join('unidad_medida', 'unidad_medida.id_um', '=', 'postre_fijo_unidad_medidas.id_um' )
+                        ->select('precio_um', 'cantidad', 'nombre_unidad')
+                        ->where('id_tipo_postre', 'fijo')
+                        ->where('id_postre', $object->id_postre)
+                        ->where('id_categoria', $categoria)
+                        ->get();
+                    
+                    $object->Presentaciones  = $newObjectsArray;
+                    
+                }
+
             }
 
             if ($catalogo->isEmpty()) {
@@ -156,6 +182,12 @@ class ControladorCatalogo extends Controller
 
     public function seleccionarFecha(Request $request)
     {
+        $botonPresionado = $request->input('botonPress');
+        if($botonPresionado=="Mover"){
+            $mes = $request->input('mes');
+            $anio = $request->input('anio');
+            return redirect()->route('fijo.calendario.get',['mes' => $mes, 'anio' => $anio]);
+        }
 
         $fechaEscogida = $request->input('fechaSeleccionada');
         $horaEntrega = $request->input('horaEntrega');
