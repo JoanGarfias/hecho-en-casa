@@ -222,7 +222,6 @@ class ControladorCatalogo extends Controller
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
                 session()->put('proceso_compra', 'fijo.calendario.post');
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-
                 if($porciones_dia + $cantidad_minima >= 1000000){
                     //dd($porciones_dia + $cantidad_minima);
                     return redirect()->route('fijo.calendario.get'); //Aqui se le tiene que mandar un mensaje de error
@@ -239,7 +238,6 @@ class ControladorCatalogo extends Controller
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
                 session()->put('proceso_compra', 'personalizado.calendario.post');
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-
                 if($porciones_dia + $cantidad_minima >= 10000000){
                     /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
                     session()->put('proceso_compra', 'personalizado.catalogo.post');
@@ -375,6 +373,8 @@ class ControladorCatalogo extends Controller
         $nombre_categoria = session('nombre_categoria');
         $lista_unidad = session('lista_unidad'); 
         $atributosSesion = session('atributosSesion');
+        $porciones_dia = session('porciones_dia');
+        session()->put('porciones', 100 - $porciones_dia); 
 
         return view('pedidos', compact('fecha', 'sabor_postre', 'hora_entrega', 'nombre_categoria', 'lista_unidad', 'atributosSesion'));
     }
