@@ -1,6 +1,8 @@
 *{
     font-family: "Poppins", serif;
+    
     font-style: normal;
+    font-weight: bold;
 }
 
 #fechaEntrega{
@@ -88,17 +90,15 @@ label {
     font-weight: bold;
 }
 
-.paraMostrar {
+input {
     background: white;
-    color: black;
     border: 1px solid #E8D9C2;
     border-radius: 4px;
     width: 30%;
     padding: 5px;
     margin-left: 36px;
-    font-weight: lighter;
+    
 }
-
 
 .mensaje{
     margin-top: 6px;
@@ -144,7 +144,6 @@ form {
 .nota{
     margin: 10px;
     color: #C7C0B5;
-    font-weight: bold;
 }
 
 
@@ -247,7 +246,7 @@ select {
 .custom-select-button {
     background-color: transparent;
     border: none;
-    font-size:medium;
+    font-size: 20px;
     cursor: pointer;
 }
 

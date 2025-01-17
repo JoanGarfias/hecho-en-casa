@@ -56,7 +56,6 @@ class ControladorBuscarPedido extends Controller{
                 session()->put("nombre_completo", $resultado); 
                 $nombre_unidad = "Piezas";
             }
-            //dd($nombre_sabor->nombre, $nombre_categoria->nombre, $resultado);
 
             $id_usuario = usuario::where("id_u", $pedido->id_usuario)->first(); 
             $nombre_completo = $id_usuario->nombre . " " .$id_usuario->apellido_paterno . " " .$id_usuario->apellido_materno;
@@ -75,10 +74,9 @@ class ControladorBuscarPedido extends Controller{
             $precio_final = $pedido->precio_final;
 
 
-            return view('buscadorpedido', ['pedido' => $pedido, 'tipopostre' => $resultado, 'nombre_completo' => $nombre_completo, 'telefono' => $telefono, 'fecha_entrega' => $fecha_entrega, 'hora_entrega' => $hora_entrega, 'precio_final' => $precio_final, 'tipo_entrega' => $tipo_entrega, 'nombre_unidad' => $nombre_unidad]);
+            return view('buscarPedido', ['pedido' => $pedido, 'tipopostre' => $resultado, 'nombre_completo' => $nombre_completo, 'telefono' => $telefono, 'fecha_entrega' => $fecha_entrega, 'hora_entrega' => $hora_entrega, 'precio_final' => $precio_final, 'tipo_entrega' => $tipo_entrega, 'nombre_unidad' => $nombre_unidad]);
         } else {
-            return view('buscadorpedido', ['error' => 'Folio no encontrado']);
+            return view('buscarPedido', ['error' => 'Folio no encontrado']);
         }
     }
 }
-//a

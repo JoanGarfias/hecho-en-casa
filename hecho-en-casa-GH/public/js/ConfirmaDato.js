@@ -13,13 +13,13 @@ function toggleAddressFields() {
  
 // Función para habilitar campos después de confirmar el CP
 document.getElementById('confirm-cp').addEventListener('click', function () {
-    const cpInput = document.getElementById('codigo_postal');
+    const cpInput = document.getElementById('codigo-postal');
     const calleInput = document.getElementById('calle');
     const estadoInput = document.getElementById('estado');
     const numeroIntInput = document.getElementById('numeroInt'); // Cambiado a numeroInt
     const numeroExtInput = document.getElementById('numeroExt'); // Cambiado a numeroExt
     const ciudadInput = document.getElementById('ciudad');
-    const coloniaSelect = document.getElementById('asentamiento');
+    const coloniaSelect = document.getElementById('colonia');
     const checklistInput = document.querySelector('.checklist input'); // Asegura seleccionar el input del checklist
 
     if (cpInput.value.trim() !== '') {

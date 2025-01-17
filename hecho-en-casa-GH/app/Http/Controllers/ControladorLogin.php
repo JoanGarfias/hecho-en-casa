@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\Correo;
-use App\Models\Usuario;
+use App\Models\usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cookie;
@@ -17,7 +17,7 @@ class ControladorLogin extends Controller
     {   
         return view('iniciar-sesion');
     }
-    
+
     public function Logear(Request $request)
     {
         $action = $request->input('action');//esto borrar
@@ -29,7 +29,7 @@ class ControladorLogin extends Controller
                 'g-recaptcha-response' => 'required|captcha',
             ]);
     
-            $usuario = Usuario::select('id_u', 'contraseña')
+            $usuario = usuario::select('id_u', 'contraseña')
             ->where('correo_electronico', $credentials['email'])
             ->first();
 
@@ -44,8 +44,8 @@ class ControladorLogin extends Controller
                 $userId = $usuario ? $usuario->id_u : null; // Devuelve el id si existe, o si no devuelve null
                 
                 //false para http only y que se pueda ver en JS
-                Cookie::queue(cookie('session_token', $sessionToken, 60 * 72, null, null, false, false));
-                Cookie::queue(cookie('user_id', $userId, 60 * 72, null, null, false, false));
+                Cookie::queue(cookie('session_token', $userId, 60 * 72, null, null, false, false));
+                Cookie::queue(cookie('user_id', $sessionToken, 60 * 72, null, null, false, false));
 
                 switch(session('id_tipopostre')){
                     case "fijo":
@@ -71,7 +71,7 @@ class ControladorLogin extends Controller
                 'email' => 'required|email',
             ]);
     
-            $usuario = Usuario::where('correo_electronico', $credentials['email'])->first();
+            $usuario = usuario::where('correo_electronico', $credentials['email'])->first();
             if($usuario){
                 $correo = $credentials['email'];
                 $token = Str::random(64);
@@ -104,7 +104,7 @@ class ControladorLogin extends Controller
 
         if ($sessionToken) {
             // Buscar al usuario con ese token de sesión
-            $usuario = Usuario::where('token_sesion', $sessionToken)->first();
+            $usuario = usuario::where('token_sesion', $sessionToken)->first();
     
             if ($usuario) {
                 //Se elimina el token de la bd

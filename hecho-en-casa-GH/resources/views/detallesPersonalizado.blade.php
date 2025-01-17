@@ -95,9 +95,8 @@
 
         <br>
         <label>Costo:</label><br>
-        <input type="number" name="costo" id="costo" value="0" min="0" max="0">
+        <input type="number" name="costo" value="800" min="100" max="800"></input>
         <br>
-
         <label>Porciones:</label><br>
         <input type="number" name="porciones"></input>
 
@@ -105,46 +104,5 @@
         <!-- Botón de envío -->
         <button type="submit">Guardar selección</button>
     </form>
-<script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const saborSelect = document.getElementById('sabor');
-            const rellenoSelect = document.getElementById('relleno');
-            const coberturaSelect = document.getElementById('cobertura');
-            const elementosSelect = document.getElementById('elementos');
-            const costoInput = document.getElementById('costo'); // Referencia al campo de costo
-        
-            function obtenerPrecio(option) {
-                const texto = option.textContent;
-                const precioMatch = texto.match(/\((\d+(\.\d+)?) MXN\)/); // Captura el precio del texto
-                return precioMatch ? parseFloat(precioMatch[1]) : 0;
-            }
-        
-            function calcularPrecioTotal() {
-                let precioTotal = 0;
-        
-                // Obtener precios seleccionados
-                precioTotal += obtenerPrecio(saborSelect.options[saborSelect.selectedIndex]);
-                precioTotal += obtenerPrecio(rellenoSelect.options[rellenoSelect.selectedIndex]);
-                precioTotal += obtenerPrecio(coberturaSelect.options[coberturaSelect.selectedIndex]);
-        
-                // Obtener precios de múltiples elementos seleccionados
-                Array.from(elementosSelect.selectedOptions).forEach(option => {
-                    precioTotal += obtenerPrecio(option);
-                });
-        
-                // Mostrar el precio total en el campo de costo
-                costoInput.value = precioTotal.toFixed(2);  // Asignar precio calculado
-            }
-        
-            // Agrega eventos para recalcular el precio cada vez que cambien las selecciones
-            saborSelect.addEventListener('change', calcularPrecioTotal);
-            rellenoSelect.addEventListener('change', calcularPrecioTotal);
-            coberturaSelect.addEventListener('change', calcularPrecioTotal);
-            elementosSelect.addEventListener('change', calcularPrecioTotal);
-        
-            // Calcula el precio inicial
-            calcularPrecioTotal();
-        });
-</script>
 </body>
 </html>

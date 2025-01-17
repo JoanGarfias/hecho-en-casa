@@ -17,7 +17,7 @@
 
            <div class="FOLIO-info"> <!--user-info -->
                <h2 class="Folio-name">Pedido con folio:</h2>
-               <input type="text" id="folio" name="folio" value="{{session('folio')}}" readonly>
+               <input type="text" id="folio" name="folio" value="Folio F0120" readonly>
              
            </div>
 
@@ -25,35 +25,37 @@
 
                <div class="left-column">
                    <label>Tipo de postre:</label>
-                   <input type="text" value="{{session('nombre_categoria')}}" readonly>
+                   <input type="text" value="Selección" readonly>
 
                    <label>Sabor:</label>
-                   <input type="text" value="{{session('sabor_postre')}}" readonly>
+                   <input type="text" value="Selección" readonly>
 
                    <label>Porciones:</label>
-                   <input type="text" value="{{session('porcionespedidas')}}" readonly>
+                   <input type="text" value="000" readonly>
 
+                   <label>Cantidad:</label>
+                   <input type="text" value="00" readonly>
                </div>
 
                <div class="right-column">
 
                     <label>Nombre:</label>
-                   <input type="text" value="{{$nombre}}" readonly>
+                   <input type="text" value="Fulanito1" readonly>
                    
                    <label>Teléfono:</label>
-                   <input type="text" value="{{$telefono}}" readonly>
+                   <input type="text" value="000 0000 000" readonly>
 
                    <label>Fecha de entrega:</label>
-                   <input type="text" value="{{$fecha}}" readonly>
+                   <input type="text" value="DD/MM/YYYY" readonly>
 
                    <label>Hora de entrega:</label>
-                   <input type="text" value="{{$hora}}" readonly>
+                   <input type="text" value="00:00" readonly>
 
                    <label>Tipo de entrega:</label>
-                   <input type="text" value="{{$tipo_entrega}}" readonly>
+                   <input type="text" value="Selección" readonly>
 
                    <label>Costo Apróximado:</label>
-                   <input type="text" value="${{$costo}}" readonly>
+                   <input type="text" value="$00000" readonly>
                </div>
            </div>
            <button class="descargarPDF-button"> 
@@ -78,7 +80,7 @@
 
                             <div class="FOLIO-info"> <!--user-info -->
                                 <h2 class="Folio-name">Pedido con folio:</h2>
-                                <input type="text" id="folio" name="folio" value="{{session('folio')}}" readonly>
+                                <input type="text" id="folio" name="folio" value="Folio F0120" readonly>
                             </div>       
 
                             <div class="details">
@@ -95,10 +97,7 @@
                                 </div>
                             </div>
 
-                            <form action="{{route('inicio.get')}}" method="GET">
-                                @csrf
-                                <button id="continuar" class="arrow" type="submit">Volver al inicio</button>
-                            </form>
+                            <button id="continuar" class="arrow" type="submit">volver al inicio</button>
                         
                             </div>
                         </div>

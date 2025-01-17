@@ -7,9 +7,9 @@
 <div class = "titule">
 
     
-    @if (session('tipo_postre') == 'temporada') <!--Recuerda poner este-->
+    @if (false) <!--Recuerda poner este-->
         <h2>PEDIDOS DE TEMPORADA</h2>   
-    @elseif(session('tipo_postre') == 'pop-up')
+    @else
         <h2>PEDIDOS POP UP</h2>   
     @endif
     
@@ -22,11 +22,12 @@
                 <div class="columna">
                     <div class="fila">
                         <label for="fechaEntrega">Fecha de entrega:</label>
-                        <label for="" id="fechaEntrega" name="fechaEntrega" class="paraMostrar">{{session('fecha')}}</label>
+                        <input type="text" id="fechaEntrega" name="fechaEntrega" placeholder="{{session('fecha')}}" readonly>
                     </div>
                     <div class="fila">
                         <label for="horaEntrega">Hora de entrega:</label>
-                        <label for="" id="horaEntrega" name="horaEntrega" class="paraMostrar">{{session('hora')}}</label>                     
+                        <input type="text" id="horaEntrega" name="horaEntrega" placeholder="{{session('hora')}}" readonly>
+                        
                     </div>
                     <div class="fila">
                         <label for="tipoPostre">Tipo de postre:</label>
