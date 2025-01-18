@@ -7,7 +7,6 @@
 </head>
 <body>
     <form action="{{ route('fijo.detallesPedido.post') }}" method="POST">
-        
         @csrf
 
         <label for="fecha-entrega">Fecha de entrega:</label>

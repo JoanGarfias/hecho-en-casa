@@ -162,7 +162,7 @@ class ControladorCatalogo extends Controller
         $diaActual = $primerDiaDelMes->copy();
         $diaSiguiente = $diaActual->copy()->addDay();
                     
-        //Obtencion de los dias del calendario
+        //obtencion de los dias del calendario
         while ($diaActual->lte($ultimoDiaDelMes)) {
             $diasDelMes[] = [
                 'fecha' => $diaActual->toDateString(), // Solo la fecha
@@ -270,7 +270,15 @@ class ControladorCatalogo extends Controller
                 ]);
 
                 return redirect()->route('emergente.detallesPedido.get');
+                //break;
+                // return ERROR;
         }
+        /* return view('fechaSeleccionada', [
+            'fecha' => $fechaEscogida,
+            'postre' => $postre,
+            'porciones_dia' => $porciones_dia,
+            'cantidad_minima' => $cantidad_minima,
+        ]); */
     }
 
     public function mostrarDetalles(Request $request){
@@ -297,6 +305,20 @@ class ControladorCatalogo extends Controller
                 session(['nombre_categoria' => 'Categoría no encontrada']);
             }
 
+            //$listaunidad = PostreFijoUnidad::where('id_pf', $postre->id_postre)->get();
+            /*$listaunidad = PostreFijoUnidad::where('id_pf', $postre->id_postre)->pluck('id_um'); // Obtener solo la columna 'id_um'
+            if ($listaunidad->isNotEmpty()) {
+                $unidades = []; 
+                foreach ($listaunidad as $id_um) {  // Ahora recorro la lista de 'id_um'
+                    $nombreunidad = UnidadMedida::where('id_um', $id_um)->first();  //'UnidadMedida' usando 'id_um'
+                    
+                    if ($nombreunidad) {
+                        $unidades[] = [
+                            'nombreunidad' => $nombreunidad->nombre_unidad,  // 'nombre_unidad' de la tabla 'UnidadMedida'
+                            'cantidadporciones' => $nombreunidad->cantidad, 
+                        ];
+                    }
+                }*/
             $listaunidad = PostreFijoUnidad::where('id_pf', $postre->id_postre)->pluck('id_um'); // Obtener solo la columna 'id_um'
 
             if ($listaunidad->isNotEmpty()) {

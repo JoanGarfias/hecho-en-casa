@@ -67,7 +67,8 @@ class EnlazadorPedido
         }
 
         // Ejecuta $next($request) una sola vez y pasa la respuesta a eliminarCache.
-        return $this->eliminarCache($rutaActual, $next($request));
+        $response = $next($request);
+        return $this->eliminarCache($rutaActual, $response, $opcion_envio, $tipopostre) ?? $response;
 
     }
 
@@ -108,14 +109,26 @@ class EnlazadorPedido
         return $tipopostre ? $tipopostre . '.catalogo.get' : 'inicio.get';
     }
 
-    private function eliminarCache($vista, $response)
+    private function eliminarCache($vista, $response, $opcion_envio, $tipopostre)
     {
         if (in_array($vista, $this->rutasSinCache)) {
             $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
             $response->headers->set('Pragma', 'no-cache');
             $response->headers->set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
+            return $response;
         }
-        return $response;
+
+        if ($opcion_envio === "Sucursal") {
+            $rutaDireccion = $tipopostre . '.detallesPedido.get';
+            if ($vista === $rutaDireccion) {
+                $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+                $response->headers->set('Pragma', 'no-cache');
+                $response->headers->set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
+                return $response;
+            }
+        }
+
+        return null;
     }
 
     private function olvidarDatos(... $datos){
