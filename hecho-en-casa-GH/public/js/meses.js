@@ -109,7 +109,6 @@ document.addEventListener('DOMContentLoaded', function(){
         inputAnio.value = anioNumerico;
         if(mesAux===12) 
             inputAnio.value = anioNumerico - 1;
-        alert('Enviandoporquesi 1')
         formulario.submit();
         
     });
@@ -121,13 +120,9 @@ document.addEventListener('DOMContentLoaded', function(){
         inputAnio.value = hoyanio;
         if(mesAux===1)
             inputAnio.value = hoyanio + 1;
-        alert('Enviandoporquesi 2')
         formulario.submit();
         
     });
-
-    console.log('el mes en meses: ' + mesNumerico)
-
     renderCalendar();
     variableMes = mesNumerico
 });
@@ -136,9 +131,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
 document.addEventListener('DOMContentLoaded', function () {
     const numbers = document.getElementById("numbers");
-
-    
-    console.log('entro')
     // Delegación de eventos: Detectar clics solo en elementos con la clase "available"
     numbers.addEventListener("click", function (e) {
         const clickedDay = e.target;
@@ -148,8 +140,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (previouslySelected) {
                 previouslySelected.classList.remove("selected");
             }
-
-            console.log(clickedDay)
             // Seleccionar el nuevo día
             clickedDay.classList.add("selected");
 
@@ -157,11 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const diaNumero = clickedDay.textContent;
             const mes = variableMes;
             const anio = document.getElementById("anio").value || new Date().getFullYear();
-
-            console.log(mes)
-
             const fecha = `${anio}-${String(mes).padStart(2, "0")}-${String(diaNumero).padStart(2, "0")}`;
-            console.log("Fecha seleccionada:", fecha);
 
             // Guardar en el campo oculto
             const inputFecha = document.getElementById("fechaSeleccionada");
@@ -278,7 +264,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (fechando.trim() === ''){
                         alert('Tienes que seleccionar una fecha')
                     } else {   
-                        alert('Enviandoporquesi 3')
                         formulario.submit();        
                     }
                 });
