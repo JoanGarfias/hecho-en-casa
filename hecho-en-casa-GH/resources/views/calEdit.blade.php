@@ -81,6 +81,6 @@
                 </script>
             </body>
             <x-pie/>
-            <script src="{{ asset('js/meses.js') }}"></script>
+            <script src="{{ asset('js/mesesdos.js') }}"></script>
             <script src="{{ asset('js/rutaCalEdit.js')}}"></script>
            
