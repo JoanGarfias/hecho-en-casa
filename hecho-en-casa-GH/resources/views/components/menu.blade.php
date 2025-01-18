@@ -38,7 +38,7 @@
     </div>
 </header>
 <!--Para la animación del logo de usuario-->
-
+<script src="{{ asset('js/despliegue-menu.js') }}" defer></script>
 <script src="{{ asset('js/icono.js') }}" defer></script>
 
 <script>
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const boton1 = document.getElementById('primer_boton_perfil');
     const boton2 = document.getElementById('segundo_boton_perfil');
 
-    let sesion = getCookieByName('user_id');    
+    let sesion = getCookieByName('session_token');
     if (sesion) {
         // Usuario autenticado: Mostrar "Perfil" y "Cerrar sesión"
         boton1.textContent = 'Perfil';
