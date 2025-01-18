@@ -191,6 +191,7 @@ class ControladorCatalogo extends Controller
 
         $cantidad_minima = $porciones_unidad_minima ? $porciones_unidad_minima->cantidad : 0;
         
+        //$tipopostre = session('id_tipopostre')
         switch($tipopostre){
             case "fijo":
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
@@ -232,7 +233,7 @@ class ControladorCatalogo extends Controller
                     return redirect()->route('personalizado.detallesPedido.get');
                 }
                 //break;
-            case "temporada": case "pop-up":                
+            case "emergentes":                
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
                 session()->put('proceso_compra', 'emergente.calendario.post');
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */

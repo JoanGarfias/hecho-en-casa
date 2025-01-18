@@ -44,8 +44,8 @@ class ControladorLogin extends Controller
                 $userId = $usuario ? $usuario->id_u : null; // Devuelve el id si existe, o si no devuelve null
                 
                 //false para http only y que se pueda ver en JS
-                Cookie::queue(cookie('session_token', $userId, 60 * 72, null, null, false, false));
-                Cookie::queue(cookie('user_id', $sessionToken, 60 * 72, null, null, false, false));
+                Cookie::queue(cookie('session_token', $sessionToken, 60 * 72, null, null, false, false));
+                Cookie::queue(cookie('user_id', $userId, 60 * 72, null, null, false, false));
 
                 switch(session('id_tipopostre')){
                     case "fijo":
