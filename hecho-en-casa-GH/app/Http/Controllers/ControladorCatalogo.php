@@ -36,22 +36,48 @@ class ControladorCatalogo extends Controller
         if ($categorias->isNotEmpty()) {
             if ($categoria === null) {
                 $categoriaPorDefecto = $categorias->first()->id_cat;
-                $catalogo = Cache::remember('catalogofijoCatNula', 30, function () use ($categoriaPorDefecto) {
-                    return Catalogo::join('postre_fijo_unidad_medidas', 'postre_fijo_unidad_medidas.id_pf', '=', 'catalogo.id_postre' )
-                        ->select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion', 'precio_um')
+                $catalogo = Cache::remember('catalogofijoCatNulaFull', 30, function () use ($categoriaPorDefecto) {
+                    return Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
                         ->where('id_tipo_postre', 'fijo')
                         ->where('id_categoria', $categoriaPorDefecto)
                         ->get();
-                });
+                        });
+                
+                foreach ($catalogo as $object) {
+                    $newObjectsArray =  Catalogo::join('postre_fijo_unidad_medidas', 'postre_fijo_unidad_medidas.id_pf', '=', 'catalogo.id_postre' )
+                        ->join('unidad_medida', 'unidad_medida.id_um', '=', 'postre_fijo_unidad_medidas.id_um' )
+                        ->select('precio_um', 'cantidad', 'nombre_unidad')
+                        ->where('id_tipo_postre', 'fijo')
+                        ->where('id_postre', $object->id_postre)
+                        ->where('id_categoria', $categoriaPorDefecto)
+                        ->get();
+                    
+                    $object->Presentaciones  = $newObjectsArray;
+                    
+                }
+                
             } else {
                 $cacheKey = "catalogofijoCat{$categoria}";
                 $catalogo = Cache::remember($cacheKey, 30, function () use ($categoria) {
-                    return Catalogo::join('postre_fijo_unidad_medidas', 'postre_fijo_unidad_medidas.id_pf', '=', 'catalogo.id_postre' )
-                        ->select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion', 'precio_um')
+                    return Catalogo::select('id_postre', 'id_tipo_postre', 'id_categoria', 'imagen', 'nombre', 'descripcion')
                         ->where('id_tipo_postre', 'fijo')
                         ->where('id_categoria', $categoria)
                         ->get();
                 });
+
+                foreach ($catalogo as $object) {
+                    $newObjectsArray =  Catalogo::join('postre_fijo_unidad_medidas', 'postre_fijo_unidad_medidas.id_pf', '=', 'catalogo.id_postre' )
+                        ->join('unidad_medida', 'unidad_medida.id_um', '=', 'postre_fijo_unidad_medidas.id_um' )
+                        ->select('precio_um', 'cantidad', 'nombre_unidad')
+                        ->where('id_tipo_postre', 'fijo')
+                        ->where('id_postre', $object->id_postre)
+                        ->where('id_categoria', $categoria)
+                        ->get();
+                    
+                    $object->Presentaciones  = $newObjectsArray;
+                    
+                }
+
             }
 
             if ($catalogo->isEmpty()) {
@@ -156,6 +182,12 @@ class ControladorCatalogo extends Controller
 
     public function seleccionarFecha(Request $request)
     {
+        $botonPresionado = $request->input('botonPress');
+        if($botonPresionado=="Mover"){
+            $mes = $request->input('mes');
+            $anio = $request->input('anio');
+            return redirect()->route('fijo.calendario.get',['mes' => $mes, 'anio' => $anio]);
+        }
 
         $fechaEscogida = $request->input('fechaSeleccionada');
         $horaEntrega = $request->input('horaEntrega');
@@ -352,8 +384,8 @@ class ControladorCatalogo extends Controller
 
 
         $sabor = session('sabor_postre');
-        $unidadm = intval($request->input('unidadm'));
-        $unidadSeleccionada = $request->input('unidadm');  // "5|kilogramo"
+        $unidadm = intval($request->input('porciones'));
+        $unidadSeleccionada = $request->input('porciones');  // "5|kilogramo"
         list($cantidadPorciones, $nombreUnidad) = explode('|', $unidadSeleccionada);
         //Obtener id_um 
         $id_um = UnidadMedida::where('cantidad', $cantidadPorciones)
@@ -407,7 +439,7 @@ class ControladorCatalogo extends Controller
 
             return redirect()->route('fijo.direccion.get');      
         }
-        else{
+        else if ($tipo_entrega == "Sucursal"){
             // Instanciación de postrefijo  
 
             $fijo = new Postrefijo;
@@ -435,24 +467,7 @@ class ControladorCatalogo extends Controller
             session([
                 'folio' => $id_pedido,
             ]);
-
-            $datos = [
-                'costo' => $costo,
-                'tipo_entrega' => $tipo_entrega,
-                'id_usuario' => $id_usuario,
-                'fecha_hora_entrega' => $fecha_hora_entrega,
-                'fecha_hora_registro' => $fecha_hora_registro,
-                'id_tipopostre' => $id_tipopostre,
-                'id_pf' =>  $id_nuevo_postre,
-                'pedido' => [
-                    'id_pedido' => $pedido->id_ped,
-                    'porcionespedidas' => $pedido->porcionespedidas,
-                    'status' => $pedido->status,
-                    'precio_final' => $pedido->precio_final,
-                    'fecha_hora_registro' => $pedido->fecha_hora_registro,
-                    'fecha_hora_entrega' => $pedido->fecha_hora_entrega,
-                ],
-            ];
+            
             return redirect()->route('fijo.ticket.get', ['folio' => $id_pedido]);            
         }
     }
@@ -565,12 +580,17 @@ class ControladorCatalogo extends Controller
 
         $pedido = Pedido::find(session("folio"));
         $fechaHoraEntrega = $pedido->fecha_hora_entrega;
+        $costo = $pedido->precio_final;
 
         list($fecha, $hora) = explode(' ', $fechaHoraEntrega);
 
         $usuario = Usuario::find($pedido->id_usuario); 
+        
+        $nombre = $usuario->nombre;
+        $telefono = $usuario->telefono;
+        
         $tipo_entrega = session('tipo_entrega');
 
-        return view('pedido', compact('pedido', 'usuario', 'fecha', 'hora', 'tipo_entrega'));
+        return view('ResumenPedFij', compact('costo', 'nombre', 'telefono', 'fecha', 'hora', 'tipo_entrega'));
     }
 }
