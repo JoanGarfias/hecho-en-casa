@@ -395,7 +395,6 @@ class ControladorCatalogo extends Controller
         session()->put('opcion_envio', $tipo_entrega);
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
-
         $id_postre = session('id_postre');
         $postre = Catalogo::where('id_postre', $id_postre)
                             ->first();
@@ -450,7 +449,16 @@ class ControladorCatalogo extends Controller
 
         // Ahora se puede usar los valores capturados
         session(['valoresSeleccionados' => $valoresSeleccionados, 'costo' => $costo]); 
-        
+        $usuario = Cache::remember('usuario', 30, function () {
+            return usuario::where('id_u', session('id_usuario'))->first();
+        });
+
+        $direccion = $usuario->calle_u . " " . $usuario->num_exterior_u . ", " . $usuario->colonia_u . ", " .
+                    $usuario->ciudad_u . ", ". $usuario->estado_u;
+        session([
+            'telefono' => $usuario->telefono,
+            'direccion' => $direccion,
+        ]);
 
         if ($tipo_entrega == "Domicilio") {
             $datos = [
@@ -505,11 +513,13 @@ class ControladorCatalogo extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-
+        $ruta = $request->route()->getName();
+        $rutaPost = "fijo.direccion.post";
+        
         //ANEXAR LÓGICA PARA OBTENER LA DIRECCIÓN DEL USUARIO
 
         $datos = session('datos_pedido');
-        return view('ConfirmaDato', compact('datos'));
+        return view('ConfirmaDato', compact('datos', 'rutaPost'));
     }
 
     public function guardarDireccion(Request $request){ //POST: Mandamos a la ruta del ticket
@@ -517,7 +527,7 @@ class ControladorCatalogo extends Controller
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
-        $tipo_domicilio = $request->input('tipo_domicilio'); 
+        $tipo_domicilio = $request->input('ubicacion'); 
         //ACÁ SE DEBERÍA JALAR LA UBICACIÓN DEL FORMULARIO
         //dd($tipo_domicilio);
         $id_usuario = session('id_usuario');
@@ -529,26 +539,33 @@ class ControladorCatalogo extends Controller
         $ciudad = $user->ciudad_u;
         $colonia = $user->colonia_u;
         $calle = $user->calle_u;
-        $numero = $user->num_exterior_u;
+        $numeroInterior = $user->num_interior_u;
+        $numeroExterior = $user->num_exterior_u;
+        $referencia = $user->referencia_u;
 
-        if($tipo_domicilio==='Nueva'){ 
+
+        if($tipo_domicilio==='otra'){ 
             $codigo_postal = $request->input('codigo_postal');
             $estado = $request->input('estado');
-            $ciudad = $request->input('municipio');
+            $ciudad = $request->input('ciudad');
             $colonia = $request->input('asentamiento');
             $calle = $request->input('calle');
             $numero = $request->input('numero');
+            $numeroInterior = $request->input('numeroI');
+            $numeroExterior = $request->input('numeroE');
+            $referencia = $request->input('referencia');
             //$referencia = $request->input('referencia');
 
             //Si elige volverla su ubicacion predeterminada entonces lo actualizamos en el perfil del usuario
-            if($request->has('aceptar')){
+            if($request->has('opciones')){
                 $user->Codigo_postal_u = $codigo_postal;
                 $user->estado_u = $estado;
                 $user->ciudad_u = $ciudad;
                 $user->colonia_u = $colonia;
                 $user->calle_u = $calle;
-                $user->num_exterior_u = $numero;
-                //$user->referencia_u = $referencia;
+                $user->num_exterior_u = $numeroExterior;
+                $user->num_interior_u = $numeroInterior;
+                $user->referencia_u = $referencia;
                 $user->save();
             }
 
@@ -558,7 +575,7 @@ class ControladorCatalogo extends Controller
         $fijo = new Postrefijo;
         $fijo->id_atributo = session('id_atributo');
         $fijo->id_um = session('id_um'); //$unidadm;
-        $fijo->id_postre_elegido = session("postre");//1;
+        $fijo->id_postre_elegido = session("id_postre");//1;
         $fijo->save();  
 
         // Obtenemos el ID del postre creado
@@ -567,17 +584,18 @@ class ControladorCatalogo extends Controller
         // Instanciación de Pedido
         $pedido = new Pedido;
         $pedido->id_usuario = session('id_usuario');
-        $pedido->id_tipopostre = $datos['id_tipopostre'];
+        $pedido->id_tipopostre = session('id_tipopostre');
         $pedido->id_seleccion_usuario = $id_nuevo_postre;
         $pedido->estado_e = $estado;
         $pedido->Codigo_postal_e = $codigo_postal;
         $pedido->ciudad_e = $ciudad;
         $pedido->colonia_e = $colonia;
         $pedido->calle_e = $calle;
-        $pedido->num_exterior_e = $numero; 
-        //$pedido->referencia_e = $referencia;
+        $pedido->num_exterior_e = $numeroExterior; 
+        $pedido->num_interior_e = $numeroInterior; 
+        $pedido->referencia_e = $referencia;
         $pedido->porcionespedidas = session("porcionespedidas");
-        $pedido->fecha_hora_entrega =  session('fecha') . " " . session('hora_entrega'); 
+        $pedido->fecha_hora_entrega =  session('fecha_entrega') . " " . session('hora_entrega'); 
         $pedido->fecha_hora_registro = now();
         $pedido->status = "pendiente";
         $pedido->precio_final = session("costo");
@@ -586,15 +604,6 @@ class ControladorCatalogo extends Controller
         $id_pedido = $pedido->id_ped;
         session([
             'folio' => $id_pedido,
-        ]);
-
-        session([
-            'codigo_postal' => $codigo_postal,
-            'estado' => $estado,
-            'ciudad' => $ciudad,
-            'colonia' => $colonia,
-            'calle' => $calle,
-            'numero' => $numero,
         ]);
 
         return redirect()->route('fijo.ticket.get',['folio' => $id_pedido]);
