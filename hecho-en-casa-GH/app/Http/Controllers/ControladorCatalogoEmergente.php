@@ -47,7 +47,6 @@ class ControladorCatalogoEmergente extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $idPostre = $request->input('id_postre');
-        dd($idPostre);
         $postre = Cache::remember('postres', 30, function () use ($idPostre){
             return Catalogo::where('id_postre', $idPostre)->first();
         });
@@ -96,15 +95,17 @@ class ControladorCatalogoEmergente extends Controller
 
         session([   
             'nombre_postre' => $postre->nombre,
+            'tipo_postre_e' => $postre->id_tipo_postre
         ]);
         
+
         return view('pedidosTempPop');
     }
 
     public function seleccionarDetalles(Request $request){    
         $validated = $request->validate([
             'cantidad' => 'required|integer',
-            'tipo_entrega' => 'required',
+            'tipoEntrega' => 'required',
         ]);
 
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
@@ -112,8 +113,6 @@ class ControladorCatalogoEmergente extends Controller
         session()->put('opcion_envio', $tipo_entrega);
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-
-
 
         session([
             'cantidad_pedida' => $validated['cantidad'],
