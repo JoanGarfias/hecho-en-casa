@@ -258,34 +258,21 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-    const formulario = document.getElementById('cambioFecha');
-    const hiddenAction = document.getElementById('botonPress');
+    const formulario = document.querySelector('#cambioFecha')
     const enviar = document.querySelector('.aceptandoFecha')
 
-    const botones = document.querySelectorAll('.botonPr');
-    let action = null; 
+    if (enviar != null){
+        enviar.addEventListener("click", event => {
+            event.preventDefault();
 
-    botones.forEach(boton => {
-        boton.addEventListener('click', event => {
-            event.preventDefault(); 
-            action = boton.value; 
-            hiddenAction.value = action;
-    
-            if (enviar != null){
-                enviar.addEventListener("click", event => {
-                    event.preventDefault();
-        
-                    if (fechando.trim() === ''){
-                        alert('Tienes que seleccionar una fecha')
-                    } else {   
-                        alert('Enviandoporquesi 3')
-                        formulario.submit();        
-                    }
-                });
-            }      
+            if (fechando.trim() === ''){
+                alert('Tienes que seleccionar una fecha')
+            } else {   
+                alert('Enviandoporquesi 3')
+                formulario.submit();        
+            }
         });
-    });
+    }
 });
-
 
 
