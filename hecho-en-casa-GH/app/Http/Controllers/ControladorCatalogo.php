@@ -183,11 +183,20 @@ class ControladorCatalogo extends Controller
 
     public function seleccionarFecha(Request $request)
     {
+        $ruta = $request->route()->getName();
         $botonPresionado = $request->input('botonPress');
         if($botonPresionado=="Mover"){
             $mes = $request->input('mes');
             $anio = $request->input('anio');
-            return redirect()->route('fijo.calendario.get',['mes' => $mes, 'anio' => $anio]);
+            switch($ruta){
+                case "fijo.calendario.post":
+                    return redirect()->route('fijo.calendario.get',['mes' => $mes, 'anio' => $anio]);
+                case "emergente.calendario.post":
+                    return redirect()->route('emergente.calendario.get',['mes' => $mes, 'anio' => $anio]);
+                case "personalizado.calendario.post":
+                    return redirect()->route('personalizado.calendario.get',['mes' => $mes, 'anio' => $anio]);
+            }
+            
         }
         $fechaEscogida = $request->input('fechaSeleccionada');
         $horaEntrega = $request->input('horaEntrega');

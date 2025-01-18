@@ -74,7 +74,7 @@ Route::middleware([EnlazadorRecuperacion::class, ProtectorPeticiones::class])->g
 Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrarCatalogo'])->name('fijo.catalogo.get')
 ->middleware([ProtectorPeticiones::class]);
 
-Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(function () {
+//Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(function () {
     Route::post('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'guardarSeleccionCatalogo'])->name('fijo.catalogo.post');
     Route::get('fijo/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])->name('fijo.calendario.get');
     Route::post('fijo/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'seleccionarFecha'])->name('fijo.calendario.post');
@@ -86,7 +86,7 @@ Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(funct
     Route::post('fijo/detalles-direccion', [ControladorCatalogo::class, 'guardarDireccion'])->name('fijo.direccion.post');
 
     Route::get('fijo/ticket/{folio}', [ControladorCatalogo::class, 'mostrarTicket'])->name('fijo.ticket.get');
-});
+//});
 Route::post('fijo/detalles-direccion/buscar', [App\Http\Controllers\ControladorCP::class, 'buscar'])->name('buscar'); //Ruta nueva fijo
 
 /* RUTAS DE POSTRES PERSONALIZADOS */
