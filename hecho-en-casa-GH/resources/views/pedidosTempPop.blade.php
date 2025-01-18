@@ -6,7 +6,6 @@
   
 <div class = "titule">
 
-    
     @if (session('tipo_postre_e') == 'temporada') <!--Recuerda poner este-->
         <h2>PEDIDOS DE TEMPORADA</h2>   
     @elseif(session('tipo_postre_e') == 'pop-up')
@@ -17,7 +16,7 @@
 <div class="flexi">
     
     <div class = "contenedor"><!-- café-->
-        <form id="formularioPedidos" action="" method="">
+        <form id="formularioPedidos" action="{{route('emergente.detallesPedido.post')}}" method="POST">
             <div class="dosColumnas">
                 <div class="columna">
                     <div class="fila">
@@ -31,15 +30,15 @@
                     </div>
                     <div class="fila">
                         <label for="tipoPostre">Tipo de postre:</label>
-                        <label for="" id="tipoPostre" name="tipoPostre" class="paraMostrar"></label>                        
+                        <label for="" id="tipoPostre" name="tipoPostre" class="paraMostrar">{{session('nombre_postre')}}</label>                        
                     </div>
                     <div class="fila">
                         <label for="cantidad">Cantidad:</label>
                         <div class="cantidad-wrapper">
                             <input type="text" id="cantidad" name="cantidad" value="1" required>
                             <div class="boton-wrapper">
-                                <button type="button" class="incrementar">🔺</button>
-                                <button type="button" class="decrementar">🔻</button>
+                                <button type="button" class="incrementar flechitas">🔺</button>
+                                <button type="button" class="decrementar flechitas">🔻</button>
                             </div>
                             
                         </div>
@@ -59,7 +58,9 @@
                     </div>
                     <div class="fila">
                         <label for="costo">Costo:</label>
-                        <label for="" id="costo" name="costo" class="paraMostrar"></label>
+                        <label for="" id="costo" name="costo" class="paraMostrar">{{session('precio')}}</label>
+                        <input type="hidden" id="precio" value="{{session('precio')}}">
+                        
                         <br>
                         <p class="nota">NOTA: El costo es aproximado, el precio final puede variar según su ubicación.</p>
                     </div>
@@ -78,7 +79,39 @@
                     <button id="continuar" class="botoncito" type="submit">Continuar</button>
                 </div>
             </div>
-        </form>  
+        </form> 
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                function sumarSeleccionado() {
+                    // Obtener valores actuales
+                    let total = parseFloat(document.getElementById('precio').value) || 0;
+                    let cantidad = parseFloat(document.getElementById("cantidad").value) || 1;
+        
+                    // Multiplicar por la cantidad ingresada
+                    total *= cantidad;
+        
+                    // Actualizar el valor del costo en el label
+                    document.getElementById("costo").innerText = total.toFixed(2);
+                }
+        
+                // Evento para cambios en la cantidad
+                const cantidadInput = document.getElementById("cantidad");
+                const flechitas = document.querySelectorAll('.flechitas');
+        
+                // Escuchar eventos de cambio en cantidad
+                cantidadInput.addEventListener('input', sumarSeleccionado);
+        
+                // Escuchar clics en las flechitas
+                flechitas.forEach(button => {
+                    button.addEventListener('click', () => {
+                        sumarSeleccionado();
+                    });
+                });
+        
+                // Ejecutar inicialmente por si es necesario actualizar desde el inicio
+                sumarSeleccionado();
+            });
+        </script>
     </div>
 </div>
 <x-pie/>
