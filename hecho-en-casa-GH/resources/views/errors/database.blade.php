@@ -19,6 +19,7 @@
     
         <div class="contenedor">
             <h1>❌ Error en la Conexión a la Base de Datos</h1>
+            <p>{{$message}}</p>
         <br>
             <p>Disculpe los inconvenientes.</p>
             <br>

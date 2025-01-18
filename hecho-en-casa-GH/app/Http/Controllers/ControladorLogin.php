@@ -21,7 +21,7 @@ class ControladorLogin extends Controller
     public function Logear(Request $request)
     {
         $action = $request->input('action');//esto borrar
-        if($action === 'login'){
+        if($action == 'login'){
             
             $credentials = $request->validate([
                 'email' => 'required|email',
@@ -65,7 +65,7 @@ class ControladorLogin extends Controller
             else{
                 return redirect()->route('login.get')->withErrors(['correo_electronico' => 'Credenciales incorrectas.']);
             }
-        }elseif($action === 'recuperar'){
+        }elseif($action == 'recuperar'){
             
             $credentials = $request->validate([
                 'email' => 'required|email',
@@ -92,7 +92,7 @@ class ControladorLogin extends Controller
             }
             return redirect()->back()
                 ->with('error', 'Correo no registrado.');
-        }elseif($action === 'register'){
+        }elseif($action == 'register'){
             return redirect()->route('registrar.get');
         }
     }

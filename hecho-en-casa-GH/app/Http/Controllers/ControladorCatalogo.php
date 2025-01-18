@@ -116,9 +116,10 @@ class ControladorCatalogo extends Controller
         $error = session('error'); // Recuperar el mensaje de error
         session()->put('proceso_compra', $request->route()->getName()); //con esto sabemos el nombre de la ruta de la que viene
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-
+        
         $ruta = $request->route()->getName();
         $metodo = null;
+        
         if($ruta == "personalizado.calendario.get"){
             $metodo = "personalizado.calendario.post";
         }elseif($ruta == "emergente.calendario.get"){
@@ -188,7 +189,6 @@ class ControladorCatalogo extends Controller
             $anio = $request->input('anio');
             return redirect()->route('fijo.calendario.get',['mes' => $mes, 'anio' => $anio]);
         }
-
         $fechaEscogida = $request->input('fechaSeleccionada');
         $horaEntrega = $request->input('horaEntrega');
         $postre = session('id_postre');
@@ -196,7 +196,6 @@ class ControladorCatalogo extends Controller
         session(['id_usuario' => Cookie::get('user_id')]);
         session(['fecha_entrega' => $fechaEscogida]);
         session(['hora_entrega' => $horaEntrega]);
-
 
         $pedidos_dia = Cache::remember('pedidosdia', 30, function () use ($fechaEscogida) {
             return Pedido::select('fecha_hora_entrega', 'porcionespedidas')
@@ -216,7 +215,8 @@ class ControladorCatalogo extends Controller
         });
 
         $cantidad_minima = $porciones_unidad_minima ? $porciones_unidad_minima->cantidad : 0;
-
+        
+        //$tipopostre = session('id_tipopostre')
         switch($tipopostre){
             case "fijo":
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
@@ -258,14 +258,12 @@ class ControladorCatalogo extends Controller
                     return redirect()->route('personalizado.detallesPedido.get');
                 }
                 //break;
-            case "emergente":
+            case "emergentes":                
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
                 session()->put('proceso_compra', 'emergente.calendario.post');
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
                 session([
-                    'fecha' => $fechaEscogida,
-                    'postre' => $postre,
                     'porciones_dia' => $porciones_dia,
                 ]);
 
@@ -475,7 +473,7 @@ class ControladorCatalogo extends Controller
 
             // Instanciación de Pedido
             $pedido = new Pedido;
-            $pedido->id_usuario = $id_usuario;
+            $pedido->id_usuario = session('id_usuario');
             $pedido->id_tipopostre = $id_tipopostre;
             $pedido->id_seleccion_usuario = $id_nuevo_postre; 
             $pedido->porcionespedidas = $unidadm * $cantidad; 
@@ -595,17 +593,14 @@ class ControladorCatalogo extends Controller
     }
     
     public function mostrarTicket(){
-
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->forget('proceso_compra');
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-
         $pedido = Pedido::find(session("folio"));
         $fechaHoraEntrega = $pedido->fecha_hora_entrega;
         $costo = $pedido->precio_final;
 
         list($fecha, $hora) = explode(' ', $fechaHoraEntrega);
-
         $usuario = Usuario::find($pedido->id_usuario); 
         
         $nombre = $usuario->nombre;

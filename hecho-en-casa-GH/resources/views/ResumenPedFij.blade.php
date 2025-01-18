@@ -111,5 +111,3 @@
    <script src="{{ asset('js/Gracias.js') }}"></script>
 
 </body>
-
-<x-pie/>
