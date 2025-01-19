@@ -56,6 +56,7 @@ class ControladorBuscarPedido extends Controller{
                 session()->put("nombre_completo", $resultado); 
                 $nombre_unidad = "Piezas";
             }
+            //dd($nombre_sabor->nombre, $nombre_categoria->nombre, $resultado);
 
             $id_usuario = usuario::where("id_u", $pedido->id_usuario)->first(); 
             $nombre_completo = $id_usuario->nombre . " " .$id_usuario->apellido_paterno . " " .$id_usuario->apellido_materno;
