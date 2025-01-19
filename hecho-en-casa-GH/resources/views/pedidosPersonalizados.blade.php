@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="{{ asset('css/mensajeErrorE.css') }}">
 <link rel="stylesheet" href="{{ asset('css/pedidos.css') }}">
 <link rel="stylesheet" href="{{ asset('css/pedidosTempPop.css') }}">
 <link rel="stylesheet" href="{{ asset('css/pedidosPersonalizados.css') }}">
@@ -171,6 +172,7 @@
                 </div>
             </div>
         </form>  
+        <div id="mensajeEmergente"></div>
     </div>
 </div>
 
