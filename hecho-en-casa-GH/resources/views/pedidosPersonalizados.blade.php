@@ -216,7 +216,7 @@
 
         inputPorciones.addEventListener('input', actualizarPorcionesRestantes);
 
-        document.querySelector('.incrementar').addEventListener('click', () => {
+        /*document.querySelector('.incrementar').addEventListener('click', () => {
             inputPorciones.value = parseInt(inputPorciones.value || 0) + 1;
             actualizarPorcionesRestantes();
         });
@@ -224,6 +224,21 @@
         document.querySelector('.decrementar').addEventListener('click', () => {
             inputPorciones.value = Math.max(parseInt(inputPorciones.value || 0) - 1, 0);
             actualizarPorcionesRestantes();
+        });*/ 
+        // Incrementar: Asegúrate de que el valor se actualice correctamente al hacer clic
+        document.querySelector('.incrementar').addEventListener('click', () => {
+            let cantidadActual = parseInt(inputPorciones.value) || 0;
+            cantidadActual += 1; // Incrementar en 1
+            inputPorciones.value = cantidadActual; // Actualizar el valor del input
+            actualizarPorcionesRestantes(); // Llamar a la función de actualización
+        });
+
+        // Decrementar: Asegúrate de que no se pase de 0
+        document.querySelector('.decrementar').addEventListener('click', () => {
+            let cantidadActual = parseInt(inputPorciones.value) || 0;
+            cantidadActual = Math.max(cantidadActual - 1, 1); // Decrementar en 1 sin pasar de 0
+            inputPorciones.value = cantidadActual; // Actualizar el valor del input
+            actualizarPorcionesRestantes(); // Llamar a la función de actualización
         });
 
         actualizarPorcionesRestantes(); 
