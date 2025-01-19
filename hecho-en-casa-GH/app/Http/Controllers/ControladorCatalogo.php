@@ -188,19 +188,38 @@ class ControladorCatalogo extends Controller
     {
         $ruta = $request->route()->getName();
         $botonPresionado = $request->input('botonPress');
-        if($botonPresionado=="Mover"){
+
+
+        /*ESTO ES PARTE DEL ENLAZADOR */
+        /*NO TOCAR O JOAN TE MANDA A LA LUNA */
+        if ($botonPresionado == "Mover") {
             $mes = $request->input('mes');
             $anio = $request->input('anio');
-            switch($ruta){
-                case "fijo.calendario.post":
-                    return redirect()->route('fijo.calendario.get',['mes' => $mes, 'anio' => $anio]);
-                case "emergente.calendario.post":
-                    return redirect()->route('emergente.calendario.get',['mes' => $mes, 'anio' => $anio]);
-                case "personalizado.calendario.post":
-                    return redirect()->route('personalizado.calendario.get',['mes' => $mes, 'anio' => $anio]);
+        
+            $rutas = [
+                "fijo.calendario.post" => [
+                    'proceso_compra' => 'fijo.calendario.post',
+                    'redirect' => 'fijo.calendario.get',
+                ],
+                "personalizado.calendario.post" => [
+                    'proceso_compra' => 'personalizado.calendario.post',
+                    'redirect' => 'personalizado.calendario.get',
+                ],
+                "emergente.calendario.post" => [
+                    'proceso_compra' => 'emergente.calendario.post',
+                    'redirect' => 'emergente.calendario.get',
+                ],
+            ];
+        
+            if (isset($rutas[$ruta])) {
+                $config = $rutas[$ruta];
+                session()->put('proceso_compra', $config['proceso_compra']);
+                return redirect()->route($config['redirect'], ['mes' => $mes, 'anio' => $anio]);
             }
-            
         }
+        /*AQUÍ TERMINÓ EL ENLAZADOR*/
+
+        
         $fechaEscogida = $request->input('fechaSeleccionada');
         $horaEntrega = $request->input('horaEntrega');
         $postre = session('id_postre');
