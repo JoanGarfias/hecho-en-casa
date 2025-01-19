@@ -3,7 +3,7 @@ let fechando = ''
 
 document.addEventListener('DOMContentLoaded', function(){
     calendarioData = JSON.parse(calendario);
-   
+    console.log(calendarioData)
     const primerDia = calendarioData.diasDelMes[0].fecha;
     const ultimoDia = calendarioData.diasDelMes[calendarioData.diasDelMes.length - 1].fecha;
     const numeroUltimoDia = parseInt(ultimoDia.split('-')[2], 10);
@@ -110,7 +110,6 @@ document.addEventListener('DOMContentLoaded', function(){
         if(mesAux===12) 
             inputAnio.value = anioNumerico - 1;
         formulario.submit();
-        
     });
 
     botonSig.addEventListener('click', (e) => {
