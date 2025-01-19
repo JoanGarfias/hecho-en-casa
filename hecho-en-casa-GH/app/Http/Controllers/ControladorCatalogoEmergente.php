@@ -217,7 +217,6 @@ class ControladorCatalogoEmergente extends Controller
             $ciudad = $request->input('ciudad');
             $colonia = $request->input('asentamiento');
             $calle = $request->input('calle');
-            $numero = $request->input('numero');
             $numeroInterior = $request->input('numeroI');
             $numeroExterior = $request->input('numeroE');
             $referencia = $request->input('referencia');
