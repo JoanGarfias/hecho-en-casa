@@ -555,7 +555,6 @@ class ControladorCatalogo extends Controller
             $numeroInterior = $request->input('numeroI');
             $numeroExterior = $request->input('numeroE');
             $referencia = $request->input('referencia');
-            //$referencia = $request->input('referencia');
 
             //Si elige volverla su ubicacion predeterminada entonces lo actualizamos en el perfil del usuario
             if($request->has('opciones')){
@@ -626,7 +625,8 @@ class ControladorCatalogo extends Controller
         $telefono = $usuario->telefono;
         
         $tipo_entrega = session('tipo_entrega');
+        $tipo_postre = $pedido->id_tipopostre;
 
-        return view('ResumenPedFij', compact('costo', 'nombre', 'telefono', 'fecha', 'hora', 'tipo_entrega'));
+        return view('ResumenPedFij', compact('costo', 'nombre', 'telefono', 'fecha', 'hora', 'tipo_entrega', 'tipo_postre'));
     }
 }
