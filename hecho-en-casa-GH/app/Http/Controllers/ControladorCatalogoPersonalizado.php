@@ -142,7 +142,7 @@ class ControladorCatalogoPersonalizado extends Controller
             // Instanciación de Pedido
             $pedido = new Pedido;
             $pedido->id_usuario = $id_usuario;
-            $pedido->id_tipopostre = $id_tipopostre;
+            $pedido->id_tipopostre = 'personalizado';
             $pedido->id_seleccion_usuario = $id_detalles_pastel;
             $pedido->porcionespedidas = $porciones;
             $pedido->status = 'pendiente';
@@ -235,7 +235,7 @@ class ControladorCatalogoPersonalizado extends Controller
             // Instanciación de Pedido
         $pedido = new Pedido;
         $pedido->id_usuario = $id_usuario;
-        $pedido->id_tipopostre = $datos['id_tipopostre'];
+        $pedido->id_tipopostre = session('id_tipopostre');
         $pedido->id_seleccion_usuario = $id_detalles_pastel;
         $pedido->porcionespedidas = $datos['porciones'];
         $pedido->status = 'pendiente';
@@ -272,31 +272,47 @@ class ControladorCatalogoPersonalizado extends Controller
         if ($folio !== null) {
             // Consulta el pedido con el folio
             //Cache innecesario, por ser una consulta que se realiza una sola vez, y es improbable que se realice la misma consulta con un mismo folio dos veces seguidas
-            $ticket_pedido = Pedido::select('id_ped','id_seleccion_usuario','id_tipopostre', 'porcionespedidas', 'status', 'precio_final')
-            ->where('id_ped', $folio)
+            $ticket_pedido = Pedido::where('id_ped', $folio)
             ->first();
     
             if (!$ticket_pedido) {
                 return redirect()->back()->with('error', 'El pedido con el folio especificado no existe.');
             }
-    
+            
+            $entrega = $ticket_pedido->fecha_hora_entrega;
+            list($fecha, $hora) = explode(' ', $entrega);
             // Si hay una relación con Pastelpersonalizado
             $id_pastel = $ticket_pedido->id_seleccion_usuario;
-            $datos = ["id_pastel" => $id_pastel];
+            dd($id_pastel, $ticket_pedido);
             //Cache innecesario, por ser una consulta que se realiza una sola vez, y es improbable que se realice la misma consulta con un mismo folio dos veces seguidas
-            $ticket_pastel = Pastelpersonalizado::select('id_saborpan', 'id_saborrelleno', 'id_cobertura', 'tipo_evento', 'descripciondetallada', 'imagendescriptiva')
-            ->where('id_pp', $id_pastel)
-            ->first();
-
+            $ticket_pastel = Pastelpersonalizado::where('id_pp', $id_pastel)
+                            ->first();
+            
             $sabor_pan = SaborPan::select('nom_pan')
-                        ->where('id_sp', $ticket_pastel->id_saborpan);
-            $sabor_relleno = SaborRelleno::select('nom_relleno');
-        }
+                        ->where('id_sp', $ticket_pastel->id_saborpan)
+                        ->first();
+            $sabor_relleno = SaborRelleno::select('nom_relleno')
+                        ->where('id_sr', $ticket_pastel->id_saborrelleno)
+                        ->first();
+            $sabor_cobertura = Cobertura::select('nom_cobertura')
+                        ->where('id_c', $ticket_pastel->id_cobertura)
+                        ->first();
+            $tematica = $ticket_pastel->tipo_evento;
+            $user = usuario::where('id_u', session('id_usuario'))->first();
+            $nombre = $user->nombre;
+            $telefono = $user->telefono;
+            $tipo_entrega = session('opcion_envio');
+            $link = $ticket_pastel->imagendescriptiva;
+            $descripcion = $ticket_pastel->descripciondetallada;
+            $costo = $ticket_pedido->precio_final;
+        }   
         else {
             return redirect()->back()->with('error', 'El folio no fue especificado.');
         }
     
         // Envía la información a la vista
-        return view('ResumenPedioP', compact('ticket_pedido', 'ticket_pastel', 'datos'));
+        return view('ResumenPedioP', compact('sabor_pan', 'sabor_relleno', 'sabor_cobertura',
+            'tematica', 'nombre', 'telefono', 'tipo_entrega', 'link', 'descripcion',
+            'costo', 'fecha', 'hora'));
     }
 }
