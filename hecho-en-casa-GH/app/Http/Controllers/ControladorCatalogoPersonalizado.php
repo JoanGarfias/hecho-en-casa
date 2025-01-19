@@ -73,23 +73,22 @@ class ControladorCatalogoPersonalizado extends Controller
         $tematica = $request->input('tematica');
         $imagen = $request->input('imagen');
         $descripcion = $request->input('descripcion');
-      
         $costo = intval($request->input('costo'));
-        $id_usuario = Cookie::get('user_id');
+        $id_usuario = session('id_usuario');
 
         session()->put('opcion_envio', $tipo_entrega);
 
-        $fechaEscogida = session('fecha');
-        $horaEntrega = session('hora');
+        $fechaEscogida = session('fecha_entrega');
+        $horaEntrega = session('hora_entrega');
         $fecha_hora_entrega = Carbon::parse($fechaEscogida . ' ' . $horaEntrega); 
         $fecha_hora_registro = now();
         $id_tipopostre = 'personalizado';
 
-        $sabor_pan = intval($request->input('sabor_pan'));
-        $relleno = intval($request->input('sabor_relleno'));
-        $cobertura = intval($request->input('cobertura'));
+        $sabor_pan = ($request->input('sabor_pan'));
+        $relleno = ($request->input('sabor_relleno'));
+        $cobertura = ($request->input('cobertura'));
         $elementos = array_map('intval', $request->input('elementos', []));
-      
+        dd($sabor_pan, $relleno, $cobertura, $elementos);
         $costoCatalogo = Catalogo::where('id_tipo_postre', "personalizado")->first();; //LO SACARE DE A TABLA CATALOGO PRECIO_EMERGENTES
         $costoPan = SaborPan::where('nom_pan', $sabor_pan)->first();
         $costoRelleno = SaborRelleno::where('nom_relleno', $relleno)->first();
