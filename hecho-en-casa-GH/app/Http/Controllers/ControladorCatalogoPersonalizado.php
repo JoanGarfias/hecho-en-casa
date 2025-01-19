@@ -282,7 +282,7 @@ class ControladorCatalogoPersonalizado extends Controller
             ->first();
     
             if (!$ticket_pedido) {
-                return redirect()->back()->with('error', 'El pedido con el folio especificado no existe.');
+                return redirect()->route('personalizado.catalogo.get')->withErrors('errorFolio', 'El pedido con el folio especificado no existe.');
             }
             
             $entrega = $ticket_pedido->fecha_hora_entrega;
@@ -314,7 +314,7 @@ class ControladorCatalogoPersonalizado extends Controller
             $costo = $ticket_pedido->precio_final;
         }   
         else {
-            return redirect()->back()->with('error', 'El folio no fue especificado.');
+            return redirect()->route('personalizado.catalogo.get')->withErrors('errorFolioNoEspecificado', 'El folio no fue especificado.');
         }
     
         // Envía la información a la vista

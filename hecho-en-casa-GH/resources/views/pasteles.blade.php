@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/pastel.css') }}"> <!-- Ruta absoluta -->
+    <link rel="stylesheet" href="{{ asset('css/mensajeErrorE.css') }}">
+    <script src="{{ asset('js/MensajeError.js') }}"></script>   
     <title>Pasteles</title>
 </head>
 <body>
@@ -66,6 +68,15 @@
         </form>
     </div>
 </div>
+@if ($errors->has('errorFolio'))
+    <script>
+        mostrarMensaje('{{$errors->first('errorFolio')}}');
+    </script>
+@elseif ($errors->has('errorFolioNoEspecificado'))
+    <script>
+        mostrarMensaje('{{$errors->first('errorFolioNoEspecificado')}}');
+    </script>
+@endif
 <x-pie/>
 
 </div>

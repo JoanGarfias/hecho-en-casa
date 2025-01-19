@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/menuCatalogoFijo.css') }}">
     <link rel="stylesheet" href="{{ asset('css/galleta.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/mensajeErrorE.css') }}">
+    <script src="{{ asset('js/MensajeError.js') }}"></script>   
     <title>Catálogo</title>
 </head>
 <x-menu/>
@@ -98,6 +100,12 @@
         });
 
     </script>
+
+    @if ($errors->has('errorPostre'))
+        <script>
+            mostrarMensaje('{{$errors->first('errorPostre')}}');
+        </script>
+    @endif
 
 <x-pie/>
 

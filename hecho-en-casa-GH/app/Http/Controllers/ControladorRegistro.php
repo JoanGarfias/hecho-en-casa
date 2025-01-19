@@ -22,21 +22,12 @@ class ControladorRegistro extends Controller
         /*ENLAZADOR DE REGISTRO */
         session()->put('proceso_registro', $request->route()->getName());
         /*ENLAZADOR DE REGISTRO */
-
-        $credentials = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'required|string',
-            'apellidoP' => 'required|string|max:255',
-            'apellidoM' => 'required|string|max:255',
-            'g-recaptcha-response' => 'required|captcha',  // Validación del reCAPTCHA
-        ]);
         
-        $nombre = $credentials['name'];
-        $apellido_paterno = $credentials['apellidoP'];
-        $apellido_materno = $credentials['apellidoM'];
-        $telefono = $credentials['phone'];
-        $correo = $credentials['email'];
+        $nombre = $request->input('name');
+        $apellido_paterno = $request->input('apellidoP');
+        $apellido_materno = $request->input('apellidoM');
+        $telefono = $request->input('phone');
+        $correo = $request->input('email');
         
         $correo_existe = usuario::where('correo_electronico', $correo)->first();
 
@@ -112,8 +103,9 @@ class ControladorRegistro extends Controller
         try{
             $usuario->save();
         }catch(\Exception $e){
-            return redirect()->route('registrar.get')->with('error', 'Error al guardar el usuario');    
+            return redirect()->route('registrar.get')->with('errorRegistro', 'Error al guardar el usuario');    
         }
+        
         Mail::to($usuario->correo_electronico)->send(new CorreoRegistro($usuario->nombre));
         return redirect()->route('login.get');
     }
@@ -124,8 +116,8 @@ class ControladorRegistro extends Controller
     } 
 
     public function validarRecuperacion(Request $request, $token = null){
-        if(!$token){
-            return redirect()->route('inicio.get')->withErrors(['error' => 'Token no proporcionado']);
+        if($token===null){
+            return redirect()->route('inicio.get')->withErrors(['errorToken' => 'Token no proporcionado.']);
         }
         $usuario = Usuario::where('token_recuperacion', $token)->first();
         
@@ -136,9 +128,7 @@ class ControladorRegistro extends Controller
             ]);
             return view('recuperacioncontrasena');
         } 
-        return view('inicio', [
-            'error' => 'Token inválido',
-        ]);
+        return redirect()->route('inicio.get')->withErrors(['errorValidacion' => 'Token no valido.']);
         
     }
 
@@ -151,7 +141,7 @@ class ControladorRegistro extends Controller
             try{
                 $usuario->save();
             }catch(\Exception $e){
-                return redirect()->route('login.get')->with('error', 'Error al actualizar la contraseña');
+                return redirect()->route('login.get')->withErrors(['errorKey' => 'Error al actualizar la contraseña.']);
             }
         }
 

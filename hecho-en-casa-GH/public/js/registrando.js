@@ -27,7 +27,7 @@ function validateForm() {
     // Obtener valores de los campos
     let seleccion = false;
 
-    const nombre = document.getElementById("name").value.trim();
+    const nombre = document.getElementById("name").value;
     const apellidoP = document.getElementById("apellidoP").value.trim();
     const apellidoM = document.getElementById("apellidoM").value.trim();
     const email = document.getElementById("email").value.trim();
@@ -35,7 +35,7 @@ function validateForm() {
     
    
     // Expresiones regulares para validaciones
-    const nombreReg = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ'-\s]{2,100}$/; 
+    const nombreReg = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ'-]+( [a-zA-ZáéíóúÁÉÍÓÚñÑüÜ'-]+)?$/
     const apellidoPReg =  /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ'-]{2,100}$/;
     const apellidoMReg =  /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ'-]{2,100}$/;
     const emailReg = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,100}$/;
@@ -54,14 +54,17 @@ function validateForm() {
     let validarApellidoM = document.getElementById("mensajeApellidoM")
     let validarEmail = document.getElementById("mensajeEmail")
     let validarPhone = document.getElementById("mensajePhone")
-
+    
     // Validar nombre
     if (nombreReg.test(nombre)) {
         validarName.textContent = "Nombre válido.";
         validarName.className = "bien"; 
-        
+    } else if (nombre.length < 2 || nombre.length > 100){
+        validarName.textContent = "Error en el nombre (es muy corto o muy extenso).";
+        validarName.className = "error"; 
+        isValid = false
     } else {
-        validarName.textContent = "El nombre debe contener solo letras y espacios.";
+        validarName.textContent = "El nombre debe contener solo letras y un único espacio.";
         validarName.className = "error"; 
         isValid = false
     }
@@ -69,8 +72,12 @@ function validateForm() {
     if (apellidoPReg.test(apellidoP)) {
         validarApellidoP.textContent = "Apellido válido."; 
         validarApellidoP.className = "bien";      
+    } else if (apellidoP.length < 2 || apellidoP.length > 100){
+        validarApellidoP.textContent = "Error en el apellido (es muy corto  o muy extenso).";
+        validarApellidoP.className = "error"; 
+        isValid = false
     } else {
-        validarApellidoP.textContent = "El apellido debe contener solo letras.";
+        validarApellidoP.textContent = "El apellido no debe contener espacios y debe tener únicamente letras.";
         validarApellidoP.className = "error"; 
         isValid = false
     }
@@ -79,8 +86,12 @@ function validateForm() {
         validarApellidoM.textContent = "Apellido válido.";
         validarApellidoM.className = "bien"; 
         
+    } else if (apellidoM.length < 2 || apellidoM.length > 100){
+        validarApellidoM.textContent = "Error en el apellido (es muy corto o muy extenso).";
+        validarApellidoM.className = "error"; 
+        isValid = false
     } else {
-        validarApellidoM.textContent = "El apellido debe contener solo letras";
+        validarApellidoM.textContent = "El apellido no debe contener espacios y debe tener únicamente letras.";
         validarApellidoM.className = "error"; 
         isValid = false
     }
@@ -89,6 +100,10 @@ function validateForm() {
     if (emailReg.test(email)) {
         validarEmail.textContent = "Correo válido.";
         validarEmail.className = "bien";     
+    }  else if (email.length < 5 || email.length > 100){
+        validarEmail.textContent = "Error en el correo electrónico (es muy corto o muy extenso).";
+        validarEmail.className = "error"; 
+        isValid = false
     } else {
         validarEmail.textContent = "Introduce un correo electrónico válido.";
         validarEmail.className = "error";   

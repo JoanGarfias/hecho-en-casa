@@ -85,5 +85,6 @@
                 </script>
             </body>
             <x-pie/>
-            <script src="{{ asset('js/meses.js') }}"></script>
+            <script src="{{ asset('js/MensajeError.js') }}"></script>           
+            <script src="{{ asset('js/meses.js') }}"></script>           
            
