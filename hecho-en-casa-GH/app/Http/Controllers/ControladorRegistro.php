@@ -22,21 +22,12 @@ class ControladorRegistro extends Controller
         /*ENLAZADOR DE REGISTRO */
         session()->put('proceso_registro', $request->route()->getName());
         /*ENLAZADOR DE REGISTRO */
-
-        $credentials = $request->validate([
-            'name' => 'string|max:255',
-            'email' => 'email|max:255',
-            'phone' => 'string',
-            'apellidoP' => 'string|max:255',
-            'apellidoM' => 'string|max:255',
-            'g-recaptcha-response' => 'captcha',  // Validación del reCAPTCHA
-        ]);
         
-        $nombre = $credentials['name'];
-        $apellido_paterno = $credentials['apellidoP'];
-        $apellido_materno = $credentials['apellidoM'];
-        $telefono = $credentials['phone'];
-        $correo = $credentials['email'];
+        $nombre = $request->input('name');
+        $apellido_paterno = $request->input('apellidoP');
+        $apellido_materno = $request->input('apellidoM');
+        $telefono = $request->input('phone');
+        $correo = $request->input('email');
         
         $correo_existe = usuario::where('correo_electronico', $correo)->first();
 
