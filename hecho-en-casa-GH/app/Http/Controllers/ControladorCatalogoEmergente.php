@@ -17,6 +17,7 @@ class ControladorCatalogoEmergente extends Controller
     /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
     session()->put('id_tipopostre', 'emergente');
     session()->put('proceso_compra', $request->route()->getName());
+    //No deberia estar aca pero jeyson no puso un POST para el catalogo
     /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $emergentes = Cache::remember('catalogoemergentes', 30, function () {
@@ -169,7 +170,7 @@ class ControladorCatalogoEmergente extends Controller
             dd("Error al guardar el pedido: " . $e->getMessage());
         }
         
-        //Para reducir su stock en caso de que tenga si es null entonces no maneja stock
+        //para reducir su stock en caso de que tenga si es null entonces no maneja stock
         if($postre->stock != null){
             $postre->stock = $postre->stock - session('cantidad_pedida');
             $postre->save();

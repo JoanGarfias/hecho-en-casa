@@ -38,6 +38,7 @@ class ControladorPerfil extends Controller
 
         if(Cache::get('usuario') == null){
             return redirect()->route('inicio.get')->with('error', 'Error: No existe sesion del usuario');
+            //return "Error: No existe sesion del usuario";
         }
 
         $cambiarcontrasena = $request->input('cambiarcontrasena');
@@ -51,12 +52,14 @@ class ControladorPerfil extends Controller
         if($cambiartelefono == true){//Si el boton de editar telefono esta activo
             $telefono = $request->input('telefono');
             try{
-                $updateTelefonotry = usuario::select('telefono')
+                //return $cambiartelefono;
+                $updateTelefonotry = Usuario::select('telefono')
                 ->where('id_u', Cache::get('usuario')->id_u)->update([
                     'telefono' => $telefono,
                 ]);
             }catch(\Exception $e){
                 return redirect()->route('inicio.get')->with('error', 'Error al actualizar el telefono');
+                //return $e;
             }
         }
         if($cambiardomicilio == true){//Si el boton de editar ubicacion esta activo
@@ -69,7 +72,7 @@ class ControladorPerfil extends Controller
             $num_interior_u = $request->input('NumInt');
             $referencia_u = $request->input('referencia');
             try{
-                $updateTelefonotry = usuario::select('Codigo_postal_u','estado_u','ciudad_u','colonia_u','calle_u','num_exterior_u','num_interior_u','referencia_u',)
+                $updateTelefonotry = Usuario::select('Codigo_postal_u','estado_u','ciudad_u','colonia_u','calle_u','num_exterior_u','num_interior_u','referencia_u',)
                 ->where('id_u', Cache::get('usuario')->id_u)->update([
                     'Codigo_postal_u' => $Codigo_postal_u,
                     'estado_u' => $estado_u,
@@ -82,6 +85,7 @@ class ControladorPerfil extends Controller
                 ]);
             }catch(\Exception $e){
                 return redirect()->route('inicio.get')->with('error', 'Error al actualizar el domicilio');
+                //return $e;
             }
         }
         if($cambiarcontrasena == true){//Si el boton de editar contraseña esta activo
@@ -93,6 +97,7 @@ class ControladorPerfil extends Controller
                 ]);
             }catch(\Exception $e){
                 return redirect()->route('inicio.get')->with('error', 'Error al actualizar la contraseña');
+                //return $e;
             }
         }
         
