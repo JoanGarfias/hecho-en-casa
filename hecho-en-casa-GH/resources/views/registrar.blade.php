@@ -67,6 +67,11 @@
     <script>
         mostrarMensaje('{{$errors->first('email')}}');
     </script>
+@elseif (session('errorRegistro'))
+    <div id="mensajeEmergente"></div>
+    <script>
+        mostrarMensaje('{{session('errorRegistro')}}');
+    </script>
 @endif
 <x-pie/>
 
