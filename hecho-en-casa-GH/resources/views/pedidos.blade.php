@@ -136,9 +136,9 @@
         
             let radioSeleccionado = document.querySelector("#unidadm input[type='radio']:checked");
             let cantidad = parseFloat(document.getElementById("cantidad").value) || 0;
-            
+
             let cantidadPorciones = 0;
-        
+            
             if (radioSeleccionado) {
                 let opcion = radioSeleccionado.value.split('|');
                 let precioUnidad = parseFloat(opcion[2]);
