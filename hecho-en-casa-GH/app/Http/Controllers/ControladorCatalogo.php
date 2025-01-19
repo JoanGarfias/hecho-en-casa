@@ -267,7 +267,6 @@ class ControladorCatalogo extends Controller
                 ]);
 
                 return redirect()->route('fijo.detallesPedido.get');
-                //break;
             case "personalizado":
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
                 session()->put('proceso_compra', 'personalizado.calendario.post');
@@ -290,7 +289,6 @@ class ControladorCatalogo extends Controller
                     ]);
                     return redirect()->route('personalizado.detallesPedido.get');
                 }
-                //break;
             case "emergente":                
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
                 session()->put('proceso_compra', 'emergente.calendario.post');
@@ -301,26 +299,13 @@ class ControladorCatalogo extends Controller
                 ]);
 
                 return redirect()->route('emergente.detallesPedido.get');
-                //break;
-                // return ERROR;
         }
-        /* return view('fechaSeleccionada', [
-            'fecha' => $fechaEscogida,
-            'postre' => $postre,
-            'porciones_dia' => $porciones_dia,
-            'cantidad_minima' => $cantidad_minima,
-        ]); */
     }
 
     public function mostrarDetalles(Request $request){
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-
-        //COMO SON DATOS DIRECTOS NO ES NECESARIO ESTO
-        //if (!session('postre') || !session('fecha')) {
-        //    return redirect()->route('seleccionarFecha')->with('error', 'No se ha seleccionado un postre o fecha.');
-        //}
                                                                 //session('postre')
         $postre = Catalogo::where('id_postre', session('id_postre'))->first();
         if ($postre) {
