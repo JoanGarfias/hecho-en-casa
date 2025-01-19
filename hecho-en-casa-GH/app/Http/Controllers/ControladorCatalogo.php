@@ -262,8 +262,9 @@ class ControladorCatalogo extends Controller
                 session()->put('proceso_compra', 'fijo.calendario.post');
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
-                if($porciones_dia + $cantidad_minima >= 1000000){
+                if($porciones_dia + $cantidad_minima >= 100){
                     //dd($porciones_dia + $cantidad_minima);
+                    throw new InvalidArgumentException('Ya no hay porciones suficientes para el postre escogido en esta fecha.');
                     return redirect()->route('fijo.calendario.get'); //Aqui se le tiene que mandar un mensaje de error
                 }
 
@@ -279,10 +280,11 @@ class ControladorCatalogo extends Controller
                 session()->put('proceso_compra', 'personalizado.calendario.post');
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
-                if($porciones_dia + $cantidad_minima >= 10000000){
+                if($porciones_dia + $cantidad_minima >= 100){
                     /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
                     session()->put('proceso_compra', 'personalizado.catalogo.post');
                     /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
+                    throw new InvalidArgumentException('Ya no hay porciones suficientes para el postre escogido en esta fecha.');
                     return redirect()->route('personalizado.calendario.get')
                     ->with('error', 'Las porciones superan el límite, ya no se puede pedir');                    
                 }
@@ -293,7 +295,6 @@ class ControladorCatalogo extends Controller
                         'porciones_dia' => $porciones_dia,
                         'hora' => $horaEntrega,
                     ]);
-    
                     return redirect()->route('personalizado.detallesPedido.get');
                 }
                 //break;
