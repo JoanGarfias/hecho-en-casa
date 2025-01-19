@@ -515,7 +515,6 @@ class ControladorCatalogo extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-        $ruta = $request->route()->getName();
         $rutaPost = "fijo.direccion.post";
         
         //ANEXAR LÓGICA PARA OBTENER LA DIRECCIÓN DEL USUARIO
