@@ -339,20 +339,6 @@ class ControladorCatalogo extends Controller
                 session(['nombre_categoria' => 'Categoría no encontrada']);
             }
 
-            //$listaunidad = PostreFijoUnidad::where('id_pf', $postre->id_postre)->get();
-            /*$listaunidad = PostreFijoUnidad::where('id_pf', $postre->id_postre)->pluck('id_um'); // Obtener solo la columna 'id_um'
-            if ($listaunidad->isNotEmpty()) {
-                $unidades = []; 
-                foreach ($listaunidad as $id_um) {  // Ahora recorro la lista de 'id_um'
-                    $nombreunidad = UnidadMedida::where('id_um', $id_um)->first();  //'UnidadMedida' usando 'id_um'
-                    
-                    if ($nombreunidad) {
-                        $unidades[] = [
-                            'nombreunidad' => $nombreunidad->nombre_unidad,  // 'nombre_unidad' de la tabla 'UnidadMedida'
-                            'cantidadporciones' => $nombreunidad->cantidad, 
-                        ];
-                    }
-                }*/
             $listaunidad = PostreFijoUnidad::where('id_pf', $postre->id_postre)->pluck('id_um'); // Obtener solo la columna 'id_um'
 
             if ($listaunidad->isNotEmpty()) {
@@ -383,7 +369,6 @@ class ControladorCatalogo extends Controller
             $atributosSesion = [];
 
             foreach ($tiposAtributo as $tipo) {
-                //$atributos = $personalizaciones->where('id_tipo_atributo', $tipo->idtipo_atributo)->pluck('nom_atributo')->toArray();
                 $atributos = $personalizaciones
                 ->where('id_tipo_atributo', $tipo->idtipo_atributo)
                 ->map(function ($item) {
@@ -397,7 +382,6 @@ class ControladorCatalogo extends Controller
                     $atributosSesion[$tipo->nombre_atributo] = $atributos;
                 }
             }
-            //dd($atributosSesion);
             session(['atributosSesion' => $atributosSesion]);
         } else {
             return redirect()->route('seleccionarFecha')->with('error', 'Postre no encontrado.');
