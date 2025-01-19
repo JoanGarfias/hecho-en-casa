@@ -370,7 +370,7 @@ class ControladorCatalogo extends Controller
                     $atributosSesion[$tipo->nombre_atributo] = $atributos;
                 }
             }
-
+            //dd($atributosSesion);
             session(['atributosSesion' => $atributosSesion]);
         } else {
             return redirect()->route('seleccionarFecha')->with('error', 'Postre no encontrado.');
@@ -382,6 +382,8 @@ class ControladorCatalogo extends Controller
         $nombre_categoria = session('nombre_categoria');
         $lista_unidad = session('lista_unidad'); 
         $atributosSesion = session('atributosSesion');
+        $porciones_dia = session('porciones_dia');
+        session()->put('porciones', 100 - $porciones_dia);
 
         return view('pedidos', compact('fecha', 'sabor_postre', 'hora_entrega', 'nombre_categoria', 'lista_unidad', 'atributosSesion'));
     }
