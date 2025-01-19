@@ -54,6 +54,14 @@
         <script>
             mostrarMensaje('{{$errors->first('errorCategoriaFijo')}}');
         </script>
+    @elseif($errors->has('errorEmergente'))
+        <script>
+            mostrarMensaje('{{$errors->first('errorEmergente')}}');
+        </script>
+    @elseif($errors->has('errorPedido'))
+        <script>
+            mostrarMensaje('{{$errors->first('errorPedido')}}');
+        </script>
     @endif
 <x-pie/>
 
