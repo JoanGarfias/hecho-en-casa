@@ -401,6 +401,12 @@ class ControladorCatalogo extends Controller
         $id_usuario = session('id_usuario');
         session(['tipo_entrega'=> $tipo_entrega]);
 
+        //OBTENER PRECIOS
+        $costototal = $request->input('costot');
+        $porcionestotales = $request->input('porcionest');
+        session(['costototal'=> $costototal, 'porcionestotales'=> $porcionestotales]);
+        //dd($costototal, $porcionestotales);
+
         $fechaEscogida = session('fecha_entrega');
         $horaEntrega = session('hora_entrega');
         $fecha_hora_entrega = Carbon::parse($fechaEscogida . ' ' . $horaEntrega);
@@ -491,9 +497,9 @@ class ControladorCatalogo extends Controller
             $pedido->id_usuario = session('id_usuario');
             $pedido->id_tipopostre = $id_tipopostre;
             $pedido->id_seleccion_usuario = $id_nuevo_postre; 
-            $pedido->porcionespedidas = $unidadm * $cantidad; 
+            $pedido->porcionespedidas = $porcionestotales; 
             $pedido->status = 'pendiente';
-            $pedido->precio_final = $costo * $cantidad;
+            $pedido->precio_final = $costototal;
             $pedido->fecha_hora_registro = $fecha_hora_registro;
             $pedido->fecha_hora_entrega = $fecha_hora_entrega;
             $pedido->save();  // Guardamos el pedido
@@ -589,11 +595,11 @@ class ControladorCatalogo extends Controller
         $pedido->num_exterior_e = $numeroExterior; 
         $pedido->num_interior_e = $numeroInterior; 
         $pedido->referencia_e = $referencia;
-        $pedido->porcionespedidas = session("porcionespedidas");
+        $pedido->porcionespedidas = session("porcionestotales");
         $pedido->fecha_hora_entrega =  session('fecha_entrega') . " " . session('hora_entrega'); 
         $pedido->fecha_hora_registro = now();
         $pedido->status = "pendiente";
-        $pedido->precio_final = session("costo");
+        $pedido->precio_final = session("costototal");
         $pedido->save();
 
         $id_pedido = $pedido->id_ped;
