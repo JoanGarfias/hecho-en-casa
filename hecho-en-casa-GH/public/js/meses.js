@@ -255,22 +255,32 @@ document.addEventListener("DOMContentLoaded", () => {
         boton.addEventListener('click', event => {
             event.preventDefault(); 
             action = boton.value; 
+
             hiddenAction.value = action;
-    
+
             if (enviar != null){
-                enviar.addEventListener("click", event => {
-                    event.preventDefault();
-        
-                    if (fechando.trim() === ''){
-                        alert('Tienes que seleccionar una fecha')
-                    } else {   
-                        formulario.submit();        
-                    }
-                });
+                if ((action === 'Enviar') && (fechando.trim() === '')){
+                    mostrarMensaje('Tienes que seleccionar una fecha')                          
+                } else {   
+                    formulario.submit();        
+                }
             }      
         });
     });
 });
 
 
+function mostrarMensaje(texto) {
+    const mensaje = document.getElementById('mensajeEmergente');
+    mensaje.textContent = texto; // Agregar texto al mensaje
+    mensaje.style.opacity = '1'; // Mostrar el mensaje
+    mensaje.style.visibility = 'visible'; // Asegurarse de que sea visible
 
+    // Ocultar el mensaje después de 3 segundos
+    setTimeout(() => {
+        mensaje.style.opacity = '0'; // Inicia la transición para ocultar
+        setTimeout(() => {
+            mensaje.style.visibility = 'hidden'; // Ocultar completamente
+        }, 500); // Coincidir con el tiempo de transición de opacity
+    }, 3000);
+}

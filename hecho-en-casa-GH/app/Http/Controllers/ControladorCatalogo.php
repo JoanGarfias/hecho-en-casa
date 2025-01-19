@@ -436,14 +436,14 @@ class ControladorCatalogo extends Controller
                 $valor = $request->input($campo);  // Capturamos el valor enviado
                 $valoresSeleccionados[$campo] = $valor;
             }
-
-    
+            list($nombre, $precio) = explode('|', $valor);
+            
             $id_tipoatributo = TipoAtributo::where('nombre_atributo', $campo)->first();
                 $id_atributo = AtributosExtra::where('id_tipo_atributo', $id_tipoatributo->idtipo_atributo)
-                ->where('nom_atributo', $valor)
+                ->where('nom_atributo', $nombre)
                 ->first(['id_atributo']);
                 session(['id_atributo'=> $id_atributo->id_atributo]);
-
+            
                 $costo = $costo + $id_atributo->precio_a;
         } else {
             session(['id_atributo' => null]); 
