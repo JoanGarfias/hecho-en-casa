@@ -23,7 +23,11 @@ function validateContra() {
         validarPass.textContent = "La contraseña debe tener al menos 8 caracteres.";
         validarPass.className = "error";
         isValid = false;
-    } 
+    } else if (password.length > 128){
+        validarPass.textContent = "Es una contraseña demasiado larga.";
+        validarPass.className = "error";
+        isValid = false;
+    }
 
     // Validar que la contraseña contenga al menos una letra mayúscula
     if (!/[A-Z]/.test(password)) {
