@@ -116,14 +116,15 @@ class ControladorCatalogoEmergente extends Controller
 
         session([
             'cantidad_pedida' => $validated['cantidad'],
-            'tipo_entrega' => $validated['tipo_entrega'],
+            'tipo_entrega' => $validated['tipoEntrega'],
         ]);
 
         $usuario = Cache::remember('usuario', 30, function () {
             return usuario::where('id_u', session('id_usuario'))->first();
         });
 
-        $direccion = $usuario->calle_u . " " . $usuario->num_exterior_u . ", " . $usuario->colonia_u;
+        $direccion = $usuario->calle_u . " " . $usuario->num_exterior_u . ", " . $usuario->colonia_u . ", " .
+                    $usuario->ciudad_u . ", ". $usuario->estado_u;
         session([
             'telefono' => $usuario->telefono,
             'direccion' => $direccion,
@@ -181,9 +182,8 @@ class ControladorCatalogoEmergente extends Controller
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
-
         //$datos = session('datos_pedido');
-        return view('direccionEmergente');
+        return view('confirmaDato');
     }
 
     public function seleccionarDireccion(Request $request){ 
