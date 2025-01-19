@@ -17,6 +17,7 @@
     
     <div class = "contenedor"><!-- café-->
         <form id="formularioPedidos" action="{{route('emergente.detallesPedido.post')}}" method="POST">
+            @csrf
             <div class="dosColumnas">
                 <div class="columna">
                     <div class="fila">

@@ -107,9 +107,9 @@ class ControladorCatalogoEmergente extends Controller
             'cantidad' => 'required|integer',
             'tipoEntrega' => 'required',
         ]);
-
+        dd($request->all());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-        $tipo_entrega = $validated['tipo_entrega'];
+        $tipo_entrega = $validated['tipoEntrega'];
         session()->put('opcion_envio', $tipo_entrega);
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
@@ -181,9 +181,9 @@ class ControladorCatalogoEmergente extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-
+        $rutaPost = "emergente.direccion.post";
         //$datos = session('datos_pedido');
-        return view('confirmaDato');
+        return view('confirmaDato', compact('rutaPost'));
     }
 
     public function seleccionarDireccion(Request $request){ 
@@ -192,7 +192,7 @@ class ControladorCatalogoEmergente extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $ubicacion = $request->input('ubicacion');
-        $id_usuario = $request->input('id_usuario');
+
         //por defecto cargamos la ubicacion del usuario predeterminado
         $user = Cache::remember('usuario', 30, function () {
             return usuario::where('id_u', session('id_usuario'))->first();
@@ -202,28 +202,32 @@ class ControladorCatalogoEmergente extends Controller
         $ciudad = $user->ciudad_u;
         $colonia = $user->colonia_u;
         $calle = $user->calle_u;
-        $numero = $user->num_exterior_u; ///<-----------AQUI SE TIENE QUE SEPARAR EN DOS CAMPOS
-        //$referencia = $user->referencia_u;
+        $numeroInterior = $user->num_interior_u;
+        $numeroExterior = $user->num_exterior_u;
+        $referencia = $user->referencia_u;
 
         //si elige otra entocnes sobreescribimos los valores
         if($ubicacion=='otra'){
             $codigo_postal = $request->input('codigo_postal');
             $estado = $request->input('estado');
             $ciudad = $request->input('ciudad');
-            $colonia = $request->input('colonia');
+            $colonia = $request->input('asentamiento');
             $calle = $request->input('calle');
-            $numero = $request->input('numero'); ///<-----------AQUI SE TIENE QUE SEPARAR EN DOS CAMPOS
-            //$referencia = $request->input('referencia');
+            $numero = $request->input('numero');
+            $numeroInterior = $request->input('numeroI');
+            $numeroExterior = $request->input('numeroE');
+            $referencia = $request->input('referencia');
 
             //si elige volverla su ubicacion predeterminada entonces lo actualizamos en el perfil del usuario
-            if($request->has('predeterminado')){
+            if($request->has('opciones')){
                 $user->Codigo_postal_u = $codigo_postal;
                 $user->estado_u = $estado;
                 $user->ciudad_u = $ciudad;
                 $user->colonia_u = $colonia;
                 $user->calle_u = $calle;
-                $user->num_exterior_u = $numero; ///<-----------AQUI SE TIENE QUE SEPARAR EN DOS CAMPOS
-                //$user->referencia_u = $referencia;
+                $user->num_exterior_u = $numeroExterior;
+                $user->num_interior_u = $numeroInterior;
+                $user->referencia_u = $referencia;
                 $user->save();
             }
 
@@ -231,7 +235,7 @@ class ControladorCatalogoEmergente extends Controller
 
         //ESTO ES LA CONSULTA A PARTIR DEL ID QUE ME LLEGO DE LA VISTA ANTERIOR
         $postre = Cache::remember('postresession', 10, function () {
-            return Catalogo::where('id_postre', session('postre'))
+            return Catalogo::where('id_postre', session('id_postre'))
                             ->first();
         });
         
@@ -244,7 +248,7 @@ class ControladorCatalogoEmergente extends Controller
         }
 
         $pedido = new Pedido;
-        $pedido->id_usuario = session('id_u');
+        $pedido->id_usuario = session('id_usuario');
         $pedido->id_tipopostre = $postre->id_tipo_postre;
         $pedido->id_seleccion_usuario = $emergente->id_pt;//este es el id de la tabla postre emergente que se guardara en pedido
         $pedido->estado_e = $estado;
@@ -252,13 +256,14 @@ class ControladorCatalogoEmergente extends Controller
         $pedido->ciudad_e = $ciudad;
         $pedido->colonia_e = $colonia;
         $pedido->calle_e = $calle;
-        $pedido->num_exterior_e = $numero; ///<-------------------AQUI SE TIENE QUEE SEPARAR EN DOS CAMPOS
-        //$pedido->referencia_e = $referencia;
+        $pedido->num_exterior_e = $numeroExterior; 
+        $pedido->num_interior_e = $numeroInterior; 
+        $pedido->referencia_e = $referencia;
         $pedido->porcionespedidas = session('cantidad_pedida');
-        $pedido->fecha_hora_entrega =  session('fecha') . " " . session('hora_entrega'); 
+        $pedido->fecha_hora_entrega =  session('fecha_entrega') . " " . session('hora_entrega'); 
         $pedido->fecha_hora_registro = now();
         $pedido->status = "pendiente";
-        $pedido->precio_final = $postre->precio_emergentes;;
+        $pedido->precio_final = session('costo');
         
         try {
             $pedido->save();
