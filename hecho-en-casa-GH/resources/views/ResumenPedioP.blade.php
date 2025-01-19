@@ -17,7 +17,7 @@
 
            <div class="FOLIO-info"> <!--user-info -->
                <h2 class="Folio-name">Pedido con folio:</h2>
-               <input type="text" id="folio" name="folio" value="Folio P0520" readonly>
+               <input type="text" id="folio" name="folio" value="{{session('folio')}}" readonly>
              
            </div>
 
@@ -25,16 +25,13 @@
 
                <div class="left-column">
                    <label>Tipo de postre:</label>
-                   <input type="text" id="tipo_postre" value="Selección" readonly>
+                   <input type="text" id="tipo_postre" value="{{session('id_tipopostre')}}" readonly>
 
                    <label>Porciones:</label>
-                   <input type="text" id="porciones" value="000" readonly>
-
-                   <label>Cantidad:</label>
-                   <input type="text" id="cantidad" value="00" readonly>
+                   <input type="text" id="porciones" value="{{session('porciones')}}" readonly>
 
                    <label>Sabor de pan:</label>
-                   <input type="text" id="sabor" value="Selección" readonly>
+                   <input type="text" id="sabor" value="{{}}" readonly>
 
                    <label>Sabor de relleno:</label>
                    <input type="text" id="sabor_relleno" value="Selección" readonly>
