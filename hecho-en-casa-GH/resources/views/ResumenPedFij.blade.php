@@ -31,7 +31,7 @@
                    <input type="text" value="{{session('sabor_postre')}}" readonly>
                     @if ($tipo_postre == "fijo")
                         <label>Porciones:</label>     
-                        <input type="text" value="{{session('porcionespedidas')}}" readonly>
+                        <input type="text" value="{{session('porcionestotal')}}" readonly>
                     @elseif ($tipo_postre == "temporada" || $tipo_postre == "pop-up")
                         <label>Cantidad:</label>     
                         <input type="text" value="{{session('cantidad_pedida')}}" readonly>
