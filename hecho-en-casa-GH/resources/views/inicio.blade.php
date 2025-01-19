@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="{{ asset('css/cuerpo.css') }}"> <!-- Ruta absoluta -->
+<link rel="stylesheet" href="{{ asset('css/mensajeErrorE.css') }}">
+<script src="{{ asset('js/MensajeError.js') }}"></script>   
 <title>Inicio</title>
 <x-menu />
 
@@ -27,6 +29,14 @@
         </div>    
     </div>
 </main>
+
+    @if (isset($error))
+    <!-- Mensaje de error si el pedido no existe -->
+        <div id="mensajeEmergente"></div>
+        <script>
+            mostrarMensaje('{{$error}}');
+        </script>
+    @endif
 <x-pie/>
 
 
