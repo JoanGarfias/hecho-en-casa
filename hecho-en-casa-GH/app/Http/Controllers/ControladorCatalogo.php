@@ -238,7 +238,6 @@ class ControladorCatalogo extends Controller
         session([
             'porciones_dia_aceptados' => $porciones_dia_aceptados,
         ]);
-        //dd($porciones_dia_aceptados);
 
         $porciones_dia = $pedidos_dia->sum('porcionespedidas');
         $porciones_unidad_minima = Cache::remember('porcionesunidadminima', 30, function () use ($postre) {
@@ -251,7 +250,6 @@ class ControladorCatalogo extends Controller
 
         $cantidad_minima = $porciones_unidad_minima ? $porciones_unidad_minima->cantidad : 0;
         
-        //$tipopostre = session('id_tipopostre')
         switch($tipopostre){
             case "fijo":
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
@@ -259,7 +257,6 @@ class ControladorCatalogo extends Controller
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
                 if($porciones_dia + $cantidad_minima >= 100){
-                    //dd($porciones_dia + $cantidad_minima);
                     throw new InvalidArgumentException('Ya no hay porciones suficientes para el postre escogido en esta fecha.');
                     return redirect()->route('fijo.calendario.get'); //Aqui se le tiene que mandar un mensaje de error
                 }
@@ -541,7 +538,6 @@ class ControladorCatalogo extends Controller
 
         $tipo_domicilio = $request->input('ubicacion'); 
         //ACÁ SE DEBERÍA JALAR LA UBICACIÓN DEL FORMULARIO
-        //dd($tipo_domicilio);
         $id_usuario = session('id_usuario');
         //por defecto cargamos la ubicacion del usuario predeterminado
         $user = usuario::where('id_u', $id_usuario)->first();
