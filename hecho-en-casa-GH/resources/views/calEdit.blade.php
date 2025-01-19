@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="{{ asset('css/mensajeErrorE.css') }}">
 <link rel="stylesheet" href="{{ asset('css/CalEdit.css') }}">
    <title>Calendario - Elegir fechas</title>          
 <x-menu />
@@ -56,6 +57,9 @@
                             <button type="submit" id="next-month" class="arrow botonPr" value="Mover">➡</button>
                         </div>                        
                     </form>
+                    <!--Tienes que poner este para que aparezca el mensaje emergente-->
+                    <div id="mensajeEmergente"></div>
+                    
                 </div>
                 </div>
                 <br>
