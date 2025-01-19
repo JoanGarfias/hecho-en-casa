@@ -93,7 +93,7 @@ Route::post('fijo/detalles-direccion/buscar', [App\Http\Controllers\ControladorC
 Route::get('/personalizado', [ControladorCatalogoPersonalizado::class, 'mostrarCatalogo'])->name('personalizado.catalogo.get')
 ->middleware([ProtectorPeticiones::class]);
 
-//Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(function () {
+Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(function () {
     Route::post('/personalizado', [ControladorCatalogoPersonalizado::class, 'seleccionarCatalogo'])->name('personalizado.catalogo.post');
 
     Route::get('personalizado/seleccionar-fecha/{mes?}/{anio?}', [ControladorCatalogo::class, 'mostrarCalendario'])->name('personalizado.calendario.get');
@@ -106,7 +106,7 @@ Route::get('/personalizado', [ControladorCatalogoPersonalizado::class, 'mostrarC
     Route::post('personalizado/detalles-direccion', [ControladorCatalogoPersonalizado::class, 'guardarDireccion'])->name('personalizado.direccion.post');
 
     Route::get('personalizado/ticket/', [ControladorCatalogoPersonalizado::class, 'mostrarTicket'])->name('personalizado.ticket.get');
-//});
+});
 Route::post('personalizado/detalles-direccion/buscar', [App\Http\Controllers\ControladorCP::class, 'buscar'])->name('buscar'); //Ruta nueva personalizado
 
 /* RUTAS DE POSTRES EMERGENTES */
