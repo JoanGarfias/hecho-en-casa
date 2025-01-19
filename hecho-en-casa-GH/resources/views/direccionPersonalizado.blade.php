@@ -36,8 +36,11 @@
             <label for="calle">Calle:</label>
             <input type="text" id="calle" name="calle" style="width: 190px;"><br><br>
 
-            <label for="numero">Numero:</label>
-            <input type="number" id="numero" name="numero"><br><br>
+            <label for="numeroI">Numero Interior:</label>
+            <input type="number" id="numeroI" name="numeroI"><br><br>
+
+            <label for="numeroE">Numero Exterior:</label>
+            <input type="number" id="numeroE" name="numeroE"><br><br>
 
             <label for="aceptar">Establecer como ubicación predeterminada</label>
             <input type="checkbox" id="aceptar" name="aceptar" value="1"><br><br>
