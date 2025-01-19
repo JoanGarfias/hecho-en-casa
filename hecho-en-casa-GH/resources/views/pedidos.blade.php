@@ -131,6 +131,8 @@
     <script>
         let porcionesDisponibles = parseInt(document.getElementById("porcionesRestantes").textContent) || 0;
         function sumarSeleccionado() {
+            let cantidad = parseFloat(document.getElementById("cantidad").value) || 0;
+            console.log(cantidad);
             let total = 0;
             const labelCosto = document.getElementById("costo");
             const labelPorciones = document.querySelector('.porciones-a-pedir');
@@ -138,10 +140,9 @@
             const formulario = document.getElementById("formularioPedidos");
         
             let radioSeleccionado = document.querySelector("#unidadm input[type='radio']:checked");
-            let cantidad = parseFloat(document.getElementById("cantidad").value) || 0;
 
             let cantidadPorciones = 0;
-            
+
             if (radioSeleccionado) {
                 let opcion = radioSeleccionado.value.split('|');
                 let precioUnidad = parseFloat(opcion[2]);
@@ -177,7 +178,7 @@
                 formulario.querySelector('button[type="submit"]').disabled = false;
             }
         
-            if (porcionesRestantes <= 0) {
+            if (porcionesRestantes < cantidadPorciones) { //Esto
                 document.querySelector(".flechitas.incrementar").disabled = true;
                 document.getElementById("cantidad").disabled = true;
             } else {
@@ -203,13 +204,21 @@
             });
         });
         
-        const btn = document.querySelectorAll('.flechitas');
-        btn.forEach(b => {
-            b.addEventListener('click', () => {
-                sumarSeleccionado();
+        // BUG RESUELTO
+        const cantidadInput = document.getElementById("cantidad");
+
+        document.querySelectorAll('.flechitas').forEach(flechita => {
+            flechita.addEventListener('click', function() {
+                let cantidad = parseFloat(cantidadInput.value) || 0; 
+                if (this.classList.contains("incrementar")) {
+                    cantidad++; 
+                } else {
+                    cantidad = Math.max(cantidad - 1, 1);Minimo
+                }
+                cantidadInput.value = cantidad; //console.log(cantidad);
+                sumarSeleccionado(); 
             });
-        });
-        
+        });     
         window.onload = function () {
             sumarSeleccionado();
         };
