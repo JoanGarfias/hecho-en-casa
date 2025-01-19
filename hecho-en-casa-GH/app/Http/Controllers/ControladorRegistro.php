@@ -24,12 +24,12 @@ class ControladorRegistro extends Controller
         /*ENLAZADOR DE REGISTRO */
 
         $credentials = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'required|string',
-            'apellidoP' => 'required|string|max:255',
-            'apellidoM' => 'required|string|max:255',
-            'g-recaptcha-response' => 'required|captcha',  // Validación del reCAPTCHA
+            'name' => 'string|max:255',
+            'email' => 'email|max:255',
+            'phone' => 'string',
+            'apellidoP' => 'string|max:255',
+            'apellidoM' => 'string|max:255',
+            'g-recaptcha-response' => 'captcha',  // Validación del reCAPTCHA
         ]);
         
         $nombre = $credentials['name'];
@@ -112,8 +112,9 @@ class ControladorRegistro extends Controller
         try{
             $usuario->save();
         }catch(\Exception $e){
-            return redirect()->route('registrar.get')->with('error', 'Error al guardar el usuario');    
+            return redirect()->route('registrar.get')->with('errorRegistro', 'Error al guardar el usuario');    
         }
+        
         Mail::to($usuario->correo_electronico)->send(new CorreoRegistro($usuario->nombre));
         return redirect()->route('login.get');
     }
