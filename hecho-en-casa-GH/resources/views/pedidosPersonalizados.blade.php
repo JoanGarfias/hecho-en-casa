@@ -11,7 +11,8 @@
 <div class="flexi">
     
     <div class = "contenedor"><!-- café-->
-        <form id="formularioPedidos" action="" method="">
+        <form id="formularioPedidos" action="{{route('personalizado.detallesPedido.post')}}" method="POST">
+            @csrf
             <div class="dosColumnas">
                 <div class="columna">
                     <div class="fila">
@@ -37,13 +38,15 @@
                             </div>
                             
                         </div>
+                        <div class="fila">
+                            <p style="color: black;">Quedan <span id="porcionesRestantes">{{session('porciones')}}</span> porciones disponibles</p>
+                        </div>
                     </div>
                     <div class="fila">
                         <label for="saborPan">Sabor de pan:</label>
                         <div class="custom-select">
                             <div>                               
                                 <input type="text" id="agarrarValorPan" name="sabor_pan" readonly placeholder="Seleccione una opción">
-                                <input type="hidden" id="tipoEntrega" name="tipoEntrega">
                             </div> 
                             <button id="seleccionarPan" class="diseñandobutton" type="button">🔻</button>
                             <div id="seleccionadoOpcionPan" class="customizandoOpciones" style="display: none;">
@@ -101,23 +104,23 @@
                         <label for="tematica">Temática:</label>
                         <div class="opciones">
                             <label>
-                                <input type="radio" name="tematica" value="figura" required>
+                                <input type="radio" name="tematica" value="cumpleanos" required>
                                 <p class="blanca"> Cumpleaños</p>
                             </label>
                             <label>
-                                <input type="radio" name="tematica" value="figura" >
+                                <input type="radio" name="tematica" value="xv" >
                                 <p class="blanca"> XV años</p>
                             </label>
                             <label>
-                                <input type="radio" name="tematica" value="figura">
+                                <input type="radio" name="tematica" value="boda">
                                 <p class="blanca"> Boda</p>
                             </label>
                             <label>
-                                <input type="radio" name="tematica" value="figura">
+                                <input type="radio" name="tematica" value="bautizo">
                                 <p class="blanca"> Bautizo</p>
                             </label>
                             <label>
-                                <input type="radio" name="tematica" value="figura">
+                                <input type="radio" name="tematica" value="otro">
                                 <p class="blanca"> Otro</p>
                             </label>
                         </div>
@@ -172,18 +175,58 @@
 
 <script>
     // Variables desde el controlador
-    let sabores = @json($sabores);
-    let rellenos = @json($rellenos);
-    let coberturas = @json($coberturas);
-    let elementos = @json($elementos);
+    //let sabores = @json($sabores);
+    //let rellenos = @json($rellenos);
+    //let coberturas = @json($coberturas);
+    //let elementos = @json($elementos);
 
     // Mostrar en la consola
-    console.log('Sabores:', sabores);
-    console.log('Rellenos:', rellenos);
-    console.log('Coberturas:', coberturas);
-    console.log('Elementos:', elementos);
+    //console.log('Sabores:', sabores);
+    //console.log('Rellenos:', rellenos);
+    //console.log('Coberturas:', coberturas);
+    //console.log('Elementos:', elementos);
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const inputPorciones = document.getElementById('porciones');
+        const spanPorcionesRestantes = document.getElementById('porcionesRestantes');
+        let porcionesRestantes = parseInt(spanPorcionesRestantes.textContent);
+
+        function actualizarPorcionesRestantes() {
+            const porcionesSolicitadas = parseInt(inputPorciones.value) || 0;
+            const nuevasPorcionesRestantes = porcionesRestantes - porcionesSolicitadas;
+
+            const botonEnviar = document.querySelector('button[type="submit"]');
+
+            if (nuevasPorcionesRestantes < 0) {
+                spanPorcionesRestantes.textContent = "SIN RESERVA";
+                spanPorcionesRestantes.style.color = 'red';
+                document.querySelector(".incrementar").disabled = true;
+                botonEnviar.disabled = true; // Deshabilitar el botón de envío
+            } else {
+                spanPorcionesRestantes.textContent = nuevasPorcionesRestantes;
+                spanPorcionesRestantes.style.color = 'green'; // Cambia a un color apropiado
+                document.querySelector(".incrementar").disabled = false;
+                botonEnviar.disabled = false; // Habilitar el botón de envío
+            }
+        }
+
+        inputPorciones.addEventListener('input', actualizarPorcionesRestantes);
+
+        document.querySelector('.incrementar').addEventListener('click', () => {
+            inputPorciones.value = parseInt(inputPorciones.value || 0) + 1;
+            actualizarPorcionesRestantes();
+        });
+
+        document.querySelector('.decrementar').addEventListener('click', () => {
+            inputPorciones.value = Math.max(parseInt(inputPorciones.value || 0) - 1, 0);
+            actualizarPorcionesRestantes();
+        });
+
+        actualizarPorcionesRestantes(); 
+    });
+</script>
 
 
 <x-pie/>

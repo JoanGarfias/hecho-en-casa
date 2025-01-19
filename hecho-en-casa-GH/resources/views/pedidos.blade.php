@@ -158,10 +158,19 @@
             
             let porcionesRestantes = porcionesDisponibles - porcionesTotales;
         
-            if (porcionesRestantes < cantidadPorciones) {
-                porcionesRestantesLabel.textContent = "SIN RESERVA";
+            if (porcionesRestantes < cantidadPorciones) {  
+                /*porcionesRestantesLabel.textContent = "SIN RESERVA";
                 porcionesRestantesLabel.style.color = 'red';
-                formulario.querySelector('button[type="submit"]').disabled = true;
+                formulario.querySelector('button[type="submit"]').disabled = true;*/
+                if (porcionesRestantes <= 0){ //IF ESTE IF ELSE NO FUNCIONA, SOLO COMENTAR Y DESCOMENTAR EL DE ARRIBA
+                    porcionesRestantesLabel.textContent = "SIN RESERVA";
+                    porcionesRestantesLabel.style.color = 'red';
+                    formulario.querySelector('button[type="submit"]').disabled = true;
+                }else{
+                    porcionesRestantesLabel.textContent = "SIN RESERVA";
+                    porcionesRestantesLabel.style.color = 'red';
+                    formulario.querySelector('button[type="submit"]').disabled = false;
+                }
             } else {
                 porcionesRestantesLabel.textContent = porcionesRestantes;
                 porcionesRestantesLabel.style.color = '';
