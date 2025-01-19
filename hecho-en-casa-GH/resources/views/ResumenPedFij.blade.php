@@ -29,9 +29,13 @@
 
                    <label>Sabor:</label>
                    <input type="text" value="{{session('sabor_postre')}}" readonly>
-
-                   <label>Porciones:</label>
-                   <input type="text" value="{{session('porcionespedidas')}}" readonly>
+                    @if ($tipo_postre == "fijo")
+                        <label>Porciones:</label>     
+                        <input type="text" value="{{session('porcionespedidas')}}" readonly>
+                    @elseif ($tipo_postre == "temporada" || $tipo_postre == "pop-up")
+                        <label>Cantidad:</label>     
+                        <input type="text" value="{{session('cantidad_pedida')}}" readonly>
+                    @endif
 
                </div>
 
@@ -111,5 +115,3 @@
    <script src="{{ asset('js/Gracias.js') }}"></script>
 
 </body>
-
-<x-pie/>

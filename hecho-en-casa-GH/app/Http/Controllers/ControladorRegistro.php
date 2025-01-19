@@ -128,6 +128,7 @@ class ControladorRegistro extends Controller
             return redirect()->route('inicio.get')->withErrors(['error' => 'Token no proporcionado']);
         }
         $usuario = Usuario::where('token_recuperacion', $token)->first();
+        
         if ($usuario){
             session([
                 'usuario' => $usuario->id_u,
