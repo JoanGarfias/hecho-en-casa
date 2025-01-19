@@ -109,7 +109,7 @@
                         <label for="tematica">Temática:</label>
                         <div class="opciones">
                             <label>
-                                <input type="radio" name="tematica" value="Cumpleaños" required>
+                                <input type="radio" name="tematica" value="Cumpleaños">
                                 <p class="blanca"> Cumpleaños</p>
                             </label>
                             <label>
@@ -128,7 +128,7 @@
                                 <input type="radio" name="tematica" value="Otro" id="otrosRadio">
                                 <p class="blanca"> Otro</p>
                                 <div id="campoOtros" style="display: none;">
-                                    <input type="text" id="otrosTexto" name="otrosTexto" class="paraOtros">
+                                    <input type="text" id="otrosTexto" name="otrosTexto" class="paraOtros" value="">
                                 </div>
                             </label>
                         </div>
@@ -149,11 +149,11 @@
                 <div class="columna">
                     <div class="fila">
                         <label for="imagen">Añadir imagen:</label>
-                        <textarea id="imagen" name="imagen" class="escribiendo" placeholder="Pega aquí un enlace de Google o Pinterest..." required></textarea>
+                        <textarea id="imagen" name="imagen" class="escribiendo" placeholder="Pega aquí un enlace de Google o Pinterest..."></textarea>
                     </div>
                     <div class="fila">
                         <label for="descripcion">Descripción detallada:</label>
-                        <textarea id="descripcion" name="descripcion" class="escribiendo" placeholder="Describe tu pedido" required></textarea>
+                        <textarea id="descripcion" name="descripcion" class="escribiendo" placeholder="Describe tu pedido"></textarea>
                     </div>
 
                     <div class="fila"> 
