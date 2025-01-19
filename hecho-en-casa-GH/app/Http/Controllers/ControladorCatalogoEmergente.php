@@ -149,7 +149,8 @@ class ControladorCatalogoEmergente extends Controller
         try{
             $emergente->save();
         }catch(\Exception $e){
-            dd("Error al guardar el postre emergente: ".$e->getMessage());
+            return redirect()->route('inicio.get')
+            ->with('error', 'Error al guardar el postre emergente: ' .$e->getMessage()); 
         }
 
         $pedido = new Pedido;
@@ -165,7 +166,8 @@ class ControladorCatalogoEmergente extends Controller
         try {
             $pedido->save();
         } catch (\Exception $e) {
-            dd("Error al guardar el pedido: " . $e->getMessage());
+            return redirect()->route('inicio.get')
+            ->with('error', 'Error al guardar el pedido: ' .$e->getMessage()); 
         }
         
         //para reducir su stock en caso de que tenga si es null entonces no maneja stock
@@ -217,7 +219,6 @@ class ControladorCatalogoEmergente extends Controller
             $ciudad = $request->input('ciudad');
             $colonia = $request->input('asentamiento');
             $calle = $request->input('calle');
-            $numero = $request->input('numero');
             $numeroInterior = $request->input('numeroI');
             $numeroExterior = $request->input('numeroE');
             $referencia = $request->input('referencia');
@@ -248,7 +249,8 @@ class ControladorCatalogoEmergente extends Controller
         try{
             $emergente->save();
         }catch(\Exception $e){
-            dd("Error al guardar el postre emergente: ".$e->getMessage());
+            return redirect()->route('inicio.get')
+            ->with('error', 'Error al guardar el postre emergente: ' .$e->getMessage()); 
         }
 
         $pedido = new Pedido;
@@ -272,7 +274,8 @@ class ControladorCatalogoEmergente extends Controller
         try {
             $pedido->save();
         } catch (\Exception $e) {
-            dd("Error al guardar el pedido: " . $e->getMessage());
+            return redirect()->route('inicio.get')
+            ->with('error', 'Error al guardar el pedido: ' .$e->getMessage()); 
         }
         
         session([
