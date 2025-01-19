@@ -71,9 +71,9 @@ label {
 input[type="text"]#telefono {
    width: 50%; /* Asegura que el campo ocupe el ancho completo del contenedor */
    padding: 10px; /* Espaciado interno */
-   font-size: 14px; /* Tamaño de fuente */
-   border: 1px solid #ccc; /* Borde */
-   border-radius: 4px; /* Bordes redondeados */
+   font-size: 1rem; /* Tamaño de fuente */
+   border: 10px solid #FCF5C7;
+   border-radius: 5px; /* Bordes redondeados */
    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
    outline: none; /* Quita el contorno azul predeterminado al enfocar */
    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
@@ -82,8 +82,8 @@ input[type="text"]#telefono {
 
  input[type="text"], input[type="radio"] {
     margin-top: 5px;
-    padding: 8px;
-    border: 1px solid #ccc;
+    padding: 10px;
+    border: 10px solid #FCF5C7; /* Borde */
     border-radius: 4px;
     font-size: 14px;
     display: block; /* Coloca cada elemento en una nueva línea */
@@ -92,12 +92,12 @@ input[type="text"]#telefono {
  }
  
  button {
-   background-color: #D9B87B;
+   background-color: #FBAF35;
    color: #FFF;
    padding: 10px 20px;
    border: none;
    border-radius: 5px;
-   font-size: 1em;
+   font-size: 1rem;
    cursor: pointer;
    display: flex;
    align-items: center;
