@@ -188,10 +188,6 @@
                 document.getElementById("cantidad").disabled = false;
             }
 
-            // Actualizar los valores en los campos ocultos
-            document.getElementById("hiddenCosto").value = total.toFixed(2);
-            document.getElementById("hiddenPorciones").value = porcionesTotales;
-
             let selects = document.querySelectorAll('select');
             selects.forEach(select => {
                 let selectedOption = select.options[select.selectedIndex];
@@ -202,6 +198,9 @@
                 }
             });
             labelCosto.textContent = total.toFixed(2);
+            // Actualizar los valores en los campos ocultos
+            document.getElementById("hiddenCosto").value = total.toFixed(2);
+            document.getElementById("hiddenPorciones").value = porcionesTotales;
         }
         
         document.querySelectorAll('select').forEach(function(selectElement) {
