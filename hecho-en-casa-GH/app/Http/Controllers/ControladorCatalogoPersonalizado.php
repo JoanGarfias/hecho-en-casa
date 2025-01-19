@@ -40,19 +40,19 @@ class ControladorCatalogoPersonalizado extends Controller
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         
-        $sabores = Cache::remember('sabores', 10, function () {
+        $sabores = Cache::remember('sabores', 60, function () {
             return SaborPan::select('id_sp', 'nom_pan', 'precio_p')
             ->get();
         });
-        $rellenos = Cache::remember('rellenos', 10, function () {
+        $rellenos = Cache::remember('rellenos', 60, function () {
             return SaborRelleno::select('id_sr', 'nom_relleno', 'precio_sr')
             ->get();
         });
-        $coberturas = Cache::remember('coberturas', 10, function () {
+        $coberturas = Cache::remember('coberturas', 60, function () {
             return Cobertura::select('id_c', 'nom_cobertura', 'precio_c')
             ->get();
         });
-        $elementos = Cache::remember('elementos', 10, function () {
+        $elementos = Cache::remember('elementos', 60, function () {
             return Elemento::select('id_e', 'nom_elemento', 'precio_e')
             ->get();
         });
@@ -180,8 +180,6 @@ class ControladorCatalogoPersonalizado extends Controller
 
 
         $tipo_domicilio = $request->input('ubicacion');
-        //dd($tipo_domicilio);
-        //$datos = session('datos_pedido'); 
         
         $id_usuario = session('id_usuario');
         $user = Cache::remember('user', 10, function () use ($id_usuario){
