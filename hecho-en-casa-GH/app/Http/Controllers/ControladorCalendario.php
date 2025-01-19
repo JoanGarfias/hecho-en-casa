@@ -31,6 +31,10 @@ class ControladorCalendario extends Controller
             }
 
             $fecha = Carbon::createFromDate($anio, $mes, 1);
+        }else{
+            if (($mes === null && $anio !== null) || ($mes !== null && $anio === null)) {
+                throw new CalendarioException('Faltó ingresar mes o año');
+            }
         }
         
         $primerDiaDelMes = $fecha->copy()->startOfMonth();
