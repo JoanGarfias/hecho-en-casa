@@ -3,6 +3,7 @@ let fechando = ''
 
 document.addEventListener('DOMContentLoaded', function(){
     calendarioData = JSON.parse(calendario);
+    console.log(calendarioData);
     const primerDia = calendarioData.diasDelMes[0].fecha;
     const ultimoDia = calendarioData.diasDelMes[calendarioData.diasDelMes.length - 1].fecha;
     const numeroUltimoDia = parseInt(ultimoDia.split('-')[2], 10);
@@ -94,8 +95,6 @@ document.addEventListener('DOMContentLoaded', function(){
         switch(diafuturo){
             case "Saturday":
                 return diapresente + 6;
-            case "Sunday":
-                return diapresente + 5;
             default:
                 return diapresente + 4;
         }

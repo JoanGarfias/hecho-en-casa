@@ -228,10 +228,12 @@ class ControladorCatalogo extends Controller
             return Pedido::select('fecha_hora_entrega', 'porcionespedidas')
                 ->whereIn('id_tipopostre', ['fijo', 'personalizado'])
                 ->whereDate('fecha_hora_entrega', $fechaEscogida)
+                ->where('status', 'aceptado')
                 ->get();
         });
 
         $porciones_dia_aceptados = Pedido::whereDate('fecha_hora_entrega', $fechaEscogida)
+                                ->whereIn('id_tipopostre', ['fijo', 'personalizado'])
                                 ->where('status', 'aceptado')
                                 ->sum('porcionespedidas');
 
