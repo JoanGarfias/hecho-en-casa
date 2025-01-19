@@ -20,7 +20,7 @@ document.querySelectorAll('.custom-select-options .option').forEach(option => {
 });
 
 //para el movimiento de los botones de incremento y decremento de porciones
-/*document.querySelector('.incrementar').addEventListener('click', function() {
+document.querySelector('.incrementar').addEventListener('click', function() {
     var cantidadInput = document.getElementById('cantidad');
     cantidadInput.value = parseInt(cantidadInput.value) + 1;
 });
@@ -30,7 +30,7 @@ document.querySelector('.decrementar').addEventListener('click', function() {
     if (parseInt(cantidadInput.value) > 1) { // No permitir que sea menor que 1
         cantidadInput.value = parseInt(cantidadInput.value) - 1;
     }
-});*/
+});
 
 // Restringir entrada manual a números
 document.getElementById('cantidad').addEventListener('input', function() {
