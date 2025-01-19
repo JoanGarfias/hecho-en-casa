@@ -39,24 +39,26 @@ class ControladorCatalogoPersonalizado extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-
-        $sabores = Cache::remember('sabores', 10, function () {
+        
+        $sabores = Cache::remember('sabores', 60, function () {
             return SaborPan::select('id_sp', 'nom_pan', 'precio_p')
             ->get();
         });
-        $rellenos = Cache::remember('rellenos', 10, function () {
+        $rellenos = Cache::remember('rellenos', 60, function () {
             return SaborRelleno::select('id_sr', 'nom_relleno', 'precio_sr')
             ->get();
         });
-        $coberturas = Cache::remember('coberturas', 10, function () {
+        $coberturas = Cache::remember('coberturas', 60, function () {
             return Cobertura::select('id_c', 'nom_cobertura', 'precio_c')
             ->get();
         });
-        $elementos = Cache::remember('elementos', 10, function () {
+        $elementos = Cache::remember('elementos', 60, function () {
             return Elemento::select('id_e', 'nom_elemento', 'precio_e')
             ->get();
         });
-
+        
+        $porciones_dia_aceptados = session('porciones_dia_aceptados'); 
+        session()->put('porciones', 100 - $porciones_dia_aceptados);
         return view('pedidosPersonalizados', compact('sabores', 'rellenos', 'coberturas', 'elementos'));
     }
 
@@ -71,27 +73,25 @@ class ControladorCatalogoPersonalizado extends Controller
         $tematica = $request->input('tematica');
         $imagen = $request->input('imagen');
         $descripcion = $request->input('descripcion');
-      
         $costo = intval($request->input('costo'));
-        $id_usuario = Cookie::get('user_id');
-
+        $id_usuario = session('id_usuario');
+        
         session()->put('opcion_envio', $tipo_entrega);
 
-        $fechaEscogida = session('fecha');
-        $horaEntrega = session('hora');
+        $fechaEscogida = session('fecha_entrega');
+        $horaEntrega = session('hora_entrega');
         $fecha_hora_entrega = Carbon::parse($fechaEscogida . ' ' . $horaEntrega); 
         $fecha_hora_registro = now();
         $id_tipopostre = 'personalizado';
 
-        $sabor_pan = intval($request->input('sabor_pan'));
-        $relleno = intval($request->input('sabor_relleno'));
-        $cobertura = intval($request->input('cobertura'));
+        $sabor_pan = intval($request->input('panElegido'));
+        $relleno = intval($request->input('rellenoElegido'));
+        $cobertura = intval($request->input('coberturaElegido'));
         $elementos = array_map('intval', $request->input('elementos', []));
-      
         $costoCatalogo = Catalogo::where('id_tipo_postre', "personalizado")->first();; //LO SACARE DE A TABLA CATALOGO PRECIO_EMERGENTES
-        $costoPan = SaborPan::where('nom_pan', $sabor_pan)->first();
-        $costoRelleno = SaborRelleno::where('nom_relleno', $relleno)->first();
-        $costoCobertura = Cobertura::where('nom_cobertura', $cobertura)->first();
+        $costoPan = SaborPan::where('id_sp', $sabor_pan)->first();
+        $costoRelleno = SaborRelleno::where('id_sr', $relleno)->first();
+        $costoCobertura = Cobertura::where('id_c', $cobertura)->first();
 
         $costo = $costoPan->precio_p + $costoRelleno->precio_sr + $costoCobertura->precio_c + $costoCatalogo->precio_emergentes;
         foreach ($elementos as $elementoId) {
@@ -102,7 +102,7 @@ class ControladorCatalogoPersonalizado extends Controller
         //session()->put('costo', $costo);
         //$datos = ['costo', $costo];
         $porciones = intval($request->input('porciones'));
-
+        
         if ($tipo_entrega == "Domicilio") {
             $datos = [
                 'id_saborpan' => $sabor_pan,
@@ -132,7 +132,8 @@ class ControladorCatalogoPersonalizado extends Controller
             $pastel->id_cobertura = $cobertura;
             $pastel->tipo_evento = $tematica;
             $pastel->descripciondetallada = $descripcion;
-            $pastel->id_postre_elegido = 37;
+            $pastel->imagendescriptiva = $imagen;
+            $pastel->id_postre_elegido = 37; //id base del pastel personalizado
             $pastel->save();  // Guardamos el pastel en la base de datos
 
             // Obtenemos el ID del pastel recién creado
@@ -141,7 +142,7 @@ class ControladorCatalogoPersonalizado extends Controller
             // Instanciación de Pedido
             $pedido = new Pedido;
             $pedido->id_usuario = $id_usuario;
-            $pedido->id_tipopostre = $id_tipopostre;
+            $pedido->id_tipopostre = 'personalizado';
             $pedido->id_seleccion_usuario = $id_detalles_pastel;
             $pedido->porcionespedidas = $porciones;
             $pedido->status = 'pendiente';
@@ -158,33 +159,8 @@ class ControladorCatalogoPersonalizado extends Controller
                 $listarElemento->id_elemento = $elem;
                 $listarElemento->save();
             }
-
-            $datos = [
-                'tematica' => $tematica,
-                'imagen' => $imagen,
-                'descripcion' => $descripcion,
-                'costo' => $costo,
-                'tipo_entrega' => $tipo_entrega,
-                'id_usuario' => $id_usuario,
-                'fecha_hora_entrega' => $fecha_hora_entrega,
-                'fecha_hora_registro' => $fecha_hora_registro,
-                'id_tipopostre' => $id_tipopostre,
-                'sabor_pan' => $sabor_pan,
-                'relleno' => $relleno,
-                'cobertura' => $cobertura,
-                'elementos' => $elementos,
-                'porciones' => $porciones,
-                'id_pp' => $id_detalles_pastel,
-                'pedido' => [
-                    'id_pedido' => $pedido->id_ped,
-                    'porcionespedidas' => $pedido->porcionespedidas,
-                    'status' => $pedido->status,
-                    'precio_final' => $pedido->precio_final,
-                    'fecha_hora_registro' => $pedido->fecha_hora_registro,
-                    'fecha_hora_entrega' => $pedido->fecha_hora_entrega,
-                ],
-            ];
-            return redirect()->route('personalizado.ticket.get', ['folio' => $id_pedido]);            
+            session(['folio'=>$id_pedido]);
+            return redirect()->route('personalizado.ticket.get');            
         }
     }
 
@@ -192,9 +168,9 @@ class ControladorCatalogoPersonalizado extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-        
+        $rutaPost = "personalizado.direccion.post";
         $datos = session('datos_pedido');
-        return view('direccionPersonalizado', compact('datos'));
+        return view('ConfirmaDato', compact('datos', 'rutaPost'));
     }
 
     public function guardarDireccion(Request $request){
@@ -203,40 +179,43 @@ class ControladorCatalogoPersonalizado extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
 
-        $tipo_domicilio = $request->input('tipo_domicilio');
-        //dd($tipo_domicilio);
-        //$datos = session('datos_pedido'); 
+        $tipo_domicilio = $request->input('ubicacion');
         
-        $id_usuario = 1; //Prueba
+        $id_usuario = session('id_usuario');
         $user = Cache::remember('user', 10, function () use ($id_usuario){
             return usuario::where('id_u', $id_usuario)->first(); 
         });
+        
         $datos = session('datos_pedido'); 
         $codigo_postal = $user->Codigo_postal_u;
         $estado = $user->estado_u;
         $ciudad = $user->ciudad_u;
         $colonia = $user->colonia_u;
         $calle = $user->calle_u;
-        $numero = $user->num_exterior_u;
+        $numeroInterior = $user->num_interior_u;
+        $numeroExterior = $user->num_exterior_u;
+        $referencia = $user->referencia_u;
 
-        if($tipo_domicilio==="Nueva"){ //Datos prueba
+        if($tipo_domicilio==="otra"){ //Datos prueba
             $codigo_postal = $request->input('codigo_postal');
             $estado = $request->input('estado');
             $ciudad = $request->input('municipio');
             $colonia = $request->input('asentamiento');
             $calle = $request->input('calle');
-            $numero = $request->input('numero');
-            //$referencia = $request->input('referencia');
+            $numeroInterior = $request->input('numeroI');
+            $numeroExterior = $request->input('numeroE');
+            $referencia = $request->input('referencia');
 
             //Si elige volverla su ubicacion predeterminada entonces lo actualizamos en el perfil del usuario
-            if($request->has("aceptar")){
+            if($request->has("opciones")){
                 $user->Codigo_postal_u = $codigo_postal;
                 $user->estado_u = $estado;
                 $user->ciudad_u = $ciudad;
                 $user->colonia_u = $colonia;
                 $user->calle_u = $calle;
-                $user->num_exterior_u = $numero;
-                //$user->referencia_u = $referencia;
+                $user->num_exterior_u = $numeroExterior;
+                $user->num_interior_u = $numeroInterior;
+                $user->referencia_u = $referencia;
                 $user->save();
             }
 
@@ -248,6 +227,7 @@ class ControladorCatalogoPersonalizado extends Controller
         $pastel->id_saborrelleno = $datos['id_saborrelleno'];
         $pastel->id_cobertura = $datos['id_cobertura'];
         $pastel->tipo_evento = $datos['tematica'];
+        $pastel->imagendescriptiva = $datos['imagen'];
         $pastel->descripciondetallada = $datos['descripcion'];
         $pastel->id_postre_elegido = 37;
         $pastel->save();  // Guardamos el pastel en la base de datos
@@ -255,11 +235,10 @@ class ControladorCatalogoPersonalizado extends Controller
         // Obtenemos el ID del pastel recién creado
         $id_detalles_pastel = $pastel->id_pp;
 
-        $id_usuario = 1;
             // Instanciación de Pedido
         $pedido = new Pedido;
         $pedido->id_usuario = $id_usuario;
-        $pedido->id_tipopostre = $datos['id_tipopostre'];
+        $pedido->id_tipopostre = 'personalizado';
         $pedido->id_seleccion_usuario = $id_detalles_pastel;
         $pedido->porcionespedidas = $datos['porciones'];
         $pedido->status = 'pendiente';
@@ -271,51 +250,76 @@ class ControladorCatalogoPersonalizado extends Controller
         $pedido->ciudad_e = $ciudad;
         $pedido->colonia_e = $colonia;
         $pedido->calle_e = $calle;
-        $pedido->num_exterior_e = $numero;
+        $pedido->num_exterior_e = $numeroExterior;
+        $pedido->num_interior_e = $numeroInterior; 
         $pedido->save();  // Guardamos el pedido en la base de datos
 
-            $id_pedido = $pedido->id_ped;
+        $id_pedido = $pedido->id_ped;
 
         foreach($datos['elementos'] as $elem){
-                $listarElemento = new ListaElementos;
-                $listarElemento->id_pp = $id_detalles_pastel;
-                $listarElemento->id_elemento = $elem;
-                $listarElemento->save();
-            }
+            $listarElemento = new ListaElementos;
+            $listarElemento->id_pp = $id_detalles_pastel;
+            $listarElemento->id_elemento = $elem;
+            $listarElemento->save();
+        }
 
         //$costo = session("costo");
-        return redirect()->route('personalizado.ticket.get', ['folio' => $id_pedido]);  
+        session(['folio'=>$id_pedido]);
+        
+        return redirect()->route('personalizado.ticket.get');  
     }
 
-    public function mostrarTicket(Request $request, $folio = null){
+    public function mostrarTicket(Request $request){
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->forget('proceso_compra');
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-
+        $folio = session('folio');
+        
         if ($folio !== null) {
             // Consulta el pedido con el folio
             //Cache innecesario, por ser una consulta que se realiza una sola vez, y es improbable que se realice la misma consulta con un mismo folio dos veces seguidas
-            $ticket_pedido = Pedido::select('id_ped','id_seleccion_usuario','id_tipopostre', 'porcionespedidas', 'status', 'precio_final')
-            ->where('id_ped', $folio)
+            $ticket_pedido = Pedido::where('id_ped', $folio)
             ->first();
     
             if (!$ticket_pedido) {
                 return redirect()->back()->with('error', 'El pedido con el folio especificado no existe.');
             }
-    
+            
+            $entrega = $ticket_pedido->fecha_hora_entrega;
+            list($fecha, $hora) = explode(' ', $entrega);
             // Si hay una relación con Pastelpersonalizado
             $id_pastel = $ticket_pedido->id_seleccion_usuario;
-            $datos = ["id_pastel" => $id_pastel];
+            
             //Cache innecesario, por ser una consulta que se realiza una sola vez, y es improbable que se realice la misma consulta con un mismo folio dos veces seguidas
-            $ticket_pastel = Pastelpersonalizado::select('id_saborpan', 'id_saborrelleno', 'id_cobertura', 'tipo_evento', 'descripciondetallada', 'imagendescriptiva')
-            ->where('id_pp', $id_pastel)
-            ->first();
-        }
+            $ticket_pastel = Pastelpersonalizado::where('id_pp', $id_pastel)
+                            ->first();
+            
+            $sabor_pan = SaborPan::where('id_sp', $ticket_pastel->id_saborpan)
+                        ->first();
+            $sabor_relleno = SaborRelleno::where('id_sr', $ticket_pastel->id_saborrelleno)
+                        ->first();
+            $sabor_cobertura = Cobertura::where('id_c', $ticket_pastel->id_cobertura)
+                        ->first();
+
+            $pan = $sabor_pan->nom_pan;
+            $relleno = $sabor_relleno->nom_relleno;
+            $tematica = $ticket_pastel->tipo_evento;
+            $cobertura = $sabor_cobertura->nom_cobertura;
+            $user = usuario::where('id_u', session('id_usuario'))->first();
+            $nombre = $user->nombre;
+            $telefono = $user->telefono;
+            $tipo_entrega = session('opcion_envio');
+            $link = $ticket_pastel->imagendescriptiva;
+            $descripcion = $ticket_pastel->descripciondetallada;
+            $costo = $ticket_pedido->precio_final;
+        }   
         else {
             return redirect()->back()->with('error', 'El folio no fue especificado.');
         }
     
         // Envía la información a la vista
-        return view('ResumenPedidoP', compact('ticket_pedido', 'ticket_pastel', 'datos'));
+        return view('ResumenPedioP', compact('pan', 'relleno', 'cobertura',
+            'tematica', 'nombre', 'telefono', 'tipo_entrega', 'link', 'descripcion',
+            'costo', 'fecha', 'hora'));
     }
 }

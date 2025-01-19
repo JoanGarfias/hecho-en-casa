@@ -17,7 +17,7 @@
 
            <div class="FOLIO-info"> <!--user-info -->
                <h2 class="Folio-name">Pedido con folio:</h2>
-               <input type="text" id="folio" name="folio" value="Folio P0520" readonly>
+               <input type="text" id="folio" name="folio" value="{{session('folio')}}" readonly>
              
            </div>
 
@@ -25,49 +25,49 @@
 
                <div class="left-column">
                    <label>Tipo de postre:</label>
-                   <input type="text" id="tipo_postre" value="Selección" readonly>
+                   <input type="text" id="tipo_postre" value="{{session('id_tipopostre')}}" readonly>
 
                    <label>Porciones:</label>
-                   <input type="text" id="porciones" value="000" readonly>
-
-                   <label>Cantidad:</label>
-                   <input type="text" id="cantidad" value="00" readonly>
+                   <input type="text" id="porciones" value="{{session('porciones')}}" readonly>
 
                    <label>Sabor de pan:</label>
-                   <input type="text" id="sabor" value="Selección" readonly>
+                   <input type="text" id="sabor" value="{{$pan}}" readonly>
 
                    <label>Sabor de relleno:</label>
-                   <input type="text" id="sabor_relleno" value="Selección" readonly>
+                   <input type="text" id="sabor_relleno" value="{{$relleno}}" readonly>
 
                    <label>Cobertura:</label>
-                   <input type="text" id="cobertura" value="Selección" readonly>
+                   <input type="text" id="cobertura" value="{{$cobertura}}" readonly>
 
                    <label>Temática:</label>
-                   <input type="text" id="tematica" value="Selección" readonly>
+                   <input type="text" id="tematica" value="{{$tematica}}" readonly>
                </div>
 
                <div class="right-column">
 
                     <label>Nombre:</label>
-                   <input type="text" id="nombre" value="Fulanito1" readonly>
+                   <input type="text" id="nombre" value="{{$nombre}}" readonly>
                    
                    <label>Teléfono:</label>
-                   <input type="text" id="telefono" value="000 0000 000" readonly>
+                   <input type="text" id="telefono" value="{{$telefono}}" readonly>
 
                    <label>Fecha de entrega:</label>
-                   <input type="text" id="fecha_entrega" value="DD/MM/YYYY" readonly>
+                   <input type="text" id="fecha_entrega" value="{{$fecha}}" readonly>
+
+                   <label>Hora de entrega:</label>
+                   <input type="text" id="hora_entrega" value="{{$hora}}" readonly>
 
                    <label>Tipo de entrega:</label>
-                   <input type="text" id="tipo_entrega" value="Selección" readonly>
+                   <input type="text" id="tipo_entrega" value="{{$tipo_entrega}}" readonly>
 
                    <label>Link de referencia:</label>
-                   <input type="text" id="link" value="https..." readonly>
+                   <input type="text" id="link" value="{{$link}}" readonly>
 
                    <label>Descripción detallada:</label>
-                   <input type="text" id="descripcion" value="Descripción..." readonly>
+                   <input type="text" id="descripcion" value="{{$descripcion}}" readonly>
 
                    <label>Costo Apróximado:</label>
-                   <input type="text" id="costo" value="$00000" readonly>
+                   <input type="text" id="costo" value="${{$costo}}" readonly>
                </div>
            </div>
            <button class="descargarPDF-button"> 
@@ -92,7 +92,7 @@
 
                             <div class="FOLIO-info"> <!--user-info -->
                                 <h2 class="Folio-name">Pedido con folio:</h2>
-                                <input type="text" id="folio" name="folio" value="Folio F0120" readonly>
+                                <input type="text" id="folio" name="folio" value="{{session('folio')}}" readonly>
                             </div>       
 
                             <div class="details">

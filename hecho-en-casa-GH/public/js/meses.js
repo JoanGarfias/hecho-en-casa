@@ -1,9 +1,8 @@
 let variableMes
-let fechando 
+let fechando = ''
 
 document.addEventListener('DOMContentLoaded', function(){
     calendarioData = JSON.parse(calendario);
-   
     const primerDia = calendarioData.diasDelMes[0].fecha;
     const ultimoDia = calendarioData.diasDelMes[calendarioData.diasDelMes.length - 1].fecha;
     const numeroUltimoDia = parseInt(ultimoDia.split('-')[2], 10);
@@ -119,12 +118,9 @@ document.addEventListener('DOMContentLoaded', function(){
         inputAnio.value = hoyanio;
         if(mesAux===1)
             inputAnio.value = hoyanio + 1;
-        
         formulario.submit();
+        
     });
-
-    console.log('el mes en meses: ' + mesNumerico)
-
     renderCalendar();
     variableMes = mesNumerico
 });
@@ -133,9 +129,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
 document.addEventListener('DOMContentLoaded', function () {
     const numbers = document.getElementById("numbers");
-
-    fechando =''
-    console.log('entro')
     // Delegación de eventos: Detectar clics solo en elementos con la clase "available"
     numbers.addEventListener("click", function (e) {
         const clickedDay = e.target;
@@ -145,8 +138,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (previouslySelected) {
                 previouslySelected.classList.remove("selected");
             }
-
-            console.log(clickedDay)
             // Seleccionar el nuevo día
             clickedDay.classList.add("selected");
 
@@ -154,11 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const diaNumero = clickedDay.textContent;
             const mes = variableMes;
             const anio = document.getElementById("anio").value || new Date().getFullYear();
-
-            console.log(mes)
-
             const fecha = `${anio}-${String(mes).padStart(2, "0")}-${String(diaNumero).padStart(2, "0")}`;
-            console.log("Fecha seleccionada:", fecha);
 
             // Guardar en el campo oculto
             const inputFecha = document.getElementById("fechaSeleccionada");
@@ -167,10 +154,11 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             
             fechando = fecha
-            
+
+           
         }
     });
-    
+    fechando =''
     
 });
 
@@ -254,23 +242,43 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-    const formulario = document.querySelector('#cambioFecha')
+    const formulario = document.getElementById('cambioFecha');
+    const hiddenAction = document.getElementById('botonPress');
     const enviar = document.querySelector('.aceptandoFecha')
 
-    if (enviar != null){
-        enviar.addEventListener("click", event => {
-            event.preventDefault();
+    const botones = document.querySelectorAll('.botonPr');
+    let action = null; 
 
-            if ((fechando.trim() === '')){
-                alert('Tienes que seleccionar una fecha')
-            } else {   
-                formulario.submit();
-            }
+    botones.forEach(boton => {
+        boton.addEventListener('click', event => {
+            event.preventDefault(); 
+            action = boton.value; 
+
+            hiddenAction.value = action;
+
+            if (enviar != null){
+                if ((action === 'Enviar') && (fechando.trim() === '')){
+                    mostrarMensaje('Tienes que seleccionar una fecha')                          
+                } else {   
+                    formulario.submit();        
+                }
+            }      
         });
-    }
-    
-    
-    
+    });
 });
 
 
+function mostrarMensaje(texto) {
+    const mensaje = document.getElementById('mensajeEmergente');
+    mensaje.textContent = texto; // Agregar texto al mensaje
+    mensaje.style.opacity = '1'; // Mostrar el mensaje
+    mensaje.style.visibility = 'visible'; // Asegurarse de que sea visible
+
+    // Ocultar el mensaje después de 3 segundos
+    setTimeout(() => {
+        mensaje.style.opacity = '0'; // Inicia la transición para ocultar
+        setTimeout(() => {
+            mensaje.style.visibility = 'hidden'; // Ocultar completamente
+        }, 500); // Coincidir con el tiempo de transición de opacity
+    }, 3000);
+}

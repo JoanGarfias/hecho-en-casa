@@ -41,20 +41,23 @@
                     <button class="carousel-button left" onclick="moveCarousel('carousel-temporada', -1)">&lt;</button>
                     <div class="carousel-track">
                         
+                        
                         @foreach ($emergentes as $categoria => $items)
                             @if ($categoria == "temporada")
-                                @foreach ($items as $item)
-                                <form action="{{route('emergente.catalogo.post')}}" method="POST" id="formulario">
+                                <form action="{{route('emergente.catalogo.post')}}" method="POST" id="formularioTemp">
                                     @csrf                    
-                                    <div class="carousel-item">
-                                        <div class="image-container">
-                                            <img src="{{$item->imagen}}" alt="{{$item->nombre}}">
-                                            <img class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
-                                            <input type="hidden" name="id_postre" value="{{ $item->id_postre }}">
+                                    <input id="seleccionTemporada" type="hidden" name="id_postre" value="">
+                                    @foreach ($items as $item)
+                                        <div class="carousel-item">
+                                            <div class="image-container">
+                                                <p>{{$item->id_postre}}</p>
+                                                <img src="{{$item->imagen}}" alt="{{$item->nombre}}">
+                                                <img id="{{$item->id_postre}}-temporada" class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
+                                                
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endforeach     
                                 </form>
-                                @endforeach     
                             @endif
                         @endforeach
                         <!-- Agregar más imágenes de Temporada según sea necesario -->
@@ -71,19 +74,20 @@
                     <div class="carousel-track">
                         @foreach ($emergentes as $categoria => $items)
                             @if ($categoria == "pop-up")
-                                @foreach ($items as $item)
-                                    <form action="{{route('emergente.catalogo.post')}}" method="POST" id="formulario">
-                                        @csrf
-                                        
-                                        <div class="carousel-item">
-                                            <div class="image-container">
-                                                <img src="{{$item->imagen}}" alt="{{$item->nombre}}">
-                                                <img class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
-                                                <input type="hidden" name="id_postre" value="{{ $item->id_postre }}">
+                                <form action="{{route('emergente.catalogo.post')}}" method="POST" id="formularioPopUp">
+                                    @csrf
+                                    <input id="seleccionPopup" type="hidden" name="id_postre" value="">
+                                    @foreach ($items as $item)           
+                                            <div class="carousel-item">
+                                                <div class="image-container">
+                                                    <p>{{$item->id_postre}}</p>
+                                                    <img src="{{$item->imagen}}" alt="{{$item->nombre}}">
+                                                    <img id="{{$item->id_postre}}-popup" class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
+                                                </div>
                                             </div>
-                                        </div>
-                                    </form>
-                                @endforeach     
+                                        
+                                    @endforeach     
+                                </form>
                             @endif
                         @endforeach
                         <!-- Agregar más imágenes de Pop-Up según sea necesario -->
@@ -98,12 +102,24 @@
     
         document.addEventListener("DOMContentLoaded", (event) => {
             let botones = document.querySelectorAll(".shopping-bag");
-            botones.forEach(boton => {
-                boton.addEventListener('click', function(){
-                    document.getElementById('formulario').submit();
-                });
+            botones.forEach(boton =>{
+                let id = boton.id;
+                let [numero, categoria] = id.split('-');
+                if(categoria == 'temporada'){
+                    boton.addEventListener('click', function(){
+                        document.getElementById('seleccionTemporada').value = numero;
+                        document.getElementById('formularioTemp').submit();            
+                    });
+                }else if(categoria == 'popup'){
+                    boton.addEventListener('click', function(){
+                        document.getElementById('seleccionPopup').value = numero;
+                        document.getElementById('formularioPopUp').submit();            
+                    });
+                }
+                
             });
         });
+        
     </script>
     <x-pie/>
     <script src="{{ asset('js/scripte.js') }}"></script>
