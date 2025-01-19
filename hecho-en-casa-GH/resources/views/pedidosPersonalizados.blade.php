@@ -54,7 +54,7 @@
                                     <div class="darOpciones" data-value="{{$sabor->id_sp}}">{{$sabor->nom_pan}} {{$sabor->precio_p}} MXN</div>    
                                 @endforeach
                             </div>           
-                            <input type="hidden" id="panElegido" value="">            
+                            <input type="hidden" id="panElegido" name="panElegido" value="">            
                         </div>
                     </div>
                     <div class="fila">
@@ -69,7 +69,7 @@
                                     <div class="darOpciones" data-value="{{$relleno->id_sr}}">{{$relleno->nom_relleno}} {{$relleno->precio_sr}} MXN</div>    
                                 @endforeach
                             </div>     
-                            <input type="hidden" id="rellenoElegido" value="">                              
+                            <input type="hidden" id="rellenoElegido" name="rellenoElegido" value="">                              
                         </div>
                     </div>
                     <div class="fila">
@@ -77,7 +77,6 @@
                         <div class="custom-select">
                             <div>                               
                                 <input type="text" id="agarrarValorCobertura" name="cobertura" readonly placeholder="Seleccione una opción">
-                                <input type="hidden" id="tipoEntrega" name="tipoEntrega">
                             </div> 
                             <button id="seleccionarCobertura" class="diseñandobutton" type="button">🔻</button>
                             <div id="seleccionadoOpcionCobertura" class="customizandoOpciones" style="display: none;">
@@ -85,7 +84,7 @@
                                     <div class="darOpciones" data-value="{{$cobertura->id_c}}">{{$cobertura->nom_cobertura}} {{$cobertura->precio_c}} MXN</div>    
                                 @endforeach
                             </div>                       
-                            <input type="hidden" id="coberturaElegido" value="">                              
+                            <input type="hidden" id="coberturaElegido" name="coberturaElegido" value="">                              
                         </div>
                     </div>
                 </div>
