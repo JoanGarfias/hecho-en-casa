@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Exceptions\CalendarioException;
 use Illuminate\Http\Request;
 use App\Models\Catalogo;
 use App\Models\Categoria;
@@ -130,18 +132,18 @@ class ControladorCatalogo extends Controller
         $fecha = Carbon::now();
         if($mes && $anio){
             if (!is_numeric($mes) || !is_numeric($anio)) {
-                throw new InvalidArgumentException('El mes y el año deben ser números enteros.');
+                throw new CalendarioException('El mes y el año deben ser números enteros.');
             }
             
             $mes = (int) $mes;
             $anio = (int) $anio;
 
             if ($mes < 1 || $mes > 12) {
-                throw new InvalidArgumentException('El mes debe estar entre 1 y 12.');
+                throw new CalendarioException('El mes debe estar entre 1 y 12.');
             }
 
             if ($anio < 2024 || $anio > Carbon::now()->year + 1) {
-                throw new InvalidArgumentException('El año no es válido.');
+                throw new CalendarioException('El año no es válido.');
             }
             
             $fecha = Carbon::createFromDate($anio, $mes, 1);
@@ -155,6 +157,7 @@ class ControladorCatalogo extends Controller
             return Pedido:: select('id_ped', 'fecha_hora_entrega', 'porcionespedidas')
                             ->whereBetween('fecha_hora_entrega', [$primerDiaDelMes, $ultimoDiaDelMes])
                             ->where('status', 'aceptado')
+                            ->whereIn('id_tipopostre', ['fijo', 'personalizado'])
                             ->get();
             });
 
