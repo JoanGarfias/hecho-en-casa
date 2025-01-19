@@ -31,13 +31,13 @@
                    <input type="text" id="porciones" value="{{session('porciones')}}" readonly>
 
                    <label>Sabor de pan:</label>
-                   <input type="text" id="sabor" value="{{$sabor_pan}}" readonly>
+                   <input type="text" id="sabor" value="{{$pan}}" readonly>
 
                    <label>Sabor de relleno:</label>
-                   <input type="text" id="sabor_relleno" value="{{$sabor_relleno}}" readonly>
+                   <input type="text" id="sabor_relleno" value="{{$relleno}}" readonly>
 
                    <label>Cobertura:</label>
-                   <input type="text" id="cobertura" value="{{$sabor_cobertura}}" readonly>
+                   <input type="text" id="cobertura" value="{{$cobertura}}" readonly>
 
                    <label>Temática:</label>
                    <input type="text" id="tematica" value="{{$tematica}}" readonly>
