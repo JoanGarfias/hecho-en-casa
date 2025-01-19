@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="{{ asset('css/mensajeErrorE.css') }}">
 <link rel="stylesheet" href="{{ asset('css/pedidos.css') }}">
 <link rel="stylesheet" href="{{ asset('css/pedidosTempPop.css') }}">
  
@@ -44,7 +45,7 @@
                             @if (session('lista_unidad') && count(session('lista_unidad')) > 0)
                                 @foreach (session('lista_unidad') as $unidad)
                                 <label>
-                                    <input type="radio" name="porciones" value="{{ $unidad['cantidadporciones'] }}|{{ $unidad['nombreunidad'] }}|{{ $unidad['precio'] }}" required>
+                                    <input type="radio" name="porciones" value="{{ $unidad['cantidadporciones'] }}|{{ $unidad['nombreunidad'] }}|{{ $unidad['precio'] }}">
                                     <span class="blanca">{{ $unidad['cantidadporciones'] }}</span>
                                 </label>
                                 @endforeach
@@ -52,7 +53,7 @@
                                 <p class="blanca">No hay opciones disponibles</p>
                             @endif
                         </div>
-                
+                        
                     </div>
                     <div class="fila">
                         <label for="cantidad">Cantidad:</label>
@@ -70,24 +71,25 @@
                         <label for="sabor">Sabor:</label>
                         <label for="" id="sabor" name="sabor" class="paraMostrar">{{session('sabor_postre')}}</label>
                     </div>
+                    @if (!empty($atributosSesion))
+                        @foreach ($atributosSesion as $nombreTipo => $atributos)
+                            <div class="fila"> 
+                                <label for="{{ strtolower($nombreTipo) }}">{{ ucfirst($nombreTipo) }}:</label>
+                                <div class="opciones"> 
+                                    <select id="{{ strtolower($nombreTipo) }}" name="{{ strtolower($nombreTipo) }}">
+                                        @foreach ($atributos as $atributo)
+                                            <option value="{{ $atributo['nom_atributo'] }}|{{ $atributo['precio_a'] }}">
+                                                {{ ucfirst($atributo['nom_atributo']) }} ({{ number_format($atributo['precio_a'], 2) }} $)
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
 
-                @if (!empty($atributosSesion))
-                @foreach ($atributosSesion as $nombreTipo => $atributos)
-                    <div class="fila"> 
-                        <label for="{{ strtolower($nombreTipo) }}">{{ ucfirst($nombreTipo) }}:</label>
-                        <div class="opciones"> 
-                            <select id="{{ strtolower($nombreTipo) }}" name="{{ strtolower($nombreTipo) }}">
-                                @foreach ($atributos as $atributo)
-                                    <option value="{{ $atributo['nom_atributo'] }}|{{ $atributo['precio_a'] }}">
-                                        {{ ucfirst($atributo['nom_atributo']) }} ({{ number_format($atributo['precio_a'], 2) }} $)
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                @endforeach
-            @endif
+                
 
                 <div class="columna">
                     <div class="fila">
@@ -112,19 +114,20 @@
                 </div>
             </div>
             <div class="arrows">
-                <button id="prev" class="arrow">⬅</button>
-                <button id="next" class="arrow">➡</button>
+                <button id="prev" class="arrow botonPr" >⬅</button>
+                <button id="next" class="arrow botonPr">➡</button>
             </div>
 
             <div class="fondo-emergente" id="fondoEmergente">
                 <div class="emergente">    
                     <p class="mensajeEmergente">¿Estás seguro de tu elección?</p>
                     <br>
-                    <button id="editar" class="botoncito">Seguir editando</button>
-                    <button id="continuar" class="botoncito" type="submit">Continuar</button>
+                    <button id="editar" class="botoncito botonPr">Seguir editando</button>
+                    <button id="continuar" class="botoncito botonPr" type="submit">Continuar</button>
                 </div>
             </div>
-        </form>    
+        </form>   
+        <div id="mensajeEmergente"></div>
     <script>
         let porcionesDisponibles = parseInt(document.getElementById("porcionesRestantes").textContent) || 0;
         function sumarSeleccionado() {
