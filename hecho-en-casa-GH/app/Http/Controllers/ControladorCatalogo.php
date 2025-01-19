@@ -212,7 +212,15 @@ class ControladorCatalogo extends Controller
                 ->whereDate('fecha_hora_entrega', $fechaEscogida)
                 ->get();
         });
-    
+
+        $porciones_dia_aceptados = Pedido::whereDate('fecha_hora_entrega', $fechaEscogida)
+                                ->where('status', 'aceptado')
+                                ->sum('porcionespedidas');
+
+        session([
+            'porciones_dia_aceptados' => $porciones_dia_aceptados,
+        ]);
+        //dd($porciones_dia_aceptados);
 
         $porciones_dia = $pedidos_dia->sum('porcionespedidas');
         $porciones_unidad_minima = Cache::remember('porcionesunidadminima', 30, function () use ($postre) {
@@ -382,8 +390,8 @@ class ControladorCatalogo extends Controller
         $nombre_categoria = session('nombre_categoria');
         $lista_unidad = session('lista_unidad'); 
         $atributosSesion = session('atributosSesion');
-        $porciones_dia = session('porciones_dia');
-        session()->put('porciones', 100 - $porciones_dia);
+        $porciones_dia_aceptados = session('porciones_dia_aceptados'); 
+        session()->put('porciones', 100 - $porciones_dia_aceptados); //solo porciones con status disponibles
 
         return view('pedidos', compact('fecha', 'sabor_postre', 'hora_entrega', 'nombre_categoria', 'lista_unidad', 'atributosSesion'));
     }
