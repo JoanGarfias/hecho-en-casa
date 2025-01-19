@@ -28,7 +28,7 @@
                    <input type="text" id="tipo_postre" value="{{session('id_tipopostre')}}" readonly>
 
                    <label>Porciones:</label>
-                   <input type="text" id="porciones" value="{{session('porciones')}}" readonly>
+                   <input type="text" id="porciones" value="{{session('porcionestotal')}}" readonly>
 
                    <label>Sabor de pan:</label>
                    <input type="text" id="sabor" value="{{$pan}}" readonly>
