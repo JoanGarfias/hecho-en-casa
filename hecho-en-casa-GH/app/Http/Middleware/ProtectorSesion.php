@@ -20,7 +20,7 @@ class ProtectorSesion
             return $this->redirectToLogin('Debes iniciar sesión.');
         }
 
-        $usuario = Usuario::where('token_sesion', $sessionToken)
+        $usuario = usuario::where('token_sesion', $sessionToken)
             ->where('id_u', $userId)
             ->first();
 
