@@ -56,7 +56,7 @@ class ControladorCatalogoEmergente extends Controller
 
         session([
             'id_postre' => $idPostre,
-            'id_tipopostre' => 'emergentes',
+            'id_tipopostre' => 'emergente',
             'precio' => $precio,
             'tipo_postre_e' => $postre->id_tipo_postre,
         ]);
@@ -298,7 +298,8 @@ class ControladorCatalogoEmergente extends Controller
         $telefono = $usuario->telefono;
         
         $tipo_entrega = session('tipo_entrega');
+        $tipo_postre = $pedido->id_tipopostre;
 
-        return view('ResumenPedFij', compact('costo', 'nombre', 'telefono', 'fecha', 'hora', 'tipo_entrega'));
+        return view('ResumenPedFij', compact('costo', 'nombre', 'telefono', 'fecha', 'hora', 'tipo_entrega', 'tipo_postre'));
     }
 }

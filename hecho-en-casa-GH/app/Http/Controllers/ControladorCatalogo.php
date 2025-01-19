@@ -626,7 +626,8 @@ class ControladorCatalogo extends Controller
         $telefono = $usuario->telefono;
         
         $tipo_entrega = session('tipo_entrega');
+        $tipo_postre = $pedido->id_tipopostre;
 
-        return view('ResumenPedFij', compact('costo', 'nombre', 'telefono', 'fecha', 'hora', 'tipo_entrega'));
+        return view('ResumenPedFij', compact('costo', 'nombre', 'telefono', 'fecha', 'hora', 'tipo_entrega', 'tipo_postre'));
     }
 }
