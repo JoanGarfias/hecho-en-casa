@@ -190,66 +190,104 @@
     //console.log('Elementos:', elementos);
 </script>
 
-<script>
+<script> 
     document.addEventListener('DOMContentLoaded', function () {
+        // Variables y funciones del primer script
         const inputPorciones = document.getElementById('porciones');
         const spanPorcionesRestantes = document.getElementById('porcionesRestantes');
-        let porcionesRestantes = parseInt(spanPorcionesRestantes.textContent);
+        let porcionesRestantes = parseInt(spanPorcionesRestantes.textContent) || 0;
 
         function actualizarPorcionesRestantes() {
             const porcionesSolicitadas = parseInt(inputPorciones.value) || 0;
             const nuevasPorcionesRestantes = porcionesRestantes - porcionesSolicitadas;
-
             const botonEnviar = document.querySelector('button[type="submit"]');
 
             if (nuevasPorcionesRestantes < 0) {
                 spanPorcionesRestantes.textContent = "SIN RESERVA";
                 spanPorcionesRestantes.style.color = 'red';
                 document.querySelector(".incrementar").disabled = true;
-                botonEnviar.disabled = true; // Deshabilitar el botón de envío
+                botonEnviar.disabled = true;
             } else {
                 spanPorcionesRestantes.textContent = nuevasPorcionesRestantes;
-                spanPorcionesRestantes.style.color = 'green'; // Cambia a un color apropiado
+                spanPorcionesRestantes.style.color = 'green';
                 document.querySelector(".incrementar").disabled = false;
-                botonEnviar.disabled = false; // Habilitar el botón de envío
+                botonEnviar.disabled = false;
             }
         }
 
-        inputPorciones.addEventListener('input', actualizarPorcionesRestantes);
+        const precioPorPorcion = 100;
+        let totalCosto = 8 * precioPorPorcion; 
+        const costoInput = document.getElementById('costo');
 
-        /*document.querySelector('.incrementar').addEventListener('click', () => {
-            inputPorciones.value = parseInt(inputPorciones.value || 0) + 1;
+        function actualizarCosto() {
+            let valorPorciones = parseInt(inputPorciones.value) || 0;
+            totalCosto = valorPorciones * precioPorPorcion;
+
+            const saborPanSeleccionado = document.querySelector('#seleccionadoOpcionPan .darOpciones.seleccionado');
+            if (saborPanSeleccionado) {
+                const precioPan = parseFloat(saborPanSeleccionado.textContent.match(/\d+(\.\d+)?/)[0]);
+                totalCosto += precioPan;
+            }
+
+            const saborRellenoSeleccionado = document.querySelector('#seleccionadoOpcionRelleno .darOpciones.seleccionado');
+            if (saborRellenoSeleccionado) {
+                const precioRelleno = parseFloat(saborRellenoSeleccionado.textContent.match(/\d+(\.\d+)?/)[0]);
+                totalCosto += precioRelleno;
+            }
+
+            const coberturaSeleccionada = document.querySelector('#seleccionadoOpcionCobertura .darOpciones.seleccionado');
+            if (coberturaSeleccionada) {
+                const precioCobertura = parseFloat(coberturaSeleccionada.textContent.match(/\d+(\.\d+)?/)[0]);
+                totalCosto += precioCobertura;
+            }
+
+            const elementosCheckboxes = document.querySelectorAll('input[name="elementos[]"]:checked');
+            elementosCheckboxes.forEach(checkbox => {
+                const precioElemento = parseFloat(checkbox.nextElementSibling.textContent.match(/\d+(\.\d+)?/)[0]);
+                totalCosto += precioElemento;
+            });
+
+            costoInput.value = `${totalCosto.toFixed(2)} MXN`;  
+        }
+
+        document.querySelector('.incrementar').addEventListener('click', function () {
+            let valorActual = parseInt(inputPorciones.value) || 0;
+            inputPorciones.value = valorActual + 1;
+            actualizarCosto();
             actualizarPorcionesRestantes();
         });
 
-        document.querySelector('.decrementar').addEventListener('click', () => {
-            inputPorciones.value = Math.max(parseInt(inputPorciones.value || 0) - 1, 0);
+        document.querySelector('.decrementar').addEventListener('click', function () {
+            let valorActual = parseInt(inputPorciones.value) || 0;
+            inputPorciones.value = Math.max(valorActual - 1, 8);  
+            actualizarCosto();
             actualizarPorcionesRestantes();
-        });*/ 
-        // Incrementar: Asegúrate de que el valor se actualice correctamente al hacer clic
-        document.querySelector('.incrementar').addEventListener('click', () => {
-            let cantidadActual = parseInt(inputPorciones.value) || 0;
-            cantidadActual += 1; // Incrementar en 1
-            inputPorciones.value = cantidadActual; // Actualizar el valor del input
-            actualizarPorcionesRestantes(); // Llamar a la función de actualización
         });
 
-        // Decrementar: Asegúrate de que no se pase de 0
-        document.querySelector('.decrementar').addEventListener('click', () => {
-            let cantidadActual = parseInt(inputPorciones.value) || 0;
-            cantidadActual = Math.max(cantidadActual - 1, 1); // Decrementar en 1 sin pasar de 0
-            inputPorciones.value = cantidadActual; // Actualizar el valor del input
-            actualizarPorcionesRestantes(); // Llamar a la función de actualización
+        inputPorciones.addEventListener('input', function () {
+            let valorActual = parseInt(inputPorciones.value) || 0;
+            if (valorActual < 8) {
+                inputPorciones.value = 8; 
+            }
+            actualizarCosto();
+            actualizarPorcionesRestantes();
         });
 
-        actualizarPorcionesRestantes(); 
+        document.querySelectorAll('.darOpciones').forEach(opcion => {
+            opcion.addEventListener('click', () => {
+                document.querySelectorAll('.darOpciones').forEach(op => op.classList.remove('seleccionado'));
+                opcion.classList.add('seleccionado');
+                actualizarCosto();
+            });
+        });
+
+        document.querySelectorAll('input[name="elementos[]"]').forEach(checkbox => {
+            checkbox.addEventListener('change', actualizarCosto);
+        });
+        actualizarCosto();
+        actualizarPorcionesRestantes();
     });
 </script>
-
-
 <x-pie/>
 
 <script src="{{ asset('js/pidiendoPersonalizado.js')}}"></script>
-
-<script src="{{ asset('js/costoPersonalizado.js') }}" defer></script>
-
