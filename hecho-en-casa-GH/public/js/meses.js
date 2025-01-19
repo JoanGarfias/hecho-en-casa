@@ -109,7 +109,6 @@ document.addEventListener('DOMContentLoaded', function(){
         if(mesAux===12) 
             inputAnio.value = anioNumerico - 1;
         formulario.submit();
-        
     });
 
     botonSig.addEventListener('click', (e) => {
