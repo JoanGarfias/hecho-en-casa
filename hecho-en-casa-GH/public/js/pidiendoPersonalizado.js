@@ -83,19 +83,6 @@ document.querySelectorAll('.custom-select-options .option').forEach(option => {
     });
 });
 
-//para el movimiento de los botones de incremento y decremento de porciones
-document.querySelector('.incrementar').addEventListener('click', function() {
-    var cantidadInput = document.getElementById('porciones');
-    cantidadInput.value = parseInt(cantidadInput.value) + 1;
-});
-
-document.querySelector('.decrementar').addEventListener('click', function() {
-    var cantidadInput = document.getElementById('porciones');
-    if (parseInt(cantidadInput.value) > 7) { // No permitir que sea menor que 1
-        cantidadInput.value = parseInt(cantidadInput.value) - 1;
-    }
-});
-
 const formulario = document.getElementById('formularioPedidos')
 
 formulario.addEventListener("submit", (e) => {
