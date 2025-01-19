@@ -107,7 +107,7 @@ class ControladorCatalogoEmergente extends Controller
             'cantidad' => 'required|integer',
             'tipoEntrega' => 'required',
         ]);
-        dd($request->all());
+        
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         $tipo_entrega = $validated['tipoEntrega'];
         session()->put('opcion_envio', $tipo_entrega);
@@ -117,6 +117,7 @@ class ControladorCatalogoEmergente extends Controller
         session([
             'cantidad_pedida' => $validated['cantidad'],
             'tipo_entrega' => $validated['tipoEntrega'],
+            
         ]);
 
         $usuario = Cache::remember('usuario', 30, function () {
@@ -130,15 +131,18 @@ class ControladorCatalogoEmergente extends Controller
             'direccion' => $direccion,
         ]);
 
-        if($tipo_entrega === 'Domicilio'){
-            return redirect()->route('emergente.direccion.get');  //SI SELECCIONO ENTREGA A DOMICILIO ENTONCES NOS VAMOS A DETALLES DIRECCION
-        }
-
-        $id_postre = session('postre');
+        $id_postre = session('id_postre');
         $postre = Cache::remember('postres2', 10, function () use ($id_postre){
             return Catalogo::where('id_postre', $id_postre)
                             ->first();
         });
+
+        $costo = $validated['cantidad'] * $postre->precio_emergentes;
+        session(['costo'=>$costo]);
+
+        if($tipo_entrega === 'Domicilio'){
+            return redirect()->route('emergente.direccion.get');  //SI SELECCIONO ENTREGA A DOMICILIO ENTONCES NOS VAMOS A DETALLES DIRECCION
+        }
 
         $emergente = new Postreemergente;
         $emergente->id_postre_elegido = $postre->id_postre;
@@ -149,14 +153,14 @@ class ControladorCatalogoEmergente extends Controller
         }
 
         $pedido = new Pedido;
-        $pedido->id_usuario = session('id_u');
+        $pedido->id_usuario = session('id_usuario');
         $pedido->id_tipopostre = $postre->id_tipo_postre;
         $pedido->id_seleccion_usuario = $emergente->id_pt;//este es el id de la tabla postre emergente que se guardara en pedido
         $pedido->porcionespedidas = session('cantidad_pedida');
-        $pedido->fecha_hora_entrega = session('fecha') . " " . session('hora_entrega'); 
+        $pedido->fecha_hora_entrega = session('fecha_entrega') . " " . session('hora_entrega'); 
         $pedido->fecha_hora_registro = now();
         $pedido->status = "pendiente";
-        $pedido->precio_final = $postre->precio_emergentes;
+        $pedido->precio_final = $costo;
         
         try {
             $pedido->save();
@@ -280,19 +284,21 @@ class ControladorCatalogoEmergente extends Controller
     }
 
     public function mostrarTicket(){
-
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->forget('proceso_compra');
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-
         $pedido = Pedido::find(session("folio"));
         $fechaHoraEntrega = $pedido->fecha_hora_entrega;
+        $costo = $pedido->precio_final;
 
         list($fecha, $hora) = explode(' ', $fechaHoraEntrega);
-
         $usuario = Usuario::find($pedido->id_usuario); 
+        
+        $nombre = $usuario->nombre;
+        $telefono = $usuario->telefono;
+        
         $tipo_entrega = session('tipo_entrega');
 
-        return view('ResumenPedFijo', compact('pedido', 'usuario', 'fecha', 'hora', 'tipo_entrega'));
+        return view('ResumenPedFij', compact('costo', 'nombre', 'telefono', 'fecha', 'hora', 'tipo_entrega'));
     }
 }
