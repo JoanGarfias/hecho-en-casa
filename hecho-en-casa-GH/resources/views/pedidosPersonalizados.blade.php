@@ -11,7 +11,8 @@
 <div class="flexi">
     
     <div class = "contenedor"><!-- café-->
-        <form id="formularioPedidos" action="" method="">
+        <form id="formularioPedidos" action="{{route('personalizado.detallesPedido.post')}}" method="POST">
+            @csrf
             <div class="dosColumnas">
                 <div class="columna">
                     <div class="fila">
@@ -43,7 +44,6 @@
                         <div class="custom-select">
                             <div>                               
                                 <input type="text" id="agarrarValorPan" name="sabor_pan" readonly placeholder="Seleccione una opción">
-                                <input type="hidden" id="tipoEntrega" name="tipoEntrega">
                             </div> 
                             <button id="seleccionarPan" class="diseñandobutton" type="button">🔻</button>
                             <div id="seleccionadoOpcionPan" class="customizandoOpciones" style="display: none;">
@@ -101,23 +101,23 @@
                         <label for="tematica">Temática:</label>
                         <div class="opciones">
                             <label>
-                                <input type="radio" name="tematica" value="figura" required>
+                                <input type="radio" name="tematica" value="cumpleanos" required>
                                 <p class="blanca"> Cumpleaños</p>
                             </label>
                             <label>
-                                <input type="radio" name="tematica" value="figura" >
+                                <input type="radio" name="tematica" value="xv" >
                                 <p class="blanca"> XV años</p>
                             </label>
                             <label>
-                                <input type="radio" name="tematica" value="figura">
+                                <input type="radio" name="tematica" value="boda">
                                 <p class="blanca"> Boda</p>
                             </label>
                             <label>
-                                <input type="radio" name="tematica" value="figura">
+                                <input type="radio" name="tematica" value="bautizo">
                                 <p class="blanca"> Bautizo</p>
                             </label>
                             <label>
-                                <input type="radio" name="tematica" value="figura">
+                                <input type="radio" name="tematica" value="otro">
                                 <p class="blanca"> Otro</p>
                             </label>
                         </div>

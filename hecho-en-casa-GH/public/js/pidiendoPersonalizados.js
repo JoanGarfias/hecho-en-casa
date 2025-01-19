@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const value = target.getAttribute("data-value");
             const text = target.textContent;
             input.value = text; // Muestra el texto en el input
+            console.log("valor" + value)
             menu.style.display = "none"; // Oculta el menú desplegable
         }
     };
@@ -88,7 +89,7 @@ document.querySelector('.incrementar').addEventListener('click', function() {
 
 document.querySelector('.decrementar').addEventListener('click', function() {
     var cantidadInput = document.getElementById('porciones');
-    if (parseInt(cantidadInput.value) > 1) { // No permitir que sea menor que 1
+    if (parseInt(cantidadInput.value) > 7) { // No permitir que sea menor que 1
         cantidadInput.value = parseInt(cantidadInput.value) - 1;
     }
 });
