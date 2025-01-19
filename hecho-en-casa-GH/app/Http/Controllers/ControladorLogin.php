@@ -63,7 +63,7 @@ class ControladorLogin extends Controller
                 }
             }
             else{
-                return redirect()->route('login.get')->withErrors(['error' => 'Correo o contraseña incorrecta.']);
+                return redirect()->route('login.get')->withErrors(['errorCredenciales' => 'Correo o contraseña incorrecta.']);
             }
         }elseif($action == 'recuperar'){
             

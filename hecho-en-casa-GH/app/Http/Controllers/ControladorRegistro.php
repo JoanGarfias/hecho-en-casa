@@ -116,8 +116,8 @@ class ControladorRegistro extends Controller
     } 
 
     public function validarRecuperacion(Request $request, $token = null){
-        if(!$token){
-            return redirect()->route('inicio.get')->withErrors(['error' => 'Token no proporcionado']);
+        if($token===null){
+            return redirect()->route('inicio.get')->withErrors(['errorToken' => 'Token no proporcionado.']);
         }
         $usuario = Usuario::where('token_recuperacion', $token)->first();
         
@@ -128,9 +128,7 @@ class ControladorRegistro extends Controller
             ]);
             return view('recuperacioncontrasena');
         } 
-        return view('inicio', [
-            'error' => 'Token inválido',
-        ]);
+        return redirect()->route('inicio.get')->withErrors(['errorValidacion' => 'Token no valido.']);
         
     }
 
@@ -143,7 +141,7 @@ class ControladorRegistro extends Controller
             try{
                 $usuario->save();
             }catch(\Exception $e){
-                return redirect()->route('login.get')->with('error', 'Error al actualizar la contraseña');
+                return redirect()->route('login.get')->withErrors(['errorKey' => 'Error al actualizar la contraseña.']);
             }
         }
 

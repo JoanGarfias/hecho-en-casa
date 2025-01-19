@@ -29,12 +29,22 @@
         </div>    
     </div>
 </main>
-
-    @if (isset($error))
-    <!-- Mensaje de error si el pedido no existe -->
-        <div id="mensajeEmergente"></div>
+    <div id="mensajeEmergente"></div>
+    @if ($errors->has('errorCredenciales'))
         <script>
-            mostrarMensaje('{{$error}}');
+            mostrarMensaje('{{$errors->first('errorCredenciales')}}');
+        </script>
+    @elseif ($errors->has('errorToken'))
+        <script>
+            mostrarMensaje('{{$errors->first('errorToken')}}');
+        </script>
+    @elseif ($errors->has('errorValidacion'))
+        <script>
+            mostrarMensaje('{{$errors->first('errorValidacion')}}');
+        </script>
+    @elseif($errors->has('errorKey'))
+        <script>
+            mostrarMensaje('{{$errors->first('errorKey')}}');
         </script>
     @endif
 <x-pie/>
