@@ -212,9 +212,10 @@
                 let cantidad = parseFloat(cantidadInput.value) || 0; 
                 if (this.classList.contains("incrementar")) {
                     cantidad++; 
-                } else {
-                    cantidad = Math.max(cantidad - 1, 1);Minimo
+                } else if (this.classList.contains("decrementar")) {
+                    cantidad = Math.max(cantidad - 1, 1); 
                 }
+
                 cantidadInput.value = cantidad; //console.log(cantidad);
                 sumarSeleccionado(); 
             });
