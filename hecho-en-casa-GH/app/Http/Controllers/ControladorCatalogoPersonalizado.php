@@ -39,7 +39,7 @@ class ControladorCatalogoPersonalizado extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-
+        
         $sabores = Cache::remember('sabores', 10, function () {
             return SaborPan::select('id_sp', 'nom_pan', 'precio_p')
             ->get();
@@ -75,7 +75,7 @@ class ControladorCatalogoPersonalizado extends Controller
         $descripcion = $request->input('descripcion');
         $costo = intval($request->input('costo'));
         $id_usuario = session('id_usuario');
-
+        
         session()->put('opcion_envio', $tipo_entrega);
 
         $fechaEscogida = session('fecha_entrega');
@@ -159,8 +159,8 @@ class ControladorCatalogoPersonalizado extends Controller
                 $listarElemento->id_elemento = $elem;
                 $listarElemento->save();
             }
-
-            return redirect()->route('personalizado.ticket.get', ['folio' => $id_pedido]);            
+            session(['folio'=>$id_pedido]);
+            return redirect()->route('personalizado.ticket.get');            
         }
     }
 
@@ -261,6 +261,7 @@ class ControladorCatalogoPersonalizado extends Controller
 
         //$costo = session("costo");
         session(['folio'=>$id_pedido]);
+        
         return redirect()->route('personalizado.ticket.get');  
     }
 
@@ -269,6 +270,7 @@ class ControladorCatalogoPersonalizado extends Controller
         session()->forget('proceso_compra');
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
         $folio = session('folio');
+        
         if ($folio !== null) {
             // Consulta el pedido con el folio
             //Cache innecesario, por ser una consulta que se realiza una sola vez, y es improbable que se realice la misma consulta con un mismo folio dos veces seguidas
@@ -283,21 +285,22 @@ class ControladorCatalogoPersonalizado extends Controller
             list($fecha, $hora) = explode(' ', $entrega);
             // Si hay una relación con Pastelpersonalizado
             $id_pastel = $ticket_pedido->id_seleccion_usuario;
-            dd($id_pastel, $ticket_pedido);
+            
             //Cache innecesario, por ser una consulta que se realiza una sola vez, y es improbable que se realice la misma consulta con un mismo folio dos veces seguidas
             $ticket_pastel = Pastelpersonalizado::where('id_pp', $id_pastel)
                             ->first();
             
-            $sabor_pan = SaborPan::select('nom_pan')
-                        ->where('id_sp', $ticket_pastel->id_saborpan)
+            $sabor_pan = SaborPan::where('id_sp', $ticket_pastel->id_saborpan)
                         ->first();
-            $sabor_relleno = SaborRelleno::select('nom_relleno')
-                        ->where('id_sr', $ticket_pastel->id_saborrelleno)
+            $sabor_relleno = SaborRelleno::where('id_sr', $ticket_pastel->id_saborrelleno)
                         ->first();
-            $sabor_cobertura = Cobertura::select('nom_cobertura')
-                        ->where('id_c', $ticket_pastel->id_cobertura)
+            $sabor_cobertura = Cobertura::where('id_c', $ticket_pastel->id_cobertura)
                         ->first();
+
+            $pan = $sabor_pan->nom_pan;
+            $relleno = $sabor_relleno->nom_relleno;
             $tematica = $ticket_pastel->tipo_evento;
+            $cobertura = $sabor_cobertura->nom_cobertura;
             $user = usuario::where('id_u', session('id_usuario'))->first();
             $nombre = $user->nombre;
             $telefono = $user->telefono;
@@ -311,7 +314,7 @@ class ControladorCatalogoPersonalizado extends Controller
         }
     
         // Envía la información a la vista
-        return view('ResumenPedioP', compact('sabor_pan', 'sabor_relleno', 'sabor_cobertura',
+        return view('ResumenPedioP', compact('pan', 'relleno', 'cobertura',
             'tematica', 'nombre', 'telefono', 'tipo_entrega', 'link', 'descripcion',
             'costo', 'fecha', 'hora'));
     }

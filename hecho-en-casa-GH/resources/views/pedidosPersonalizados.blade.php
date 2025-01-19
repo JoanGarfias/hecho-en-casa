@@ -106,23 +106,23 @@
                         <label for="tematica">Temática:</label>
                         <div class="opciones">
                             <label>
-                                <input type="radio" name="tematica" value="cumpleanos" required>
+                                <input type="radio" name="tematica" value="Cumpleaños" required>
                                 <p class="blanca"> Cumpleaños</p>
                             </label>
                             <label>
-                                <input type="radio" name="tematica" value="xv" >
+                                <input type="radio" name="tematica" value="XV Años" >
                                 <p class="blanca"> XV años</p>
                             </label>
                             <label>
-                                <input type="radio" name="tematica" value="boda">
+                                <input type="radio" name="tematica" value="Boda">
                                 <p class="blanca"> Boda</p>
                             </label>
                             <label>
-                                <input type="radio" name="tematica" value="bautizo">
+                                <input type="radio" name="tematica" value="Bautizo">
                                 <p class="blanca"> Bautizo</p>
                             </label>
                             <label>
-                                <input type="radio" name="tematica" value="otro">
+                                <input type="radio" name="tematica" value="Otro">
                                 <p class="blanca"> Otro</p>
                             </label>
                         </div>
