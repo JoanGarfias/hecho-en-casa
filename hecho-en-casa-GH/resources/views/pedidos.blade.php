@@ -152,9 +152,10 @@
             let porcionesTotales = cantidadPorciones * cantidad;
             labelPorciones.textContent = `Porciones a pedir: ${porcionesTotales}`;
         
+            
             let porcionesRestantes = porcionesDisponibles - porcionesTotales;
         
-            if (porcionesRestantes < 0) {
+            if (porcionesRestantes < cantidadPorciones) {
                 porcionesRestantesLabel.textContent = "SIN RESERVA";
                 porcionesRestantesLabel.style.color = 'red';
                 formulario.querySelector('button[type="submit"]').disabled = true;
