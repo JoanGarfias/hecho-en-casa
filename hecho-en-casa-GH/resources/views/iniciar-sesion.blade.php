@@ -65,7 +65,7 @@
 </div>
     @if ($errors->has('error'))
         <!-- Mensaje de error si el pedido no existe -->
-        <div id="mensajeEmergente">Error</div>
+        <div id="mensajeEmergente"></div>
         <script>
             mostrarMensaje('{{$errors->first('error')}}');
         </script>
