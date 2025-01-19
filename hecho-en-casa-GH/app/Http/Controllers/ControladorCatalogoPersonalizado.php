@@ -56,7 +56,9 @@ class ControladorCatalogoPersonalizado extends Controller
             return Elemento::select('id_e', 'nom_elemento', 'precio_e')
             ->get();
         });
-
+        
+        $porciones_dia = session('porciones_dia');
+        session()->put('porciones', 100 - $porciones_dia);
         return view('pedidosPersonalizados', compact('sabores', 'rellenos', 'coberturas', 'elementos'));
     }
 
