@@ -84,9 +84,9 @@ class ControladorCatalogoPersonalizado extends Controller
         $fecha_hora_registro = now();
         $id_tipopostre = 'personalizado';
 
-        $sabor_pan = ($request->input('sabor_pan'));
-        $relleno = ($request->input('sabor_relleno'));
-        $cobertura = ($request->input('cobertura'));
+        $sabor_pan = ($request->input('panElegido'));
+        $relleno = ($request->input('rellenoElegido'));
+        $cobertura = ($request->input('coberturaElegido'));
         $elementos = array_map('intval', $request->input('elementos', []));
         dd($sabor_pan, $relleno, $cobertura, $elementos);
         $costoCatalogo = Catalogo::where('id_tipo_postre', "personalizado")->first();; //LO SACARE DE A TABLA CATALOGO PRECIO_EMERGENTES

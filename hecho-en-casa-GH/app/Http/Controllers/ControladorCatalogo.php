@@ -267,7 +267,7 @@ class ControladorCatalogo extends Controller
                     return redirect()->route('personalizado.detallesPedido.get');
                 }
                 //break;
-            case "emergentes":                
+            case "emergente":                
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
                 session()->put('proceso_compra', 'emergente.calendario.post');
                 /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */

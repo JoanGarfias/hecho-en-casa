@@ -53,7 +53,8 @@
                                 @foreach ($sabores as $sabor)
                                     <div class="darOpciones" data-value="{{$sabor->id_sp}}">{{$sabor->nom_pan}} {{$sabor->precio_p}} MXN</div>    
                                 @endforeach
-                            </div>                       
+                            </div>           
+                            <input type="hidden" id="panElegido" value="">            
                         </div>
                     </div>
                     <div class="fila">
@@ -61,14 +62,14 @@
                         <div class="custom-select">
                             <div>                               
                                 <input type="text" id="agarrarValorRelleno" name="sabor_relleno" readonly placeholder="Seleccione una opción">
-                                <input type="hidden" id="tipoEntrega" name="tipoEntrega">
                             </div> 
                             <button id="seleccionarRelleno" class="diseñandobutton" type="button">🔻</button>
                             <div id="seleccionadoOpcionRelleno" class="customizandoOpciones" style="display: none;">
                                 @foreach ($rellenos as $relleno)
                                     <div class="darOpciones" data-value="{{$relleno->id_sr}}">{{$relleno->nom_relleno}} {{$relleno->precio_sr}} MXN</div>    
                                 @endforeach
-                            </div>                       
+                            </div>     
+                            <input type="hidden" id="rellenoElegido" value="">                              
                         </div>
                     </div>
                     <div class="fila">
@@ -84,6 +85,7 @@
                                     <div class="darOpciones" data-value="{{$cobertura->id_c}}">{{$cobertura->nom_cobertura}} {{$cobertura->precio_c}} MXN</div>    
                                 @endforeach
                             </div>                       
+                            <input type="hidden" id="coberturaElegido" value="">                              
                         </div>
                     </div>
                 </div>
@@ -231,7 +233,7 @@
 
 <x-pie/>
 
-<script src="{{ asset('js/pidiendoPersonalizados.js') }}" defer></script>
+<script src="{{ asset('js/pidiendoPersonalizado.js')}}"></script>
 
 <script src="{{ asset('js/costoPersonalizado.js') }}" defer></script>
 
