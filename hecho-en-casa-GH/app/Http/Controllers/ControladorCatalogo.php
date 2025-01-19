@@ -120,13 +120,16 @@ class ControladorCatalogo extends Controller
         $ruta = $request->route()->getName();
         $metodo = null;
         
-        if($ruta == "personalizado.calendario.get"){
-            $metodo = "personalizado.calendario.post";
-        }elseif($ruta == "emergente.calendario.get"){
-            $metodo = "emergente.calendario.post";
-        }elseif($ruta == "fijo.calendario.get"){
-            $metodo = "fijo.calendario.post";
+        $rutasMetodos = [
+            "personalizado.calendario.get" => "personalizado.calendario.post",
+            "emergente.calendario.get" => "emergente.calendario.post",
+            "fijo.calendario.get" => "fijo.calendario.post",
+        ];
+        
+        if (isset($rutasMetodos[$ruta])) {
+            $metodo = $rutasMetodos[$ruta];
         }
+        
     
         $fecha = Carbon::now();
         if($mes && $anio){
