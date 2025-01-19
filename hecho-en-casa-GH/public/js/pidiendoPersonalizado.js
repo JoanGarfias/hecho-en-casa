@@ -28,12 +28,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Actualizar el valor seleccionado
-    const updateSelectedValue = (event, input, menu, oculto) => {
+    const updateSelectedValue = (event, label, menu, oculto) => {
         const target = event.target;
         if (target.classList.contains("darOpciones")) {
             const value = target.getAttribute("data-value");
             const text = target.textContent;
-            input.value = text; // Muestra el texto en el input
+            label.textContent = text; // Muestra el texto en el label
             oculto.value = value;
             menu.style.display = "none"; // Oculta el menú desplegable
         }
@@ -65,7 +65,35 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    const otrosRadio = document.getElementById("otrosRadio");
+    const campoOtros = document.getElementById("campoOtros");
+    const radios = document.querySelectorAll('input[name="tematica"]'); // Todos los radio buttons
 
+    // Verificar si hay un radio button seleccionado
+    function verificarSeleccion() {
+        const seleccionado = Array.from(radios).some(radio => radio.checked); // Verifica si alguno está seleccionado
+        if (!seleccionado) {
+            console.log("Ningún radio button está seleccionado.");
+        } else {
+            console.log("Al menos un radio button está seleccionado.");
+        }
+    }
+
+    // Escuchar el evento de cambio en los radio buttons
+    radios.forEach(radio => {
+        radio.addEventListener("change", () => {
+            verificarSeleccion(); // Verifica la selección en tiempo real
+
+            if (otrosRadio.checked) {
+                campoOtros.style.display = "block"; // Mostrar el campo "Otros"
+            } else {
+                campoOtros.style.display = "none"; // Ocultar el campo "Otros"
+                document.getElementById("otrosTexto").value = ""; // Limpia el campo "Otros" al ocultarlo
+            }
+        });
+    });
+});
 
 //Para el boton de tipo entrega
 document.getElementById('toggleSelect').addEventListener('click', function(event) {
