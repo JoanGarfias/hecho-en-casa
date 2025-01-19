@@ -79,13 +79,13 @@ class ControladorCatalogo extends Controller
             }
 
             if ($catalogo->isEmpty()) {
-                abort(404, 'Catálogo no encontrado');
+                return redirect()->route('inicio.get')->withErrors(['errorCatalogoFijo' => 'Catálogo no encontrado.']);
             }
 
             return view('catalogo', compact('categorias', 'catalogo'))
                 ->with('categoriaSeleccionada', $categoria);
         } else {
-            abort(500, 'No hay categorías disponibles');
+            return redirect()->route('inicio.get')->withErrors(['errorCategoriaFijo' => 'Catálogo no disponible.']);
         }
     }
 
@@ -371,7 +371,7 @@ class ControladorCatalogo extends Controller
             }
             session(['atributosSesion' => $atributosSesion]);
         } else {
-            return redirect()->route('seleccionarFecha')->with('error', 'Postre no encontrado.');
+            return redirect()->route('fijo.catalogo.get')->withErrors('errorPostre', 'Postre no encontrado.');
         }
 
         $fecha = session('fecha');
@@ -398,12 +398,11 @@ class ControladorCatalogo extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $id_postre = session('id_postre');
-        $postre = Catalogo::where('id_postre', $id_postre)
-                            ->first();
+        
         //$costo = intval($request->input('costo'));
         $costoUM = PostreFijoUnidad::where('id_pf', $id_postre)->first();
         $costo = $costoUM->precio_um;
-        $id_usuario = session('id_usuario');
+
         session(['tipo_entrega'=> $tipo_entrega]);
 
         $fechaEscogida = session('fecha_entrega');
@@ -530,7 +529,6 @@ class ControladorCatalogo extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $tipo_domicilio = $request->input('ubicacion'); 
-        //ACÁ SE DEBERÍA JALAR LA UBICACIÓN DEL FORMULARIO
         $id_usuario = session('id_usuario');
         //por defecto cargamos la ubicacion del usuario predeterminado
         $user = usuario::where('id_u', $id_usuario)->first();
@@ -543,7 +541,6 @@ class ControladorCatalogo extends Controller
         $numeroInterior = $user->num_interior_u;
         $numeroExterior = $user->num_exterior_u;
         $referencia = $user->referencia_u;
-
 
         if($tipo_domicilio==='otra'){ 
             $codigo_postal = $request->input('codigo_postal');

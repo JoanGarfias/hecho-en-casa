@@ -46,6 +46,14 @@
         <script>
             mostrarMensaje('{{$errors->first('errorKey')}}');
         </script>
+    @elseif($errors->has('errorCatalogoFijo'))
+        <script>
+            mostrarMensaje('{{$errors->first('errorCatalogoFijo')}}');
+        </script>
+    @elseif($errors->has('errorCategoriaFijo'))
+        <script>
+            mostrarMensaje('{{$errors->first('errorCategoriaFijo')}}');
+        </script>
     @endif
 <x-pie/>
 
