@@ -37,6 +37,9 @@
                             </div>
                             
                         </div>
+                        <div class="fila">
+                            <p style="color: black;">Quedan <span id="porcionesRestantes">{{session('porciones')}}</span> porciones disponibles</p>
+                        </div>
                     </div>
                     <div class="fila">
                         <label for="saborPan">Sabor de pan:</label>
@@ -172,18 +175,58 @@
 
 <script>
     // Variables desde el controlador
-    let sabores = @json($sabores);
-    let rellenos = @json($rellenos);
-    let coberturas = @json($coberturas);
-    let elementos = @json($elementos);
+    //let sabores = @json($sabores);
+    //let rellenos = @json($rellenos);
+    //let coberturas = @json($coberturas);
+    //let elementos = @json($elementos);
 
     // Mostrar en la consola
-    console.log('Sabores:', sabores);
-    console.log('Rellenos:', rellenos);
-    console.log('Coberturas:', coberturas);
-    console.log('Elementos:', elementos);
+    //console.log('Sabores:', sabores);
+    //console.log('Rellenos:', rellenos);
+    //console.log('Coberturas:', coberturas);
+    //console.log('Elementos:', elementos);
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const inputPorciones = document.getElementById('porciones');
+        const spanPorcionesRestantes = document.getElementById('porcionesRestantes');
+        let porcionesRestantes = parseInt(spanPorcionesRestantes.textContent);
+
+        function actualizarPorcionesRestantes() {
+            const porcionesSolicitadas = parseInt(inputPorciones.value) || 0;
+            const nuevasPorcionesRestantes = porcionesRestantes - porcionesSolicitadas;
+
+            const botonEnviar = document.querySelector('button[type="submit"]');
+
+            if (nuevasPorcionesRestantes < 0) {
+                spanPorcionesRestantes.textContent = "SIN RESERVA";
+                spanPorcionesRestantes.style.color = 'red';
+                document.querySelector(".incrementar").disabled = true;
+                botonEnviar.disabled = true; // Deshabilitar el botón de envío
+            } else {
+                spanPorcionesRestantes.textContent = nuevasPorcionesRestantes;
+                spanPorcionesRestantes.style.color = 'green'; // Cambia a un color apropiado
+                document.querySelector(".incrementar").disabled = false;
+                botonEnviar.disabled = false; // Habilitar el botón de envío
+            }
+        }
+
+        inputPorciones.addEventListener('input', actualizarPorcionesRestantes);
+
+        document.querySelector('.incrementar').addEventListener('click', () => {
+            inputPorciones.value = parseInt(inputPorciones.value || 0) + 1;
+            actualizarPorcionesRestantes();
+        });
+
+        document.querySelector('.decrementar').addEventListener('click', () => {
+            inputPorciones.value = Math.max(parseInt(inputPorciones.value || 0) - 1, 0);
+            actualizarPorcionesRestantes();
+        });
+
+        actualizarPorcionesRestantes(); 
+    });
+</script>
 
 
 <x-pie/>
