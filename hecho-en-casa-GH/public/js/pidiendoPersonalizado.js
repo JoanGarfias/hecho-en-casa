@@ -10,7 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectedValuePan = document.getElementById("agarrarValorPan");
     const selectedValueRelleno = document.getElementById("agarrarValorRelleno");
     const selectedValueCobertura = document.getElementById("agarrarValorCobertura");
-    
+    const pan = document.getElementById('panElegido');
+    const relleno = document.getElementById('rellenoElegido');
+    const cobertura = document.getElementById('coberturaElegido');
     
     // Mostrar/Ocultar el menú desplegable
     toggleSelectPan.addEventListener("click", () => {
@@ -26,27 +28,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Actualizar el valor seleccionado
-    const updateSelectedValue = (event, input, menu) => {
+    const updateSelectedValue = (event, input, menu, oculto) => {
         const target = event.target;
         if (target.classList.contains("darOpciones")) {
             const value = target.getAttribute("data-value");
             const text = target.textContent;
             input.value = text; // Muestra el texto en el input
-            console.log("valor" + value)
+            oculto.value = value;
             menu.style.display = "none"; // Oculta el menú desplegable
         }
     };
 
     selectOptionsPan.addEventListener("click", (event) => {
-        updateSelectedValue(event, selectedValuePan, selectOptionsPan);
+        updateSelectedValue(event, selectedValuePan, selectOptionsPan, pan);
     });
 
     selectOptionsRelleno.addEventListener("click", (event) => {
-        updateSelectedValue(event, selectedValueRelleno, selectOptionsRelleno);
+        updateSelectedValue(event, selectedValueRelleno, selectOptionsRelleno, relleno);
     });
 
     selectOptionsCobertura.addEventListener("click", (event) => {
-        updateSelectedValue(event, selectedValueCobertura, selectOptionsCobertura);
+        updateSelectedValue(event, selectedValueCobertura, selectOptionsCobertura, cobertura);
     });
 
     // Cerrar el menú si se hace clic fuera
@@ -122,5 +124,3 @@ function enviandoForm () {
        // console.log('enviando')
     });
 }
-
-//cuando le doy clik al icono de 
