@@ -169,7 +169,8 @@
                 <button id="prev" class="arrow">⬅</button>
                 <button id="next" class="arrow">➡</button>
             </div>
-
+            <input type="hidden" id="hiddenCosto" name="costot" value="">
+            <input type="hidden" id="hiddenPorciones" name="porcionest" value="">
             <div class="fondo-emergente" id="fondoEmergente">
                 <div class="emergente">    
                     <p class="mensajeEmergente">¿Estás seguro de tu elección?</p>
@@ -255,6 +256,8 @@
             });
 
             costoInput.textContent = `${totalCosto.toFixed(2)} MXN`;  
+            document.getElementById("hiddenCosto").value = totalCosto.toFixed(2);
+            document.getElementById("hiddenPorciones").value = valorPorciones;
         }
 
         document.querySelector('.incrementar').addEventListener('click', function () {
