@@ -55,6 +55,7 @@ async function generatePDF() {
         { label: "Nombre", id: "nombre" },
         { label: "Teléfono", id: "telefono" },
         { label: "Fecha de entrega", id: "fecha_entrega" },
+        { label: "Hora de entrega", id: "hora_entrega" },
         { label: "Tipo de entrega", id: "tipo_entrega" },
         { label: "Link de referencia", id: "link_referencia" },
         { label: "Descripción detallada", id: "descripcion_detallada" },
