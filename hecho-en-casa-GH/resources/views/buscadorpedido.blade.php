@@ -14,16 +14,22 @@
     <div class="header">
         <h1 class="titulo">BUSCADOR DE PEDIDOS</h1>
         <div class="search-container">
-            <!-- Aquí se integra el formulario para buscar el pedido -->
             <form method="POST" action="{{ route('buscarpedido.post') }}">
                 @csrf
-                <input type="number" name="folio" id="folio" placeholder="Ingrese su folio" required>
-                <button type="submit">
-                    <img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="Buscar">
-                </button>
+                <div class="search-input-container">
+                    <input type="text" name="folio" id="folio" placeholder="Ingrese su folio" required>
+                    <button type="submit" class="search-button">
+                        <img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="Buscar">
+                    </button>
+                </div>
             </form>
         </div>
     </div>
+    
+    
+    
+    
+    
 
     @if (isset($pedido))
     <div class="container">
