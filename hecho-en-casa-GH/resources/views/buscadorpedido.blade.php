@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/buscarPedido.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/mensajeErrorE.css') }}">
     <title>Buscador de Pedidos</title>
+    <script src="{{ asset('js/MensajeError.js') }}"></script>   
 </head>
 <body>
     <x-menu />
@@ -12,16 +14,22 @@
     <div class="header">
         <h1 class="titulo">BUSCADOR DE PEDIDOS</h1>
         <div class="search-container">
-            <!-- Aquí se integra el formulario para buscar el pedido -->
             <form method="POST" action="{{ route('buscarpedido.post') }}">
                 @csrf
-                <input type="number" name="folio" id="folio" placeholder="Ingrese su folio" required>
-                <button type="submit">
-                    <img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="Buscar">
-                </button>
+                <div class="search-input-container">
+                    <input type="text" name="folio" id="folio" placeholder="Ingrese su folio" required>
+                    <button type="submit" class="search-button">
+                        <img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="Buscar">
+                    </button>
+                </div>
             </form>
         </div>
     </div>
+    
+    
+    
+    
+    
 
     @if (isset($pedido))
     <div class="container">
@@ -77,11 +85,13 @@
             </div>
         </div>
     </div>
+    
     @elseif (isset($error))
     <!-- Mensaje de error si el pedido no existe -->
-    <div class="container">
-        <p style="color: red;">{{ $error }}</p>
-    </div>
+        <div id="mensajeEmergente"></div>
+        <script>
+            mostrarMensaje('{{$error}}');
+        </script>
     @endif
 </body>
 

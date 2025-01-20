@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="{{ asset('css/mensajeErrorE.css') }}">
 <link rel="stylesheet" href="{{ asset('css/CalEdit.css') }}">
    <title>Calendario - Elegir fechas</title>          
 <x-menu />
@@ -32,10 +33,11 @@
                     </div>
                    
                     <form class="ajustando" action="{{route($metodo)}}" method="POST" id="cambioFecha">
+                        
                         <div class="hour">
                             <label for="time" class="seleccionarHora">Seleccionar hora:</label>
                             <div class="hora-selector">
-                                <input type="time" id="horaEntrega" name="horaEntrega" min="11:00" max="19:00" required>
+                                <input type="time" id="horaEntrega" name="horaEntrega" value="11:00" min="11:00" max="19:00" required>
                                 <div class="boton-wrapper">
                                     <button type="button" id="incrementarHora" class="hora-boton">🔺</button>
                                     <button type="button" id="decrementarHora" class="hora-boton">🔻</button>                                        
@@ -43,7 +45,7 @@
                             </div>
                         </div>
                         <div class="botAceptar">
-                            <button class="botonPr aceptandoFecha" type="submit" value="Enviar" id="enviarFormulario">Aceptar fecha y hora</button>
+                            <button class="botonPr aceptandoFecha" type="submit" value="Enviar">Aceptar fecha y hora</button>
                         </div>
                         @csrf
                         <input type="hidden" name="mes" id="mes" value="">
@@ -55,12 +57,15 @@
                             <button type="submit" id="next-month" class="arrow botonPr" value="Mover">➡</button>
                         </div>                        
                     </form>
+                    <!--Tienes que poner este para que aparezca el mensaje emergente-->
+                    <div id="mensajeEmergente"></div>
+                    
                 </div>
                 </div>
                 <br>
                 <script>
                     const calendario = @json($calendarioJson);
-
+                    
                     const months = [
                         { bg: "url('{{ asset('img/enero.png') }}')" },
                         { bg: "url('{{ asset('img/febrero.png') }}')" },
@@ -80,7 +85,6 @@
                 </script>
             </body>
             <x-pie/>
-            <script src="{{ asset('js/calEdit.js') }}"></script>
-            <script src="{{ asset('js/meses.js') }}"></script>
-            <script src="{{ asset('js/rutaCalEdit.js')}}"></script>
+            <script src="{{ asset('js/MensajeError.js') }}"></script>           
+            <script src="{{ asset('js/meses.js') }}"></script>           
            

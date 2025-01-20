@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\Correo;
-use App\Models\Usuario;
+use App\Models\usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cookie;
@@ -21,7 +21,7 @@ class ControladorLogin extends Controller
     public function Logear(Request $request)
     {
         $action = $request->input('action');//esto borrar
-        if($action === 'login'){
+        if($action == 'login'){
             
             $credentials = $request->validate([
                 'email' => 'required|email',
@@ -29,7 +29,7 @@ class ControladorLogin extends Controller
                 'g-recaptcha-response' => 'required|captcha',
             ]);
     
-            $usuario = Usuario::select('id_u', 'contraseña')
+            $usuario = usuario::select('id_u', 'contraseña')
             ->where('correo_electronico', $credentials['email'])
             ->first();
 
@@ -49,13 +49,13 @@ class ControladorLogin extends Controller
 
                 switch(session('id_tipopostre')){
                     case "fijo":
-                        return redirect()->route('fijo.catalogo.get');
+                        return redirect()->route('fijo.calendario.get');
                         break;
                     case "personalizado":
-                        return redirect()->route('personalizado.catalogo.get');
+                        return redirect()->route('personalizado.calendario.get');
                         break;
                     case "emergente":
-                        return redirect()->route('emergente.catalogo.get');
+                        return redirect()->route('emergente.calendario.get');
                         break;
                     default:
                     return redirect()->route('inicio.get'); // 72 horas
@@ -63,15 +63,15 @@ class ControladorLogin extends Controller
                 }
             }
             else{
-                return redirect()->route('login.get')->withErrors(['correo_electronico' => 'Credenciales incorrectas.']);
+                return redirect()->route('login.get')->withErrors(['errorCredenciales' => 'Correo o contraseña incorrecta.']);
             }
-        }elseif($action === 'recuperar'){
+        }elseif($action == 'recuperar'){
             
             $credentials = $request->validate([
                 'email' => 'required|email',
             ]);
     
-            $usuario = Usuario::where('correo_electronico', $credentials['email'])->first();
+            $usuario = usuario::where('correo_electronico', $credentials['email'])->first();
             if($usuario){
                 $correo = $credentials['email'];
                 $token = Str::random(64);
@@ -81,7 +81,7 @@ class ControladorLogin extends Controller
                     $usuario->save();
                 }catch(\Exception $e){
                     return redirect()->route('inicio.get')
-                    ->with('error', 'Error al guardar el usuario');    
+                    ->with('error', 'Error al recuperar contraseña');    
                 }
                 session([
                     'correo' => $correo,
@@ -91,8 +91,8 @@ class ControladorLogin extends Controller
                 ->with('success', 'Se ha enviado un enlace de recuperación a tu correo.');
             }
             return redirect()->back()
-                ->with('error', 'Correo no registrado.');
-        }elseif($action === 'register'){
+                ->with('errorCorreo', 'Correo no registrado.');
+        }elseif($action == 'register'){
             return redirect()->route('registrar.get');
         }
     }
