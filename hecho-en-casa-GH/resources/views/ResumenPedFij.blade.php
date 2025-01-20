@@ -1,4 +1,4 @@
-<title>RESUMEN PERSONALIZADO</title>
+<title>RESUMEN FIJO</title>
 <link rel="stylesheet" href="{{ asset('css/ResumenPedFij.css') }}">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
@@ -24,40 +24,40 @@
            <div class="details">
 
                <div class="left-column">
-                   <label>Tipo de postre:</label>
-                   <input type="text" value="{{session('nombre_categoria')}}" readonly>
+                   <label for="tipo_postre">Tipo de postre:</label>
+                   <input type="text" id="tipo_postre" value="{{session('nombre_categoria')}}" readonly>
 
-                   <label>Sabor:</label>
-                   <input type="text" value="{{session('sabor_postre')}}" readonly>
+                   <label for="sabor">Sabor:</label>
+                   <input type="text" id="sabor" value="{{session('sabor_postre')}}" readonly>
                     @if ($tipo_postre == "fijo")
-                        <label>Porciones:</label>     
-                        <input type="text" value="{{session('porcionestotal')}}" readonly>
+                        <label for="porciones">Porciones:</label>     
+                        <input type="text" id="porciones" value="{{session('porcionestotal')}}" readonly>
                     @elseif ($tipo_postre == "temporada" || $tipo_postre == "pop-up")
-                        <label>Cantidad:</label>     
-                        <input type="text" value="{{session('cantidad_pedida')}}" readonly>
+                        <label for="cantidad">Cantidad:</label>     
+                        <input type="text" id="cantidad" value="{{session('cantidad_pedida')}}" readonly>
                     @endif
 
                </div>
 
                <div class="right-column">
 
-                    <label>Nombre:</label>
-                   <input type="text" value="{{$nombre}}" readonly>
+                    <label for="nombre">Nombre:</label>
+                   <input type="text" id="nombre" value="{{$nombre}}" readonly>
                    
-                   <label>Teléfono:</label>
-                   <input type="text" value="{{$telefono}}" readonly>
+                   <label for="telefono">Teléfono:</label>
+                   <input type="text" id="telefono" value="{{$telefono}}" readonly>
 
-                   <label>Fecha de entrega:</label>
-                   <input type="text" value="{{$fecha}}" readonly>
+                   <label for="fecha_entrega">Fecha de entrega:</label>
+                   <input type="text" id="fecha_entrega" value="{{$fecha}}" readonly>
 
-                   <label>Hora de entrega:</label>
-                   <input type="text" value="{{$hora}}" readonly>
+                   <label for="hora_entrega">Hora de entrega:</label>
+                   <input type="text" id="hora_entrega" value="{{$hora}}" readonly>
 
-                   <label>Tipo de entrega:</label>
-                   <input type="text" value="{{$tipo_entrega}}" readonly>
+                   <label for="tipo_entrega">Tipo de entrega:</label>
+                   <input type="text" id="tipo_entrega" value="{{$tipo_entrega}}" readonly>
 
-                   <label>Costo Apróximado:</label>
-                   <input type="text" value="${{$costo}}" readonly>
+                   <label for="costo_aproximado">Costo Apróximado:</label>
+                   <input type="text" id="costo_aproximado" value="${{$costo}}" readonly>
                </div>
            </div>
            <button class="descargarPDF-button"> 
