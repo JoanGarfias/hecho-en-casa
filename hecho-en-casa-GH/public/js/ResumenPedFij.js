@@ -92,3 +92,4 @@ async function generatePDF() {
 
 // Asignar la función al botón
 document.querySelector(".descargarPDF-button").addEventListener("click", generatePDF);
+//añadí un coemtario xd
