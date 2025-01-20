@@ -106,7 +106,10 @@
                                 </div>
                             </div>
 
-                            <button id="continuar" class="arrow" type="submit">volver al inicio</button>
+                            <form action="{{route('inicio.get')}}" method="GET">
+                                @csrf
+                                <button id="continuar" class="arrow" type="submit">Volver al inicio</button>
+                            </form>
                         
                             </div>
                         </div>
