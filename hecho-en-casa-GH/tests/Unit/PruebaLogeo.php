@@ -10,7 +10,6 @@ class PruebaLogeo extends TestCase
     {
         // Realiza una solicitud GET a la página de inicio
         $response = $this->get('/');
-
         // Verifica que la respuesta tenga el status 200 (OK)
         $response->assertStatus(200);
     }
