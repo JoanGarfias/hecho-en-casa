@@ -40,6 +40,13 @@ expect()->extend('toBeOne', function () {
 | global functions to help you to reduce the number of lines of code in your test files.
 |
 */
+use function Pest\Laravel\get;
+use function Pest\Laravel\post;
+use function Pest\Laravel\put;
+use function Pest\Laravel\delete;
+
+// Esto carga los helpers de PestLaravel
+
 
 function something()
 {
