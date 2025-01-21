@@ -46,6 +46,7 @@ main h2 {
 /* Ajuste de la sección pasteles */
 .pasteles {
     text-align: center; /* Centra la palabra PASTELES arriba */
+    margin-bottom: 10px;
 }
 
 .pasteles h3 {
@@ -138,6 +139,8 @@ main h2 {
         font-size: 0.8em;
         padding: 8px 16px;
         margin-left: 0;
+        position: center;
+        
     }
 
     .personaliza img {
@@ -147,6 +150,8 @@ main h2 {
 }
 
 @media (max-width: 480px) {
+
+    
     main h2 {
         font-size: 1.5em;
     }
@@ -158,6 +163,7 @@ main h2 {
     .personaliza {
         font-size: 0.7em;
         padding: 6px 12px;
+        
     }
 
     .personaliza img {

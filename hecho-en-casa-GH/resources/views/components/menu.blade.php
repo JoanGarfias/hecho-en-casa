@@ -38,7 +38,20 @@
     </div>
 </header>
 <!--Para la animación del logo de usuario-->
-<script src="{{ asset('js/despliegue-menu.js') }}" defer></script>
+
+<script src = "{{ asset('js/despliegue-menu.js') }}" defer>
+const mediaQuery = window.matchMedia('(max-width: 600px)');
+function handleScreenChange(e) { if (e.matches) { 
+    const script = document.createElement('script'); 
+    script.src = "{{ asset('js/despliegue-menu.js') }}"; 
+    script.defer = true; document.body.appendChild(script);
+    document.body.appendChild(script);
+}
+}
+mediaQuery.addListener(handleScreenChange);
+handleScreenChange(mediaQuery);
+
+</script>
 
 <script src="{{ asset('js/icono.js') }}" defer></script>
 
