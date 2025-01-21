@@ -25,6 +25,7 @@ class ControladorRegistro extends Controller
             'phone' => 'required|string',
             'apellidoP' => 'required|string|max:255',
             'apellidoM' => 'required|string|max:255',
+            'g-recaptcha-response' => 'required|captcha',
         ];
     }
 
