@@ -51,14 +51,14 @@ async function generatePDF() {
         { label: "Sabor de pan", id: "sabor_pan" },
         { label: "Sabor de relleno", id: "sabor_relleno" },
         { label: "Cobertura", id: "cobertura" },
-        { label: "TemÃ¡tica", id: "tematica" },
+        { label: "Tematica", id: "tematica" },
         { label: "Nombre", id: "nombre" },
-        { label: "TelÃ©fono", id: "telefono" },
+        { label: "Telefono", id: "telefono" },
         { label: "Fecha de entrega", id: "fecha_entrega" },
         { label: "Hora de entrega", id: "hora_entrega" },
         { label: "Tipo de entrega", id: "tipo_entrega" },
         { label: "Link de referencia", id: "link_referencia" },
-        { label: "DescripciÃ³n detallada", id: "descripcion_detallada" },
+        { label: "Descripcion detallada", id: "descripcion_detallada" },
         { label: "Costo Aproximado", id: "costo_aproximado" },
     ];
 
