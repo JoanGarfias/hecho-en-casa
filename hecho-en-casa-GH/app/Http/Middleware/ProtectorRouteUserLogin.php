@@ -18,7 +18,7 @@ class ProtectorRouteUserLogin
 
         if ($sessionToken && $usuario) { 
             if(request()->routeIs('login.get') || request()->routeIs('login.post') || request()->routeIs('registrar.get') || request()->routeIs('registrar.post')){
-                return redirect()->back()->with('error', 'No estás permitido entrar porque ya estás logueado.');
+                return redirect()->back()->withErrors('error', 'No estás permitido entrar porque ya estás logueado.');
             }
         }
 
