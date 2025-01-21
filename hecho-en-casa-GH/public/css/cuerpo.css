@@ -46,7 +46,7 @@ main h2 {
 /* Ajuste de la sección pasteles */
 .pasteles {
     text-align: center; /* Centra la palabra PASTELES arriba */
-    margin-bottom: 10px;
+    margin-bottom: 0px;
 }
 
 .pasteles h3 {

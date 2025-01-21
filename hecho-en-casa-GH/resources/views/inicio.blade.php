@@ -10,13 +10,17 @@
     <h2>DESCUBRE</h2>
     <div class="contenedor">
         <div class="seccion temporada">
+            <div class="contenedor-flex"> 
             <h3>TEMPORADA</h3>
             <img src="{{ asset('img/temporada.png') }}" alt="Pasteles de temporada">
             <button class="personaliza" onclick="window.location.href='{{ route('emergente.catalogo.get') }}'">
                 <img src="{{ asset('img/varita.png') }}" alt="Personaliza tu pastel">
                 Aprovecha que se acaban
             </button>
+            </div>
         </div>
+
+
         <div class="seccion pasteles">
             <h3>PASTELES</h3>
             <div class="contenedor-flex">
