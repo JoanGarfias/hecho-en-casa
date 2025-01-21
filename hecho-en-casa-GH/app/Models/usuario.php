@@ -28,12 +28,19 @@ class Usuario extends Model
         'token_sesion', // Añadir a fillable
         'token_recuperacion',
         'contraseña',
-        'direccion',
         'nombre',
         'apellido_paterno',
         'apellido_materno',
-        'correo',
+        'correo_electronico',
         'telefono',
+        'Codigo_postal_u',
+        'estado_u',
+        'ciudad_u',
+        'colonia_u',
+        'calle_u',
+        'num_exterior_u',
+        'num_interior_u',
+        'referencia_u',
     ];
 
     // Definir los castings para columnas específicas (si es necesario)
