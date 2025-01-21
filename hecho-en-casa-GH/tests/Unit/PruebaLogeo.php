@@ -9,7 +9,7 @@ class PruebaLogeo extends TestCase
     public function test_cargar_login()
     {
         // Realiza una solicitud GET a la página de inicio
-        $response = $this->get('/');
+        $response = $this->get('/login');
         // Verifica que la respuesta tenga el status 200 (OK)
         $response->assertStatus(200);
     }
@@ -36,7 +36,6 @@ class PruebaLogeo extends TestCase
     {
         // Envia una solicitud POST al endpoint de login con credenciales incorrectas
         $response = $this->generar_post_logeo("joanpagarf09@gmail.com", "Password1!");
-    
         $response->assertSessionHasNoErrors();
     }
 
