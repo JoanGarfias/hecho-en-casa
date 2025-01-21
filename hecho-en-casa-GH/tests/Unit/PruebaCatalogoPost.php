@@ -10,7 +10,6 @@ class PruebaCatalogoPost extends TestCase
     {
         $data = [
             'id_postre' => 1,
-            //'nombre_postre' => 'Pay de platano',
         ];
 
         // Realiza la solicitud POST al endpoint del catálogo sin estar autenticado
