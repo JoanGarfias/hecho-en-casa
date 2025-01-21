@@ -9,7 +9,7 @@ class PruebaCatalogoCategorias extends TestCase
     {
         // Datos de prueba para la solicitud POST
         $data = [
-            'id_postre' => 123,
+            'id_postre' => 1,
             'nombre_postre' => 'Pastel de Chocolate',
         ];
 
@@ -17,7 +17,7 @@ class PruebaCatalogoCategorias extends TestCase
         $response = $this->post(route('guardar.seleccion.catalogo'), $data);
 
         // Verifica que los datos se guardaron correctamente en la sesión
-        $response->assertSessionHas('id_postre', 123);
+        $response->assertSessionHas('id_postre', 1);
         $response->assertSessionHas('id_tipopostre', 'fijo');
         $response->assertSessionHas('nombre_postre', 'Pastel de Chocolate');
         $response->assertSessionHas('proceso_compra', 'guardar.seleccion.catalogo');
