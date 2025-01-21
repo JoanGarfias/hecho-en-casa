@@ -10,7 +10,7 @@
     <h2>DESCUBRE</h2>
     <div class="contenedor">
         <div class="seccion temporada">
-            <div class="contenedor-flex"> 
+            <div class="conte_nedor"> 
             <h3>TEMPORADA</h3>
             <img src="{{ asset('img/temporada.png') }}" alt="Pasteles de temporada">
             <button class="personaliza" onclick="window.location.href='{{ route('emergente.catalogo.get') }}'">

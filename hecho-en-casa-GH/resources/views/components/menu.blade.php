@@ -39,7 +39,7 @@
 </header>
 <!--Para la animación del logo de usuario-->
 
-<script src = "{{ asset('js/despliegue-menu.js') }}" defer>
+<script >
 const mediaQuery = window.matchMedia('(max-width: 600px)');
 function handleScreenChange(e) { if (e.matches) { 
     const script = document.createElement('script'); 
