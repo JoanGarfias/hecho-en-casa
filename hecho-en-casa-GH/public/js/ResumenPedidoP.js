@@ -97,3 +97,10 @@ async function generatePDF() {
 
 // Asignar la función al botón
 document.querySelector(".descargarPDF-button").addEventListener("click", generatePDF);
+
+
+fields.forEach(field => {
+    console.log(`Buscando id: ${field.id}`);
+    const element = document.getElementById(field.id);
+    console.log(`Elemento encontrado:`, element);
+});

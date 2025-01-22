@@ -13,9 +13,8 @@
             <div class="conte_nedor"> 
             <h3>TEMPORADA</h3>
             <img src="{{ asset('img/temporada.png') }}" alt="Pasteles de temporada">
-            <button class="personaliza" onclick="window.location.href='{{ route('emergente.catalogo.get') }}'">
-                <img src="{{ asset('img/varita.png') }}" alt="Personaliza tu pastel">
-                Aprovecha que se acaban
+            <button class="emergente" onclick="window.location.href='{{ route('emergente.catalogo.get') }}'">
+                Ir a Pop-Up
             </button>
             </div>
         </div>
@@ -25,11 +24,12 @@
             <h3>PASTELES</h3>
             <div class="contenedor-flex">
                 <img src="{{ asset('img/pasteles.png') }}" alt="Pasteles personalizados">
-                <button class="personaliza" onclick="window.location.href='{{ route('personalizado.catalogo.get') }}'">
+                
+            </div>
+            <button class="personaliza" onclick="window.location.href='{{ route('personalizado.catalogo.get') }}'">
                     <img src="{{ asset('img/varita.png') }}" alt="Personaliza tu pastel">
                     Personaliza tu pastel
                 </button>
-            </div>
         </div>    
     </div>
 </main>

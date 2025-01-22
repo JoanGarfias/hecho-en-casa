@@ -132,7 +132,7 @@ textarea#descripcion_detallada {
 
 /* Estilo específico para cuando es readonly */
 textarea[readonly] {
-    background-color: #e9e9e9; /* Fondo ligeramente más oscuro */
+    background-color: #ffffff; /* Fondo ligeramente más oscuro */
     border: 10px solid #FCF5C7;
     border-color: #FCF5C7; /* Borde gris más definido */
     color: #000000; /* Texto más claro */

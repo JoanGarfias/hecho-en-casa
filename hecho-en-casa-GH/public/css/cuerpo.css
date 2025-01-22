@@ -73,7 +73,7 @@ main h2 {
     border-radius: 25px;
 }
 
-.personaliza {
+.personaliza, .emergente {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -90,7 +90,7 @@ main h2 {
     transition: all 0.3s ease; /* Agrega transición suave para todos los cambios */
 }
 
-.personaliza:hover {
+.personaliza:hover, .emergente:hover {
 
     background-color: #D0A974; /* Cambia el color de fondo cuando pasa el mouse */
     transform: scale(1.05); /* Aumenta el tamaño del botón ligeramente */
