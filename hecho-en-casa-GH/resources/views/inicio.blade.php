@@ -24,11 +24,12 @@
             <h3>PASTELES</h3>
             <div class="contenedor-flex">
                 <img src="{{ asset('img/pasteles.png') }}" alt="Pasteles personalizados">
-                <button class="personaliza" onclick="window.location.href='{{ route('personalizado.catalogo.get') }}'">
+                
+            </div>
+            <button class="personaliza" onclick="window.location.href='{{ route('personalizado.catalogo.get') }}'">
                     <img src="{{ asset('img/varita.png') }}" alt="Personaliza tu pastel">
                     Personaliza tu pastel
                 </button>
-            </div>
         </div>    
     </div>
 </main>
