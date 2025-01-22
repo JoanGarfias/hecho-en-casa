@@ -73,6 +73,8 @@ body {
 }
 
 .description-container {
+    position: relative; /* Necesario para mantener la estructura interna */
+    margin-top: 40px; /* Añade un margen superior para evitar que se toquen los círculos */
     background: #E5C99C;
     width: 100%; /* Se adapta al ancho del padre */
     margin-top: 10px;
