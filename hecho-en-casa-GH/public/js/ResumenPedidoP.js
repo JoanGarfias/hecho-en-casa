@@ -59,7 +59,7 @@ async function generatePDF() {
         { label: "Tipo de entrega", id: "tipo_entrega" },
         { label: "Link de referencia", id: "link_referencia" },
         { label: "Descripción detallada", id: "descripcion" },
-        { label: "Costo Aproximado", id: "costo_aproximado" },
+        { label: "Costo Apróximado", id: "costo_aproximado" },
     ];
 
     fields.forEach(field => {
