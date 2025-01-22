@@ -58,21 +58,26 @@
                     <input type="hidden" name="nombre_postre" value="{{ $producto->nombre }}">
                     <h2>{{ $producto->nombre }}</h2>
                     <img src="{{ $producto->imagen }}" alt="{{ $producto->nombre }}">
-                    <div class="outer-circle">
+                    <div class="outer-circles-container">
                         @if(isset($producto->Presentaciones) && $producto->Presentaciones->isNotEmpty())
                             @foreach($producto->Presentaciones as $presentacion)
-                            <div class="price-circle">
-                                <span>{{ $presentacion->cantidad }} {{ $presentacion->nombre_unidad }}:</span>
-                                <span>${{ number_format($presentacion->precio_um, 2) }}</span>
+                            <div class="outer-circle">
+                                <div class="price-circle">
+                                    <span>{{ $presentacion->cantidad }} {{ $presentacion->nombre_unidad }}:</span>
+                                    <span>${{ number_format($presentacion->precio_um, 2) }}</span>
+                                </div>
                             </div>
                             @endforeach
                         @else
-                            <div class="price-circle">
-                                <span>No disponible:</span>
-                                <span>$0.00</span>
+                            <div class="outer-circle">
+                                <div class="price-circle">
+                                    <span>No disponible:</span>
+                                    <span>$0.00</span>
+                                </div>
                             </div>
                         @endif
                     </div>
+                    
                     <div class="description-container">
                         <span>{{ $producto->descripcion }}</span>
                         <img class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
@@ -83,6 +88,35 @@
         </div>
     </main>
     
+    <script>
+ document.addEventListener("DOMContentLoaded", () => {
+    const products = document.querySelectorAll(".main-container"); // Todos los productos
+    
+    products.forEach(product => {
+        const presentations = product.querySelectorAll(".outer-circle"); // Todas las presentaciones de un producto
+        
+        // Alinear dinámicamente las outer-circle si hay más de una
+        if (presentations.length > 1) {
+            presentations.forEach((circle, index) => {
+                if (index === 0) {
+                    // Primer círculo: a la izquierda con un margen adicional
+                    circle.style.left = "10px"; // Mover más hacia la izquierda
+                    circle.style.transform = "translateX(-50%)"; // Centrar el círculo respecto al borde
+                } else if (index === 1) {
+                    // Segundo círculo: a la derecha con un margen adicional
+                    circle.style.right = "10px"; // Mover más hacia la derecha
+                    circle.style.transform = "translateX(50%)"; // Centrar el círculo respecto al borde
+                }
+                circle.style.position = "absolute";
+                circle.style.top = "-70px"; // Mantener en la misma línea horizontal
+            });
+        }
+    });
+});
+
+
+        </script>
+        
     
 
     <script>

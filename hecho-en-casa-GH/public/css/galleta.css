@@ -99,17 +99,18 @@ body {
     transform: scale(1.1); /* Aumenta ligeramente el tamaño al pasar el ratón */
 }
 
+
+.outer-circles-container {
+    position: relative; /* Necesario para posicionar .outer-circle dentro del contenedor */
+}
+
 .outer-circle {
     position: absolute;
-    bottom: -20px;
-    right: -8px;
     background: #EADAC6;
-    margin-right: 0px;
     border-radius: 50%;
     width: 80px;
     height: 80px;
     display: flex;
-    top: 160px;
     justify-content: center;
     align-items: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -117,7 +118,6 @@ body {
 
 .price-circle {
     background: #DDB97F;
-    flex-direction: column; /* Apila el contenido verticalmente */
     color: #fff;
     font-size: 0.8em;
     font-weight: bold;
@@ -127,7 +127,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
+
 
 /* Media Queries para hacerlo responsivo */
 @media (max-width: 768px) {
