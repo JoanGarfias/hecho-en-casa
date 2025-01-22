@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/menuCatalogoFijo.css') }}">
     <link rel="stylesheet" href="{{ asset('css/galleta.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/mensajeErrorE.css') }}">
-    <script src="{{ asset('js/MensajeError.js') }}"></script>   
     <title>Catálogo</title>
 </head>
 <x-menu/>
@@ -60,6 +58,12 @@
                     <input type="hidden" name="nombre_postre" value="{{ $producto->nombre }}">
                     <h2>{{ $producto->nombre }}</h2>
                     <img src="{{ $producto->imagen }}" alt="{{ $producto->nombre }}">
+                    <div class="outer-circle">
+                        <div class="price-circle">
+                          <span>10 px:</span><!-- Aqui ira las piezas -->
+                          <span>$360</span><!-- Aqui ira los precios -->
+                        </div>
+                      </div>
                     <div class="description-container">
                         <span>{{ $producto->descripcion }}</span>
                         <img class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
@@ -72,12 +76,6 @@
     
 
     <script>
-
-        /*Datos de prueba
-        let datos = @json($catalogo);
-        console.log(datos);
-        */
-
         // Función para cambiar la categoría al hacer clic en un enlace del menú lateral
         function cambiarCategoria(event, element) {
             event.preventDefault(); // Evita el comportamiento predeterminado del enlace
@@ -100,12 +98,6 @@
         });
 
     </script>
-
-    @if ($errors->has('errorPostre'))
-        <script>
-            mostrarMensaje('{{$errors->first('errorPostre')}}');
-        </script>
-    @endif
 
 <x-pie/>
 
