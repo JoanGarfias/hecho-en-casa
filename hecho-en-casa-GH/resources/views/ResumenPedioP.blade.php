@@ -60,8 +60,8 @@
                    <label for="link_referencia">Link de referencia:</label>
                    <input type="text" id="link_referencia" value="{{$link}}" readonly>
 
-                   <label for="descripcion_detallada">Descripción detallada:</label>
-                   <textarea id="descripcion_detallada" value="{{$descripcion}}" readonly> </textarea>
+                   <label for="descripcion">Descripción detallada:</label>
+                   <textarea name="descripcion" id="descripcion" readonly> {{$descripcion}} </textarea>
                    
                    <label for="costo_aproximado">Costo Apróximado:</label>
                    <input type="text" id="costo_aproximado" value="${{$costo}}" readonly>

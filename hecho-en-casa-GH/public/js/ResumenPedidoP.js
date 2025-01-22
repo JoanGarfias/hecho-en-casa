@@ -58,7 +58,7 @@ async function generatePDF() {
         { label: "Hora de entrega", id: "hora_entrega" },
         { label: "Tipo de entrega", id: "tipo_entrega" },
         { label: "Link de referencia", id: "link_referencia" },
-        { label: "Descripcion detallada", id: "descripcion_detallada" },
+        { label: "Descripcion", id: "descripcion" },
         { label: "Costo Aproximado", id: "costo_aproximado" },
     ];
 
