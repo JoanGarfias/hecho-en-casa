@@ -39,19 +39,37 @@
 </header>
 <!--Para la animación del logo de usuario-->
 
-<script >
-const mediaQuery = window.matchMedia('(max-width: 600px)');
-function handleScreenChange(e) { if (e.matches) { 
-    const script = document.createElement('script'); 
-    script.src = "{{ asset('js/despliegue-menu.js') }}"; 
-    script.defer = true; document.body.appendChild(script);
-    document.body.appendChild(script);
-}
-}
-mediaQuery.addListener(handleScreenChange);
-handleScreenChange(mediaQuery);
-
+<script>
+    // Detecta si la pantalla tiene un ancho máximo de 600px
+    const mediaQuery = window.matchMedia('(max-width: 600px)');
+    
+    // Función que se ejecutará cuando cambie el tamaño de la pantalla o al cargar la página
+    function handleScreenChange(e) {
+        if (e.matches) { 
+            // Si la pantalla es de un dispositivo móvil, agrega el script
+            if (!document.getElementById('despliegue-menu')) { // Evita agregar el script varias veces
+                const script = document.createElement('script');
+                script.src = "{{ asset('js/despliegue-menu.js') }}";
+                script.id = 'despliegue-menu'; // Asigna un ID para identificarlo fácilmente
+                script.defer = true;
+                document.body.appendChild(script);
+            }
+        } else {
+            // Si no es una pantalla móvil, elimina el script si existe
+            const existingScript = document.getElementById('despliegue-menu');
+            if (existingScript) {
+                document.body.removeChild(existingScript);
+            }
+        }
+    }
+    
+    // Escucha los cambios en el tamaño de pantalla
+    mediaQuery.addEventListener('change', handleScreenChange);
+    
+    // Ejecuta la función al cargar la página
+    handleScreenChange(mediaQuery);
 </script>
+
 
 <script src="{{ asset('js/icono.js') }}" defer></script>
 

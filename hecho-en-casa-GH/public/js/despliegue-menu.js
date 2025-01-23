@@ -3,21 +3,30 @@ document.addEventListener('DOMContentLoaded', function () {
     const menuIzquierdo = document.querySelector('.menu-izquierdo');
     const menuDerecho = document.querySelector('.menu-derecho');
 
-    // Mostrar/ocultar menús desplegables al hacer clic en el ícono
-    hamburgerMenu.addEventListener('click', function (e) {
-        e.preventDefault(); // Evita recargar la página al hacer clic
-        menuIzquierdo.style.display =
-            menuIzquierdo.style.display === 'block' ? 'none' : 'block';
-        //menuDerecho.style.display =
-           // menuDerecho.style.display === 'block' ? 'none' : 'block';
-    });
+    // Verifica que los elementos existan en el DOM antes de añadir eventos
+    if (hamburgerMenu && menuIzquierdo) {
+        // Mostrar/ocultar menú izquierdo al hacer clic en el ícono
+        hamburgerMenu.addEventListener('click', function (e) {
+            e.preventDefault(); // Evita recargar la página al hacer clic
+            menuIzquierdo.style.display =
+                menuIzquierdo.style.display === 'block' ? 'none' : 'block';
+        });
+    }
 
     // Cerrar los menús desplegables al hacer clic fuera de ellos
     document.addEventListener('click', function (event) {
-        if (!hamburgerMenu.contains(event.target) && 
-            !menuIzquierdo.contains(event.target) && 
-            !menuDerecho.contains(event.target)) {
+        // Verifica que los elementos existan antes de evaluar condiciones
+        if (
+            hamburgerMenu &&
+            menuIzquierdo &&
+            !hamburgerMenu.contains(event.target) &&
+            !menuIzquierdo.contains(event.target)
+        ) {
             menuIzquierdo.style.display = 'none';
+        }
+
+        // Si quieres manejar el menú derecho en el futuro:
+        if (menuDerecho && !menuDerecho.contains(event.target)) {
             menuDerecho.style.display = 'none';
         }
     });
