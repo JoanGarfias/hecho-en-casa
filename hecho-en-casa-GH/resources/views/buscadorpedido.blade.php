@@ -51,7 +51,9 @@
                 </div>
                 <div class="form-group">
                     <label for="estatus">Estatus:</label>
-                    <button class="{{ strtolower($pedido->status) }}">{{ $pedido->status }}</button>
+                    <button style="background-color: #F8CFA0; font-weight: bold; color: #F3770A; border: none; padding: 10px 20px; border-radius: 5px;">
+                        {{ $pedido->status }}
+                    </button>
                 </div>
             </div>
 

@@ -194,6 +194,15 @@ body {
     font-size: 18px;
 }
 
+.estatus-btn {
+    background-color: #F8CFA0;
+    color: #F3770A;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 /* Media queries para pantallas más pequeñas */
 @media (max-width: 768px) {
     .header {
