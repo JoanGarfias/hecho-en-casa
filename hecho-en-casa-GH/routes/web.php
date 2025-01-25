@@ -108,7 +108,7 @@ Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(funct
 
     Route::get('personalizado/ticket/', [ControladorCatalogoPersonalizado::class, 'mostrarTicket'])->name('personalizado.ticket.get');
 });
-Route::post('personalizado/detalles-direccion/buscar', [App\Http\Controllers\ControladorCP::class, 'buscar'])->name('buscar'); //Ruta nueva personalizado
+Route::post('personalizado/detalles-direccion/buscar', [ControladorCP::class, 'buscar'])->name('buscar'); //Ruta nueva personalizado
 
 /* RUTAS DE POSTRES EMERGENTES */
 Route::get('/emergentes', [ControladorCatalogoEmergente::class, 'mostrar'])->name('emergente.catalogo.get')
