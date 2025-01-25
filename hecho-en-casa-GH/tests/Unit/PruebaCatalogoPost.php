@@ -16,6 +16,6 @@ class PruebaCatalogoPost extends TestCase
         $response = $this->post('fijo/catalogo', $data);
 
         // Verifica que la respuesta redirija al login
-        $response->assertRedirect(route('/login')); 
+        $response->assertRedirect("/login"); 
     }
 }

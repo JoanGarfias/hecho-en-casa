@@ -26,10 +26,8 @@ class ControladorLogin extends Controller
             $credentials = $request->validate([
                 'email' => 'required|email',
                 'password' => 'required',
-                
+                'g-recaptcha-response' => 'required|captcha',
             ]);
-            //Esto iba dentro del Array de arriba
-            //'g-recaptcha-response' => 'required|captcha',
 
             $usuario = usuario::select('id_u', 'contraseña')
             ->where('correo_electronico', $credentials['email'])
