@@ -18,19 +18,25 @@ class ControladorRegistro extends Controller
         return view('registrar');
     }
 
-    public function registrar(Request $request){
-        /*ENLAZADOR DE REGISTRO */
-        session()->put('proceso_registro', $request->route()->getName());
-        /*ENLAZADOR DE REGISTRO */
-
-        $credentials = $request->validate([
+    public function reglasValidacion(){
+        return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|string',
             'apellidoP' => 'required|string|max:255',
             'apellidoM' => 'required|string|max:255',
-            'g-recaptcha-response' => 'required|captcha',  // Validación del reCAPTCHA
-        ]);
+            'g-recaptcha-response' => 'required|captcha',
+        ];
+    }
+
+    public function registrar(Request $request){
+        /*ENLAZADOR DE REGISTRO */
+        session()->put('proceso_registro', $request->route()->getName());
+        /*ENLAZADOR DE REGISTRO */
+
+        $credentials = $request->validate($this->reglasValidacion());
+            //'g-recaptcha-response' => 'required|captcha',  // Validación del reCAPTCHA
+        
         
         $nombre = $credentials['name'];
         $apellido_paterno = $credentials['apellidoP'];

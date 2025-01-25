@@ -28,7 +28,7 @@ class ControladorLogin extends Controller
                 'password' => 'required',
                 'g-recaptcha-response' => 'required|captcha',
             ]);
-    
+
             $usuario = usuario::select('id_u', 'contraseña')
             ->where('correo_electronico', $credentials['email'])
             ->first();
@@ -63,7 +63,7 @@ class ControladorLogin extends Controller
                 }
             }
             else{
-                return redirect()->route('login.get')->withErrors(['correo_electronico' => 'Credenciales incorrectas.']);
+                return redirect()->route('login.get')->withErrors(['error' => 'Credenciales incorrectas.']);
             }
         }elseif($action == 'recuperar'){
             
