@@ -3,6 +3,7 @@ let fechando = ''
 
 document.addEventListener('DOMContentLoaded', function(){
     calendarioData = JSON.parse(calendario);
+    console.log(calendarioData);
     const primerDia = calendarioData.diasDelMes[0].fecha;
     const ultimoDia = calendarioData.diasDelMes[calendarioData.diasDelMes.length - 1].fecha;
     const numeroUltimoDia = parseInt(ultimoDia.split('-')[2], 10);
@@ -94,8 +95,6 @@ document.addEventListener('DOMContentLoaded', function(){
         switch(diafuturo){
             case "Saturday":
                 return diapresente + 6;
-            case "Sunday":
-                return diapresente + 5;
             default:
                 return diapresente + 4;
         }
@@ -266,19 +265,3 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
-
-
-function mostrarMensaje(texto) {
-    const mensaje = document.getElementById('mensajeEmergente');
-    mensaje.textContent = texto; // Agregar texto al mensaje
-    mensaje.style.opacity = '1'; // Mostrar el mensaje
-    mensaje.style.visibility = 'visible'; // Asegurarse de que sea visible
-
-    // Ocultar el mensaje después de 3 segundos
-    setTimeout(() => {
-        mensaje.style.opacity = '0'; // Inicia la transición para ocultar
-        setTimeout(() => {
-            mensaje.style.visibility = 'hidden'; // Ocultar completamente
-        }, 500); // Coincidir con el tiempo de transición de opacity
-    }, 3000);
-}

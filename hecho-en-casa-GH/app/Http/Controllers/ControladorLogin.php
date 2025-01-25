@@ -49,13 +49,13 @@ class ControladorLogin extends Controller
 
                 switch(session('id_tipopostre')){
                     case "fijo":
-                        return redirect()->route('fijo.catalogo.get');
+                        return redirect()->route('fijo.calendario.get');
                         break;
                     case "personalizado":
-                        return redirect()->route('personalizado.catalogo.get');
+                        return redirect()->route('personalizado.calendario.get');
                         break;
                     case "emergente":
-                        return redirect()->route('emergente.catalogo.get');
+                        return redirect()->route('emergente.calendario.get');
                         break;
                     default:
                     return redirect()->route('inicio.get'); // 72 horas
@@ -81,7 +81,7 @@ class ControladorLogin extends Controller
                     $usuario->save();
                 }catch(\Exception $e){
                     return redirect()->route('inicio.get')
-                    ->with('error', 'Error al guardar el usuario');    
+                    ->with('error', 'Error al recuperar contraseña');    
                 }
                 session([
                     'correo' => $correo,
@@ -91,7 +91,7 @@ class ControladorLogin extends Controller
                 ->with('success', 'Se ha enviado un enlace de recuperación a tu correo.');
             }
             return redirect()->back()
-                ->with('error', 'Correo no registrado.');
+                ->with('errorCorreo', 'Correo no registrado.');
         }elseif($action == 'register'){
             return redirect()->route('registrar.get');
         }

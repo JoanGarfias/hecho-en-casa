@@ -11,11 +11,8 @@
 <h1>RESUMEN DE PEDIDO</h1>
 
    <div class="main-container">
-       <!-- Tarjeta de perfil -->
-       <!-- <div class="resumen-card"> -->
        <div class="resumen-card"> 
-
-           <div class="FOLIO-info"> <!--user-info -->
+           <div class="FOLIO-info">
                <h2 class="Folio-name">Pedido con folio:</h2>
                <input type="text" id="folio" name="folio" value="{{session('folio')}}" readonly>
              
@@ -24,50 +21,50 @@
            <div class="details">
 
                <div class="left-column">
-                   <label>Tipo de postre:</label>
+                   <label for="tipo_postre">Tipo de postre:</label>
                    <input type="text" id="tipo_postre" value="{{session('id_tipopostre')}}" readonly>
 
-                   <label>Porciones:</label>
-                   <input type="text" id="porciones" value="{{session('porciones')}}" readonly>
+                   <label for="porciones">Porciones:</label>
+                   <input type="text" id="porciones" value="{{session('porcionestotal')}}" readonly>
 
-                   <label>Sabor de pan:</label>
-                   <input type="text" id="sabor" value="{{$pan}}" readonly>
+                   <label for="sabor_pan">Sabor de pan:</label>
+                   <input type="text" id="sabor_pan" value="{{$pan}}" readonly>
 
-                   <label>Sabor de relleno:</label>
+                   <label for="sabor_relleno">Sabor de relleno:</label>
                    <input type="text" id="sabor_relleno" value="{{$relleno}}" readonly>
 
-                   <label>Cobertura:</label>
+                   <label for="cobertura">Cobertura:</label>
                    <input type="text" id="cobertura" value="{{$cobertura}}" readonly>
 
-                   <label>Temática:</label>
+                   <label for="tematica">Temática:</label>
                    <input type="text" id="tematica" value="{{$tematica}}" readonly>
                </div>
 
                <div class="right-column">
 
-                    <label>Nombre:</label>
+                   <label for="nombre">Nombre:</label>
                    <input type="text" id="nombre" value="{{$nombre}}" readonly>
                    
-                   <label>Teléfono:</label>
+                   <label for="telefono">Teléfono:</label>
                    <input type="text" id="telefono" value="{{$telefono}}" readonly>
 
-                   <label>Fecha de entrega:</label>
+                   <label for="fecha_entrega">Fecha de entrega:</label>
                    <input type="text" id="fecha_entrega" value="{{$fecha}}" readonly>
 
-                   <label>Hora de entrega:</label>
+                   <label for="hora_entrega">Hora de entrega:</label>
                    <input type="text" id="hora_entrega" value="{{$hora}}" readonly>
 
-                   <label>Tipo de entrega:</label>
+                   <label for="tipo_entrega">Tipo de entrega:</label>
                    <input type="text" id="tipo_entrega" value="{{$tipo_entrega}}" readonly>
 
-                   <label>Link de referencia:</label>
-                   <input type="text" id="link" value="{{$link}}" readonly>
+                   <label for="link_referencia">Link de referencia:</label>
+                   <input type="text" id="link_referencia" value="{{$link}}" readonly>
 
-                   <label>Descripción detallada:</label>
-                   <input type="text" id="descripcion" value="{{$descripcion}}" readonly>
-
-                   <label>Costo Apróximado:</label>
-                   <input type="text" id="costo" value="${{$costo}}" readonly>
+                   <label for="descripcion">Descripción detallada:</label>
+                   <textarea name="descripcion" id="descripcion" readonly> {{$descripcion}} </textarea>
+                   
+                   <label for="costo_aproximado">Costo Apróximado:</label>
+                   <input type="text" id="costo_aproximado" value="${{$costo}}" readonly>
                </div>
            </div>
            <button class="descargarPDF-button"> 
@@ -109,7 +106,10 @@
                                 </div>
                             </div>
 
-                            <button id="continuar" class="arrow" type="submit">volver al inicio</button>
+                            <form action="{{route('inicio.get')}}" method="GET">
+                                @csrf
+                                <button id="continuar" class="arrow" type="submit">Volver al inicio</button>
+                            </form>
                         
                             </div>
                         </div>

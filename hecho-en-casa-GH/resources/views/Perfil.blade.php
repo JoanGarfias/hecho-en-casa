@@ -122,11 +122,7 @@
               <div class="form-control">
                 <label>Colonia:</label>
                 <select name="colonia" id="colonia" name="colonia" disabled>
-                    <option value="">Selecciona una Colonia:</option>
-                    <option value="Porfirio">Porfirio Díaz</option>
-                    <option value="hidalgo oriente">Hidalgo Oriente</option>
-                    <option value="centro">Centro</option>
-                    <option value="barrio espinal">Barrio Espinal</option>
+                    <option value="{{Cache::get('usuario')->colonia_u}}">{{Cache::get('usuario')->colonia_u}}</option>
                 </select>
                     <p></p>
               </div>

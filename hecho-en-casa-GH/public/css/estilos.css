@@ -121,7 +121,7 @@ header {
     z-index: 1001; /* Asegura que esté sobre otros elementos */
     left: 90%; /* Centra horizontalmente respecto al ícono */
     transform: translateX(-50%); /* Ajuste para centrar perfectamente */
-    width: 230px; /* Cambia este valor para hacerlo más ancho */
+    width: 280px; /* Cambia este valor para hacerlo más ancho */
     height: 120px; /* Cambia este valor para hacerlo más largo */
     overflow: auto; /* Permite desplazamiento si el contenido supera la altura */
 }

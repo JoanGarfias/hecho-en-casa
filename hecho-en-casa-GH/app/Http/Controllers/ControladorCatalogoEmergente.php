@@ -150,7 +150,7 @@ class ControladorCatalogoEmergente extends Controller
             $emergente->save();
         }catch(\Exception $e){
             return redirect()->route('inicio.get')
-            ->with('error', 'Error al guardar el postre emergente: ' .$e->getMessage()); 
+            ->withErrors('errorEmergente', 'Error al guardar el postre emergente.'); 
         }
 
         $pedido = new Pedido;
@@ -167,7 +167,7 @@ class ControladorCatalogoEmergente extends Controller
             $pedido->save();
         } catch (\Exception $e) {
             return redirect()->route('inicio.get')
-            ->with('error', 'Error al guardar el pedido: ' .$e->getMessage()); 
+            ->withErrors('errorPedido', 'Error al guardar el pedido'); 
         }
         
         //para reducir su stock en caso de que tenga si es null entonces no maneja stock
@@ -250,7 +250,7 @@ class ControladorCatalogoEmergente extends Controller
             $emergente->save();
         }catch(\Exception $e){
             return redirect()->route('inicio.get')
-            ->with('error', 'Error al guardar el postre emergente: ' .$e->getMessage()); 
+            ->withErrors('errorEmergente', 'Error al guardar el postre emergente.'); 
         }
 
         $pedido = new Pedido;
@@ -275,7 +275,7 @@ class ControladorCatalogoEmergente extends Controller
             $pedido->save();
         } catch (\Exception $e) {
             return redirect()->route('inicio.get')
-            ->with('error', 'Error al guardar el pedido: ' .$e->getMessage()); 
+            ->withErrors('errorPedido', 'Error al guardar el pedido.'); 
         }
         
         session([

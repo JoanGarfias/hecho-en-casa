@@ -1,5 +1,6 @@
 <?php
 
+use App\Exceptions\CalendarioException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -37,11 +38,11 @@ return Application::configure(basePath: dirname(__DIR__))
             return response()->view('errors.http', ['message' => $e->getMessage()], $e->getStatusCode());
         });
 
-        $exceptions->render(function (InvalidArgumentException $e, Request $request) {
+        $exceptions->render(function (CalendarioException $e, Request $request) {
             Log::error('Excepción capturada: ' . $e->getMessage(), [
                 'exception' => $e,
             ]);
-            return response()->view('errors.calendario', ['message' => $e->getMessage()], 400);
+            return $e->render($request);
         });
 
         $exceptions->render(function (Throwable $e, Request $request) {

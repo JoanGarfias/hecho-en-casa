@@ -13,6 +13,7 @@ use App\Models\usuario;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cookie;
 
 class ControladorBuscarPedido extends Controller{
     public function ObtenerFolio()
@@ -23,7 +24,10 @@ class ControladorBuscarPedido extends Controller{
     public function MostrarPedido(Request $request)
     {
         $folio = $request->input('folio');
-        $pedido = Pedido::where('id_ped', $folio)->first(); // Reemplaza con tu campo correcto
+        $id_u = Cookie::get('user_id');
+        $pedido = Pedido::where('id_ped', $folio)
+                        ->where('id_usuario', $id_u) //para solo mostrar tus ticket y no de nadie mas
+                        ->first(); // Reemplaza con tu campo correcto
 
         if ($pedido) {
             $id_pf = $pedido->id_seleccion_usuario;
