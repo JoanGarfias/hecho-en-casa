@@ -67,7 +67,7 @@
             </button>
 
           <label>Número de tel.</label>
-          <input type="text" value="<?php echo Cache::get('usuario')->telefono ?>" readonly name="telefono" id="telefono" >
+          <input type="text" value="<?php echo htmlspecialchars(Cache::get('usuario')->telefono) ?>" readonly name="telefono" id="telefono" >
 
           <label>Correo:</label>
           <input type="email" value="<?php echo Cache::get('usuario')->correo_electronico ?>" readonly>
@@ -100,24 +100,24 @@
               <label>Ubicación de entrega</label>
               
               <label>C.P :</label>
-              <input type="text" value="<?php echo Cache::get('usuario')->Codigo_postal_u ?>" name="codigopostal" id="codigopostal" readonly>
+              <input type="text" value="<?php echo htmlspecialchars(Cache::get('usuario')->Codigo_postal_u) ?>" name="codigopostal" id="codigopostal" readonly>
 
               <label>Estado:</label>
-              <input type="text" value="<?php echo Cache::get('usuario')->estado_u ?>" name="estado" id="estado" readonly>
+              <input type="text" value="<?php echo htmlspecialchars(Cache::get('usuario')->estado_u) ?>" name="estado" id="estado" readonly>
 
               <label>Ciudad:</label>
-              <input type="text" value="<?php echo Cache::get('usuario')->ciudad_u ?>" name="ciudad" id="ciudad" readonly>
+              <input type="text" value="<?php echo htmlspecialchars(Cache::get('usuario')->ciudad_u) ?>" name="ciudad" id="ciudad" readonly>
             </div>
 
             <div class="right-columnd">
               <label>Calle:</label>
-              <input id="calle" type="text" value="<?php echo Cache::get('usuario')->calle_u ?>" name="calle" readonly>
+              <input id="calle" type="text" value="<?php echo htmlspecialchars(Cache::get('usuario')->calle_u) ?>" name="calle" readonly>
 
               <label>Número int:</label>
-              <input id="numero-int" type="text" value="<?php echo Cache::get('usuario')->num_interior_u ?>" name="NumInt"readonly>
+              <input id="numero-int" type="text" value="<?php echo htmlspecialchars(Cache::get('usuario')->num_interior_u) ?>" name="NumInt"readonly>
 
               <label>Número ext:</label>
-              <input id="numero-ext" type="text" value="<?php echo Cache::get('usuario')->num_exterior_u ?>" name="NumExt"readonly>
+              <input id="numero-ext" type="text" value="<?php echo htmlspecialchars(Cache::get('usuario')->num_exterior_u) ?>" name="NumExt"readonly>
 
               <div class="form-control">
                 <label>Colonia:</label>
@@ -128,8 +128,7 @@
               </div>
 
               <label>Referencias:</label>
-              <!--<input id="Referencia" type="text" value="<?php echo Cache::get('usuario')->num_exterior_u ?>" name="NumExt"readonly>-->
-
+              <input id="referencia" type="text" value="<?php echo htmlspecialchars(Cache::get('usuario')->referencia_u) ?>" name="referencia"readonly>
 
             </div>
         </div>
