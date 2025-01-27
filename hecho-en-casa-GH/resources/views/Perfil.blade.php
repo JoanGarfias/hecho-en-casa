@@ -127,6 +127,10 @@
                     <p></p>
               </div>
 
+              <label>Referencias:</label>
+              <input id="Referencia" type="text" value="" name="referencia"readonly>
+
+
             </div>
         </div>
       </div>
