@@ -128,7 +128,7 @@
               </div>
 
               <label>Referencias:</label>
-              <!--<input id="Referencia" type="text" value="<?php echo Cache::get('usuario')->num_exterior_u ?>" name="NumExt"readonly>-->
+              <input id="Referencia" type="text" value="" name="referencia"readonly>
 
 
             </div>
