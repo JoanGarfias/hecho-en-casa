@@ -18,4 +18,20 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+
+    # Allow Access to Static Files
+    <FilesMatch "\.(html|htm|js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot|otf|ttc|mp4|webm|ogg|mp3|wav)$">
+        Header set Cache-Control "max-age=31536000, public"
+    </FilesMatch>
+
+    # Prevent Access to Sensitive Files
+    <FilesMatch "\.(env|json|log|php|config|bak|sql)$">
+        Order Allow,Deny
+        Deny from all
+    </FilesMatch>
+</IfModule>
+
+# Fallback for Servers Without mod_rewrite
+<IfModule !mod_rewrite.c>
+    ErrorDocument 404 /index.php
 </IfModule>
