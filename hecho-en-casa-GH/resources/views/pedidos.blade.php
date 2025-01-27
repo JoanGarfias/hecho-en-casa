@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="{{ asset('css/mensajeErrorE.css') }}">
 <link rel="stylesheet" href="{{ asset('css/pedidos.css') }}">
 <link rel="stylesheet" href="{{ asset('css/pedidosTempPop.css') }}">
- 
+
     <title>Pedidos</title>
     <x-menu />
   
@@ -109,10 +109,12 @@
                         <br>
                         <p class="nota">NOTA: El costo es aproximado, el precio final puede variar según su ubicación.</p>
                         <p>Porciones restantes del día: <span id="porcionesRestantes">{{session('porciones')}}</span></p> <br>
-                        <p class="porciones-a-pedir">Porciones a pedir: </p>
+                        <p name="porciones-a-pedir" class="porciones-a-pedir">Porciones a pedir: </p>
                     </div>
                 </div>
             </div>
+            <input type="hidden" id="hiddenCosto" name="costot" value="">
+            <input type="hidden" id="hiddenPorciones" name="porcionest" value="">
             <div class="arrows">
                 <button id="prev" class="arrow botonPr" >⬅</button>
                 <button id="next" class="arrow botonPr">➡</button>
@@ -185,7 +187,7 @@
                 document.querySelector(".flechitas.incrementar").disabled = false;
                 document.getElementById("cantidad").disabled = false;
             }
-        
+
             let selects = document.querySelectorAll('select');
             selects.forEach(select => {
                 let selectedOption = select.options[select.selectedIndex];
@@ -196,6 +198,9 @@
                 }
             });
             labelCosto.textContent = total.toFixed(2);
+            // Actualizar los valores en los campos ocultos
+            document.getElementById("hiddenCosto").value = total.toFixed(2);
+            document.getElementById("hiddenPorciones").value = porcionesTotales;
         }
         
         document.querySelectorAll('select').forEach(function(selectElement) {

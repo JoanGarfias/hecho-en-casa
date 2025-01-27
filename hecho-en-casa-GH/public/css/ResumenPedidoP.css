@@ -113,6 +113,35 @@ input {
     padding: 40px;
 }
 
+/*----------------------------------*/
+/* Estilo general para el textarea */
+textarea#descripcion_detallada {
+    width: 100%; /* Se ajusta al ancho del contenedor */
+    min-height: 150px; /* Altura mínima */
+    padding: 10px; /* Espaciado interno */
+    border: 10px solid #FCF5C7;
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #f9f9f9; /* Fondo claro */
+    font-family: 'Poppins', sans-serif; /* Fuente */
+    font-size: 14px; /* Tamaño de la letra */
+    line-height: 1.6; /* Espaciado entre líneas */
+    color: #000000; /* Color del texto */
+    resize:vertical; /* Desactiva el redimensionado */
+    cursor: pointer; /* Cambia el cursor al estilo "no editable" */
+}
+
+/* Estilo específico para cuando es readonly */
+textarea[readonly] {
+    background-color: #ffffff; /* Fondo ligeramente más oscuro */
+    border: 10px solid #FCF5C7;
+    border-color: #FCF5C7; /* Borde gris más definido */
+    color: #000000; /* Texto más claro */
+    cursor: not-allowed; /* Cursor que indica que no es editable */
+}
+
+
+/****************************************/
+
 .descargarPDF-button{
     background-color: #FBAF35;
     color: #FFF;

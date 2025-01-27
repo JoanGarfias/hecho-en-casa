@@ -18,15 +18,15 @@
                 <div class="columna">
                     <div class="fila">
                         <label for="fechaEntrega">Fecha de entrega:</label>
-                        <input type="text" id="fechaEntrega" name="fechaEntrega" placeholder="{{session('fecha')}}" readonly>
+                        <label for="" id="fechaEntrega" name="fechaEntrega" class="paraMostrar">{{session('fecha')}}</label>
                     </div>
                     <div class="fila">
                         <label for="horaEntrega">Hora de entrega: </label>
-                        <input type="text" id="horaEntrega" name="horaEntrega" placeholder="{{session('hora')}}" readonly>
+                        <label for="" id="horaEntrega" name="horaEntrega" class="paraMostrar tam">{{session('hora')}}</label>
                     </div>
                     <div class="fila">
                         <label for="tipoPostre">Tipo de postre:</label>
-                        <input type="text" id="tipoPostre" name="tipoPostre" placeholder="Pastel" readonly>
+                        <label for="" id="tipoPostre" name="tipoPostre" class="paraMostrar tam">Pastel</label>                       
                     </div>
                     <div class="fila">
                         <label for="porciones">Porciones:</label>
@@ -46,8 +46,9 @@
                     <div class="fila">
                         <label for="saborPan">Sabor de pan:</label>
                         <div class="custom-select">
-                            <div>                               
-                                <input type="text" id="agarrarValorPan" name="sabor_pan" readonly placeholder="Seleccione una opción">
+                            <div>                    
+                                <label for="" id="agarrarValorPan" name="sabor_pan" class="paraMostrar">Seleccione una opción</label>           
+                               
                             </div> 
                             <button id="seleccionarPan" class="diseñandobutton" type="button">🔻</button>
                             <div id="seleccionadoOpcionPan" class="customizandoOpciones" style="display: none;">
@@ -61,8 +62,9 @@
                     <div class="fila">
                         <label for="saborRelleno">Sabor de relleno:</label>
                         <div class="custom-select">
-                            <div>                               
-                                <input type="text" id="agarrarValorRelleno" name="sabor_relleno" readonly placeholder="Seleccione una opción">
+                            <div>               
+                                <label for="" id="agarrarValorRelleno" name="sabor_relleno" class="paraMostrar">Seleccione una opción</label>                
+                                
                             </div> 
                             <button id="seleccionarRelleno" class="diseñandobutton" type="button">🔻</button>
                             <div id="seleccionadoOpcionRelleno" class="customizandoOpciones" style="display: none;">
@@ -76,8 +78,9 @@
                     <div class="fila">
                         <label for="cobertura">Cobertura:</label>
                         <div class="custom-select">
-                            <div>                               
-                                <input type="text" id="agarrarValorCobertura" name="cobertura" readonly placeholder="Seleccione una opción">
+                            <div>         
+                                <label for="" id="agarrarValorCobertura" name="cobertura" class="paraMostrar">Seleccione una opción</label>                      
+                                
                             </div> 
                             <button id="seleccionarCobertura" class="diseñandobutton" type="button">🔻</button>
                             <div id="seleccionadoOpcionCobertura" class="customizandoOpciones" style="display: none;">
@@ -106,7 +109,7 @@
                         <label for="tematica">Temática:</label>
                         <div class="opciones">
                             <label>
-                                <input type="radio" name="tematica" value="Cumpleaños" required>
+                                <input type="radio" name="tematica" value="Cumpleaños">
                                 <p class="blanca"> Cumpleaños</p>
                             </label>
                             <label>
@@ -122,8 +125,11 @@
                                 <p class="blanca"> Bautizo</p>
                             </label>
                             <label>
-                                <input type="radio" name="tematica" value="Otro">
+                                <input type="radio" name="tematica" value="Otro" id="otrosRadio">
                                 <p class="blanca"> Otro</p>
+                                <div id="campoOtros" style="display: none;">
+                                    <input type="text" id="otrosTexto" name="otrosTexto" class="paraOtros" value="">
+                                </div>
                             </label>
                         </div>
                     </div>
@@ -143,16 +149,17 @@
                 <div class="columna">
                     <div class="fila">
                         <label for="imagen">Añadir imagen:</label>
-                        <textarea id="imagen" name="imagen" class="escribiendo" placeholder="Pega aquí un enlace de Google o Pinterest..." required></textarea>
+                        <textarea id="imagen" name="imagen" class="escribiendo" placeholder="Pega aquí un enlace de Google o Pinterest..."></textarea>
                     </div>
                     <div class="fila">
                         <label for="descripcion">Descripción detallada:</label>
-                        <textarea id="descripcion" name="descripcion" class="escribiendo" placeholder="Describe tu pedido" required></textarea>
+                        <textarea id="descripcion" name="descripcion" class="escribiendo" placeholder="Describe tu pedido"></textarea>
                     </div>
 
                     <div class="fila"> 
                         <label for="costo">Costo:</label>
-                        <input type="text" id="costo" name="costo" readonly>
+                        <label for="" id="costo" name="costo" class="paraMostrar tam"></label>
+                        
                         <br>
                         <p class="nota">NOTA: El costo es aproximado, el precio final puede variar según su ubicación.</p>
                     </div>
@@ -162,7 +169,8 @@
                 <button id="prev" class="arrow">⬅</button>
                 <button id="next" class="arrow">➡</button>
             </div>
-
+            <input type="hidden" id="hiddenCosto" name="costot" value="">
+            <input type="hidden" id="hiddenPorciones" name="porcionest" value="">
             <div class="fondo-emergente" id="fondoEmergente">
                 <div class="emergente">    
                     <p class="mensajeEmergente">¿Estás seguro de tu elección?</p>
@@ -247,7 +255,9 @@
                 totalCosto += precioElemento;
             });
 
-            costoInput.value = `${totalCosto.toFixed(2)} MXN`;  
+            costoInput.textContent = `${totalCosto.toFixed(2)} MXN`;  
+            document.getElementById("hiddenCosto").value = totalCosto.toFixed(2);
+            document.getElementById("hiddenPorciones").value = valorPorciones;
         }
 
         document.querySelector('.incrementar').addEventListener('click', function () {

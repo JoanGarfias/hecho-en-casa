@@ -46,6 +46,7 @@ main h2 {
 /* Ajuste de la sección pasteles */
 .pasteles {
     text-align: center; /* Centra la palabra PASTELES arriba */
+    margin-bottom: 0px;
 }
 
 .pasteles h3 {
@@ -72,7 +73,7 @@ main h2 {
     border-radius: 25px;
 }
 
-.personaliza {
+.personaliza, .emergente {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -89,7 +90,7 @@ main h2 {
     transition: all 0.3s ease; /* Agrega transición suave para todos los cambios */
 }
 
-.personaliza:hover {
+.personaliza:hover, .emergente:hover {
 
     background-color: #D0A974; /* Cambia el color de fondo cuando pasa el mouse */
     transform: scale(1.05); /* Aumenta el tamaño del botón ligeramente */
@@ -138,6 +139,8 @@ main h2 {
         font-size: 0.8em;
         padding: 8px 16px;
         margin-left: 0;
+        position: center;
+        
     }
 
     .personaliza img {
@@ -147,6 +150,8 @@ main h2 {
 }
 
 @media (max-width: 480px) {
+
+    
     main h2 {
         font-size: 1.5em;
     }
@@ -158,6 +163,7 @@ main h2 {
     .personaliza {
         font-size: 0.7em;
         padding: 6px 12px;
+        
     }
 
     .personaliza img {

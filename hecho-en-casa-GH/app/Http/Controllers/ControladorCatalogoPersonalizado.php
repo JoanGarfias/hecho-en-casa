@@ -74,7 +74,11 @@ class ControladorCatalogoPersonalizado extends Controller
         $imagen = $request->input('imagen');
         $descripcion = $request->input('descripcion');
         $costo = intval($request->input('costo'));
+        $costototal = $request->input('costot');
+        $porcionestotal = $request->input('porcionest');
         $id_usuario = session('id_usuario');
+        //dd($porcionestotal);
+        session(['costototal'=> $costototal, 'porcionestotal' => $porcionestotal]);
         
         session()->put('opcion_envio', $tipo_entrega);
 
@@ -110,11 +114,11 @@ class ControladorCatalogoPersonalizado extends Controller
                 'id_saborrelleno' => $relleno,
                 'id_cobertura' => $cobertura,
                 'elementos' => $elementos,
-                'porciones' => $porciones,
+                'porciones' => $porcionestotal,
                 'tematica' => $tematica,
                 'imagen' => $imagen,
                 'descripcion' => $descripcion,
-                'costo' => $costo,
+                'costo' => $costototal,
                 'tipo_entrega' => $tipo_entrega,
                 'fecha_hora_registro' => $fecha_hora_registro,
                 'fecha_hora_entrega' => $fecha_hora_entrega
@@ -144,9 +148,9 @@ class ControladorCatalogoPersonalizado extends Controller
             $pedido->id_usuario = $id_usuario;
             $pedido->id_tipopostre = 'personalizado';
             $pedido->id_seleccion_usuario = $id_detalles_pastel;
-            $pedido->porcionespedidas = $porciones;
+            $pedido->porcionespedidas = $porcionestotal;
             $pedido->status = 'pendiente';
-            $pedido->precio_final = $costo;
+            $pedido->precio_final = $costototal;
             $pedido->fecha_hora_registro = $fecha_hora_registro;
             $pedido->fecha_hora_entrega = $fecha_hora_entrega;
             $pedido->save();  // Guardamos el pedido en la base de datos
@@ -282,7 +286,7 @@ class ControladorCatalogoPersonalizado extends Controller
             ->first();
     
             if (!$ticket_pedido) {
-                return redirect()->back()->with('error', 'El pedido con el folio especificado no existe.');
+                return redirect()->route('personalizado.catalogo.get')->withErrors('errorFolio', 'El pedido con el folio especificado no existe.');
             }
             
             $entrega = $ticket_pedido->fecha_hora_entrega;
@@ -314,7 +318,7 @@ class ControladorCatalogoPersonalizado extends Controller
             $costo = $ticket_pedido->precio_final;
         }   
         else {
-            return redirect()->back()->with('error', 'El folio no fue especificado.');
+            return redirect()->route('personalizado.catalogo.get')->withErrors('errorFolioNoEspecificado', 'El folio no fue especificado.');
         }
     
         // Envía la información a la vista

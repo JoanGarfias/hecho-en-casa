@@ -138,10 +138,6 @@ form {
     text-align: center;
 }
 
-#fechaEntrega{
-    font-weight: bold;
-}
-
 .nota{
     margin: 10px;
     color: #C7C0B5;
@@ -182,7 +178,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .fila label {
     display: flex;
     align-items: center;
-    gap: 10px; /* Espacio entre el botón y el texto */
+    gap: 19px; /* Espacio entre el botón y el texto */
 }
 
 .fila input[type="radio"] {
@@ -190,6 +186,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     width: 20px;
     height: 20px;
     border: 2px solid #FBAF35; /* Añade un borde para darle forma de cuadrado */
+    left: 20%;
+    position: relative;
 }
 
 select {

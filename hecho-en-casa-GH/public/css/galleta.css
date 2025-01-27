@@ -73,6 +73,8 @@ body {
 }
 
 .description-container {
+    position: relative; /* Necesario para mantener la estructura interna */
+    margin-top: 40px; /* Añade un margen superior para evitar que se toquen los círculos */
     background: #E5C99C;
     width: 100%; /* Se adapta al ancho del padre */
     margin-top: 10px;
@@ -99,14 +101,17 @@ body {
     transform: scale(1.1); /* Aumenta ligeramente el tamaño al pasar el ratón */
 }
 
+
+.outer-circles-container {
+    position: relative; /* Necesario para posicionar .outer-circle dentro del contenedor */
+}
+
 .outer-circle {
     position: absolute;
-    bottom: -20px;
-    right: -8px;
     background: #EADAC6;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -119,12 +124,14 @@ body {
     font-size: 0.8em;
     font-weight: bold;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
+
 
 /* Media Queries para hacerlo responsivo */
 @media (max-width: 768px) {

@@ -16,7 +16,6 @@
     
     <div class="contenedor">
         <h1>❌ Error en el calendario</h1>
-        <p>{{$message}}</p>
     <br>
         <br>
         <p><b>Hubo un error al seleccionar la fecha :(</b></p>

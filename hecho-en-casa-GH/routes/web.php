@@ -17,6 +17,7 @@ use App\Http\Middleware\EnlazadorRecuperacion;
 use App\Http\Middleware\EnlazadorRegistro;
 use App\Http\Middleware\ProtectorRouteUserLogin;
 use App\Http\Middleware\ProtectorPeticiones;
+use App\Http\Controllers\ControladorCP;
 
 /* VISTAS PRINCIPALES */
 Route::get('/', [ControladorInicio::class, 'index'])->name('inicio.get');
@@ -87,7 +88,7 @@ Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(funct
 
     Route::get('fijo/ticket/{folio}', [ControladorCatalogo::class, 'mostrarTicket'])->name('fijo.ticket.get');
 });
-Route::post('fijo/detalles-direccion/buscar', [App\Http\Controllers\ControladorCP::class, 'buscar'])->name('buscar'); //Ruta nueva fijo
+Route::post('fijo/detalles-direccion/buscar', [ControladorCP::class, 'buscar'])->name('buscar'); //Ruta nueva fijo
 
 /* RUTAS DE POSTRES PERSONALIZADOS */
 Route::get('/personalizado', [ControladorCatalogoPersonalizado::class, 'mostrarCatalogo'])->name('personalizado.catalogo.get')
@@ -107,7 +108,7 @@ Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(funct
 
     Route::get('personalizado/ticket/', [ControladorCatalogoPersonalizado::class, 'mostrarTicket'])->name('personalizado.ticket.get');
 });
-Route::post('personalizado/detalles-direccion/buscar', [App\Http\Controllers\ControladorCP::class, 'buscar'])->name('buscar'); //Ruta nueva personalizado
+Route::post('personalizado/detalles-direccion/buscar', [ControladorCP::class, 'buscar'])->name('buscar'); //Ruta nueva personalizado
 
 /* RUTAS DE POSTRES EMERGENTES */
 Route::get('/emergentes', [ControladorCatalogoEmergente::class, 'mostrar'])->name('emergente.catalogo.get')

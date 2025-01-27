@@ -12,7 +12,6 @@ botones.forEach(boton => {
         switch (action) {
             case 'recuperar':
                 if(validarEmail()){
-                    activarBlur();
                     formulario.submit();
                 };
                 break;        

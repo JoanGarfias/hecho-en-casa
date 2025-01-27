@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Exceptions\CalendarioException;
 use Illuminate\Http\Request;
 use App\Models\Catalogo;
 use App\Models\Categoria;
@@ -77,13 +79,13 @@ class ControladorCatalogo extends Controller
             }
 
             if ($catalogo->isEmpty()) {
-                abort(404, 'Catálogo no encontrado');
+                return redirect()->route('inicio.get')->withErrors(['errorCatalogoFijo' => 'Catálogo no encontrado.']);
             }
 
             return view('catalogo', compact('categorias', 'catalogo'))
                 ->with('categoriaSeleccionada', $categoria);
         } else {
-            abort(500, 'No hay categorías disponibles');
+            return redirect()->route('inicio.get')->withErrors(['errorCategoriaFijo' => 'Catálogo no disponible.']);
         }
     }
 
@@ -130,18 +132,18 @@ class ControladorCatalogo extends Controller
         $fecha = Carbon::now();
         if($mes && $anio){
             if (!is_numeric($mes) || !is_numeric($anio)) {
-                throw new InvalidArgumentException('El mes y el año deben ser números enteros.');
+                throw new CalendarioException('El mes y el año deben ser números enteros.');
             }
             
             $mes = (int) $mes;
             $anio = (int) $anio;
 
             if ($mes < 1 || $mes > 12) {
-                throw new InvalidArgumentException('El mes debe estar entre 1 y 12.');
+                throw new CalendarioException('El mes debe estar entre 1 y 12.');
             }
 
             if ($anio < 2024 || $anio > Carbon::now()->year + 1) {
-                throw new InvalidArgumentException('El año no es válido.');
+                throw new CalendarioException('El año no es válido.');
             }
             
             $fecha = Carbon::createFromDate($anio, $mes, 1);
@@ -155,6 +157,7 @@ class ControladorCatalogo extends Controller
             return Pedido:: select('id_ped', 'fecha_hora_entrega', 'porcionespedidas')
                             ->whereBetween('fecha_hora_entrega', [$primerDiaDelMes, $ultimoDiaDelMes])
                             ->where('status', 'aceptado')
+                            ->whereIn('id_tipopostre', ['fijo', 'personalizado'])
                             ->get();
             });
 
@@ -228,10 +231,12 @@ class ControladorCatalogo extends Controller
             return Pedido::select('fecha_hora_entrega', 'porcionespedidas')
                 ->whereIn('id_tipopostre', ['fijo', 'personalizado'])
                 ->whereDate('fecha_hora_entrega', $fechaEscogida)
+                ->where('status', 'aceptado')
                 ->get();
         });
 
         $porciones_dia_aceptados = Pedido::whereDate('fecha_hora_entrega', $fechaEscogida)
+                                ->whereIn('id_tipopostre', ['fijo', 'personalizado'])
                                 ->where('status', 'aceptado')
                                 ->sum('porcionespedidas');
 
@@ -366,7 +371,7 @@ class ControladorCatalogo extends Controller
             }
             session(['atributosSesion' => $atributosSesion]);
         } else {
-            return redirect()->route('seleccionarFecha')->with('error', 'Postre no encontrado.');
+            return redirect()->route('fijo.catalogo.get')->withErrors('errorPostre', 'Postre no encontrado.');
         }
 
         $fecha = session('fecha');
@@ -393,13 +398,18 @@ class ControladorCatalogo extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $id_postre = session('id_postre');
-        $postre = Catalogo::where('id_postre', $id_postre)
-                            ->first();
+        
         //$costo = intval($request->input('costo'));
         $costoUM = PostreFijoUnidad::where('id_pf', $id_postre)->first();
         $costo = $costoUM->precio_um;
-        $id_usuario = session('id_usuario');
+
         session(['tipo_entrega'=> $tipo_entrega]);
+
+        //OBTENER PRECIOS
+        $costototal = $request->input('costot');
+        $porcionestotal = $request->input('porcionest');
+        session(['costototal'=> $costototal, 'porcionestotal'=> $porcionestotal]);
+        //dd($costototal, $porcionestotal);
 
         $fechaEscogida = session('fecha_entrega');
         $horaEntrega = session('hora_entrega');
@@ -491,9 +501,9 @@ class ControladorCatalogo extends Controller
             $pedido->id_usuario = session('id_usuario');
             $pedido->id_tipopostre = $id_tipopostre;
             $pedido->id_seleccion_usuario = $id_nuevo_postre; 
-            $pedido->porcionespedidas = $unidadm * $cantidad; 
+            $pedido->porcionespedidas = $porcionestotal; 
             $pedido->status = 'pendiente';
-            $pedido->precio_final = $costo * $cantidad;
+            $pedido->precio_final = $costototal;
             $pedido->fecha_hora_registro = $fecha_hora_registro;
             $pedido->fecha_hora_entrega = $fecha_hora_entrega;
             $pedido->save();  // Guardamos el pedido
@@ -525,7 +535,6 @@ class ControladorCatalogo extends Controller
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         $tipo_domicilio = $request->input('ubicacion'); 
-        //ACÁ SE DEBERÍA JALAR LA UBICACIÓN DEL FORMULARIO
         $id_usuario = session('id_usuario');
         //por defecto cargamos la ubicacion del usuario predeterminado
         $user = usuario::where('id_u', $id_usuario)->first();
@@ -538,7 +547,6 @@ class ControladorCatalogo extends Controller
         $numeroInterior = $user->num_interior_u;
         $numeroExterior = $user->num_exterior_u;
         $referencia = $user->referencia_u;
-
 
         if($tipo_domicilio==='otra'){ 
             $codigo_postal = $request->input('codigo_postal');
@@ -589,11 +597,11 @@ class ControladorCatalogo extends Controller
         $pedido->num_exterior_e = $numeroExterior; 
         $pedido->num_interior_e = $numeroInterior; 
         $pedido->referencia_e = $referencia;
-        $pedido->porcionespedidas = session("porcionespedidas");
+        $pedido->porcionespedidas = session("porcionestotal");
         $pedido->fecha_hora_entrega =  session('fecha_entrega') . " " . session('hora_entrega'); 
         $pedido->fecha_hora_registro = now();
         $pedido->status = "pendiente";
-        $pedido->precio_final = session("costo");
+        $pedido->precio_final = session("costototal");
         $pedido->save();
 
         $id_pedido = $pedido->id_ped;
