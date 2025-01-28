@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
         const calendar = document.getElementById("calendar");
         const numbers = document.getElementById("numbers");
+        
         // Establecer fondo dinámico
         calendar.style.backgroundImage = months[mesNumerico - 1].bg;
 
@@ -46,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function(){
         const dayName = futureDate.toLocaleDateString('en-US', { weekday: 'long' });
         const dosmeses = new Date(today); 
         dosmeses.setDate(today.getDate() + 70);
+        const daysInCurrentMonth = getDaysInMonth(today.getMonth(), today.getFullYear()) + 1;
         // Generar días del mes actual
         for (let i = 1; i <= numeroUltimoDia ; i++) {
             const day = document.createElement("li");
@@ -66,7 +68,9 @@ document.addEventListener('DOMContentLoaded', function(){
                 day.classList.add("closed");
             }
             else if(mesNumerico-1===today.getMonth()
-                 && (i>today.getDate() && i<=calcularBloqueo(dayName, today.getDate())))//CERRAR DIAS DESPUES SEGUN REGLA DE NEGOCIO
+                 && (i>today.getDate() && i<=calcularBloqueo(dayName, today.getDate()))|| 
+                (mesNumerico - 1 === (today.getMonth() + 1) % 12 && 
+                i <= (calcularBloqueo(dayName, today.getDate()) - daysInCurrentMonth)))//CERRAR DIAS DESPUES SEGUN REGLA DE NEGOCIO
             {
                 day.classList.add("closed");
             }
@@ -89,6 +93,10 @@ document.addEventListener('DOMContentLoaded', function(){
         } 
 
         
+    }
+
+    function getDaysInMonth(month, year) {
+        return new Date(year, month + 1, 0).getDate();
     }
 
     function calcularBloqueo(diafuturo, diapresente){
