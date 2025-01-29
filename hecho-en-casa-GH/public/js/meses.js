@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function(){
         const dayName = futureDate.toLocaleDateString('en-US', { weekday: 'long' });
         const dosmeses = new Date(today); 
         dosmeses.setDate(today.getDate() + 70);
-        const daysInCurrentMonth = getDaysInMonth(today.getMonth(), today.getFullYear()) + 1;
+        const daysInCurrentMonth = getDaysInMonth(today.getMonth(), today.getFullYear());
         // Generar días del mes actual
         for (let i = 1; i <= numeroUltimoDia ; i++) {
             const day = document.createElement("li");
