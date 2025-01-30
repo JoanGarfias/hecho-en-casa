@@ -128,7 +128,7 @@
                                 <input type="radio" name="tematica" value="Otro" id="otrosRadio">
                                 <p class="blanca"> Otro</p>
                                 <div id="campoOtros" style="display: none;">
-                                    <input type="text" id="otrosTexto" name="otrosTexto" class="paraOtros" value="">
+                                    <input type="text" id="otrosTexto" name="otrosTexto" class="paraOtros">
                                 </div>
                             </label>
                         </div>
