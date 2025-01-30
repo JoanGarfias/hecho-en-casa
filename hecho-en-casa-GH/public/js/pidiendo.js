@@ -63,7 +63,6 @@ formulario.addEventListener("submit", (e) => {
     if ((valorValue == '') || (!seleccionado)){
         mostrarMensaje('Tienes que seleccionar todos los campos')
     } else{
-        console.log('Abrir emergente')
         flechaNext.addEventListener('click', function(event) {
             console.log('next')
             fondoEmergente.style.display = 'flex';
