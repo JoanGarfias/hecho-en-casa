@@ -10,6 +10,7 @@ let enviarDescrip = false
 let enviarOtros = false
 let otrosSeleccionado = false
 let enviarFormulario = true
+let validarFormulario = true; // Se valida por defecto
 
 document.addEventListener("DOMContentLoaded", () => {
     const toggleSelectPan = document.getElementById("seleccionarPan");
@@ -161,10 +162,27 @@ textDescrip.addEventListener('input', () => {
     }
 });
 
+// Botón para omitir validaciones
+document.getElementById('prev').addEventListener('click', function () {
+    validarFormulario = false;
+    console.log('Sin validaciones');
+});
+
+// Botón para validar
+document.getElementById('next').addEventListener('click', function () {
+    validarFormulario = true;
+    console.log('Con validaciones');
+});
+
 
 const formulario = document.getElementById('formularioPedidos')
 
-formulario.addEventListener("submit", (e) => { 
+formulario.addEventListener("submit", (e) => {
+    if (!validarFormulario) {
+        console.log("Enviando formulario sin validaciones...");
+        return; // Se permite el envío sin validaciones
+    }
+    
     const fondoEmergente = document.getElementById('fondoEmergente');
     const flechaNext = document.getElementById('next')
     const editar = document.getElementById('editar')
