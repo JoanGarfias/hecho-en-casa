@@ -1,6 +1,33 @@
+/* Estilo base para el pie de página */
+.piePa {
+    width: 100%;
+    background-color: #f4f4f4; /* Fondo opcional */
+    text-align: center;
+}
 
-.piePa img{
-    width: 100%; /*Ancho*/
-    max-width: 2216px; 
-    height: 15%; /* Alto*/
+/* Imagen del pie de página */
+.piePa img {
+    width: 100%; /* Imagen ocupa todo el ancho del contenedor */
+    max-width: 2216px; /* Ancho máximo en pantallas grandes */
+    height: auto; /* Mantiene proporción */
+}
+
+/* Ajustes responsivos */
+@media (max-width: 1200px) {
+    .piePa img {
+        max-width: 1800px; /* Ajusta el tamaño en pantallas medianas */
+    }
+}
+
+@media (max-width: 768px) {
+    .piePa img {
+        max-width: 100%; /* Asegura que la imagen ocupe todo el ancho disponible */
+    }
+}
+
+@media (max-width: 480px) {
+    .piePa img {
+        max-width: 100%;
+        height: auto; /* Mantiene proporción en móviles */
+    }
 }

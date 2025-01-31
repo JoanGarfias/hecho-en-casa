@@ -10,36 +10,54 @@ use App\Http\Controllers\ControladorCatalogoPersonalizado;
 use App\Http\Controllers\ControladorRegistro;
 use App\Http\Controllers\ControladorLogin;
 use App\Http\Controllers\ControladorBuscarPedido;
+use App\Http\Controllers\ControladorPerfil;
 use App\Http\Middleware\ProtectorSesion;
 use App\Http\Middleware\EnlazadorPedido;
-use App\Http\Controllers\ControladorPerfil;
 use App\Http\Middleware\EnlazadorRecuperacion;
 use App\Http\Middleware\EnlazadorRegistro;
 use App\Http\Middleware\ProtectorRouteUserLogin;
+use App\Http\Middleware\ProtectorPeticiones;
+use App\Http\Controllers\ControladorCP;
 
 /* VISTAS PRINCIPALES */
 Route::get('/', [ControladorInicio::class, 'index'])->name('inicio.get');
-Route::get('/conocenos', [ControladorCalendario::class, 'index']);
+
+Route::get('/conocenos', [ControladorInicio::class, 'conocenos'])->name('conocenos.get');
+
+
+//Controlador de buscar 
 Route::get('/buscarpedido', [ControladorBuscarPedido::class, 'ObtenerFolio'])->name('buscarpedido.get');
 Route::post('/buscarpedido', [ControladorBuscarPedido::class, 'MostrarPedido'])->name('buscarpedido.post');
-Route::get('/calendario', [ControladorCalendario::class, 'index'])->name('calendario.get');
+
+Route::get('/calendario/{mes?}/{anio?}', [ControladorCalendario::class, 'index'])->name('calendario.get')
+->middleware(ProtectorPeticiones::class);
+Route::post('/calendario/{mes?}/{anio?}', [ControladorCalendario::class, 'actualizar'])->name('calendario.post');
 
 Route::get('/perfil', [ControladorPerfil::class, 'mostrar'])->name('perfil.get')
-->middleware(ProtectorSesion::class);
-//Route::post('/perfil', [ControladorPerfil::class, ''])->name('perfil.post');
+->middleware([ProtectorSesion::class, ProtectorPeticiones::class]);
+Route::post('/perfil', [ControladorPerfil::class, 'editar'])->name('perfil.post')
+->middleware([ProtectorSesion::class, ProtectorPeticiones::class]);
 
 /* PROCESO DE LOGIN */
-Route::get('/login', [ControladorLogin::class, 'mostrarLogin'])->name('login.get');
-//->middleware(ProtectorRouteUserLogin::class);
-Route::post('/login', [ControladorLogin::class, 'Logear'])->name('login.post');
-//->middleware(ProtectorRouteUserLogin::class);
-Route::get('/cerrar-sesion', [ControladorLogin::class, 'logout'])->middleware(ProtectorSesion::class)->middleware(ProtectorRouteUserLogin::class);
+Route::middleware([ProtectorPeticiones::class])->group(function(){
+    Route::get('/login', [ControladorLogin::class, 'mostrarLogin'])->name('login.get')
+    ->middleware([ProtectorRouteUserLogin::class]);
+
+    Route::post('/login', [ControladorLogin::class, 'Logear'])->name('login.post')
+    ->middleware([ProtectorRouteUserLogin::class]); 
+});
+
+//Route::middleware([ProtectorSesion::class])->group(function(){
+    Route::get('/cerrar-sesion', [ControladorLogin::class, 'logout'])->name('cerrarsesion.get');
+//});
 
 /* PROCESO DE REGISTRO */
 
-Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar.get');
-Route::middleware(EnlazadorRegistro::class)->group(function () {
-    Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.post');
+Route::get('/registrar', [ControladorRegistro::class, 'index'])->name('registrar.get')
+->middleware([ProtectorPeticiones::class])->middleware([ProtectorRouteUserLogin::class]); //C
+
+Route::middleware([EnlazadorRegistro::class])->group(function () {
+    Route::post('/registrar', [ControladorRegistro::class, 'registrar'])->name('registrar.post')->middleware([ProtectorRouteUserLogin::class]); //C
     Route::get('/contrasena', [ControladorRegistro::class, 'contrasena'])->name('registrar.contrasena.get');
     Route::post('/contrasena', [ControladorRegistro::class, 'guardarContrasena'])->name('registrar.contrasena.post');
     Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name('registrar.direccion.get');
@@ -47,13 +65,15 @@ Route::middleware(EnlazadorRegistro::class)->group(function () {
 });
 
 /* PROCESOS PARA RECUPERACION */
-Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecuperacion'])->name('recuperacion.get')
-->middleware(EnlazadorRecuperacion::class);
-Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post')
-->middleware(EnlazadorRecuperacion::class);
+
+Route::middleware([EnlazadorRecuperacion::class, ProtectorPeticiones::class])->group(function(){
+    Route::get('/recuperacion/{token?}', [ControladorRegistro::class, 'validarRecuperacion'])->name('recuperacion.get');
+    Route::post('/guardar-contrasena', [ControladorRegistro::class, 'actualizarContrasena'])->name('cambiar-clave.post');
+});
 
 /* RUTAS DE POSTRES FIJOS */
-Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrarCatalogo'])->name('fijo.catalogo.get');
+Route::get('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'mostrarCatalogo'])->name('fijo.catalogo.get')
+->middleware([ProtectorPeticiones::class]);
 
 Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(function () {
     Route::post('fijo/catalogo/{categoria?}', [ControladorCatalogo::class, 'guardarSeleccionCatalogo'])->name('fijo.catalogo.post');
@@ -68,10 +88,11 @@ Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(funct
 
     Route::get('fijo/ticket/{folio}', [ControladorCatalogo::class, 'mostrarTicket'])->name('fijo.ticket.get');
 });
-Route::post('fijo/detalles-direccion/buscar', [App\Http\Controllers\ControladorCP::class, 'buscar'])->name('buscar');
+Route::post('fijo/detalles-direccion/buscar', [ControladorCP::class, 'buscar'])->name('buscar'); //Ruta nueva fijo
 
 /* RUTAS DE POSTRES PERSONALIZADOS */
-Route::get('/personalizado', [ControladorCatalogoPersonalizado::class, 'mostrarCatalogo'])->name('personalizado.catalogo.get');
+Route::get('/personalizado', [ControladorCatalogoPersonalizado::class, 'mostrarCatalogo'])->name('personalizado.catalogo.get')
+->middleware([ProtectorPeticiones::class]);
 
 Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(function () {
     Route::post('/personalizado', [ControladorCatalogoPersonalizado::class, 'seleccionarCatalogo'])->name('personalizado.catalogo.post');
@@ -85,11 +106,13 @@ Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(funct
     Route::get('personalizado/detalles-direccion', [ControladorCatalogoPersonalizado::class, 'mostrarDireccion'])->name('personalizado.direccion.get');
     Route::post('personalizado/detalles-direccion', [ControladorCatalogoPersonalizado::class, 'guardarDireccion'])->name('personalizado.direccion.post');
 
-    Route::get('personalizado/ticket/{folio}', [ControladorCatalogoPersonalizado::class, 'mostrarTicket'])->name('personalizado.ticket.get');
+    Route::get('personalizado/ticket/', [ControladorCatalogoPersonalizado::class, 'mostrarTicket'])->name('personalizado.ticket.get');
 });
+Route::post('personalizado/detalles-direccion/buscar', [ControladorCP::class, 'buscar'])->name('buscar'); //Ruta nueva personalizado
 
 /* RUTAS DE POSTRES EMERGENTES */
-Route::get('/emergentes', [ControladorCatalogoEmergente::class, 'mostrar'])->name('emergente.catalogo.get');
+Route::get('/emergentes', [ControladorCatalogoEmergente::class, 'mostrar'])->name('emergente.catalogo.get')
+->middleware([ProtectorPeticiones::class]);
 
 Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(function () {
     Route::post('/emergentes', [ControladorCatalogoEmergente::class, 'guardarSeleccion'])->name('emergente.catalogo.post');
@@ -103,6 +126,5 @@ Route::middleware([ProtectorSesion::class, EnlazadorPedido::class])->group(funct
     Route::get('emergentes/detalles-direccion', [ControladorCatalogoEmergente::class, 'mostrarDireccion'])->name('emergente.direccion.get');
     Route::post('emergentes/detalles-direccion', [ControladorCatalogoEmergente::class, 'seleccionarDireccion'])->name('emergente.direccion.post');
 
-    Route::get('emergentes/ticket/', [ControladorCatalogo::class, 'mostrarTicket'])->name('emergente.ticket.get');
+    Route::get('emergentes/ticket/', [ControladorCatalogoEmergente::class, 'mostrarTicket'])->name('emergente.ticket.get');
 });
-

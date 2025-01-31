@@ -1,3 +1,4 @@
+
 // Función para mostrar u ocultar los campos de dirección
 function toggleAddressFields() {
     const addressFields = document.getElementById('address-fields');
@@ -8,5 +9,5 @@ function toggleAddressFields() {
     } else {
         addressFields.style.display = 'none';
     }
- }
+}
  

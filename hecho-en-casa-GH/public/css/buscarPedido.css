@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
+
+/*Buscador de pedido css*/
 /* Reset básico */
 * {
     font-family: "Poppins", sans-serif;
@@ -15,61 +17,92 @@ body {
     align-items: center;
     height: 100vh;
     padding-top: 20px;
+    overflow-x: hidden; /* Evita desbordamientos horizontales */
 }
+
+/* Estilo del encabezado */
 .header {
     display: flex;
     flex-direction: column; /* Apila el título y el buscador */
-    align-items: center; /* Centra los elementos horizontalmente */
+    align-items: center;
     width: 100%;
     max-width: 1300px;
     margin: 0 auto;
-    position: relative; /* Permite posicionar el buscador */
+    position: relative;
 }
 
 .titulo {
+    margin-top: 50px;
     font-size: 24px;
     font-weight: bold;
     color: #7E643B;
     text-align: center;
     margin-bottom: 20px;
 }
+.search-container { 
+    position: absolute; /* Coloca el buscador en la esquina superior derecha */ 
+    top: 100px; 
+    right: 0; 
+    display: flex; 
+    align-items: center; 
+    background-color: #EADAC6; 
+    border-radius: 25px; 
+    padding: 5px 10px; 
+    width: 300px; 
+} 
 
-.search-container {
-    position: absolute; /* Coloca el buscador en la esquina superior derecha */
-    top: 0;
-    right: 0;
-    display: flex;
-    align-items: center;
-    background-color: #EADAC6;
-    border-radius: 25px;
-    padding: 5px 10px;
-    width: 300px;
-}
-
-
-.search-container input {
+.search-container input { 
     border: none;
-    background: white;
-    outline: none;
-    flex: 1;
-    font-size: 16px;
-    color: #b3a89d;
-    padding: 5px;
-    border-radius: 20px;
+    background: white; 
+    outline: none; 
+    flex: 1; 
+    font-size: 16px; 
+    color: #b3a89d; 
+    padding: 5px; 
+    border-radius: 20px; 
+} 
+
+.search-input-container { 
+    display: flex; 
+    align-items: center; 
+    width: 100%; 
 }
 
-.search-container img {
-    width: 20px;
-    height: 20px;
-    margin-left: 10px;
-}
+.search-container button { 
+    border: none; 
+    background: none; padding: 0; /* Elimina espacios adicionales */ 
+    margin-left: 9px;
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    height: 100%; 
+
+} .search-container button img { 
+    width: 20px; 
+    height: 20px; 
+    margin-left: 10px; 
+    filter: invert(35%) sepia(15%) saturate(500%) hue-rotate(10deg) brightness(95%) contrast(85%); 
+    transition: transform 0.2s ease; } 
+    
+    .search-container button:hover img { 
+        transform: scale(1.1); 
+    }
+
+
+
+/* Contenedor principal */
 .container {
     background-color: #EADAC6;
-    width: 1300px;
-    padding: 30px;
+    width: 100%;
+    max-width: 1300px;
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 80px;
+    overflow-x: hidden; /* Evita desbordes horizontales */
 }
+
 .folio {
     text-align: center;
     font-size: 20px;
@@ -88,11 +121,13 @@ body {
 .form-columns {
     display: flex;
     justify-content: space-between;
-    gap: 90px;
+    gap: 50px;
+    flex-wrap: wrap; /* Permite que las columnas se ajusten en pantallas pequeñas */
 }
 
 .form-column {
     flex: 1;
+    min-width: 280px; /* Ajusta el ancho mínimo para evitar desbordes */
 }
 
 .form-group {
@@ -101,7 +136,7 @@ body {
     background-color: #FCF5C7;
     padding: 12px;
     border-radius: 5px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 .form-group label {
@@ -157,4 +192,77 @@ body {
     color: #7E643B;
     font-weight: bold;
     font-size: 18px;
+}
+
+.estatus-btn {
+    background-color: #F8CFA0;
+    color: #F3770A;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Media queries para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .search-container {
+        position: static;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .container {
+        padding: 15px;
+        margin-top: 50px;
+    }
+
+    .form-columns {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .titulo {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .titulo {
+        font-size: 18px;
+        margin-top: 30px;
+        margin-left: 100px;
+    }
+
+    .search-container input {
+        font-size: 14px;
+    }
+
+    .form-group {
+        padding: 10px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-group label {
+        margin-bottom: 5px;
+        text-align: left;
+    }
+
+    .estatus-options button {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .form-columns {
+        gap: 10px; /* Reduce el espacio entre columnas */
+    }
 }

@@ -29,18 +29,15 @@ class EnlazadorRegistro
         $flujo = $this->obtenerFlujo();
 
         if ($this->datosSesionInvalidos($rutaAnterior, $rutaActual)) {
-            //dd("Datos nulos", $rutaActual, $rutaAnterior);
             return redirect()->route($this->obtenerPaginaRegreso())->with('error', 'No sigue la estructura de la ruta de registro.');
         }
 
         if ($flujo === null || !isset($flujo[$rutaActual])) {
-            //dd("Flujo invalido", $flujo, $rutaActual, $flujo[$rutaActual]);
             return redirect()->route($this->obtenerPaginaRegreso())->with('error', 'No sigue la estructura de la ruta de registro.');
         }
 
         $aceptadas = $flujo[$rutaActual];
         if (!in_array($rutaAnterior, $aceptadas)) {
-            //dd("No es una pagina dentro de las aceptadas", $rutaActual, $rutaAnterior, $aceptadas);
             return redirect()->route($this->obtenerPaginaRegreso())->with('error', 'No sigue la estructura de la ruta de registro.');
         }
 

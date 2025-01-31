@@ -1,17 +1,17 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Correo</title>
-</head>
-<body>
-    <p>Gracias por usar nuestra aplicación.</p>
-    <p>Entra al siguiente enlace:</p>
-    <a href="#" onclick="document.getElementById('recuperar-form').submit()">hechoencasa.com/recuperacion/{{$token}}</a>
+<!--No está identado a propósito. No critiquen-->
 
-    <form id="recuperar-form" action="{{ route('recuperacion.get', ['token' => $token]) }}" method="POST" style="display: none;">
-        @csrf
-    </form>
-</body>
-</html>
+<x-mail::message>
+
+<h1 class="texto">Olvidaste tu contraseña  :(</h1>
+<br>
+
+<p>No te preocupes :D</p>
+<p>Ingresa al siguiente enlace para obtener una nueva: </p>
+  
+<a class ="linkito" href="#" onclick="document.getElementById('recuperar-form').submit()">blue-emu-830907.hostingersite.com/recuperacion/{{$token}}</a>
+    
+<form id="recuperar-form" action="{{ route('recuperacion.get', ['token' => $token]) }}" method="POST" style="display: none;">
+@csrf
+</form>
+</x-mail::message>
+

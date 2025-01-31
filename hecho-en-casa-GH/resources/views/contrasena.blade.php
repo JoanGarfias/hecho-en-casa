@@ -31,18 +31,22 @@
             <br>
             <button class="botoncito" type="submit" name="action" value="contrasena" >Continuar</button>
 
-
             <!--button class="botoncito" type="submit" name="action" value="contrasena">Continuar</button-->
 
         </form>  
     </div>
 </div>
 
+<div class="pagination">
+    <span class="dot "></span>
+    <span class="dot active"></span>
+    <span class="dot"></span>
+  </div>
+
 <x-pie/>
 
 <script src="{{ asset('js/validarContrasena.js') }}"></script>
-<!--Para la animación del logo de usuario-->
-<script src="{{ asset('js/icono.js') }}" defer></script>
+
 <!--Para mostrar la contraseña-->
 <script src="{{ asset('js/mostrarContra.js') }}" defer></script>
 <!--Para borrar el parrafo al hacer click al input-->

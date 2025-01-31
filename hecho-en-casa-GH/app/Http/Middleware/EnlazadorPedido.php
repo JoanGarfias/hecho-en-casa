@@ -9,21 +9,21 @@ class EnlazadorPedido
     private $rutasBase = [
         'fijo' => [
             'fijo.catalogo.post' => ['fijo.catalogo.get'],
-            'fijo.calendario.get' => ['fijo.catalogo.post', 'fijo.detallesPedido.get'],
+            'fijo.calendario.get' => ['fijo.catalogo.post', 'fijo.detallesPedido.get', 'fijo.calendario.post'],
             'fijo.calendario.post' => ['fijo.calendario.get', 'fijo.detallesPedido.get'],
             'fijo.detallesPedido.get' => ['fijo.calendario.post'],
             'fijo.detallesPedido.post' => ['fijo.detallesPedido.get'],
         ],
         'personalizado' => [
             'personalizado.catalogo.post' => ['personalizado.catalogo.get'],
-            'personalizado.calendario.get' => ['personalizado.catalogo.post', 'personalizado.detallesPedido.get'],
+            'personalizado.calendario.get' => ['personalizado.catalogo.post', 'personalizado.detallesPedido.get', 'personalizado.calendario.post'],
             'personalizado.calendario.post' => ['personalizado.calendario.get', 'personalizado.detallesPedido.get'],
             'personalizado.detallesPedido.get' => ['personalizado.calendario.post'],
             'personalizado.detallesPedido.post' => ['personalizado.detallesPedido.get'],
         ],
         'emergente' => [
             'emergente.catalogo.post' => ['emergente.catalogo.get'],
-            'emergente.calendario.get' => ['emergente.catalogo.post', 'emergente.detallesPedido.get'],
+            'emergente.calendario.get' => ['emergente.catalogo.post', 'emergente.detallesPedido.get', 'emergente.calendario.post'],
             'emergente.calendario.post' => ['emergente.calendario.get', 'emergente.detallesPedido.get'],
             'emergente.detallesPedido.get' => ['emergente.calendario.post'],
             'emergente.detallesPedido.post' => ['emergente.detallesPedido.get'],
@@ -51,24 +51,25 @@ class EnlazadorPedido
         $flujo = $this->obtenerFlujo($tipopostre, $opcion_envio);
 
         if ($this->datosSesionInvalidos($rutaAnterior, $rutaActual, $tipopostre)) {
+            $this->olvidarDatos($rutaAnterior, $tipopostre, $opcion_envio);
             return redirect()->route($this->obtenerPaginaRegreso($tipopostre))->with('error', 'No sigue la estructura de la ruta.');
         }
 
         if ($flujo === null || !isset($flujo[$rutaActual])) {
+            $this->olvidarDatos($rutaAnterior, $tipopostre, $opcion_envio);
             return redirect()->route($this->obtenerPaginaRegreso($tipopostre))->with('error', 'No sigue la estructura de la ruta.');
         }
 
         $aceptadas = $flujo[$rutaActual];
         if (!in_array($rutaAnterior, $aceptadas)) {
+            $this->olvidarDatos($rutaAnterior, $tipopostre, $opcion_envio);
             return redirect()->route($this->obtenerPaginaRegreso($tipopostre))->with('error', 'No sigue la estructura de la ruta.');
         }
 
-        $respuesta = $this->eliminarCache($rutaActual, $next($request), $opcion_envio, $tipopostre);
-        if ($respuesta !== null) {
-            return $respuesta;
-        }
+        // Ejecuta $next($request) una sola vez y pasa la respuesta a eliminarCache.
+        $response = $next($request);
+        return $this->eliminarCache($rutaActual, $response, $opcion_envio, $tipopostre) ?? $response;
 
-        return $next($request);
     }
 
     private function obtenerFlujo($tipopostre, $opcion_envio)
@@ -129,6 +130,15 @@ class EnlazadorPedido
 
         return null;
     }
+
+    private function olvidarDatos(... $datos){
+        foreach($datos as $dato){
+            if($dato !== null){
+                session()->forget($dato);
+            }
+        }
+    }
+
 }
 
 ?>

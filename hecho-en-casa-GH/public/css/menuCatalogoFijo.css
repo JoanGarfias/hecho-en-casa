@@ -1,0 +1,104 @@
+/* General */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fdf8ee;
+    display: flex; /* Alinea los elementos horizontalmente */
+    flex-direction: row; /* Coloca el menú y contenido principal en fila */
+    min-height: 100vh; /* Asegura que cubra toda la altura de la pantalla */
+}
+
+/* Menú lateral */
+.menu-lateral {
+    width: 200px; /* Ancho inicial para pantallas grandes */
+    max-width: 20%; /* Limita el ancho máximo a un porcentaje */
+    background-color: #d9b485;
+    color: white;
+    padding: 15px; /* Espaciado interno */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
+    border-radius: 0 10px 10px 0; /* Bordes redondeados en la esquina derecha */
+    margin: 20px; /* Espaciado alrededor del menú */
+    position: sticky; /* Fija el menú al hacer scroll */
+    top: 20px; /* Ajusta la distancia desde la parte superior */
+    height: fit-content; /* Se ajusta al contenido interno */
+    margin-right: 80%;
+}
+
+/* Títulos del menú */
+.menu-lateral h3 {
+    font-size: 1em; /* Ajusta el tamaño según la pantalla */
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+/* Lista del menú */
+.menu-lateral ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-lateral ul li {
+    margin: 8px 0;
+}
+
+.menu-lateral ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9em; /* Ajusta el tamaño según la pantalla */
+}
+
+.menu-lateral ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Responsividad con Media Queries */
+@media (max-width: 1024px) {
+    .menu-lateral {
+        width: 180px; /* Reduce el ancho en pantallas medianas */
+        max-width: 25%; /* Limita el ancho relativo */
+    }
+
+    .menu-lateral h3 {
+        font-size: 0.9em; /* Reduce el tamaño del título */
+    }
+
+    .menu-lateral ul li a {
+        font-size: 0.85em; /* Ajusta el tamaño del texto */
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        flex-direction: column; /* Cambia a diseño en columna */
+        align-items: stretch; /* Asegura que los elementos se estiren */
+    }
+
+    .menu-lateral {
+        width: 100%; /* El menú ocupa todo el ancho */
+        max-width: none; /* Anula el límite máximo */
+        border-radius: 0; /* Elimina los bordes redondeados */
+        margin: 0; /* Elimina los márgenes */
+        padding: 20px; /* Espaciado interno mayor */
+        top: 0; /* Menú en la parte superior */
+    }
+
+    .menu-lateral ul li a {
+        font-size: 1em; /* Aumenta el tamaño del texto para facilitar la lectura */
+    }
+}
+
+@media (max-width: 480px) {
+    .menu-lateral {
+        padding: 15px; /* Reduce el espaciado interno */
+        font-size: 0.8em; /* Ajusta el tamaño general del texto */
+    }
+
+    .menu-lateral ul li {
+        margin: 6px 0; /* Reduce el espacio entre elementos */
+    }
+}

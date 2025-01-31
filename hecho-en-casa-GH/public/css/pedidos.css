@@ -90,14 +90,15 @@ label {
     font-weight: bold;
 }
 
-input {
+.paraMostrar {
     background: white;
     border: 1px solid #E8D9C2;
+    color: black;
     border-radius: 4px;
-    width: 30%;
+    width: 40%;
     padding: 5px;
     margin-left: 36px;
-    
+    font-weight: normal;
 }
 
 .mensaje{
@@ -135,10 +136,6 @@ input {
 
 form {
     text-align: center;
-}
-
-#fechaEntrega{
-    font-weight: bold;
 }
 
 .nota{
@@ -181,7 +178,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .fila label {
     display: flex;
     align-items: center;
-    gap: 10px; /* Espacio entre el botón y el texto */
+    gap: 19px; /* Espacio entre el botón y el texto */
 }
 
 .fila input[type="radio"] {
@@ -189,13 +186,15 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     width: 20px;
     height: 20px;
     border: 2px solid #FBAF35; /* Añade un borde para darle forma de cuadrado */
+    left: 20%;
+    position: relative;
 }
 
 select {
     background: white;
     border: 1px solid #E8D9C2;
     border-radius: 4px;
-    width: 70%; /* Ajusta el ancho según sea necesario */
+    width: 100%; /* Ajusta el ancho según sea necesario */
     padding: 5px;
 }
 
@@ -246,8 +245,10 @@ select {
 .custom-select-button {
     background-color: transparent;
     border: none;
-    font-size: 20px;
+    font-weight: normal;
+    font-size: medium;
     cursor: pointer;
+
 }
 
 .custom-select-options {
@@ -256,13 +257,14 @@ select {
     top: 100%;
     left: 0px;
     right: 0px;
-    background-color: #FCF5C7;
+    background-color: #FFFADA;
     border: 1px solid #E8D9C2;
     border-radius: 4px;
     max-height: 224px;
     overflow-y: visible;
     z-index: 1;
     width: 150px;
+    font-weight: normal;
 }
 
 .custom-select-options .option {
@@ -271,7 +273,7 @@ select {
 }
 
 .custom-select-options .option:hover {
-    background-color: #E8D9C2;
+    background-color: #ecc180;
 }
 
 .custom-select-button:focus + .custom-select-options {

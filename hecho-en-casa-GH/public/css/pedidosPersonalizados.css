@@ -36,6 +36,42 @@
     border: 2px solid #FBAF35; /* Añade un borde para darle forma de cuadrado */
 }
 
+#otrosRadio{
+    width: 20px;
+    height: 20px;
+}
+
+#otrosRadio:checked{
+    width: 26px;
+}
+
+input[type="radio"]:checked {
+    transform: scale(1.2); /* Aumenta el tamaño */
+}
+
+.paraOtros{
+    background: white;
+    border: 1px solid #E8D9C2;
+    color: black;
+    border-radius: 4px;
+    padding: 5px;
+    font-weight: normal;
+    margin-left: 0px;
+    width: 100%;
+}
+
+.paraMostrar{
+    width: 100%;
+}
+
+.tam{
+    width: 40%;
+}
+
+#fechaEntrega{
+    width: auto;
+}
+
 .escribiendo {
     background: white;
     border: 1px solid #E8D9C2;

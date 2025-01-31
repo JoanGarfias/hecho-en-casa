@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\Correo;
-use App\Models\Usuario;
+use App\Models\usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cookie;
@@ -17,21 +17,20 @@ class ControladorLogin extends Controller
     {   
         return view('iniciar-sesion');
     }
-
+    
     public function Logear(Request $request)
     {
-        $action = $request->input('solicitud');//esto borrar
-
-        if($action === 'login'){
+        $action = $request->input('action');//esto borrar
+        if($action == 'login'){
             
             $credentials = $request->validate([
-                'correo_electronico' => 'required|email',
+                'email' => 'required|email',
                 'password' => 'required',
                 'g-recaptcha-response' => 'required|captcha',
             ]);
-    
-            $usuario = Usuario::select('id_u', 'contraseña')
-            ->where('correo_electronico', $credentials['correo_electronico'])
+
+            $usuario = usuario::select('id_u', 'contraseña')
+            ->where('correo_electronico', $credentials['email'])
             ->first();
 
             if ($usuario && Hash::check($credentials['password'], $usuario->contraseña)) {
@@ -41,28 +40,48 @@ class ControladorLogin extends Controller
                 $usuario->update([
                     'token_sesion' => $sessionToken,
                 ]);
-                // Crear la galleta con el token de sesión
-                return redirect()->route('inicio.get')->withCookie(cookie('session_token', $sessionToken, 60 * 72)); // 72 horas
+                // Crear la galleta con el token de sesión y el id
+                $userId = $usuario ? $usuario->id_u : null; // Devuelve el id si existe, o si no devuelve null
+                
+                //false para http only y que se pueda ver en JS
+                Cookie::queue(cookie('session_token', $sessionToken, 60 * 72, null, null, false, false));
+                Cookie::queue(cookie('user_id', $userId, 60 * 72, null, null, false, false));
+
+                switch(session('id_tipopostre')){
+                    case "fijo":
+                        return redirect()->route('fijo.calendario.get');
+                        break;
+                    case "personalizado":
+                        return redirect()->route('personalizado.calendario.get');
+                        break;
+                    case "emergente":
+                        return redirect()->route('emergente.calendario.get');
+                        break;
+                    default:
+                    return redirect()->route('inicio.get'); // 72 horas
+                        break;
+                }
             }
             else{
-                return redirect()->route('login.get')->withErrors(['correo_electronico' => 'Credenciales incorrectas.']);
+                return redirect()->route('login.get')->withErrors(['error' => 'Credenciales incorrectas.']);
             }
-        }elseif($action === 'recuperar'){
+        }elseif($action == 'recuperar'){
             
             $credentials = $request->validate([
-                'correo_electronico' => 'required|email',
+                'email' => 'required|email',
             ]);
     
-            $usuario = Usuario::where('correo_electronico', $credentials['correo_electronico'])->first();
+            $usuario = usuario::where('correo_electronico', $credentials['email'])->first();
             if($usuario){
-                $correo = $credentials['correo_electronico'];
+                $correo = $credentials['email'];
                 $token = Str::random(64);
                 Mail::to($correo)->send(new Correo($token));
                 $usuario->token_recuperacion = $token;
                 try{
                     $usuario->save();
                 }catch(\Exception $e){
-                    dd("Error al guardar el postre emergente: ".$e->getMessage());
+                    return redirect()->route('inicio.get')
+                    ->with('error', 'Error al recuperar contraseña');    
                 }
                 session([
                     'correo' => $correo,
@@ -72,8 +91,8 @@ class ControladorLogin extends Controller
                 ->with('success', 'Se ha enviado un enlace de recuperación a tu correo.');
             }
             return redirect()->back()
-                ->with('error', 'Correo no registrado.');
-        }elseif($action === 'register'){
+                ->with('errorCorreo', 'Correo no registrado.');
+        }elseif($action == 'register'){
             return redirect()->route('registrar.get');
         }
     }
@@ -82,7 +101,7 @@ class ControladorLogin extends Controller
     {
         //conseguir galleta
         $sessionToken = $request->cookie('session_token');
-    
+
         if ($sessionToken) {
             // Buscar al usuario con ese token de sesión
             $usuario = Usuario::where('token_sesion', $sessionToken)->first();
@@ -92,9 +111,15 @@ class ControladorLogin extends Controller
                 $usuario->update(['token_sesion' => null]);
             }
         }
-    
-        // Eliminar la galleta porque cerró sesión
-        return redirect('/')->withCookie(cookie()->forget('session_token'));
+        
+        session()->forget('id_tipopostre');
+
+        // Eliminar cookies
+        Cookie::queue(cookie('session_token', 0, -1, null, null, false, false));
+        Cookie::queue(cookie('user_id', 0, -1, null, null, false, false));        
+
+        // Opcional: Invalida la sesión en el servidor (si estás usando sesiones)
+        return redirect()->route('login.get');
     }
     
 }
