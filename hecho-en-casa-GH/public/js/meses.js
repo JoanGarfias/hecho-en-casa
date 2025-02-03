@@ -99,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
     function calcularBloqueo(diafuturo, diapresente){
-        console.log(diafuturo)
         switch(diafuturo){
             case "Saturday":
                 return diapresente + 6;
