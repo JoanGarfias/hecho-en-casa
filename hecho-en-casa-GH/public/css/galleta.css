@@ -134,37 +134,11 @@ body {
 
 
 /* Media Queries para hacerlo responsivo */
-@media (max-width: 768px) {
-    .title {
-        font-size: 1.5em;
-    }
-
+@media (max-width: 800px) {
     #productos {
-        flex-direction: column; /* Cambia los productos a una columna en pantallas pequeñas */
-        align-items: center;
-    }
-
-    .main-container {
-        width: 90%; /* Aumenta el tamaño del contenedor en pantallas más pequeñas */
-    }
-
-    .contenido-principal {
-        margin-top: 20px; /* Reduce el margen superior en pantallas pequeñas */
-    }
-
-    .description-container {
-        font-size: 0.9em; /* Aumenta el tamaño de la fuente en pantallas pequeñas */
-    }
-
-    .outer-circle {
-        width: 50px;
-        height: 50px;
-    }
-
-    .price-circle {
-        width: 40px;
-        height: 40px;
-        font-size: 0.7em; /* Ajusta el tamaño de la fuente en pantallas pequeñas */
+        position: relative;
+        left: 80px;
+        right: 0px;
     }
 }
 
@@ -186,5 +160,13 @@ body {
         width: 35px;
         height: 35px;
         font-size: 0.6em;
+    }
+
+    #productos {
+        width: 65%; /* El ancho será el 50% del contenedor */
+        height: auto;
+        position: relative;
+        left: 130px;
+        right: 0px;
     }
 }

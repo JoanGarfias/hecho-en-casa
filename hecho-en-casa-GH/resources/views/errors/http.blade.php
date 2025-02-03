@@ -21,7 +21,6 @@
 <body>
     <div class="contenedor">
         <h1>❌ Error 503</h1>
-        <p>{{$message}}</p>
     <br>
         <br>
         <p><b>Ocurrió un error al procesar su solicitud.</b></p>

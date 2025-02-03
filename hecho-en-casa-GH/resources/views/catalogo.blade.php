@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/menuCatalogoFijo.css') }}">
     <link rel="stylesheet" href="{{ asset('css/galleta.css') }}">
+    
     <title>Catálogo</title>
 </head>
 <x-menu/>
