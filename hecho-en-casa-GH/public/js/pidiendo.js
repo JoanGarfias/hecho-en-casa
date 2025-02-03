@@ -6,13 +6,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // Botón para omitir validaciones
     document.getElementById('prev').addEventListener('click', function () {
         validarFormulario = false;
-        console.log('Sin validaciones');
     });
 
     // Botón para validar
     document.getElementById('next').addEventListener('click', function () {
         validarFormulario = true;
-        console.log('Con validaciones');
     });
 
     let valorValue = ''
@@ -68,10 +66,12 @@ document.addEventListener("DOMContentLoaded", function () {
     formulario.addEventListener("submit", (e) => { 
         if (!validarFormulario) {
             // Si "prev" fue presionado, enviamos sin validar
-            console.log("Enviando formulario sin validaciones...");
-            return; // Se envía sin restricciones
-        }
-    // console.log("en el listener");
+            const calendarioUrl = document.querySelector("meta[name='ruta-calendario']").getAttribute("content");
+            const mensaje = document.getElementById('mensajeEmergente');
+            mensaje.style.display = 'none'
+            window.location.href = calendarioUrl;
+        } 
+
         const fondoEmergente = document.getElementById('fondoEmergente');
         const flechaNext = document.getElementById('next')
         const editar = document.getElementById('editar')
@@ -82,7 +82,6 @@ document.addEventListener("DOMContentLoaded", function () {
             mostrarMensaje('Tienes que seleccionar todos los campos')
         } else{
             flechaNext.addEventListener('click', function(event) {
-                console.log('next')
                 fondoEmergente.style.display = 'flex';
             });
 

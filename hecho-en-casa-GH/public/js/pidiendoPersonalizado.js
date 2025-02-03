@@ -165,13 +165,11 @@ textDescrip.addEventListener('input', () => {
 // Botón para omitir validaciones
 document.getElementById('prev').addEventListener('click', function () {
     validarFormulario = false;
-    console.log('Sin validaciones');
 });
 
 // Botón para validar
 document.getElementById('next').addEventListener('click', function () {
     validarFormulario = true;
-    console.log('Con validaciones');
 });
 
 
@@ -179,8 +177,10 @@ const formulario = document.getElementById('formularioPedidos')
 
 formulario.addEventListener("submit", (e) => {
     if (!validarFormulario) {
-        console.log("Enviando formulario sin validaciones...");
-        return; // Se permite el envío sin validaciones
+        const calendarioUrl = document.querySelector("meta[name='ruta-calendarioP']").getAttribute("content");
+        const mensaje = document.getElementById('mensajeEmergente');
+        mensaje.style.display = 'none'
+        window.location.href = calendarioUrl;
     }
     
     const fondoEmergente = document.getElementById('fondoEmergente');
