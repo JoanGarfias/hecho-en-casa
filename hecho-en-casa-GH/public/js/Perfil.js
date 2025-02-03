@@ -13,6 +13,7 @@ const calleInput = document.getElementById('calle');
 const numeroIntInput = document.getElementById('numero-int');
 const numeroExtInput = document.getElementById('numero-ext');
 const coloniaSelect = document.getElementById('colonia');
+const referenciaInput = document.getElementById('referencia');
 const cambiarContrasena = document.getElementById('hiddenAction1');
 const cambiarDomicilio = document.getElementById('hiddenAction2');
 const cambiarTelefono = document.getElementById('hiddenAction3');
@@ -52,7 +53,8 @@ editarDirButton.addEventListener('click', () => {
         calleInput,
         numeroIntInput,
         numeroExtInput,
-        coloniaSelect
+        coloniaSelect,
+        referenciaInput
     ]);
 });
 
@@ -68,13 +70,15 @@ saveButton.addEventListener('click', () => {
     }
 
     if(editarPasButton.disabled == true){
-        if (/[A-Z]/.test(passwordInput.value) && /[a-z]/.test(passwordInput.value) && /\d/.test(passwordInput.value) ) {
+        if (/[A-Z]/.test(passwordInput.value) && /[a-z]/.test(passwordInput.value) && /\d/.test(passwordInput.value)) {
         cambiarContrasena.value = true;
         }
     }
 
     if(editarDirButton.disabled == true){
-        cambiarDomicilio.value = true;
+        if(!/[\<\>]/.test(referenciaInput.value)){
+            cambiarDomicilio.value = true;
+        }
     }
 
     if(cambiarTelefono.value || cambiarContrasena.value || cambiarDomicilio.value){
