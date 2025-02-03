@@ -72,3 +72,42 @@
   .active {
     background-color: darkgoldenrod; /* Color más oscuro para resaltar */
   }
+
+
+  @media (max-width: 900px) {
+    .flexi {
+        position: relative;
+        max-width: 400px;
+        padding: 20px;
+        margin-bottom: 20px;
+        align-items: center;
+        justify-content: center;
+        top: 50px;
+        
+    }
+
+    .pagination {
+        position: relative;
+        bottom: 150px;
+      }
+
+}
+
+
+@media (max-width: 680px) {
+    
+    .pagination {
+        position: relative;
+        bottom: 50px;
+      }
+
+      .flexi {
+        position: relative;
+        max-width: 400px;
+        padding: 20px;
+        margin-bottom: 20px;
+        align-items: center;
+        top: auto;
+        
+    }
+}

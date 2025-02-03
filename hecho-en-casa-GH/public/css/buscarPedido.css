@@ -204,16 +204,13 @@ body {
 }
 
 /* Media queries para pantallas más pequeñas */
-@media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
+@media (max-width: 800px) {
+    
     .search-container {
         position: static;
-        width: 100%;
+        width: 50%;
         margin-top: 20px;
+
     }
 
     .container {
@@ -231,38 +228,26 @@ body {
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 580px) {
     .titulo {
-        font-size: 18px;
-        margin-top: 30px;
-        margin-left: 100px;
+        font-size: 20px;
+        
     }
 
-    .search-container input {
-        font-size: 14px;
+    .search-container {
+        position: static;
+        width: auto;
+        margin-top: 20px;
+        
     }
 
-    .form-group {
-        padding: 10px;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .form-group label {
-        margin-bottom: 5px;
-        text-align: left;
-    }
-
-    .estatus-options button {
-        font-size: 12px;
-        padding: 6px 10px;
-    }
 
     .container {
         padding: 10px;
     }
 
     .form-columns {
+        flex-direction: column;
         gap: 10px; /* Reduce el espacio entre columnas */
     }
 }
