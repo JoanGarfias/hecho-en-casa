@@ -19,7 +19,7 @@
     
         <div class="contenedor">
             <h1>❌ Error en la Conexión</h1>
-            <p>{{$message}}</p>
+            
         <br>
             <p>Disculpe los inconvenientes.</p>
             <br>

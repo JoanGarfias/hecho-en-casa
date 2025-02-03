@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
         const today = new Date();
         const futureDate = new Date(today);
-        futureDate.setDate(today.getDate() + 4); 
+        futureDate.setDate(today.getDate() + 5);  //5 porque son los 4 dias y quieres ver el siguiente
         const dayName = futureDate.toLocaleDateString('en-US', { weekday: 'long' });
         const dosmeses = new Date(today); 
         dosmeses.setDate(today.getDate() + 70);
@@ -99,6 +99,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
     function calcularBloqueo(diafuturo, diapresente){
+        console.log(diafuturo)
         switch(diafuturo){
             case "Saturday":
                 return diapresente + 6;
