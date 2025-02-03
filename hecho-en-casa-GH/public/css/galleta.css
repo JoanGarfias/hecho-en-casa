@@ -134,39 +134,37 @@ body {
 
 
 /* Media Queries para hacerlo responsivo */
-@media (max-width: 800px) {
+@media (max-width: 800px) and (orientation:  landscape){
     #productos {
         position: relative;
         left: 80px;
         right: 0px;
     }
+    .main-container {
+        width: 30%; /* Deja que los contenedores ocupen todo el ancho disponible */
+        padding: 10px;
+    }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 680px) and (orientation: portrait){
     .title {
         font-size: 1.2em;
+        position: relative;
+        top: -100px;
     }
 
     .main-container {
-        width: 100%; /* Deja que los contenedores ocupen todo el ancho disponible */
+        width: 80%; /* Deja que los contenedores ocupen todo el ancho disponible */
         padding: 10px;
     }
 
-    .description-container {
-        font-size: 0.8em;
-    }
-
-    .price-circle {
-        width: 35px;
-        height: 35px;
-        font-size: 0.6em;
-    }
+    
 
     #productos {
-        width: 65%; /* El ancho será el 50% del contenedor */
+        width: 75%; 
         height: auto;
         position: relative;
-        left: 130px;
-        right: 0px;
+        left: 120px;
+        top: -100px;
     }
 }
