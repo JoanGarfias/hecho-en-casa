@@ -61,6 +61,7 @@ body {
     .menu-lateral {
         width: 180px; /* Reduce el ancho en pantallas medianas */
         max-width: 25%; /* Limita el ancho relativo */
+        left: 10px;
     }
 
     .menu-lateral h3 {
@@ -72,30 +73,24 @@ body {
     }
 }
 
-@media (max-width: 768px) {
-    body {
-        flex-direction: column; /* Cambia a diseño en columna */
-        align-items: stretch; /* Asegura que los elementos se estiren */
-    }
-
+@media (max-width: 800px) {
     .menu-lateral {
-        width: 100%; /* El menú ocupa todo el ancho */
-        max-width: none; /* Anula el límite máximo */
-        border-radius: 0; /* Elimina los bordes redondeados */
-        margin: 0; /* Elimina los márgenes */
-        padding: 20px; /* Espaciado interno mayor */
-        top: 0; /* Menú en la parte superior */
-    }
-
-    .menu-lateral ul li a {
-        font-size: 1em; /* Aumenta el tamaño del texto para facilitar la lectura */
+        left: 10px;
+        position: relative;
+        border-radius: 0 10px 10px 0; /* Bordes redondeados en la esquina derecha */
     }
 }
+
 
 @media (max-width: 480px) {
     .menu-lateral {
         padding: 15px; /* Reduce el espaciado interno */
         font-size: 0.8em; /* Ajusta el tamaño general del texto */
+        clip-path: inset(0% 60% 0% 0%);
+        top: 260px; /* Distancia desde la parte superior de la ventana */
+        left: 10px;
+        position: fixed;
+        border-radius: 0 10px 10px 0; /* Bordes redondeados en la esquina derecha */
     }
 
     .menu-lateral ul li {
