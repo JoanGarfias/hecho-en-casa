@@ -58,6 +58,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    bottom: 150px;
   }
   
   .dot {
@@ -73,41 +74,47 @@
     background-color: darkgoldenrod; /* Color más oscuro para resaltar */
   }
 
-
-  @media (max-width: 900px) {
-    .flexi {
+  @media (max-width: 800px) and (orientation:  landscape){
+    .contenedor {
         position: relative;
         max-width: 400px;
         padding: 20px;
         margin-bottom: 20px;
         align-items: center;
         justify-content: center;
-        top: 50px;
-        
+        top: 100px;
+        left: 35px;
     }
 
     .pagination {
         position: relative;
-        bottom: 150px;
-      }
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        bottom: 0px; 
+        left: 15px;
+   }
 
-}
+  }
 
 
-@media (max-width: 680px) {
-    
-    .pagination {
-        position: relative;
-        bottom: 50px;
-      }
-
-      .flexi {
+  @media (max-width: 600px) and (orientation: portrait){
+    .contenedor {
         position: relative;
         max-width: 400px;
         padding: 20px;
         margin-bottom: 20px;
         align-items: center;
-        top: auto;
+        justify-content: center;
         
     }
+
+   .pagination {
+        position: relative;
+        bottom: 200px;
+      
+   }
+
 }
+
+

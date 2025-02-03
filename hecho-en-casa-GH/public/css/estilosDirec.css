@@ -115,30 +115,32 @@ option {
 
 
 
-@media (max-width: 800px) {
-  .dosColumnas {
-    flex-direction: column; /* Apila las columnas verticalmente */
-  }
+@media (max-width: 800px) and (orientation:  landscape){
+  
 
   .contenedor {
     width: 80%;
     padding: 10px;
     position: relative;
+    margin-top: 10px;
   }
 
   .columna {
-    max-width: 90%;
+    max-width: 80%;
+    align-items: center;
+    justify-content: center;
     gap: 10px;
   }
 
  
 }
 
-@media (max-width: 500px) {
+@media (max-width: 500px) and (orientation: portrait) {
   .contenedor {
     width: 90%;
     padding: 15px;
     position: relative;
+    margin-top: 5px;
   }
 
   input,
@@ -151,6 +153,8 @@ option {
   .columna {
     max-width: 90%;
     gap: 10px;
+    align-items: center;
+    justify-content: center;
   }
 
 }
