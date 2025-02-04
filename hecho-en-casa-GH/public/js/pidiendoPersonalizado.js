@@ -9,6 +9,8 @@ let enviarImg = false
 let enviarDescrip = false
 let enviarOtros = false
 let otrosSeleccionado = false
+let enviarFormulario = true
+let validarFormulario = true; // Se valida por defecto
 
 document.addEventListener("DOMContentLoaded", () => {
     const toggleSelectPan = document.getElementById("seleccionarPan");
@@ -97,15 +99,16 @@ document.addEventListener("DOMContentLoaded", () => {
     radios.forEach(radio => {
         radio.addEventListener("change", () => {
             verificarSeleccion(); // Verifica la selección en tiempo real
-
+           enviarOtros = false
             if (otrosRadio.checked) {
-                campoOtros.style.display = "block"; // Mostrar el campo "Otros"
-                otrosSeleccionado = true
-                const textOtros = document.getElementById('otrosTexto')
 
+                campoOtros.style.display = "block"; // Mostrar el campo "Otros"
+                const textOtros = document.getElementById('otrosTexto')
+                otrosSeleccionado = true
                 textOtros.addEventListener('input', () => {
+                    
                     let valorTexto= textOtros.value.trim()
-                    if (valorTexto.length < 3 || valorTexto.length > 100){
+                    if (textOtros.value.trim() == '' ||(valorTexto.length < 3 || valorTexto.length > 100)){
                         enviarOtros = false
                     } else {
                         enviarOtros = true
@@ -159,24 +162,41 @@ textDescrip.addEventListener('input', () => {
     }
 });
 
+// Botón para omitir validaciones
+document.getElementById('prev').addEventListener('click', function () {
+    validarFormulario = false;
+});
+
+// Botón para validar
+document.getElementById('next').addEventListener('click', function () {
+    validarFormulario = true;
+});
+
 
 const formulario = document.getElementById('formularioPedidos')
 
-formulario.addEventListener("submit", (e) => { 
+formulario.addEventListener("submit", (e) => {
+    if (!validarFormulario) {
+        const calendarioUrl = document.querySelector("meta[name='ruta-calendarioP']").getAttribute("content");
+        const mensaje = document.getElementById('mensajeEmergente');
+        mensaje.style.display = 'none'
+        window.location.href = calendarioUrl;
+    }
+    
     const fondoEmergente = document.getElementById('fondoEmergente');
     const flechaNext = document.getElementById('next')
     const editar = document.getElementById('editar')
     const continuar = document.getElementById('continuar')
 
     e.preventDefault(); // Detenemos el envío del formulario
-    if ((valorValue == '')|| (!enviarImg) || (!enviarDescrip) || (!seleccionadoR) || (panValue === null) || (coberturaValue === null || (!enviarOtros)) 
-        || (rellenoValue === null) ){
+    if ((valorValue == '')|| (!enviarImg) || (!enviarDescrip) || (!seleccionadoR) || (panValue === null) || (coberturaValue === null || !enviarOtros) 
+        || (rellenoValue === null)){
             if (!enviarImg){
                 mostrarMensaje('Hay un problema con el enlace (muy corto o muy extenso)')
             } else if(!enviarDescrip) {
                 mostrarMensaje('Hay un problema con la descripción (muy corta o muy extensa)')
-            } else if (otrosSeleccionado){
-                    mostrarMensaje('Hay un problema con la temática (muy corta o muy extensa)')            
+            } else if (otrosSeleccionado && !enviarOtros){
+                mostrarMensaje('Hay un problema con la temática (muy corta o muy extensa)')            
             }
             else {
                 mostrarMensaje('Tienes que rellenar todos los campos')
@@ -195,10 +215,6 @@ formulario.addEventListener("submit", (e) => {
             document.getElementById('formularioPedidos').submit();
         });
     }  
-
-    function envioForm(){
-
-    }
 });
 
 function mostrarMensaje(texto) {

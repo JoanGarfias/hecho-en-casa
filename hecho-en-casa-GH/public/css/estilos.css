@@ -213,11 +213,7 @@ header {
     }
 }
 
-@media (max-width: 768px) {
-    .menu nav {
-        padding: 10px; /* Reduce aún más el padding en pantallas pequeñas */
-        flex-direction: column; /* Cambia la dirección del menú a columna */
-    }
+@media (max-width: 800px) {
 
     .menu nav ul {
         gap: 30px; /* Reduce aún más el espacio entre elementos en pantallas pequeñas */
@@ -227,16 +223,7 @@ header {
         height: 70px; /* Reduce aún más el tamaño del logo en pantallas pequeñas */
     }
 
-    .menu-izquierdo,
-    .menu-derecho {
-        padding: 0; /* Ajusta el padding para pantallas pequeñas */
-        width: 100%; /* Asegura que ocupen todo el ancho */
-        justify-content: center; /* Centra los elementos */
-    }
-
-    .hamburger-menu {
-        display: flex; /* Muestra el ícono en móvil */
-    }
+   
 }
 
 

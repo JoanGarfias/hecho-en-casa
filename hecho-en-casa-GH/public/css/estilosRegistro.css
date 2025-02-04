@@ -73,7 +73,7 @@ input {
     background: #E8D9C2;
     border: 1px solid #E8D9C2;
     border-radius: 4px;
-    width: 100%;
+    width: 80%;
     padding: 5px;
 }
 
@@ -124,6 +124,8 @@ form {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    bottom: 50px;
   }
   
   .dot {
@@ -141,49 +143,25 @@ form {
   
 
 /* Media Queries para hacer el diseño responsive */
-@media (max-width: 1200px) {
-    .contenedor {
-        max-width: 600px;
-    }
-}
 
-@media (max-width: 992px) {
-    .contenedor {
-        max-width: 500px;
-    }
-}
-
-@media (max-width: 768px) {
+@media (max-width: 800px) {
     .contenedor {
         max-width: 400px;
         padding: 20px;
+        margin-bottom: 20px;
     }
 }
 
-@media (max-width: 576px) {
-    .contenedor {
-        max-width: 300px;
-        padding: 5px;
-    }
 
-    input {
-        width: 90%;
-    }
 
+@media (max-width: 500px) {
     .flexi {
-        margin-bottom: 20%;
-    }
-}
-
-@media (max-width: 400px) {
-    .contenedor {
-        max-width: 350px;
+        max-width: 400px;
         padding: 10px;
+        position: relative;
+        bottom: 80px; 
     }
 
-    .botoncito {
-        padding: 5px 10px; 
-    }
 
     .captcha {
         display: flex;
@@ -192,4 +170,9 @@ form {
         margin: 20px 0; /* Ajusta el margen según tus necesidades */
     }
     
+    .pagination {
+        position: relative;
+        bottom: 80px;
+      }
+
 }

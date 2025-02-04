@@ -3,7 +3,6 @@ let fechando = ''
 
 document.addEventListener('DOMContentLoaded', function(){
     calendarioData = JSON.parse(calendario);
-    console.log(calendarioData);
     const primerDia = calendarioData.diasDelMes[0].fecha;
     const ultimoDia = calendarioData.diasDelMes[calendarioData.diasDelMes.length - 1].fecha;
     const numeroUltimoDia = parseInt(ultimoDia.split('-')[2], 10);
@@ -43,11 +42,11 @@ document.addEventListener('DOMContentLoaded', function(){
 
         const today = new Date();
         const futureDate = new Date(today);
-        futureDate.setDate(today.getDate() + 4); 
+        futureDate.setDate(today.getDate() + 5);  //5 porque son los 4 dias y quieres ver el siguiente
         const dayName = futureDate.toLocaleDateString('en-US', { weekday: 'long' });
         const dosmeses = new Date(today); 
         dosmeses.setDate(today.getDate() + 70);
-        const daysInCurrentMonth = getDaysInMonth(today.getMonth(), today.getFullYear()) + 1;
+        const daysInCurrentMonth = getDaysInMonth(today.getMonth(), today.getFullYear());
         // Generar días del mes actual
         for (let i = 1; i <= numeroUltimoDia ; i++) {
             const day = document.createElement("li");

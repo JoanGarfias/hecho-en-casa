@@ -1,3 +1,4 @@
+<meta name="ruta-calendarioP" content="{{ route('personalizado.calendario.get') }}">
 <link rel="stylesheet" href="{{ asset('css/mensajeErrorE.css') }}">
 <link rel="stylesheet" href="{{ asset('css/pedidos.css') }}">
 <link rel="stylesheet" href="{{ asset('css/pedidosTempPop.css') }}">
@@ -128,7 +129,7 @@
                                 <input type="radio" name="tematica" value="Otro" id="otrosRadio">
                                 <p class="blanca"> Otro</p>
                                 <div id="campoOtros" style="display: none;">
-                                    <input type="text" id="otrosTexto" name="otrosTexto" class="paraOtros" value="">
+                                    <input type="text" id="otrosTexto" name="otrosTexto" class="paraOtros">
                                 </div>
                             </label>
                         </div>

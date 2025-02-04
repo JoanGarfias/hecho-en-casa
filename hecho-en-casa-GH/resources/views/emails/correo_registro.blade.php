@@ -5,7 +5,7 @@
 <h1 class="texto">¡Gracias por registrarte!</h1>
 <p>Gracias por usar nuestra aplicación.</p>
 <p>Entra al siguiente enlace:</p>
-<a href="#" onclick="document.getElementById('registrar').submit()">hechoencasa.com</a>
+<a href="#" onclick="document.getElementById('registrar').submit()">blue-emu-830907.hostingersite.com</a>
         
 <form id="registrar" action="{{ route('inicio.get')}}" method="POST" style="display: none;">
 @csrf

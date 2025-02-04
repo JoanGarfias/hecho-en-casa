@@ -52,7 +52,6 @@ class ControladorPerfil extends Controller
         if($cambiartelefono == true){//Si el boton de editar telefono esta activo
             $telefono = $request->input('telefono');
             try{
-                //return $cambiartelefono;
                 $updateTelefonotry = Usuario::select('telefono')
                 ->where('id_u', Cache::get('usuario')->id_u)->update([
                     'telefono' => $telefono,
@@ -72,7 +71,7 @@ class ControladorPerfil extends Controller
             $num_interior_u = $request->input('NumInt');
             $referencia_u = $request->input('referencia');
             try{
-                $updateTelefonotry = Usuario::select('Codigo_postal_u','estado_u','ciudad_u','colonia_u','calle_u','num_exterior_u','num_interior_u','referencia_u',)
+                $updateUbicaciontry = Usuario::select('Codigo_postal_u','estado_u','ciudad_u','colonia_u','calle_u','num_exterior_u','num_interior_u','referencia_u',)
                 ->where('id_u', Cache::get('usuario')->id_u)->update([
                     'Codigo_postal_u' => $Codigo_postal_u,
                     'estado_u' => $estado_u,
@@ -91,7 +90,7 @@ class ControladorPerfil extends Controller
         if($cambiarcontrasena == true){//Si el boton de editar contraseña esta activo
             $contrasena = bcrypt($request->input('contrasena'));
             try{
-                $updateTelefonotry = Usuario::select('contraseña')
+                $updateContrasenatry = Usuario::select('contraseña')
                 ->where('id_u', Cache::get('usuario')->id_u)->update([
                     'contraseña' => $contrasena,
                 ]);
