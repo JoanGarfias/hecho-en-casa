@@ -147,6 +147,12 @@ body {
 
 }
 
+form {
+    display: flex;
+    flex-direction: row;
+}
+
+
 /* Menú lateral */
 .menu-lateral {
     width: 200px; /* Mismo ancho */
