@@ -102,6 +102,8 @@ document.addEventListener('DOMContentLoaded', function(){
         switch(diafuturo){
             case "Saturday":
                 return diapresente + 6;
+            case "Sunday":
+                return diapresente + 5;
             default:
                 return diapresente + 4;
         }
