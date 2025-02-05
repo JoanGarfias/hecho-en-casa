@@ -50,7 +50,7 @@
                                     @foreach ($items as $item)
                                         <div class="carousel-item">
                                             <div class="image-container">
-                                                <p>{{$item->id_postre}}</p>
+                                                
                                                 <img src="{{$item->imagen}}" alt="{{$item->nombre}}">
                                                 <img id="{{$item->id_postre}}-temporada" class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
                                                 
@@ -80,7 +80,7 @@
                                     @foreach ($items as $item)           
                                             <div class="carousel-item">
                                                 <div class="image-container">
-                                                    <p>{{$item->id_postre}}</p>
+                                                    
                                                     <img src="{{$item->imagen}}" alt="{{$item->nombre}}">
                                                     <img id="{{$item->id_postre}}-popup" class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
                                                 </div>

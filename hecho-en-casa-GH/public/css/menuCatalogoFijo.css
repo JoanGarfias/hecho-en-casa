@@ -57,40 +57,21 @@ body {
 }
 
 /* Responsividad con Media Queries */
-@media (max-width: 1024px) {
-    .menu-lateral {
-        width: 180px; /* Reduce el ancho en pantallas medianas */
-        max-width: 25%; /* Limita el ancho relativo */
-        left: 10px;
-    }
 
-    .menu-lateral h3 {
-        font-size: 0.9em; /* Reduce el tamaño del título */
-    }
-
-    .menu-lateral ul li a {
-        font-size: 0.85em; /* Ajusta el tamaño del texto */
-    }
-}
-
-@media (max-width: 800px) {
+@media (max-width: 800px) and (orientation:  landscape){
     .menu-lateral {
         left: 10px;
-        position: relative;
+        position: sticky;
         border-radius: 0 10px 10px 0; /* Bordes redondeados en la esquina derecha */
     }
 }
 
 
-@media (max-width: 480px) {
+@media (max-width: 580px) and (orientation: portrait){
     .menu-lateral {
-        padding: 15px; /* Reduce el espaciado interno */
-        font-size: 0.8em; /* Ajusta el tamaño general del texto */
-        clip-path: inset(0% 60% 0% 0%);
-        top: 260px; /* Distancia desde la parte superior de la ventana */
-        left: 10px;
-        position: fixed;
-        border-radius: 0 10px 10px 0; /* Bordes redondeados en la esquina derecha */
+        position: sticky;
+        width: 200%;
+
     }
 
     .menu-lateral ul li {

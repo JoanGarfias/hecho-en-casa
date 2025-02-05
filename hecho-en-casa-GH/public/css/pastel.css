@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
-@media (max-width: 2080px) {
 
 
 * {
@@ -183,4 +182,58 @@ body {
 }
 
 
+@media (max-width: 968px) and (orientation:  landscape){
+    .image-gallery {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        right: 50px;
+    }
+
+
+   .menu-lateral{
+    right: 30px;
+   }
+    .customize .personaliza {
+        font-size: 18px;
+    }
+    .customize .personaliza img {
+        width: 50px;
+    }
+    .description, .customize {
+        flex: 1 1 250px;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) and (orientation: portrait){
+    .image-gallery {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+    .container h1 {
+        font-size: 1.5rem;
+    }
+
+    .container {
+        text-align:  center;
+        padding: 20px;
+        margin-left: 280px; /* Deja espacio para el menú lateral */
+        max-width: 50%; /* Ajustar el ancho disponible */
+       margin-right: 0px;
+        
+    }
+
+    .contenido-principal {
+        margin-left: 120px; /* Deja espacio suficiente para el menú */
+        padding: 20px; /* Margen interno */
+        width: 60%;
+    }
+
+    .description, .customize {
+        padding: 10px;
+    }
+    .customize .personaliza {
+        font-size: 16px;
+    }
+    .customize .personaliza img {
+        width: 40px;
+    }
 }
