@@ -14,6 +14,7 @@
 <body>
     <div class="contenedor">
         <h1>❌ Error del Sistema</h1>
+        <P>{{$message}}</P>
         <br>
         
         <br>

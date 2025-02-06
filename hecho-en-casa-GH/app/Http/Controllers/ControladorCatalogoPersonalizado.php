@@ -124,7 +124,14 @@ class ControladorCatalogoPersonalizado extends Controller
                 'fecha_hora_entrega' => $fecha_hora_entrega
             ];
             session()->put('datos_pedido', $datos);
+            $usuario = usuario::where('id_u', $id_usuario)->first();
 
+            $direccion = $usuario->calle_u . " " . $usuario->num_exterior_u . ", " . $usuario->colonia_u . ", " .
+            $usuario->ciudad_u . ", ". $usuario->estado_u;
+            session([
+                'telefono' => $usuario->telefono,
+                'direccion' => $direccion,
+            ]);
 
             return redirect()->route('personalizado.direccion.get');            ;
         }
