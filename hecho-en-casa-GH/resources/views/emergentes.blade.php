@@ -36,7 +36,7 @@
         <div class="content">
                 <!-- Sección de Temporada -->
             <div class="section">
-                <h2>Temporada</h2>
+                <h2>TEMPORADA</h2>
                 <div class="carousel" id="carousel-temporada">
                     <button class="carousel-button left" onclick="moveCarousel('carousel-temporada', -1)">&lt;</button>
                     <div class="carousel-track">
@@ -50,7 +50,7 @@
                                     @foreach ($items as $item)
                                         <div class="carousel-item">
                                             <div class="image-container">
-                                                <p>{{$item->id_postre}}</p>
+                                                
                                                 <img src="{{$item->imagen}}" alt="{{$item->nombre}}">
                                                 <img id="{{$item->id_postre}}-temporada" class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
                                                 
@@ -68,7 +68,7 @@
 
             <!-- Sección de Pop-Up -->
             <div class="section">
-                <h2>Pop-Up</h2>
+                <h2>POP-UP</h2>
                 <div class="carousel" id="carousel-popup">
                     <button class="carousel-button left" onclick="moveCarousel('carousel-popup', -1)">&lt;</button>
                     <div class="carousel-track">
@@ -80,7 +80,7 @@
                                     @foreach ($items as $item)           
                                             <div class="carousel-item">
                                                 <div class="image-container">
-                                                    <p>{{$item->id_postre}}</p>
+                                                    
                                                     <img src="{{$item->imagen}}" alt="{{$item->nombre}}">
                                                     <img id="{{$item->id_postre}}-popup" class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
                                                 </div>

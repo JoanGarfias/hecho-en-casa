@@ -77,16 +77,21 @@ body {
 }
 
 .carousel-track {
-    display: flex;
-    transition: transform 0.3s ease-in-out;
-    width: 100%;
+    display: flex; /* Alinea los elementos en fila */
+    flex-wrap: nowrap; /* Evita que las imágenes bajen a otra línea */
+    overflow: hidden; /* Oculta las imágenes fuera del área visible */
+    gap: 10px; /* Espaciado entre imágenes, opcional */
+    transition: transform 0.3s ease-in-out; /* Transición suave para el movimiento */
 }
 
+
 .carousel-item {
-    min-width: calc(110% / 3);
-    box-sizing: border-box;
-    padding: 10px;
+    flex: 0 0 auto; /* Cada item ocupa un ancho fijo y no cambia */
+    width: 300px; /* Ajusta al tamaño deseado */
+    box-sizing: border-box; /* Incluye padding y borde en el ancho */
+    padding: 10px; /* Opcional: espaciado interno */
 }
+
 
 .carousel-item img {
     width: 70%;
@@ -141,6 +146,12 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
 }
+
+form {
+    display: flex;
+    flex-direction: row;
+}
+
 
 /* Menú lateral */
 .menu-lateral {

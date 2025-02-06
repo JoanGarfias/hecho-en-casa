@@ -103,20 +103,17 @@ class ControladorCatalogoEmergente extends Controller
     }
 
     public function seleccionarDetalles(Request $request){    
-        $validated = $request->validate([
-            'cantidad' => 'required|integer',
-            'tipoEntrega' => 'required',
-        ]);
         
+        $cantidad = $request->input('cantidad');
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
-        $tipo_entrega = $validated['tipoEntrega'];
+        $tipo_entrega = $request->input('tipoEntrega');
         session()->put('opcion_envio', $tipo_entrega);
         session()->put('proceso_compra', $request->route()->getName());
         /* ENLAZADOR : NO TOCAR O JOAN TE MANDA A LA LUNA */
 
         session([
-            'cantidad_pedida' => $validated['cantidad'],
-            'tipo_entrega' => $validated['tipoEntrega'],
+            'cantidad_pedida' => $cantidad,
+            'tipo_entrega' => $tipo_entrega,
             
         ]);
 
@@ -137,7 +134,7 @@ class ControladorCatalogoEmergente extends Controller
                             ->first();
         });
 
-        $costo = $validated['cantidad'] * $postre->precio_emergentes;
+        $costo = $cantidad * $postre->precio_emergentes;
         session(['costo'=>$costo]);
 
         if($tipo_entrega === 'Domicilio'){

@@ -63,6 +63,7 @@ Route::middleware([EnlazadorRegistro::class])->group(function () {
     Route::get('/direccion', [ControladorRegistro::class, 'mostrarDireccion'])->name('registrar.direccion.get');
     Route::post('/direccion', [ControladorRegistro::class, 'guardarDireccion'])->name('registrar.direccion.post');
 });
+Route::post('/direccion/buscar', [ControladorCP::class, 'buscar'])->name('buscar'); //Ruta nueva direccion
 
 /* PROCESOS PARA RECUPERACION */
 

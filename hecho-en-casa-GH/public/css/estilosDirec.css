@@ -1,90 +1,160 @@
 .dosColumnas {
-    display: flex;
-    gap: 30px; /* Espacio entre columnas */
-    justify-content: space-between; /* Ajustar el espacio entre columnas */
+  display: flex;
+  gap: 30px; /* Espacio entre columnas */
+  justify-content: space-between; /* Ajustar el espacio entre columnas */
 }
 
 .columna {
-    flex: 1; /* Ambas columnas ocupan el mismo ancho */
-    max-width: 45%; /* Limita el tamaño máximo */
-    display: flex;
-    flex-direction: column; /* Apila filas verticalmente */
-    gap: 20px; /* Espacio entre filas */
+  flex: 1; /* Ambas columnas ocupan el mismo ancho */
+  max-width: 45%; /* Limita el tamaño máximo */
+  display: flex;
+  flex-direction: column; /* Apila filas verticalmente */
+  gap: 20px; /* Espacio entre filas */
 }
 
-.fila{
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centrar el contenido dentro de cada columna */
-    text-align: center; /* Alinear el texto en el centro */
-    padding: 12px;
-    border-radius: 10px;
+.fila {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrar el contenido dentro de cada columna */
+  text-align: center; /* Alinear el texto en el centro */
+  padding: 12px;
+  border-radius: 10px;
 }
 
-.flexi{
-    margin-top: 20px;
+.flexi {
+  margin-top: 20px;
 }
 
 .contenedor {
-    position: relative;
-    background: #C6B8A2;
-    border-radius: 25px;
-    padding: 45px;
-    box-shadow: 10px 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1;
-    width: 39%;
-    max-width: 1100px;
-    overflow: visible;
+  position: relative;
+  background: #c6b8a2;
+  border-radius: 25px;
+  padding: 45px;
+  box-shadow: 10px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  width: 39%;
+  max-width: 1100px;
+  overflow: visible;
 }
 
 .contenedor::before {
-    content: '';
-    position: absolute;
-    top: 3%;
-    width: 91%;
-    height: 93%;
-    background: white;
-    border-radius: 22px;
-    z-index: -1;
-    transform: translate(5%, 0px);/* Desplazamiento para crear el efecto */
-    left: 0px;
+  content: "";
+  position: absolute;
+  top: 3%;
+  width: 91%;
+  height: 93%;
+  background: white;
+  border-radius: 22px;
+  z-index: -1;
+  transform: translate(5%, 0px); /* Desplazamiento para crear el efecto */
+  left: 0px;
 }
 
 input {
-    background: #E8D9C2;
-    border: 1px solid #E8D9C2;
-    border-radius: 4px;
-    width: 100%;
-    padding: 5px;
-    
+  background: #e8d9c2;
+  border: 1px solid #e8d9c2;
+  border-radius: 4px;
+  width: 100%;
+  padding: 5px;
 }
 
 #referencias {
-    background: white;
-    border: 1px solid #E8D9C2;
-    border-radius: 4px;
-    width: 100%; /* Ajusta el ancho al contenedor */
-    max-width: 220px;
-    min-height: 50px; /* Altura mínima */
-    max-height: 300px; /* Altura máxima, si deseas limitarla */
-    resize: both; /* Permite ajustar tanto ancho como alto */
+  background: white;
+  border: 1px solid #e8d9c2;
+  border-radius: 4px;
+  width: 100%; /* Ajusta el ancho al contenedor */
+  max-width: 220px;
+  min-height: 50px; /* Altura mínima */
+  max-height: 300px; /* Altura máxima, si deseas limitarla */
+  resize: both; /* Permite ajustar tanto ancho como alto */
 }
 
 .pagination {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dot {
+  height: 20px;
+  width: 20px;
+  margin: 0 5px;
+  background-color: #c6b8a2;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.active {
+  background-color: darkgoldenrod; /* Color más oscuro para resaltar */
+}
+
+#asentamiento {
+  background: #e8d9c2;
+  border: 1px solid #e8d9c2;
+  border-radius: 4px;
+  width: 100%;
+  padding: 5px;
+}
+
+option {
+  background: #f8f0e3;
+}
+
+.mensajito {
+  margin-top: 15px;
+}
+
+.error {
+  color: rgb(200, 32, 32);
+  font-weight: bold;
+  font-size: 12px;
+  margin: -10px 0 10px 10px;
+}
+
+/* Media Queries para Responsividad */
+
+
+
+@media (max-width: 800px) and (orientation:  landscape){
+  
+
+  .contenedor {
+    width: 80%;
+    padding: 10px;
+    position: relative;
+    margin-top: 10px;
+  }
+
+  .columna {
+    max-width: 80%;
     align-items: center;
+    justify-content: center;
+    gap: 10px;
   }
-  
-  .dot {
-    height: 20px;
-    width: 20px;
-    margin: 0 5px;
-    background-color: #C6B8A2;
-    border-radius: 50%;
-    display: inline-block;
+
+ 
+}
+
+@media (max-width: 500px) and (orientation: portrait) {
+  .contenedor {
+    width: 90%;
+    padding: 15px;
+    position: relative;
+    margin-top: 5px;
   }
-  
-  .active {
-    background-color: darkgoldenrod; /* Color más oscuro para resaltar */
+
+  input,
+  #referencias,
+  #asentamiento {
+    width: 100%;
+    max-width: 100%;
   }
+
+  .columna {
+    max-width: 90%;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+
+}

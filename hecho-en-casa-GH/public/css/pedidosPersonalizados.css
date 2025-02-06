@@ -76,6 +76,7 @@ input[type="radio"]:checked {
     background: white;
     border: 1px solid #E8D9C2;
     border-radius: 4px;
+    padding: 2%;
     width: 100%; /* Ajusta el ancho al contenedor */
     max-width: 300px;
     min-height: 90px; /* Altura mínima */

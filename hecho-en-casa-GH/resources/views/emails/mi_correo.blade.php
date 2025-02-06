@@ -8,7 +8,7 @@
 <p>No te preocupes :D</p>
 <p>Ingresa al siguiente enlace para obtener una nueva: </p>
   
-<a class ="linkito" href="#" onclick="document.getElementById('recuperar-form').submit()">hechoencasa.com/recuperacion/{{$token}}</a>
+<a class ="linkito" href="#" onclick="document.getElementById('recuperar-form').submit()">blue-emu-830907.hostingersite.com/recuperacion/{{$token}}</a>
     
 <form id="recuperar-form" action="{{ route('recuperacion.get', ['token' => $token]) }}" method="POST" style="display: none;">
 @csrf
