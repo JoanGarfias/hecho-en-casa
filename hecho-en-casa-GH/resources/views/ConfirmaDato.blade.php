@@ -51,7 +51,7 @@
                <input type="text" id="estado" name="estado">
 
                <label for="ciudad">Ciudad:</label>
-               <input type="text" id="ciudad" name="ciudad">
+               <input type="text" id="ciudad" name="municipio">
 
                <div class="form-control">
                   <label>Colonia:</label>
