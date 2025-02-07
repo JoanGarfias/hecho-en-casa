@@ -48,7 +48,7 @@
                
                <div class="fila">
                   <label for="estado">Estado:</label>
-                  <input type="text" id="estado" name="estado" onfocus="borrarParrafo('mensajeEstado')">
+                  <input type="text" id="estado" name="estado" onfocus="borrarParrafo('mensajeEstado')" readonly>
                   <div class="mensajito">
                      <p id="mensajeEstado" ></p>
                   </div>
@@ -56,7 +56,7 @@
 
                <div class="fila">
                   <label for="ciudad">Ciudad:</label>
-                  <input type="text" id="ciudad" name="ciudad" onfocus="borrarParrafo('mensajeMuni')">
+                  <input type="text" id="ciudad" name="ciudad" onfocus="borrarParrafo('mensajeMuni')" readonly>
                   <div class="mensajito">
                      <p id="mensajeMuni"></p>
                   </div>
