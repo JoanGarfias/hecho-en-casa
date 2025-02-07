@@ -210,7 +210,7 @@ class ControladorCatalogoPersonalizado extends Controller
         if($tipo_domicilio==="otra"){ //Datos prueba
             $codigo_postal = $request->input('codigo_postal');
             $estado = $request->input('estado');
-            $ciudad = $request->input('municipio');
+            $ciudad = $request->input('ciudad');
             $colonia = $request->input('asentamiento');
             $calle = $request->input('calle');
             $numeroInterior = $request->input('numeroI');
