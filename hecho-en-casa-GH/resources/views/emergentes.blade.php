@@ -11,6 +11,7 @@
 <body>
     <x-menu />
     <x-banner-registrado/>
+    <div class="contenedor_principal">
     <!-- Menú lateral -->
     <div class="menu-lateral">
         <h3 id="titulo-postres" style="cursor: pointer;">Postres</h3>
@@ -35,7 +36,7 @@
     <div class="container">
         <div class="content">
                 <!-- Sección de Temporada -->
-            <div class="section">
+            <div class="section temporada">
                 <h2>TEMPORADA</h2>
                 <div class="carousel" id="carousel-temporada">
                     <button class="carousel-button left" onclick="moveCarousel('carousel-temporada', -1)">&lt;</button>
@@ -67,7 +68,7 @@
             </div>
 
             <!-- Sección de Pop-Up -->
-            <div class="section">
+            <div class="section popup">
                 <h2>POP-UP</h2>
                 <div class="carousel" id="carousel-popup">
                     <button class="carousel-button left" onclick="moveCarousel('carousel-popup', -1)">&lt;</button>
@@ -98,6 +99,7 @@
             
         </div>
     </div>
+</div>
     <script>
     
         document.addEventListener("DOMContentLoaded", (event) => {

@@ -226,35 +226,55 @@
 
         const precioPorPorcion = 100;
         let totalCosto = 8 * precioPorPorcion; 
+        let costoPorcionesAnterior = totalCosto; 
         const costoInput = document.getElementById('costo');
+        let costoPanAnterior = 0;
+        let costoRellenoAnterior = 0;
+        let costoCoberturaAnterior = 0;
+        let costoElementosAnterior = 0;
+        //let valorPorciones = parseInt(inputPorciones.value) || 0;
+        //totalCosto = valorPorciones * precioPorPorcion;
 
         function actualizarCosto() {
-            let valorPorciones = parseInt(inputPorciones.value) || 0;
-            totalCosto = valorPorciones * precioPorPorcion;
+            let valorPorciones = parseInt(inputPorciones.value) || 8; 
+            let nuevoCostoPorciones = valorPorciones * precioPorPorcion; 
+
+            totalCosto -= costoPorcionesAnterior; 
+            totalCosto += nuevoCostoPorciones; 
+            costoPorcionesAnterior = nuevoCostoPorciones;
 
             const saborPanSeleccionado = document.querySelector('#seleccionadoOpcionPan .darOpciones.seleccionado');
             if (saborPanSeleccionado) {
                 const precioPan = parseFloat(saborPanSeleccionado.textContent.match(/\d+(\.\d+)?/)[0]);
-                totalCosto += precioPan;
+                totalCosto -= costoPanAnterior; 
+                totalCosto += precioPan; 
+                costoPanAnterior = precioPan;
             }
 
             const saborRellenoSeleccionado = document.querySelector('#seleccionadoOpcionRelleno .darOpciones.seleccionado');
             if (saborRellenoSeleccionado) {
                 const precioRelleno = parseFloat(saborRellenoSeleccionado.textContent.match(/\d+(\.\d+)?/)[0]);
-                totalCosto += precioRelleno;
+                totalCosto -= costoRellenoAnterior;
+                totalCosto += precioRelleno; 
+                costoRellenoAnterior = precioRelleno;
             }
 
             const coberturaSeleccionada = document.querySelector('#seleccionadoOpcionCobertura .darOpciones.seleccionado');
             if (coberturaSeleccionada) {
                 const precioCobertura = parseFloat(coberturaSeleccionada.textContent.match(/\d+(\.\d+)?/)[0]);
-                totalCosto += precioCobertura;
+                totalCosto -= costoCoberturaAnterior; 
+                totalCosto += precioCobertura; 
+                costoCoberturaAnterior = precioCobertura;
             }
 
             const elementosCheckboxes = document.querySelectorAll('input[name="elementos[]"]:checked');
+            let nuevoCostoElementos = 0;
             elementosCheckboxes.forEach(checkbox => {
-                const precioElemento = parseFloat(checkbox.nextElementSibling.textContent.match(/\d+(\.\d+)?/)[0]);
-                totalCosto += precioElemento;
+                nuevoCostoElementos += parseFloat(checkbox.nextElementSibling.textContent.match(/\d+(\.\d+)?/)[0]);
             });
+            totalCosto -= costoElementosAnterior; 
+            totalCosto += nuevoCostoElementos; 
+            costoElementosAnterior = nuevoCostoElementos; 
 
             costoInput.textContent = `${totalCosto.toFixed(2)} MXN`;  
             document.getElementById("hiddenCosto").value = totalCosto.toFixed(2);

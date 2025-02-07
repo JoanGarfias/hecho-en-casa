@@ -19,9 +19,37 @@ body {
 }
 
 /* Layout */
-.container {
-    display: flex;
+
+.contenedor_principal {
+    display: grid;
+    grid-template-columns: 20% 75%;
 }
+
+
+.container {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-auto-flow: column;
+    object-fit: cover;
+    align-items: center;
+    justify-items: center;
+}
+
+.temporada {
+    margin-top: 15%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+    align-items: center;
+    justify-items: center;
+}
+
+.popup {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+    align-items: center;
+    justify-items: center;
+}
+
 
 .sidebar {
     width: 200px;
@@ -54,7 +82,6 @@ body {
 
 .section {
     margin-bottom: 40px;
-    margin-left: 100px; /* Opcional: Espacio extra desde el borde derecho */
 }
 
 .section h2 {
@@ -73,7 +100,6 @@ body {
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 80%;
-    margin-left: 150px;
 }
 
 .carousel-track {
@@ -155,7 +181,8 @@ form {
 
 /* Menú lateral */
 .menu-lateral {
-    width: 200px; /* Mismo ancho */
+    display: grid;
+    grid-template-columns: 100%;
     background-color: #d9b485;
     color: white;
     padding: 15px;
@@ -225,6 +252,7 @@ form {
     cursor: pointer;
     z-index: 5; /* Asegura que esté sobre la imagen */
     opacity: 0.8; /* Añade un efecto translúcido */
+    filter: invert(1.5) sepia(0.5) saturate(1000%) brightness(4);
     transition: opacity 0.3s ease, transform 0.3s ease; /* Efecto al pasar el ratón */
 }
 
