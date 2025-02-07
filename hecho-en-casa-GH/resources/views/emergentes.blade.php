@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Temporada y Pop-Up</title>
-    <link rel="stylesheet" href="emerpop.css">
     <link rel="stylesheet" href="{{ asset('css/emerpop.css') }}"> <!-- Ruta absoluta -->
 </head>
 <body>
     <x-menu />
     <x-banner-registrado/>
     <!-- Menú lateral -->
+    <div class="contenedor_principal">
     <div class="menu-lateral">
         <h3 id="titulo-postres" style="cursor: pointer;">Postres</h3>
         <ul>
@@ -35,7 +35,7 @@
     <div class="container">
         <div class="content">
                 <!-- Sección de Temporada -->
-            <div class="section">
+            <div class="section temporada">
                 <h2>TEMPORADA</h2>
                 <div class="carousel" id="carousel-temporada">
                     <button class="carousel-button left" onclick="moveCarousel('carousel-temporada', -1)">&lt;</button>
@@ -67,7 +67,7 @@
             </div>
 
             <!-- Sección de Pop-Up -->
-            <div class="section">
+            <div class="section popup">
                 <h2>POP-UP</h2>
                 <div class="carousel" id="carousel-popup">
                     <button class="carousel-button left" onclick="moveCarousel('carousel-popup', -1)">&lt;</button>
@@ -98,6 +98,7 @@
             
         </div>
     </div>
+</div>
     <script>
     
         document.addEventListener("DOMContentLoaded", (event) => {
