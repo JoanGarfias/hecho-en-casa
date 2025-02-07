@@ -25,6 +25,7 @@
             <br>
             <p>Por favor, intente más tarde o contacte al administrador del sistema.</p>
             <br>
+            <p>{{$message}} </p>
     
             <a href="{{route('inicio.get')}}">Volver al inicio</a>
             <br>

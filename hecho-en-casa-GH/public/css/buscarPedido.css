@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 
-/*Buscador de pedido css*/
-/* Reset básico */
 * {
     font-family: "Poppins", sans-serif;
     margin: 0;
@@ -39,6 +37,7 @@ body {
     text-align: center;
     margin-bottom: 20px;
 }
+
 .search-container { 
     position: absolute; /* Coloca el buscador en la esquina superior derecha */ 
     top: 100px; 
@@ -77,19 +76,19 @@ body {
     align-items: center; 
     justify-content: center; 
     height: 100%; 
+} 
 
-} .search-container button img { 
+.search-container button img { 
     width: 20px; 
     height: 20px; 
     margin-left: 10px; 
     filter: invert(35%) sepia(15%) saturate(500%) hue-rotate(10deg) brightness(95%) contrast(85%); 
-    transition: transform 0.2s ease; } 
+    transition: transform 0.2s ease; 
+} 
     
-    .search-container button:hover img { 
-        transform: scale(1.1); 
-    }
-
-
+.search-container button:hover img { 
+    transform: scale(1.1); 
+}
 
 /* Contenedor principal */
 .container {
@@ -100,7 +99,9 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-top: 80px;
-    overflow-x: hidden; /* Evita desbordes horizontales */
+    margin-bottom: 80px; /* Espacio de 50px debajo del contenedor */
+    min-height: 670px; /* Ajusta el valor según lo que necesites */
+   
 }
 
 .folio {
