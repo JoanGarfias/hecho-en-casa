@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <title>Temporada y Pop-Up</title>
     <link rel="stylesheet" href="{{ asset('css/emerpop.css') }}"> <!-- Ruta absoluta -->
 </head>
@@ -53,7 +54,7 @@
                                 @foreach ($items as $item)
                                     <div class="carousel-item">
                                         <div class="image-container">
-                                            <img src="{{$item->imagen}}" alt="{{$item->nombre}}">
+                                            <img src="{{$item->imagen}}" alt="{{$item->nombre}}" class="imagen_postre">
                                             <img id="{{$item->id_postre}}-temporada" class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
                                         </div>
                                     </div>
@@ -83,8 +84,8 @@
                                 @foreach ($items as $item)
                                     <div class="carousel-item">
                                         <div class="image-container">
-                                            <img src="{{$item->imagen}}" alt="{{$item->nombre}}">
-                                            <img id="{{$item->id_postre}}-popup" class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
+                                            <img src="{{$item->imagen}}" alt="{{$item->nombre}}" class="imagen_postre">
+                                            <i id="{{$item->id_postre}}-popup" class="fa-solid fa-bag-shopping shopping-bag" style="cursor: pointer;"></i>
                                         </div>
                                     </div>
                                 @endforeach     
