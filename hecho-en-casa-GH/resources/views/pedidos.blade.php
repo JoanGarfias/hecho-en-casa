@@ -37,9 +37,9 @@
                     </div>
                     <div class="fila">
                         <label for="unidad_m"> 
-                            {{ session('lista_unidad')[0]['nombreunidad'] == 'Porciones' ? 'porciones:' : 
-                               (session('lista_unidad')[0]['nombreunidad'] == 'Piezas' ? 'piezas:' : 
-                               (session('lista_unidad')[0]['nombreunidad'] == 'Piezas Mini' ? 'piezas mini:' : 'Cantidad:')) }}
+                            {{ session('lista_unidad')[0]['nombreunidad'] == 'Porciones' ? 'Porciones:' : 
+                               (session('lista_unidad')[0]['nombreunidad'] == 'Piezas' ? 'Piezas:' : 
+                               (session('lista_unidad')[0]['nombreunidad'] == 'Piezas Mini' ? 'Piezas mini:' : 'Cantidad:')) }}
                         </label>  
 
                         <div class="opciones" id="unidadm" name="unidadm" onchange="sumarSeleccionado()">
