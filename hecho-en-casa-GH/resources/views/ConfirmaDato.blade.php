@@ -56,7 +56,7 @@
 
                <div class="fila">
                   <label for="ciudad">Ciudad:</label>
-                  <input type="text" id="ciudad" name="municipio" onfocus="borrarParrafo('mensajeMuni')">
+                  <input type="text" id="ciudad" name="ciudad" onfocus="borrarParrafo('mensajeMuni')">
                   <div class="mensajito">
                      <p id="mensajeMuni"></p>
                   </div>
