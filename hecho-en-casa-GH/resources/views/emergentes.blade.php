@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Temporada y Pop-Up</title>
-    <link rel="stylesheet" href="emerpop.css">
     <link rel="stylesheet" href="{{ asset('css/emerpop.css') }}"> <!-- Ruta absoluta -->
 </head>
 <body>
@@ -48,13 +47,14 @@
                 <div class="carousel-track">
                     @foreach ($emergentes as $categoria => $items)
                         @if ($categoria == "temporada")
-                            <form action="{{route('emergente.catalogo.post')}}" method="POST">
-                                @csrf                    
+                            <form action="{{route('emergente.catalogo.post')}}" method="POST" id="formularioTemp">
+                                @csrf                  
+                                <input id="seleccionTemporada" type="hidden" name="id_postre" value="">  
                                 @foreach ($items as $item)
                                     <div class="carousel-item">
                                         <div class="image-container">
                                             <img src="{{$item->imagen}}" alt="{{$item->nombre}}">
-                                            <img class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
+                                            <img id="{{$item->id_postre}}-temporada" class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
                                         </div>
                                     </div>
                                 @endforeach     
@@ -77,13 +77,14 @@
                 <div class="carousel-track">
                     @foreach ($emergentes as $categoria => $items)
                         @if ($categoria == "pop-up")
-                            <form action="{{route('emergente.catalogo.post')}}" method="POST">
-                                @csrf                    
+                            <form action="{{route('emergente.catalogo.post')}}" method="POST" id="formularioPopUp">
+                                @csrf
+                                <input id="seleccionPopup" type="hidden" name="id_postre" value="">                     
                                 @foreach ($items as $item)
                                     <div class="carousel-item">
                                         <div class="image-container">
                                             <img src="{{$item->imagen}}" alt="{{$item->nombre}}">
-                                            <img class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
+                                            <img id="{{$item->id_postre}}-popup" class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
                                         </div>
                                     </div>
                                 @endforeach     
@@ -104,6 +105,7 @@
             botones.forEach(boton =>{
                 let id = boton.id;
                 let [numero, categoria] = id.split('-');
+                console.log(boton);
                 if(categoria == 'temporada'){
                     boton.addEventListener('click', function(){
                         document.getElementById('seleccionTemporada').value = numero;
@@ -115,7 +117,6 @@
                         document.getElementById('formularioPopUp').submit();            
                     });
                 }
-                
             });
         });
         
