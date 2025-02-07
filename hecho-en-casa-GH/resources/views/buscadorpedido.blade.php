@@ -32,7 +32,7 @@
     
 
     @if (isset($pedido))
-    <div class="container">
+    <div class="container"> <!-- Contenido principal -->
         <!-- Muestra el folio ingresado -->
         <div class="folio">
             Pedido con folio: <span class="folio-number">{{ $pedido->id_ped }}</span>
@@ -95,6 +95,7 @@
             mostrarMensaje('{{$error}}');
         </script>
     @endif
+
 </body>
 
 <script src="{{ asset('js/buscaValida.js') }}"></script>
