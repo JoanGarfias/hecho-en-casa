@@ -1,54 +1,66 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const tracks = document.querySelectorAll(".carousel-track"); // Para múltiples carruseles
-    const itemsPerView = 3;
+    const tracks = document.querySelectorAll(".carousel-track");
 
     tracks.forEach(track => {
-        const items = track.querySelectorAll(".carousel-item");
+        const items = Array.from(track.children);
         const totalItems = items.length;
-        let index = 0;
+        const itemWidth = items[0].offsetWidth + 10; // Incluye margen
+        let index = 1; // Inicia en 1 para el efecto infinito
+        let isTransitioning = false; // Evita múltiples clics rápidos
 
-        // Clonar los primeros y últimos elementos para el efecto infinito
-        for (let i = 0; i < itemsPerView; i++) {
-            let cloneFirst = items[i].cloneNode(true);
-            let cloneLast = items[totalItems - 1 - i].cloneNode(true);
-            track.appendChild(cloneFirst); // Agrega clones al final
-            track.insertBefore(cloneLast, track.firstChild); // Agrega clones al inicio
-        }
+        // Clonar primer y último elemento
+        const firstClone = items[0].cloneNode(true);
+        const lastClone = items[totalItems - 1].cloneNode(true);
 
-        // Ajustar el desplazamiento inicial para evitar el salto
-        const itemWidth = items[0].offsetWidth + 10; // Incluye el margen
-        track.style.transform = `translateX(${-itemsPerView * itemWidth}px)`;
+        track.appendChild(firstClone); // Agrega el primer clon al final
+        track.insertBefore(lastClone, track.firstChild); // Agrega el último clon al inicio
 
-        const prevButton = track.closest(".carousel").querySelector(".carousel-button.left");
-        const nextButton = track.closest(".carousel").querySelector(".carousel-button.right");
+        const newItems = track.children; // Ahora incluye los clones
+        const newTotalItems = newItems.length;
+
+        // Ajustar desplazamiento inicial para no ver el clon al inicio
+        track.style.transform = `translateX(${-index * itemWidth}px)`;
+
+        const carousel = track.closest(".carousel");
+        const prevButton = carousel.querySelector(".carousel-button.left");
+        const nextButton = carousel.querySelector(".carousel-button.right");
 
         function updateCarousel() {
-            track.style.transition = "transform 0.5s ease-in-out";
-            track.style.transform = `translateX(${-(index * itemWidth)}px)`;
+            if (isTransitioning) return; // Evita doble clic rápido
+            isTransitioning = true;
 
-            // Reinicio sin transición cuando llegamos a los clones
+            track.style.transition = "transform 0.5s ease-in-out";
+            track.style.transform = `translateX(${-index * itemWidth}px)`;
+
             track.addEventListener("transitionend", function reset() {
-                if (index >= totalItems) {
-                    index = 0;
+                isTransitioning = false;
+
+                // Salto invisible si llega a los clones
+                if (index >= newTotalItems - 1) {
+                    index = 1;
                     track.style.transition = "none";
-                    track.style.transform = `translateX(${-itemsPerView * itemWidth}px)`;
-                } else if (index < 0) {
-                    index = totalItems - itemsPerView;
+                    track.style.transform = `translateX(${-index * itemWidth}px)`;
+                } else if (index <= 0) {
+                    index = newTotalItems - 2;
                     track.style.transition = "none";
                     track.style.transform = `translateX(${-index * itemWidth}px)`;
                 }
                 track.removeEventListener("transitionend", reset);
-            });
+            }, { once: true });
         }
 
         nextButton.addEventListener("click", function () {
-            index += itemsPerView;
-            updateCarousel();
+            if (!isTransitioning) {
+                index++;
+                updateCarousel();
+            }
         });
 
         prevButton.addEventListener("click", function () {
-            index -= itemsPerView;
-            updateCarousel();
+            if (!isTransitioning) {
+                index--;
+                updateCarousel();
+            }
         });
     });
 });
