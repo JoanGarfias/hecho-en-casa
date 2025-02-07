@@ -25,7 +25,7 @@
     </FilesMatch>
 
     # Prevent Access to Sensitive Files
-    <FilesMatch "\.(env|json|log|php|config|bak|sql)$">
+    <FilesMatch "\.(env|json|log|config|bak|sql)$">
         Order Allow,Deny
         Deny from all
     </FilesMatch>

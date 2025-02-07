@@ -23,6 +23,10 @@ class ControladorRegistro extends Controller
         session()->put('proceso_registro', $request->route()->getName());
         /*ENLAZADOR DE REGISTRO */
         
+        $request->validate([
+            'g-recaptcha-response' => 'required|captcha',
+        ]);
+
         $nombre = $request->input('name');
         $apellido_paterno = $request->input('apellidoP');
         $apellido_materno = $request->input('apellidoM');
