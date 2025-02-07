@@ -226,6 +226,7 @@
 
         const precioPorPorcion = 100;
         let totalCosto = 8 * precioPorPorcion; 
+        let costoPorcionesAnterior = totalCosto; 
         const costoInput = document.getElementById('costo');
         let costoPanAnterior = 0;
         let costoRellenoAnterior = 0;
@@ -235,8 +236,12 @@
         //totalCosto = valorPorciones * precioPorPorcion;
 
         function actualizarCosto() {
-            //let valorPorciones = parseInt(inputPorciones.value) || 0;
-            //totalCosto = valorPorciones * precioPorPorcion;
+            let valorPorciones = parseInt(inputPorciones.value) || 8; 
+            let nuevoCostoPorciones = valorPorciones * precioPorPorcion; 
+
+            totalCosto -= costoPorcionesAnterior; 
+            totalCosto += nuevoCostoPorciones; 
+            costoPorcionesAnterior = nuevoCostoPorciones;
 
             const saborPanSeleccionado = document.querySelector('#seleccionadoOpcionPan .darOpciones.seleccionado');
             if (saborPanSeleccionado) {
