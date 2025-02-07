@@ -1,6 +1,8 @@
 
 <title>CONFIRMA TUS DATOS</title>
+<link rel="stylesheet" href="{{ asset('css/mensajeErrorE.css') }}">
 <link rel="stylesheet" href="{{ asset('css/ConfirmaDato.css') }}">
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <x-menu /> 
   
@@ -25,58 +27,91 @@
          </div>
 
          <!-- Vista emergente para ingresar nueva dirección -->
-         <div id="address-fields" class="address-fields">
-               <label for="codigo-postal">Código postal:</label>
-               <input type="text" id="codigo_postal" name="codigo_postal" maxlength="5" pattern="\d{5}" placeholder="Ingresa código postal">
-
-               <div id="botonCP" class="botonCP">
-                  <button type="button" id="confirm-cp">
-                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34
-                  AAAAAXNSR0IArs4c6QAAAPBJREFUSEvNlIENwjAMBL+bwCYwCpPQTWATYBM2gb6UR6lJSOJQaKSq
-                  iqL82Y7fAxZew8L6sIAdgBOAjRN8B3AAcNV9C7hMh4T0LEK2OcAjHHhL93bfCq0KwHfie92mrMeQ
-                  +dcykDjfK665C8DozkGIgebEedYMoPgxiO9DGVgWG7maphnAaNm6/LMU/HLirgxUEkG4n/W5MUxz
-                  BrqvTLh/mSjhRjdAmTD6T6sLUDM+/g/IDTuWhm2qEsVesJlxkqqlk+OafZ+aqIJQUF6w4sVxnapz
-                  qxdmGrVjOYaUvOACxIYrecENqPVCF6DGC78FPAFFD0MZXIF3GgAAAABJRU5ErkJggg=="/>Confirmar CP
-                  </button>
+         <div id="address-fields" class="address-fields dosColumnas">
+            <div class="columna">
+               <div class="fila">
+                  <label for="codigo-postal">Código postal:</label>
+                  <input type="text" id="codigo_postal" name="codigo_postal" maxlength="5" pattern="\d{5}" placeholder="Ingresa código postal" onfocus="borrarParrafo('mensajeCodigo')">
+                  
+                  <div class="mensajito">
+                     <p id="mensajeCodigo"></p>
+                  </div>
                </div>
+               
 
                <p>
                   <a href="https://www.correosdemexico.gob.mx/sslservicios/consultacp/descarga.aspx" target="_blank">
-                     No conozco mi código postal
+                     No conozco mi código postal 
                      <p></p>
                   </a>
                </p>
+               
+               <div class="fila">
+                  <label for="estado">Estado:</label>
+                  <input type="text" id="estado" name="estado" onfocus="borrarParrafo('mensajeEstado')" readonly>
+                  <div class="mensajito">
+                     <p id="mensajeEstado" ></p>
+                  </div>
+               </div>
 
-               <label for="estado">Estado:</label>
-               <input type="text" id="estado" name="estado">
+               <div class="fila">
+                  <label for="ciudad">Ciudad:</label>
+                  <input type="text" id="ciudad" name="ciudad" onfocus="borrarParrafo('mensajeMuni')" readonly>
+                  <div class="mensajito">
+                     <p id="mensajeMuni"></p>
+                  </div>
+               </div>
 
-               <label for="ciudad">Ciudad:</label>
-               <input type="text" id="ciudad" name="municipio">
+               <div class="fila">
+                  <label for="calle">Calle:</label>
+                  <input type="text" id="calle" name="calle" onfocus="borrarParrafo('mensajeCalle')">
+                  <div class="mensajito">
+                     <p id="mensajeCalle" ></p>
+                  </div>
+               </div>
 
-               <div class="form-control">
+               <div class="checklist">
+                  <label>
+                     <input type="checkbox" name="opciones" value="opcion1"> Establecer como predeterminada
+                  </label>
+               </div>
+            </div>
+
+            <div class="columna">
+               <div class="fila">
+                  <label for="numero">Número int:</label>
+                  <input type="text" id="numeroInt" name="numeroI" onfocus="borrarParrafo('mensajeInt')">
+                  <div class="mensajito">
+                     <p id="mensajeInt"></p>
+                 </div>
+               </div>
+
+               <div class="fila">
+                  <label for="numero">Número ext:</label>
+                  <input type="text" id="numeroExt" name="numeroE" onfocus="borrarParrafo('mensajeExt')">
+                  <div class="mensajito">
+                     <p id="mensajeExt" ></p>
+                 </div>
+               </div>
+
+               <div class="fila form-control">
                   <label>Colonia:</label>
-                  <select id="asentamiento" name="asentamiento" disabled>
+                  <select id="asentamiento" name="asentamiento" onfocus="borrarParrafo('mensajeAsent')" disabled>
                      <option value="">Selecciona un asentamiento</option>
                   </select><br><br>
+                  <div class="mensajito">
+                     <p id="mensajeAsent" ></p>
+                 </div>
+               </div>
+
+               <div class="fila">
+                  <label for="referencias">Referencias:</label>
+                  <input type="text" id="referencias" name="referencia" onfocus="borrarParrafo('mensajeRef')">
+                  <div class="mensajito">
+                     <p id="mensajeRef"></p>
+                  </div>
+               </div>
             </div>
-
-               <label for="calle">Calle:</label>
-               <input type="text" id="calle" name="calle">
-
-               <label for="numero">Número int:</label>
-               <input type="text" id="numeroInt" name="numeroI">
-
-               <label for="numero">Número ext:</label>
-               <input type="text" id="numeroExt" name="numeroE">
-               
-               <label for="referencias">Referencias:</label>
-               <input type="text" id="referencias" name="referencia">
-            <div class="checklist">
-               <label>
-                  <input type="checkbox" name="opciones" value="opcion1"> Establecer como predeterminada
-               </label>
-            </div>
-
          </div>
 
          <!-- Botón confirmar -->
@@ -84,13 +119,20 @@
       </form>
    </div>
    </div>
+   <div id="mensajeEmergente"></div>
    <script>
       $(document).ready(function () {
+         document.getElementById('codigo_postal').addEventListener('input', async function () {
          // Manejar el clic del botón "Confirmar CP"
-         $('#confirm-cp').on('click', function () {
-            let codigoPostal = $('#codigo_postal').val().trim(); // Obtener el valor del código postal
+            let valido = true
+            const codigoPostal = this.value.trim();// Obtener el valor del código postal
             
-            if (codigoPostal) { // Validar que no esté vacío
+            if (codigoPostal.length >= 5) { // Validar que no esté vacío
+               document.getElementById("mensajeEstado").textContent = '';
+               document.getElementById("mensajeMuni").textContent = ''
+    
+               mostrarMensaje("Espere un momento, por favor")
+
                $.ajax({
                      url: "{{ route('buscar') }}", // Ruta nombrada en Laravel
                      method: "POST",
@@ -125,24 +167,44 @@
                            // Manejo de error si no se encuentra el estado o municipio
                            $('#estado').val('');
                            $('#ciudad').val('');
-                           alert("No se pudo obtener el estado o ciudad para ese código postal.");
+                           valido = false
+                           mostrarMensaje("No se pudo obtener el estado o ciudad para ese código postal.");
                         }
                      },
                      error: function () {
                         // Manejo de error en la solicitud AJAX
-                        alert("Error al buscar los datos del código postal.");
+                        valido = false
+                        mostrarMensaje("Error al buscar los datos del código postal.");
                      }
                });
-            } else {
+            } 
+            if (!valido) {
                // Validar si el código postal está vacío
-               alert("Por favor, ingresa un código postal válido.");
+               mostrarMensaje("Por favor, ingresa un código postal válido.");
             }
          });
       });
+
+      function mostrarMensaje(texto) {
+         const mensaje = document.getElementById('mensajeEmergente');
+         mensaje.textContent = texto; // Agregar texto al mensaje
+         mensaje.style.opacity = '1'; // Mostrar el mensaje
+         mensaje.style.visibility = 'visible'; // Asegurarse de que sea visible
+
+         // Ocultar el mensaje después de 3 segundos
+         setTimeout(() => {
+               mensaje.style.opacity = '0'; // Inicia la transición para ocultar
+               setTimeout(() => {
+                  mensaje.style.visibility = 'hidden'; // Ocultar completamente
+               }, 500); // Coincidir con el tiempo de transición de opacity
+         }, 3000);
+      }
    </script>
 
 
 <script src="{{ asset('js/ConfirmaDato.js') }}"></script>
+<!--Para borrar el parrafo al hacer click al input-->
+<script src="{{ asset('js/borrandoParrafo.js') }}" defer></script>
 
 </body>
 

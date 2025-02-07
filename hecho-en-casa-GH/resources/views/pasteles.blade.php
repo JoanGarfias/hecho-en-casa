@@ -44,13 +44,13 @@
             <img src="img/pastel1.jpg" alt="Pastel 1">
         </div>
         <div class="image-card">
-            <img src="img/pastel2.jpg" alt="Pastel 2">
+            <img src="img/image.png" alt="Pastel 2">
         </div>
         <div class="image-card">
-            <img src="img/pastel3.jpg" alt="Pastel 3">
+            <img src="img/pastelito4.jpg" alt="Pastel 3">
         </div>
         <div class="image-card">
-            <img src="img/pastel2.jpg" alt="Pastel 4">
+            <img src="img/pastelito.jpg" alt="Pastel 4">
         </div>
     </div>
     <div class="description-section">

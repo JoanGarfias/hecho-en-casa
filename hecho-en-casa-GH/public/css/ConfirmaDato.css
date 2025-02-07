@@ -90,6 +90,39 @@ input[type="text"]#telefono {
     margin: 5px 0; /* Espacio entre cada campo */
     text-align: left; /* Alinea el texto del contenido a la izquierda */
  }
+
+ .dosColumnas {
+    display: flex;
+    gap: 30px; /* Espacio entre columnas */
+    justify-content: space-between; /* Ajustar el espacio entre columnas */
+  }
+  
+  .columna {
+    flex: 1; /* Ambas columnas ocupan el mismo ancho */
+    max-width: 45%; /* Limita el tamaño máximo */
+    display: flex;
+    flex-direction: column; /* Apila filas verticalmente */
+  }
+  
+  .fila {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar el contenido dentro de cada columna */
+    text-align: center; /* Alinear el texto en el centro */
+    padding: 12px;
+    border-radius: 10px;
+  }
+
+  .mensajito{
+    margin-top: 10px;
+}
+
+.error {
+    color: rgb(200, 32, 32);
+    font-weight: bold;
+    font-size: 10px;
+    margin: -5px 0 10px 10px;
+}
  
  button {
    background-color: #FBAF35;
@@ -142,7 +175,7 @@ button#confirm-cp {
  
 
  #address-fields p {
-    text-align: left; /* Alinea el texto del contenido a la izquierda */
+    text-align: center; /* Alinea el texto del contenido a la izquierda */
     font-weight: bold;
 }
 
@@ -162,7 +195,6 @@ button#confirm-cp {
  
  
 .form-control {
-   width: 40%; 
     display: flex;
     flex-direction: column;
     margin-bottom: 15px;

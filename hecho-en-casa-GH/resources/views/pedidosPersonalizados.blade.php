@@ -84,7 +84,7 @@
                                 
                             </div> 
                             <button id="seleccionarCobertura" class="diseñandobutton" type="button">🔻</button>
-                            <div id="seleccionadoOpcionCobertura" class="customizandoOpciones" style="display: none;">
+                            <div id="seleccionadoOpcionCobertura" class="customizandoOpciones desborde" style="display: none;">
                                 @foreach ($coberturas as $cobertura)
                                     <div class="darOpciones" data-value="{{$cobertura->id_c}}">{{$cobertura->nom_cobertura}} {{$cobertura->precio_c}} MXN</div>    
                                 @endforeach

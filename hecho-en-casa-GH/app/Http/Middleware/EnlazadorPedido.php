@@ -9,23 +9,23 @@ class EnlazadorPedido
     private $rutasBase = [
         'fijo' => [
             'fijo.catalogo.post' => ['fijo.catalogo.get'],
-            'fijo.calendario.get' => ['fijo.catalogo.post', 'fijo.detallesPedido.get', 'fijo.calendario.post', 'fijo.detallesPedido.post'],
+            'fijo.calendario.get' => ['fijo.catalogo.post', 'fijo.detallesPedido.get', 'fijo.calendario.post', 'fijo.detallesPedido.post', 'fijo.calendario.get'],
             'fijo.calendario.post' => ['fijo.calendario.get', 'fijo.detallesPedido.get'],
-            'fijo.detallesPedido.get' => ['fijo.calendario.post'],
+            'fijo.detallesPedido.get' => ['fijo.calendario.post', 'fijo.detallesPedido.get'],
             'fijo.detallesPedido.post' => ['fijo.detallesPedido.get'],
         ],
         'personalizado' => [
             'personalizado.catalogo.post' => ['personalizado.catalogo.get'],
-            'personalizado.calendario.get' => ['personalizado.catalogo.post', 'personalizado.detallesPedido.get', 'personalizado.calendario.post', 'personalizado.detallesPedido.post'],
+            'personalizado.calendario.get' => ['personalizado.catalogo.post', 'personalizado.detallesPedido.get', 'personalizado.calendario.post', 'personalizado.detallesPedido.post', 'fijo.calendario.get'],
             'personalizado.calendario.post' => ['personalizado.calendario.get', 'personalizado.detallesPedido.get'],
-            'personalizado.detallesPedido.get' => ['personalizado.calendario.post'],
+            'personalizado.detallesPedido.get' => ['personalizado.calendario.post', 'personalizado.detallesPedido.get'],
             'personalizado.detallesPedido.post' => ['personalizado.detallesPedido.get'],
         ],
         'emergente' => [
             'emergente.catalogo.post' => ['emergente.catalogo.get'],
-            'emergente.calendario.get' => ['emergente.catalogo.post', 'emergente.detallesPedido.get', 'emergente.calendario.post', 'emergente.detallesPedido.post'],
+            'emergente.calendario.get' => ['emergente.catalogo.post', 'emergente.detallesPedido.get', 'emergente.calendario.post', 'emergente.detallesPedido.post', 'fijo.calendario.get'],
             'emergente.calendario.post' => ['emergente.calendario.get', 'emergente.detallesPedido.get'],
-            'emergente.detallesPedido.get' => ['emergente.calendario.post'],
+            'emergente.detallesPedido.get' => ['emergente.calendario.post', 'emergente.detallesPedido.get'],
             'emergente.detallesPedido.post' => ['emergente.detallesPedido.get'],
         ],
     ];
