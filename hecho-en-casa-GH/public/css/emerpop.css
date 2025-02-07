@@ -23,6 +23,7 @@ body {
 .contenedor_principal {
     display: grid;
     grid-template-columns: 20% 75%;
+    margin-top: -170px;
 }
 
 
