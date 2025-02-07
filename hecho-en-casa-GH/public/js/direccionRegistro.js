@@ -1,7 +1,5 @@
  let enviarFormulario = true
 
-
- 
  // Función para validar si un campo de solo números es válido
  function esNumeroValido(valor) {
     return /^[0-9]+$/.test(valor); // Solo números, al menos 1 dígito
@@ -125,4 +123,3 @@ function validarLongitud(input, mensajeElemento, min, max) {
         return true; // Indica que la validación fue exitosa
     }
 }
-
