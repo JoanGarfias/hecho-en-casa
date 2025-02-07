@@ -1,43 +1,54 @@
 document.addEventListener("DOMContentLoaded", function () {
-    function moveCarousel(carouselId, direction) {
-        const carousel = document.getElementById(carouselId);
-        const track = carousel.querySelector(".carousel-track");
-        const items = Array.from(track.children);
-        const itemWidth = items[0].offsetWidth + 10; // Ancho + gap
-        const visibleItems = 3; // Cantidad de imágenes visibles a la vez
-        let currentIndex = parseInt(track.getAttribute("data-index")) || 0;
+    const tracks = document.querySelectorAll(".carousel-track"); // Para múltiples carruseles
+    const itemsPerView = 3;
 
-        // Duplicamos los elementos al inicio y al final para hacer un efecto infinito
-        if (items.length === 3) {
-            track.innerHTML += track.innerHTML; // Duplica los elementos
+    tracks.forEach(track => {
+        const items = track.querySelectorAll(".carousel-item");
+        const totalItems = items.length;
+        let index = 0;
+
+        // Clonar los primeros y últimos elementos para el efecto infinito
+        for (let i = 0; i < itemsPerView; i++) {
+            let cloneFirst = items[i].cloneNode(true);
+            let cloneLast = items[totalItems - 1 - i].cloneNode(true);
+            track.appendChild(cloneFirst); // Agrega clones al final
+            track.insertBefore(cloneLast, track.firstChild); // Agrega clones al inicio
         }
 
-        const totalItems = track.children.length;
+        // Ajustar el desplazamiento inicial para evitar el salto
+        const itemWidth = items[0].offsetWidth + 10; // Incluye el margen
+        track.style.transform = `translateX(${-itemsPerView * itemWidth}px)`;
 
-        // Actualizar el índice
-        currentIndex += direction * visibleItems;
+        const prevButton = track.closest(".carousel").querySelector(".carousel-button.left");
+        const nextButton = track.closest(".carousel").querySelector(".carousel-button.right");
 
-        // Lógica de ciclo infinito
-        if (currentIndex < 0) {
-            currentIndex = totalItems - visibleItems;
-        } else if (currentIndex >= totalItems) {
-            currentIndex = 0;
+        function updateCarousel() {
+            track.style.transition = "transform 0.5s ease-in-out";
+            track.style.transform = `translateX(${-(index * itemWidth)}px)`;
+
+            // Reinicio sin transición cuando llegamos a los clones
+            track.addEventListener("transitionend", function reset() {
+                if (index >= totalItems) {
+                    index = 0;
+                    track.style.transition = "none";
+                    track.style.transform = `translateX(${-itemsPerView * itemWidth}px)`;
+                } else if (index < 0) {
+                    index = totalItems - itemsPerView;
+                    track.style.transition = "none";
+                    track.style.transform = `translateX(${-index * itemWidth}px)`;
+                }
+                track.removeEventListener("transitionend", reset);
+            });
         }
 
-        // Aplicar la transformación para mover el carrusel
-        track.style.transition = "transform 0.5s ease-in-out";
-        track.style.transform = `translateX(${-currentIndex * itemWidth}px)`;
+        nextButton.addEventListener("click", function () {
+            index += itemsPerView;
+            updateCarousel();
+        });
 
-        // Guardar el índice actual en el atributo data-index
-        track.setAttribute("data-index", currentIndex);
-    }
-
-    // Asegurar que los botones funcionen correctamente
-    document.querySelectorAll(".carousel-button").forEach((button) => {
-        button.addEventListener("click", function () {
-            const direction = this.classList.contains("left") ? -1 : 1;
-            const carouselId = this.closest(".carousel").id;
-            moveCarousel(carouselId, direction);
+        prevButton.addEventListener("click", function () {
+            index -= itemsPerView;
+            updateCarousel();
         });
     });
 });
