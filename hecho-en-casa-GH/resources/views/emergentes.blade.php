@@ -85,7 +85,7 @@
                                     <div class="carousel-item">
                                         <div class="image-container">
                                             <img src="{{$item->imagen}}" alt="{{$item->nombre}}" class="imagen_postre">
-                                            <i id="{{$item->id_postre}}-popup" class="fa-solid fa-bag-shopping shopping-bag" style="cursor: pointer;"></i>
+                                            <img id="{{$item->id_postre}}-popup" class="shopping-bag" src="{{ asset('img/bolsa.png') }}" alt="Bolsa de compras">
                                         </div>
                                     </div>
                                 @endforeach     
