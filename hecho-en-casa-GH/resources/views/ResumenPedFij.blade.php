@@ -27,12 +27,15 @@
                    <label for="tipo_postre">Tipo de postre:</label>
                    <input type="text" id="tipo_postre" value="{{session('nombre_categoria')}}" readonly>
 
-                   <label for="sabor">Sabor:</label>
-                   <input type="text" id="sabor" value="{{session('sabor_postre')}}" readonly>
+                   
                     @if ($tipo_postre == "fijo")
+                        <label for="sabor">Sabor:</label>
+                        <input type="text" id="sabor" value="{{session('sabor_postre')}}" readonly>
                         <label for="porciones">Porciones:</label>     
                         <input type="text" id="porciones" value="{{session('porcionestotal')}}" readonly>
                     @elseif ($tipo_postre == "temporada" || $tipo_postre == "pop-up")
+                        <label for="sabor">Nombre:</label>
+                        <input type="text" id="sabor" value="{{session('sabor_postre')}}" readonly>
                         <label for="cantidad">Cantidad:</label>     
                         <input type="text" id="cantidad" value="{{session('cantidad_pedida')}}" readonly>
                     @endif

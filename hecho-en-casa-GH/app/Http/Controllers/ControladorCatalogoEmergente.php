@@ -25,6 +25,7 @@ class ControladorCatalogoEmergente extends Controller
                 'temporada' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre')
                                     ->where('id_tipo_postre', 'temporada')
                                     ->where('disponible', '1')
+                                    ->where('stock', '>', 0)
                                     ->get(),
 
                 'pop-up' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre', 'nombre', 'descripcion', 'stock')
@@ -95,6 +96,8 @@ class ControladorCatalogoEmergente extends Controller
 
         session([   
             'nombre_postre' => $postre->nombre,
+            'sabor_postre' => $postre->nombre,
+            'nombre_categoria' => $postre->id_tipo_postre,
             'tipo_postre_e' => $postre->id_tipo_postre
         ]);
         
@@ -134,6 +137,11 @@ class ControladorCatalogoEmergente extends Controller
                             ->first();
         });
 
+        if(empty($postre) || ($postre->stock != null && $postre->stock < $cantidad)){
+            return redirect()->route('inicio.get')
+            ->withErrors('errorStock', 'Falta producto para completar su pedido'); 
+        }
+
         $costo = $cantidad * $postre->precio_emergentes;
         session(['costo'=>$costo]);
 
@@ -168,7 +176,7 @@ class ControladorCatalogoEmergente extends Controller
         }
         
         //para reducir su stock en caso de que tenga si es null entonces no maneja stock
-        if($postre->stock != null){
+        if($postre->stock != null && $postre->stock > 0){
             $postre->stock = $postre->stock - session('cantidad_pedida');
             $postre->save();
         }

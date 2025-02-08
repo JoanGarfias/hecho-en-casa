@@ -98,7 +98,12 @@
         </div>
     </div>
 </div>
-
+    <div id="mensajeEmergente"></div>
+    @if ($errors->has('errorStock'))
+        <script>
+            mostrarMensaje('{{$errors->first('errorStock')}}');
+        </script>
+    @endif
     <script>
     
         document.addEventListener("DOMContentLoaded", (event) => {
@@ -106,7 +111,7 @@
             botones.forEach(boton =>{
                 let id = boton.id;
                 let [numero, categoria] = id.split('-');
-                console.log(boton);
+                
                 if(categoria == 'temporada'){
                     boton.addEventListener('click', function(){
                         document.getElementById('seleccionTemporada').value = numero;

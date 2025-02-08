@@ -100,3 +100,5 @@
 
 <script src="{{ asset('js/buscaValida.js') }}"></script>
 </html>
+
+<!-- PRUEBA -->

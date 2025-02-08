@@ -83,7 +83,8 @@
                 </div>
             </div>
         </form> 
-        <div id="mensajeEmergente"></div>
+        
+
         <script>
             document.addEventListener("DOMContentLoaded", () => {
                 function sumarSeleccionado() {
