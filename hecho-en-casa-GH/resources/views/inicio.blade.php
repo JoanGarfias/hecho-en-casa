@@ -66,6 +66,10 @@
         <script>
             mostrarMensaje('{{$errors->first('errorPedido')}}');
         </script>
+    @elseif($errors->has('errorStock'))
+        <script>
+            mostrarMensaje('{{$errors->first('errorStock')}}');
+        </script>
     @endif
 <x-pie/>
 

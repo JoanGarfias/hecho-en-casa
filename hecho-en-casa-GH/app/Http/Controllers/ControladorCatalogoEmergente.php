@@ -25,6 +25,7 @@ class ControladorCatalogoEmergente extends Controller
                 'temporada' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre')
                                     ->where('id_tipo_postre', 'temporada')
                                     ->where('disponible', '1')
+                                    ->where('stock', '>', 0)
                                     ->get(),
 
                 'pop-up' => Catalogo::select('id_postre', 'imagen', 'id_tipo_postre', 'nombre', 'descripcion', 'stock')
@@ -136,8 +137,8 @@ class ControladorCatalogoEmergente extends Controller
                             ->first();
         });
 
-        if(empty($postre) || $postre->stock < $cantidad){
-            return redirect()->route('emergente.detallesPedido.get')
+        if(empty($postre) || ($postre->stock != null && $postre->stock < $cantidad)){
+            return redirect()->route('inicio.get')
             ->withErrors('errorStock', 'Falta producto para completar su pedido'); 
         }
 

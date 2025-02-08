@@ -83,13 +83,8 @@
                 </div>
             </div>
         </form> 
-        <div id="mensajeEmergente"></div>
         
-        @if ($errors->has('errorStock'))
-            <script>
-                mostrarMensaje('{{$errors->first('errorStock')}}');
-            </script>
-        @endif
+
         <script>
             document.addEventListener("DOMContentLoaded", () => {
                 function sumarSeleccionado() {
