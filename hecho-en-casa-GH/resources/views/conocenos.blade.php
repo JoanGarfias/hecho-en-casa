@@ -20,7 +20,7 @@
         <div class="redes">
             <a href="https://www.instagram.com/hechoencasapastry/"><img class="enlace" src="{{ asset('img/instagram.png') }}" alt="Instagram"></a>
             <a href="https://www.facebook.com/hechoencasapastry/"><img class="enlace" src="{{ asset('img/facebook.png') }}" alt="Facebook"></a>
-            <a href="https://wa.me/9711242053"><img class="enlace" src="{{ asset('img/whatsapp.png') }}" alt="WhatsApp"></a>        
+            <a href="https://wa.me/9711216756"><img class="enlace" src="{{ asset('img/whatsapp.png') }}" alt="WhatsApp"></a>        
         </div>
 
     </div>

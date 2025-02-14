@@ -1,3 +1,4 @@
+<meta name="ruta-calendarioTP" content="{{ route('emergente.calendario.get') }}">
 <link rel="stylesheet" href="{{ asset('css/mensajeErrorE.css') }}">
 <link rel="stylesheet" href="{{ asset('css/pedidos.css') }}">
 <link rel="stylesheet" href="{{ asset('css/pedidosTempPop.css') }}">
@@ -82,7 +83,8 @@
                 </div>
             </div>
         </form> 
-        <div id="mensajeEmergente"></div>
+        
+
         <script>
             document.addEventListener("DOMContentLoaded", () => {
                 function sumarSeleccionado() {

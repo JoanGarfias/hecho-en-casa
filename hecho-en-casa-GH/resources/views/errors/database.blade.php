@@ -19,12 +19,13 @@
     
         <div class="contenedor">
             <h1>❌ Error en la Conexión</h1>
-            <p>{{$message}}</p>
+            
         <br>
             <p>Disculpe los inconvenientes.</p>
             <br>
             <p>Por favor, intente más tarde o contacte al administrador del sistema.</p>
             <br>
+            <p>{{$message}} </p>
     
             <a href="{{route('inicio.get')}}">Volver al inicio</a>
             <br>

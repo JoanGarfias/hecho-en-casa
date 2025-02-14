@@ -57,45 +57,21 @@ body {
 }
 
 /* Responsividad con Media Queries */
-@media (max-width: 1024px) {
+
+@media (max-width: 800px) and (orientation:  landscape){
     .menu-lateral {
-        width: 180px; /* Reduce el ancho en pantallas medianas */
-        max-width: 25%; /* Limita el ancho relativo */
-    }
-
-    .menu-lateral h3 {
-        font-size: 0.9em; /* Reduce el tamaño del título */
-    }
-
-    .menu-lateral ul li a {
-        font-size: 0.85em; /* Ajusta el tamaño del texto */
+        left: 10px;
+        position: sticky;
+        border-radius: 0 10px 10px 0; /* Bordes redondeados en la esquina derecha */
     }
 }
 
-@media (max-width: 768px) {
-    body {
-        flex-direction: column; /* Cambia a diseño en columna */
-        align-items: stretch; /* Asegura que los elementos se estiren */
-    }
 
+@media (max-width: 580px) and (orientation: portrait){
     .menu-lateral {
-        width: 100%; /* El menú ocupa todo el ancho */
-        max-width: none; /* Anula el límite máximo */
-        border-radius: 0; /* Elimina los bordes redondeados */
-        margin: 0; /* Elimina los márgenes */
-        padding: 20px; /* Espaciado interno mayor */
-        top: 0; /* Menú en la parte superior */
-    }
+        position: sticky;
+        width: 200%;
 
-    .menu-lateral ul li a {
-        font-size: 1em; /* Aumenta el tamaño del texto para facilitar la lectura */
-    }
-}
-
-@media (max-width: 480px) {
-    .menu-lateral {
-        padding: 15px; /* Reduce el espaciado interno */
-        font-size: 0.8em; /* Ajusta el tamaño general del texto */
     }
 
     .menu-lateral ul li {

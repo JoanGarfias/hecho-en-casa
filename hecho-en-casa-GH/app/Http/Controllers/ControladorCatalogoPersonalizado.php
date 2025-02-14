@@ -124,7 +124,14 @@ class ControladorCatalogoPersonalizado extends Controller
                 'fecha_hora_entrega' => $fecha_hora_entrega
             ];
             session()->put('datos_pedido', $datos);
+            $usuario = usuario::where('id_u', $id_usuario)->first();
 
+            $direccion = $usuario->calle_u . " " . $usuario->num_exterior_u . ", " . $usuario->colonia_u . ", " .
+            $usuario->ciudad_u . ", ". $usuario->estado_u;
+            session([
+                'telefono' => $usuario->telefono,
+                'direccion' => $direccion,
+            ]);
 
             return redirect()->route('personalizado.direccion.get');            ;
         }
@@ -203,7 +210,7 @@ class ControladorCatalogoPersonalizado extends Controller
         if($tipo_domicilio==="otra"){ //Datos prueba
             $codigo_postal = $request->input('codigo_postal');
             $estado = $request->input('estado');
-            $ciudad = $request->input('municipio');
+            $ciudad = $request->input('ciudad');
             $colonia = $request->input('asentamiento');
             $calle = $request->input('calle');
             $numeroInterior = $request->input('numeroI');

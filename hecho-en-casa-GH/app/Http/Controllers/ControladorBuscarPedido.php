@@ -24,9 +24,9 @@ class ControladorBuscarPedido extends Controller{
     public function MostrarPedido(Request $request)
     {
         $folio = $request->input('folio');
-        $id_u = Cookie::get('user_id');
+        //$id_u = Cookie::get('user_id');
         $pedido = Pedido::where('id_ped', $folio)
-                        ->where('id_usuario', $id_u) //para solo mostrar tus ticket y no de nadie mas
+                       // ->where('id_usuario', $id_u) //para solo mostrar tus ticket y no de nadie mas
                         ->first(); // Reemplaza con tu campo correcto
 
         if ($pedido) {

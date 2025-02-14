@@ -1,3 +1,4 @@
+<meta name="ruta-calendarioP" content="{{ route('personalizado.calendario.get') }}">
 <link rel="stylesheet" href="{{ asset('css/mensajeErrorE.css') }}">
 <link rel="stylesheet" href="{{ asset('css/pedidos.css') }}">
 <link rel="stylesheet" href="{{ asset('css/pedidosTempPop.css') }}">
@@ -83,7 +84,7 @@
                                 
                             </div> 
                             <button id="seleccionarCobertura" class="diseñandobutton" type="button">🔻</button>
-                            <div id="seleccionadoOpcionCobertura" class="customizandoOpciones" style="display: none;">
+                            <div id="seleccionadoOpcionCobertura" class="customizandoOpciones desborde" style="display: none;">
                                 @foreach ($coberturas as $cobertura)
                                     <div class="darOpciones" data-value="{{$cobertura->id_c}}">{{$cobertura->nom_cobertura}} {{$cobertura->precio_c}} MXN</div>    
                                 @endforeach
@@ -128,7 +129,7 @@
                                 <input type="radio" name="tematica" value="Otro" id="otrosRadio">
                                 <p class="blanca"> Otro</p>
                                 <div id="campoOtros" style="display: none;">
-                                    <input type="text" id="otrosTexto" name="otrosTexto" class="paraOtros" value="">
+                                    <input type="text" id="otrosTexto" name="otrosTexto" class="paraOtros">
                                 </div>
                             </label>
                         </div>
@@ -225,35 +226,55 @@
 
         const precioPorPorcion = 100;
         let totalCosto = 8 * precioPorPorcion; 
+        let costoPorcionesAnterior = totalCosto; 
         const costoInput = document.getElementById('costo');
+        let costoPanAnterior = 0;
+        let costoRellenoAnterior = 0;
+        let costoCoberturaAnterior = 0;
+        let costoElementosAnterior = 0;
+        //let valorPorciones = parseInt(inputPorciones.value) || 0;
+        //totalCosto = valorPorciones * precioPorPorcion;
 
         function actualizarCosto() {
-            let valorPorciones = parseInt(inputPorciones.value) || 0;
-            totalCosto = valorPorciones * precioPorPorcion;
+            let valorPorciones = parseInt(inputPorciones.value) || 8; 
+            let nuevoCostoPorciones = valorPorciones * precioPorPorcion; 
+
+            totalCosto -= costoPorcionesAnterior; 
+            totalCosto += nuevoCostoPorciones; 
+            costoPorcionesAnterior = nuevoCostoPorciones;
 
             const saborPanSeleccionado = document.querySelector('#seleccionadoOpcionPan .darOpciones.seleccionado');
             if (saborPanSeleccionado) {
                 const precioPan = parseFloat(saborPanSeleccionado.textContent.match(/\d+(\.\d+)?/)[0]);
-                totalCosto += precioPan;
+                totalCosto -= costoPanAnterior; 
+                totalCosto += precioPan; 
+                costoPanAnterior = precioPan;
             }
 
             const saborRellenoSeleccionado = document.querySelector('#seleccionadoOpcionRelleno .darOpciones.seleccionado');
             if (saborRellenoSeleccionado) {
                 const precioRelleno = parseFloat(saborRellenoSeleccionado.textContent.match(/\d+(\.\d+)?/)[0]);
-                totalCosto += precioRelleno;
+                totalCosto -= costoRellenoAnterior;
+                totalCosto += precioRelleno; 
+                costoRellenoAnterior = precioRelleno;
             }
 
             const coberturaSeleccionada = document.querySelector('#seleccionadoOpcionCobertura .darOpciones.seleccionado');
             if (coberturaSeleccionada) {
                 const precioCobertura = parseFloat(coberturaSeleccionada.textContent.match(/\d+(\.\d+)?/)[0]);
-                totalCosto += precioCobertura;
+                totalCosto -= costoCoberturaAnterior; 
+                totalCosto += precioCobertura; 
+                costoCoberturaAnterior = precioCobertura;
             }
 
             const elementosCheckboxes = document.querySelectorAll('input[name="elementos[]"]:checked');
+            let nuevoCostoElementos = 0;
             elementosCheckboxes.forEach(checkbox => {
-                const precioElemento = parseFloat(checkbox.nextElementSibling.textContent.match(/\d+(\.\d+)?/)[0]);
-                totalCosto += precioElemento;
+                nuevoCostoElementos += parseFloat(checkbox.nextElementSibling.textContent.match(/\d+(\.\d+)?/)[0]);
             });
+            totalCosto -= costoElementosAnterior; 
+            totalCosto += nuevoCostoElementos; 
+            costoElementosAnterior = nuevoCostoElementos; 
 
             costoInput.textContent = `${totalCosto.toFixed(2)} MXN`;  
             document.getElementById("hiddenCosto").value = totalCosto.toFixed(2);
